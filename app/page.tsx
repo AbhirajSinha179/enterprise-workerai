@@ -1,8 +1,8 @@
-import Link from "next/link"
-import { LP_GRID_ITEMS } from "lp-items"
 import { Metadata } from "next"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { LP_GRID_ITEMS } from "lp-items"
 // import { Button } from "components/Button/Button"
 
 export const metadata: Metadata = {
@@ -37,7 +37,7 @@ export default function Web() {
               Experience rapid UI development, AI-powered code reviews, and an extensive suite of tools for a smooth and
               enjoyable development process.
             </p>
-            <Component />
+            <ShadCardComponent />
             <Button asChild>
               <Link href="https://github.com/Blazity/next-enterprise" className="mr-3">
                 Get started
@@ -70,7 +70,7 @@ export default function Web() {
   )
 }
 
-export function Component() {
+export function ShadCardComponent() {
   return (
     <Card className="sm:col-span-2">
       <CardHeader className="pb-3">
