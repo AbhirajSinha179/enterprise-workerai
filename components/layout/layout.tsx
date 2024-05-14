@@ -4,9 +4,9 @@ import React from "react"
 import { useLockedBody } from "@/hooks/useBodyLock"
 // import { NavbarWrapper } from "../navbar/navbar"
 // import { SidebarWrapper } from "../sidebar/sidebar"
+import { cn } from "@/lib/utils"
 import { SidebarContext } from "./layout-context"
 import { Sidebar } from "../sidebar/sidebar"
-import { cn } from "@/lib/utils"
 
 interface Props {
   children: React.ReactNode
