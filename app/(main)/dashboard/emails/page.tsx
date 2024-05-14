@@ -9,9 +9,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
-export default function Leads() {
+export default function Emails() {
   return (
-    <ContentLayout title="Leads">
+    <ContentLayout title="Emails Pending / Scheduled">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -21,11 +21,11 @@ export default function Leads() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Leads</BreadcrumbPage>
+            <BreadcrumbPage>Emails</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <main className="flex items-center justify-center">Random leads</main>
+      <main className="flex items-center justify-center">Random emails</main>
     </ContentLayout>
   )
 }

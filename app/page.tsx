@@ -70,7 +70,7 @@ export default function Web() {
   )
 }
 
-export function ShadCardComponent() {
+function ShadCardComponent() {
   return (
     <Card className="sm:col-span-2">
       <CardHeader className="pb-3">
