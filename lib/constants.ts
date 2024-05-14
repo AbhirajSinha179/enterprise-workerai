@@ -62,8 +62,8 @@ export function getMenuList(pathname: string): Group[] {
           submenus: [],
         },
         {
-          href: "/tags",
-          label: "Tags",
+          href: "/dashboard/leads",
+          label: "Leads",
           active: pathname.includes("/tags"),
           icon: Tag,
           submenus: [],
@@ -81,8 +81,8 @@ export function getMenuList(pathname: string): Group[] {
           submenus: [],
         },
         {
-          href: "/account",
-          label: "Account",
+          href: "/dashboard/outboundSetting",
+          label: "Outbound",
           active: pathname.includes("/account"),
           icon: Settings,
           submenus: [],
