@@ -25,8 +25,13 @@ export const metadata: Metadata = {
 export default function Web() {
   return (
     <>
-      <section className="bg-white dark:bg-gray-900">
-        <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
+      <nav className="fixed flex justify-center items-center max-w-4xl px-4 py-2 m-4">
+        <div>
+          
+        </div>
+      </nav>
+      <section className="bg-background">
+        <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center min-h-screen lg:py-16">
           <div className="mx-auto place-self-center">
             <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
               Worker AI
@@ -37,7 +42,7 @@ export default function Web() {
               Experience rapid UI development, AI-powered code reviews, and an extensive suite of tools for a smooth and
               enjoyable development process.
             </p>
-            <ShadCardComponent />
+            {/* <ShadCardComponent /> */}
             <Button asChild>
               <Link href="https://github.com/Blazity/next-enterprise" className="mr-3">
                 Get started
@@ -51,7 +56,7 @@ export default function Web() {
           </div>
         </div>
       </section>
-      <section className="bg-white dark:bg-gray-900">
+      <section className="bg-background">
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
           <div className="justify-center space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-3">
             {LP_GRID_ITEMS.map((singleItem) => (
