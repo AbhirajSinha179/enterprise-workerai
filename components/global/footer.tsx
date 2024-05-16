@@ -36,11 +36,22 @@ const Footer = () => {
     visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeInOut" } },
   }
 
+  const titleAnimation = {
+    hidden: { y: "100%", opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { delay: 0.5, duration: 0.5, ease: "easeInOut" } },
+  }
+  const linksAnimation = {
+    hidden: { y: "100%", opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { delay: 0.8, duration: 0.5, ease: "easeInOut" } },
+  }
+
   return (
     <motion.section className="border-2 px-4" initial="hidden" animate="visible" variants={footerAnimation}>
       <div className="mx-auto grid w-full max-w-screen-xl gap-8 py-20 lg:grid-cols-5">
         <div className="sm:col-span-3 lg:col-span-2">
-          <h3 className="mb-2 text-3xl font-bold">Worker AI</h3>
+          <motion.h3 className="mb-2 text-3xl font-bold" variants={titleAnimation}>
+            Worker AI{" "}
+          </motion.h3>
           <p className="max-w-sm text-sm">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua.
@@ -56,12 +67,14 @@ const Footer = () => {
         </div>
         {footerLinks.map((footerLink) => (
           <div key={footerLink.title}>
-            <h3 className="mb-4 text-sm font-bold">{footerLink.title}</h3>
+            <motion.h3 className="mb-4 text-sm font-bold" variants={titleAnimation}>
+              {footerLink.title}
+            </motion.h3>
             <ul className="space-y-2 text-sm">
               {footerLink.links.map((link) => (
-                <li key={link.name}>
+                <motion.li key={link.name} variants={linksAnimation}>
                   <a href={link.href}>{link.name}</a>
-                </li>
+                </motion.li>
               ))}
             </ul>
           </div>
