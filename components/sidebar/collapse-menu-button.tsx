@@ -127,3 +127,4 @@ export function CollapseMenuButton({ icon: Icon, label, active, submenus, isOpen
     </DropdownMenu>
   )
 }
+ 
