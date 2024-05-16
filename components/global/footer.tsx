@@ -1,4 +1,6 @@
+"use client"
 import { InstagramLogoIcon, LinkedInLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons"
+import { motion } from "framer-motion"
 import { ButtonLink } from "../customComponents/customLink"
 
 const footerLinks = [
@@ -29,8 +31,13 @@ const footerLinks = [
 ]
 
 const Footer = () => {
+  const footerAnimation = {
+    hidden: { y: "100%", opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeInOut" } },
+  }
+
   return (
-    <section className="border-2 px-4">
+    <motion.section className="border-2 px-4" initial="hidden" animate="visible" variants={footerAnimation}>
       <div className="mx-auto grid w-full max-w-screen-xl gap-8 py-20 lg:grid-cols-5">
         <div className="sm:col-span-3 lg:col-span-2">
           <h3 className="mb-2 text-3xl font-bold">Worker AI</h3>
@@ -39,10 +46,9 @@ const Footer = () => {
             dolore magna aliqua.
           </p>
           <div className="mt-8">
-            <ButtonLink href=""> hello@workerai.co</ButtonLink>
+            <ButtonLink href="">hello@workerai.co</ButtonLink>
           </div>
-
-          <div className="mt-8 flex flex-row  ">
+          <div className="mt-8 flex flex-row ">
             <InstagramLogoIcon className="mr-4 h-6 w-6" />
             <TwitterLogoIcon className="mr-4 h-6 w-6" />
             <LinkedInLogoIcon className="mr-4 h-6 w-6" />
@@ -68,7 +74,7 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
