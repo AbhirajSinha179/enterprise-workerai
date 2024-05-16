@@ -47,44 +47,55 @@ const Footer = () => {
 
   return (
     <motion.section className="border-2 px-4" initial="hidden" animate="visible" variants={footerAnimation}>
-      <div className="mx-auto grid w-full max-w-screen-xl gap-8 py-20 lg:grid-cols-5">
-        <div className="sm:col-span-3 lg:col-span-2">
-          <motion.h3 className="mb-2 text-3xl font-bold" variants={titleAnimation}>
-            Worker AI{" "}
-          </motion.h3>
-          <p className="max-w-sm text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
-          </p>
-          <div className="mt-8">
+      <div className="mx-auto grid w-full max-w-screen-xl gap-8 py-10 lg:grid-cols-5">
+        <div className=" sm:col-span-3 lg:col-span-2">
+          <motion.div variants={titleAnimation}>
+            <h3 className="mb-3 text-3xl font-bold">Worker AI </h3>
+            <p className="max-w-sm text-sm">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua.
+            </p>
+          </motion.div>
+
+          <div className="mt-10 flex-row ">
             <ButtonLink href="">hello@workerai.co</ButtonLink>
-          </div>
-          <div className="mt-8 flex flex-row ">
-            <InstagramLogoIcon className="mr-4 h-6 w-6" />
-            <TwitterLogoIcon className="mr-4 h-6 w-6" />
-            <LinkedInLogoIcon className="mr-4 h-6 w-6" />
+
+            <div className="mt-2 flex flex-row">
+              <InstagramLogoIcon className="mr-4 h-6 w-6" />
+              <TwitterLogoIcon className="mr-4 h-6 w-6" />
+              <LinkedInLogoIcon className="mr-4 h-6 w-6" />
+            </div>
           </div>
         </div>
         {footerLinks.map((footerLink) => (
           <div key={footerLink.title}>
-            <motion.h3 className="mb-4 text-sm font-bold" variants={titleAnimation}>
+            <motion.h3 className="mt-12 text-xl font-bold" variants={titleAnimation}>
               {footerLink.title}
             </motion.h3>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-sm ">
               {footerLink.links.map((link) => (
                 <motion.li key={link.name} variants={linksAnimation}>
-                  <a href={link.href}>{link.name}</a>
+                  <div className="hover:text-muted-foreground  ">
+                    <a href={link.href}>{link.name}</a>
+                  </div>
                 </motion.li>
               ))}
             </ul>
           </div>
         ))}
       </div>
-      <div className="mx-auto w-full py-2">
-        <div className="mx-auto flex max-w-screen-xl items-center justify-between">
-          <p>
-            <span className="text-xs">&copy; {new Date().getFullYear()} Worker AI</span>
-          </p>
+      <div className="mx-auto max-w-screen-xl py-2">
+        <hr className="mb-2 border-t border-gray-200" />
+        <div className="flex flex-row justify-between">
+          <div className="flex w-1/6 justify-between">
+            <ButtonLink href="">Terms of Use</ButtonLink>
+            <ButtonLink href="">Privacy Policy</ButtonLink>
+          </div>
+          <div className="flex max-w-screen-xl items-center justify-center">
+            <p>
+              <span className="text-xs">© {new Date().getFullYear()} Worker AI, Inc.All rights reserved.</span>
+            </p>
+          </div>
         </div>
       </div>
     </motion.section>
