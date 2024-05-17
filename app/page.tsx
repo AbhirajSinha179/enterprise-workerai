@@ -25,15 +25,11 @@ export const metadata: Metadata = {
 export default function Web() {
   return (
     <>
-      <nav className="fixed flex justify-center items-center max-w-4xl px-4 py-2 m-4">
-        <div>
-          
-        </div>
-      </nav>
+
       <section className="bg-background">
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center min-h-screen lg:py-16">
           <div className="mx-auto place-self-center">
-            <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
+            <h1 className="mb-4 max-w-2xl text-4xl font-bold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
               Worker AI
             </h1>
 
@@ -75,18 +71,3 @@ export default function Web() {
   )
 }
 
-function ShadCardComponent() {
-  return (
-    <Card className="sm:col-span-2">
-      <CardHeader className="pb-3">
-        <CardTitle>Your Orders</CardTitle>
-        <CardDescription className="text-balance max-w-lg leading-relaxed">
-          Introducing Our Dynamic Orders Dashboard for Seamless Management and Insightful Analysis.
-        </CardDescription>
-      </CardHeader>
-      <CardFooter>
-        <Button>Create New Order</Button>
-      </CardFooter>
-    </Card>
-  )
-}
