@@ -2,6 +2,7 @@ import "styles/tailwind.css"
 import Footer from "@/components/global/footer"
 // import { Navbar } from "@/components/navbar/navbar"
 import { ThemeProvider } from "@/providers/theme-provider"
+import dynamic from "next/dynamic"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

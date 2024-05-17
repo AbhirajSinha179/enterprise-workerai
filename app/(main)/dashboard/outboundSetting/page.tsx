@@ -1,7 +1,6 @@
 "use client"
 import CardCustom from "@/components/customComponents/customCard"
 import SelectDemo from "@/components/customComponents/multipleSelectChip"
-import Footer from "@/components/global/footer"
 
 import { ContentLayout } from "@/components/layout/content-layout"
 
@@ -28,7 +27,6 @@ export default async function outboundSetting() {
           </div>
         </div>
       </ContentLayout>
-      <Footer />
     </>
   )
 }

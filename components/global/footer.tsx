@@ -45,6 +45,14 @@ const Footer = () => {
     visible: { y: 0, opacity: 1, transition: { delay: 0.8, duration: 0.5, ease: "easeInOut" } },
   }
 
+  // Discord link: https://discord.gg/34FVxdy9
+
+  // Twitter link: https://twitter.com/workerai_
+
+  // LinkedIn link: https://www.linkedin.com/company/workerai/
+
+  // maibox: hello@workerai.co
+
   return (
     <motion.section className="border-2 px-4" initial="hidden" animate="visible" variants={footerAnimation}>
       <div className="mx-auto grid w-full max-w-screen-xl gap-8 py-10 lg:grid-cols-5">
@@ -61,18 +69,22 @@ const Footer = () => {
             <ButtonLink href="">hello@workerai.co</ButtonLink>
 
             <div className="mt-2 flex flex-row">
+              {/* change the insta for gmail logo, also add each icon in a link */}
+              {/* make the links filled on hover */}
+
               <InstagramLogoIcon className="mr-4 h-6 w-6" />
               <TwitterLogoIcon className="mr-4 h-6 w-6" />
               <LinkedInLogoIcon className="mr-4 h-6 w-6" />
             </div>
           </div>
         </div>
+        {/* <div className="grid w-full max-w-screen-xl grid-cols-3 gap-8"> */}
         {footerLinks.map((footerLink) => (
-          <div key={footerLink.title}>
-            <motion.h3 className="mt-12 text-xl font-bold" variants={titleAnimation}>
+          <div key={footerLink.title} className="sm:col-span-3 lg:col-span-1">
+            <motion.h3 className="mb-3 mt-4 text-2xl font-bold" variants={titleAnimation}>
               {footerLink.title}
             </motion.h3>
-            <ul className="space-y-2 text-sm ">
+            <ul className="space-y-3 text-sm ">
               {footerLink.links.map((link) => (
                 <motion.li key={link.name} variants={linksAnimation}>
                   <div className="hover:text-muted-foreground  ">
@@ -83,7 +95,9 @@ const Footer = () => {
             </ul>
           </div>
         ))}
+        {/* </div> */}
       </div>
+
       <div className="mx-auto max-w-screen-xl py-2">
         <hr className="mb-2 border-t border-gray-200" />
         <div className="flex flex-row justify-between">
