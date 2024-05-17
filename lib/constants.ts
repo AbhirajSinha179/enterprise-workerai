@@ -19,13 +19,15 @@ type Group = {
   menus: Menu[]
 }
 
+const DASHBOARD_PATH = "/dashboard"
+
 export function getMenuList(pathname: string): Group[] {
   return [
     {
       groupLabel: "",
       menus: [
         {
-          href: "/dashboard",
+          href: `${DASHBOARD_PATH}`,
           label: "Dashboard",
           active: pathname.includes("/dashboard"),
           icon: LayoutGrid,
@@ -55,9 +57,9 @@ export function getMenuList(pathname: string): Group[] {
           ],
         },
         {
-          href: "/categories",
-          label: "Categories",
-          active: pathname.includes("/categories"),
+          href: `${DASHBOARD_PATH}/inbox`,
+          label: "Inbox",
+          active: pathname.includes("/inbox"),
           icon: Bookmark,
           submenus: [],
         },
