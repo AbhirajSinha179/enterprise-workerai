@@ -1,6 +1,6 @@
 // import { motion } from "framer-motion"
 import React from "react"
-import BlogFilters from "@/components/customComponents/blogFilter"
+// import BlogFilters from "@/components/customComponents/blogFilter"
 import BlogHeader from "@/components/customComponents/blogHeader"
 import Container from "@/components/customComponents/container"
 import { HeroPost } from "@/components/customComponents/hero-post"
