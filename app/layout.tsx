@@ -6,27 +6,30 @@ import { ThemeProvider } from "@/providers/theme-provider"
 
 const myFont = localFont({
   src: [
+    { path: '../public/fonts/GeneralSans-Extralight.woff2', weight: '200', style: 'normal' },
+    { path: '../public/fonts/GeneralSans-ExtralightItalic.woff2', weight: '200', style: 'italic' },
+    { path: '../public/fonts/GeneralSans-Italic.woff2', weight: '400', style: 'italic' },
     {
-      path: "../public/fonts/ClashDisplay-Regular.woff2",
-      weight: "300",
-      style: "normal",
+      path: '../public/fonts/GeneralSans-Regular.woff2',
+      weight: '400',
+      style: 'normal',
     },
     {
-      path: "../public/fonts/ClashDisplay-Semibold.woff2",
-      weight: "700",
-      style: "normal",
+      path: '../public/fonts/GeneralSans-SemiBold.woff2',
+      weight: '700',
+      style: 'normal',
     },
     {
-      path: "../public/fonts/ClashDisplay-Medium.woff2",
-      weight: "400",
-      style: "normal",
+      path: '../public/fonts/GeneralSans-Medium.woff2',
+      weight: '500',
+      style: 'normal',
     },
     {
-      path: "../public/fonts/ClashDisplay-Bold.woff2",
-      weight: "900",
-      style: "normal",
-    },
-  ],
+      path: '../public/fonts/GeneralSans-Bold.woff2',
+      weight: '900',
+      style: 'normal',
+    }
+  ]
 })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
