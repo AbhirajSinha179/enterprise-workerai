@@ -1,7 +1,6 @@
 "use client"
 import CardCustom from "@/components/customComponents/customCard"
 import SelectDemo from "@/components/customComponents/multipleSelectChip"
-
 import { ContentLayout } from "@/components/layout/content-layout"
 
 export default async function outboundSetting() {
@@ -26,6 +25,7 @@ export default async function outboundSetting() {
             <h2 className="mb-2 p-4 text-xl font-semibold text-zinc-50">Target</h2>
           </div>
         </div>
+
       </ContentLayout>
     </>
   )
