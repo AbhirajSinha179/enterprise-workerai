@@ -9,6 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Inbox } from "@/components/inbox/mail"
+import { mails } from "@/components/inbox/data"
 
 export default function InboxPage() {
   return (
@@ -27,7 +28,7 @@ export default function InboxPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <Inbox />
+        <Inbox mails={mails} />
       </ContentLayout>
     </>
   )
