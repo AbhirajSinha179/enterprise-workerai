@@ -1,6 +1,5 @@
 "use client"
 import { ChangeEvent, useEffect, useState } from "react"
-import CardCustom from "@/components/customComponents/customCard"
 import InputWithCommas from "@/components/customComponents/inputWithCommans"
 import SelectDemo from "@/components/customComponents/multipleSelectChip"
 import { ContentLayout } from "@/components/layout/content-layout"
@@ -60,7 +59,11 @@ export default function OutboundSetting() {
               </div>
             </div>
           </div>
-          <CardCustom title="Company data" />
+          <div className="m-4 h-96 w-1/2 overflow-hidden rounded-lg bg-card shadow-md transition duration-300 hover:shadow-lg">
+            <div className="p-4">
+              <h2 className="mb-2 text-xl font-semibold ">Company data</h2>
+            </div>
+          </div>
         </div>
         <div className="container mx-auto my-10 flex justify-between">
           <div className="bg-background-600 m-4 h-96 w-full overflow-hidden rounded-lg bg-card shadow-md transition duration-300 hover:shadow-lg">

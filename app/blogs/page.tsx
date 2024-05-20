@@ -13,7 +13,6 @@ const blogs = () => {
     <>
       <BlogHeader />
       <hr className="mt-10 border-t border-gray-200" />
-      {/* <BlogFilters /> */}
       <div className="mt-8">
         <Container>
           <HeroPost

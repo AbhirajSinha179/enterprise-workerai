@@ -1,5 +1,4 @@
 import { DiscordLogoIcon, EnvelopeClosedIcon, InstagramLogoIcon, LinkedInLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons"
-import { ButtonLink } from "../customComponents/customLink"
 import Link from "next/link"
 import { Button } from "../ui/button"
 const footerLinks = [
@@ -107,8 +106,16 @@ const Footer = () => {
           <hr className="mb-2 border-t border-gray-200" />
           <div className="flex flex-row justify-between">
             <div className="flex w-1/6 justify-between">
-              <ButtonLink href="">Terms of Use</ButtonLink>
-              <ButtonLink href="">Privacy Policy</ButtonLink>
+              <Link href="" >
+                <Button variant="link" size={"useLink"}>
+                  Terms of Use
+                </Button>
+              </Link>
+              <Link href="" >
+                <Button variant="link" size={"useLink"}>
+                  Privacy Policy
+                </Button>
+              </Link>
             </div>
             <div className="flex max-w-screen-xl items-center justify-center">
               <p>
