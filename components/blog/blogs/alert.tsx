@@ -1,6 +1,4 @@
 import cn from "classnames"
-import Container from "./container"
-
 type Props = {
   preview?: boolean
 }
@@ -14,7 +12,7 @@ const Alert = ({ preview }: Props) => {
         "border-neutral-200 bg-neutral-50": !preview,
       })}
     >
-      <Container>
+      <div className="container mx-auto px-5">
         <div className="py-2 text-center text-sm">
           {preview ? (
             <>
@@ -37,7 +35,7 @@ const Alert = ({ preview }: Props) => {
             </>
           )}
         </div>
-      </Container>
+      </div>
     </div>
   )
 }

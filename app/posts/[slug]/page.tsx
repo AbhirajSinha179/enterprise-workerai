@@ -1,10 +1,9 @@
 import { Metadata } from "next"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 import Alert from "@/components/blog/blogs/alert"
-import Container from "@/components/blog/blogs/container"
-import Header from "@/components/blog/blogs/header"
-import { PostBody } from "@/components/blog/blogs/post-body"
-import { PostHeader } from "@/components/blog/blogs/post-header"
+import CoverImage from "@/components/blog/blogs/cover-image"
+import markdownStyles from "@/components/blog/blogs/markdown-styles.module.css"
 import { getAllPosts, getPostBySlug } from "@/lib/api"
 import markdownToHtml from "@/lib/markdownToHtml"
 
@@ -14,19 +13,31 @@ export default async function Post({ params }: Params) {
   if (!post) {
     return notFound()
   }
-
   const content = await markdownToHtml(post.content || "")
-
   return (
     <main>
       <Alert preview={post.preview} />
-      <Container>
-        <Header />
+      <div className="container mx-auto px-5" >
+        <h2 className="mb-20 mt-8 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
+          <Link href="/blog" className="hover:underline">
+            Blogs
+          </Link>
+          .
+        </h2>
         <article className="mb-32">
-          <PostHeader title={post.title} coverImage={post.coverImage} />
-          <PostBody content={content} />
+
+          <h1 className="mb-12 text-center text-5xl font-bold leading-tight tracking-tighter md:text-left md:text-7xl md:leading-none lg:text-8xl">
+            {post.title}
+          </h1>
+          <div className="mb-8 sm:mx-0 md:mb-16">
+            <CoverImage title={post.title} src={post.coverImage} />
+          </div>
+
+          <div className="mx-auto max-w-2xl">
+            <div className={markdownStyles["markdown"]} dangerouslySetInnerHTML={{ __html: content }} />
+          </div>
         </article>
-      </Container>
+      </div>
     </main>
   )
 }

@@ -1,6 +1,4 @@
 import React from "react"
-import BlogHeader from "@/components/blog/blogs/blogHeader"
-import Container from "@/components/blog/blogs/container"
 import { HeroPost } from "@/components/blog/blogs/hero-post"
 import { MoreStories } from "@/components/blog/blogs/more-stories"
 import { getAllPosts } from "@/lib/api"
@@ -11,10 +9,12 @@ const blogs = () => {
   const morePosts = allPosts.slice(1)
   return (
     <>
-      <BlogHeader />
+      <div>
+        <h1 className="pt-10 text-center text-4xl font-bold">Worker AI Blog</h1>
+      </div>
       <hr className="mt-10 border-t border-gray-200" />
       <div className="mt-8">
-        <Container>
+        <div className="container mx-auto px-5">
           <HeroPost
             title={heroPost.title}
             coverImage={heroPost.coverImage}
@@ -24,7 +24,7 @@ const blogs = () => {
             excerpt={heroPost.excerpt}
           />
           {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-        </Container>
+        </div>
       </div>
     </>
   )
