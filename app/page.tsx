@@ -1,10 +1,8 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { CardChronark } from "@/components/customComponents/cardChronark"
+import Footer from "@/components/global/footer"
 import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { LP_GRID_ITEMS } from "lp-items"
-// import { Button } from "components/Button/Button"
 
 export const metadata: Metadata = {
   title: "Worker AI",
@@ -39,7 +37,6 @@ export default function Web() {
               Experience rapid UI development, AI-powered code reviews, and an extensive suite of tools for a smooth and
               enjoyable development process.
             </p>
-            {/* <ShadCardComponent /> */}
             <Button asChild>
               <Link href="https://github.com/Blazity/next-enterprise" className="mr-3">
                 Get started
@@ -61,6 +58,7 @@ export default function Web() {
                 <div className="bg-primary-100 dark:bg-primary-900 mb-4 flex h-10 w-10 items-center justify-center rounded-full p-1.5 text-blue-700 lg:h-12 lg:w-12">
                   {singleItem.icon}
                 </div>
+
                 <h3 className="mb-2 text-xl font-bold dark:text-white">{singleItem.title}</h3>
                 <p className="text-gray-500 dark:text-gray-400">{singleItem.description}</p>
               </div>
@@ -68,7 +66,7 @@ export default function Web() {
           </div>
         </div>
       </section>
-
+      <Footer />
     </>
   )
 }

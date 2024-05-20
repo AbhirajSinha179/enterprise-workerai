@@ -8,7 +8,7 @@ interface ButtonLinkProps {
 
 export const ButtonLink: React.FC<ButtonLinkProps> = ({ href, children }) => {
   return (
-    <Link href={href} passHref>
+    <Link href={href} passHref >
       <Button variant="link" size={"useLink"}>
         {children}
       </Button>
