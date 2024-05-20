@@ -8,6 +8,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import EmailList from "@/components/scheduler/email-list"
 
 export default function Emails() {
   return (
@@ -25,7 +26,7 @@ export default function Emails() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <main className="flex items-center justify-center">Random emails</main>
+      <main><EmailList /></main>
     </ContentLayout>
   )
 }
