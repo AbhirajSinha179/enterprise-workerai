@@ -13,7 +13,7 @@ interface MailListProps {
 }
 
 export function MailList({ items }: MailListProps) {
-  const { config, setConfig} = useMail()
+  const { config, setConfig } = useMail()
 
   return (
     <ScrollArea className="h-screen">
@@ -26,16 +26,16 @@ export function MailList({ items }: MailListProps) {
               config.selected === item.id && "bg-muted"
             )}
             onClick={() =>
-              setConfig({
-                ...config,
+              setConfig((prevConfig) => ({
+                ...prevConfig,
                 selected: item.id,
-              })
+              }))
             }
           >
             <div className="flex w-full flex-col gap-1">
               <div className="flex items-center">
                 <div className="flex items-center gap-2">
-                  <div className="font-semibold">{item.name}</div>
+                  <div className="text-md font-semibold">{item.name}</div>
                   {!item.read && <span className="flex h-2 w-2 rounded-full bg-blue-600" />}
                 </div>
                 <div

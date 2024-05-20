@@ -30,7 +30,7 @@ export const Layout = ({ children }: Props) => {
       <Sidebar />
       <main
         className={cn(
-          "min-h-[100vh] bg-zinc-50 transition-[margin-left] duration-300 ease-in-out dark:bg-zinc-900",
+          "min-h-[100vh] transition-[margin-left] duration-300 ease-in-out",
            sidebarOpen===false? "lg:ml-72" :"lg:ml-[90px]"
         )}
       >

@@ -19,27 +19,24 @@ export function Sidebar() {
       )}
     >
       <SidebarToggle isOpen={!collapsed} setIsOpen={setCollapsed} />
-      <div className="relative flex h-full flex-col overflow-y-auto px-3 py-4 shadow-md dark:shadow-zinc-800">
-        <Button
+      <div className="relative flex h-full flex-col overflow-y-auto px-3 py-4 shadow-md">
+        <Link
+          href="/dashboard"
           className={cn(
-            "mb-1 transition-transform duration-300 ease-in-out",
+            "mb-1 flex items-center gap-2 transition-transform duration-300 ease-in-out self-center",
             collapsed ? "translate-x-1" : "translate-x-0"
           )}
-          variant="link"
-          asChild
         >
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <PanelsTopLeft className="mr-1 h-6 w-6" />
-            <h1
-              className={cn(
-                "whitespace-nowrap text-lg font-bold transition-[transform,opacity,display] duration-300 ease-in-out font-sans",
-                collapsed ? "hidden -translate-x-96 opacity-0" : "translate-x-0 opacity-100"
-              )}
-            >
-              Worker AI
-            </h1>
-          </Link>
-        </Button>
+          <PanelsTopLeft className="mr-1 size-6" />
+          <h1
+            className={cn(
+              "whitespace-nowrap font-sans text-lg font-bold transition-[transform,opacity,display] duration-300 ease-in-out",
+              collapsed ? "hidden -translate-x-96 opacity-0" : "translate-x-0 opacity-100"
+            )}
+          >
+            Worker AI
+          </h1>
+        </Link>
         <Menu isOpen={!collapsed} />
       </div>
     </aside>

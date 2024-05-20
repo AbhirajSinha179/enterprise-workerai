@@ -25,15 +25,15 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { Separator } from "@/components/ui/separator"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
-import { useMail } from "@/contexts/MailContext"
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { useMail } from "@/contexts/MailContext"
+import { cn } from "@/lib/utils"
 
 interface MailProps {
   accounts?: {
@@ -88,10 +88,10 @@ export function Inbox({
               </TabsList>
             </div>
             <Separator />
-            <div className="bg-default p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="p-4 backdrop-blur supports-[backdrop-filter]:bg-background/0">
               <form>
                 <div className="relative">
-                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Search className="absolute left-2 top-2.5 size-4 text-muted-foreground" />
                   <Input placeholder="Search" className="pl-8" />
                 </div>
               </form>
