@@ -15,7 +15,7 @@ const myFont = localFont({
       style: 'normal',
     },
     {
-      path: '../public/fonts/GeneralSans-SemiBold.woff2',
+      path: '../public/fonts/GeneralSans-Semibold.woff2',
       weight: '700',
       style: 'normal',
     },
