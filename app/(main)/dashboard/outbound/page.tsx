@@ -1,6 +1,6 @@
 "use client"
 import { ChangeEvent, useEffect, useState } from "react"
-import InputWithCommas from "@/components/customComponents/inputWithCommans"
+import InputWithCommas from "@/components/customComponents/inputWithCommas"
 import SelectDemo from "@/components/customComponents/multipleSelectChip"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { Button } from "@/components/ui/button"
@@ -10,7 +10,6 @@ import { Label } from "@/components/ui/label"
 export default function OutboundSetting() {
   const [csvFile, setCsvFile] = useState<File | null>(null)
   const [inputValue, setInputValue] = useState<string>("")
-
   const validateCsvType = (fileName: string): boolean => {
     const CSV_REGEX = /\.csv$/i;
     if (!CSV_REGEX.exec(fileName)) {
@@ -21,8 +20,6 @@ export default function OutboundSetting() {
   }
 
   const handleCsvChange = (event: ChangeEvent<HTMLInputElement>) => {
-
-
     if (event.target.files && event.target.files.length > 0) {
       const files = event.target.files;
       const targetFile = files[0];
@@ -35,9 +32,11 @@ export default function OutboundSetting() {
     setInputValue(event.target.value)
   }
 
-  const handleSubmit = () => {
-    // Handle the submit logic here
+  const handleSubmitCSV = () => {
     console.log("CSV File:", csvFile)
+  }
+
+  const handleSubmit = () => {
     console.log("Input Value:", inputValue)
   }
 
@@ -71,8 +70,7 @@ export default function OutboundSetting() {
             <div className="grid w-full max-w-sm items-center gap-1.5 p-4">
               <Label htmlFor="csv">CSV file</Label>
               <Input id="csv" type="file" onChange={handleCsvChange} />
-              {/* add upload button which will make api call to upload file data (csv) */}
-
+              <Button type="button" onClick={handleSubmitCSV}>Submit</Button>
             </div>
             <div className="flex w-full max-w-sm items-center space-x-2 p-4">
               <Input type="text" placeholder="Input" value={inputValue} onChange={handleInputChange} />

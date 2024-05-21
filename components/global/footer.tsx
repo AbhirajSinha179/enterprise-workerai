@@ -1,6 +1,6 @@
-import { DiscordLogoIcon, EnvelopeClosedIcon, InstagramLogoIcon, LinkedInLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons"
+import { DiscordLogoIcon, EnvelopeClosedIcon, LinkedInLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 const footerLinks = [
   {
     title: "About",
@@ -53,34 +53,34 @@ const Footer = () => {
               </Link>
 
               <div className="mt-2 flex flex-row">
-                <a
+                <Link
                   href="https://www.linkedin.com/company/workerai/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <LinkedInLogoIcon className="mr-4 h-6 w-6 transition-transform hover:scale-125" />
-                </a>
-                <a
+                  <LinkedInLogoIcon className="mr-4 size-6 transition-transform hover:scale-125" />
+                </Link>
+                <Link
                   href="https://twitter.com/workerai_"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <TwitterLogoIcon className="mr-4 h-6 w-6 transition-transform hover:scale-125 " />
-                </a>
-                <a
+                  <TwitterLogoIcon className="mr-4 size-6 transition-transform hover:scale-125 " />
+                </Link>
+                <Link
                   href="https://discord.gg/34FVxdy9"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <DiscordLogoIcon className="mr-4 h-6 w-6 transition-transform hover:scale-125 " />
-                </a>
-                <a
+                  <DiscordLogoIcon className="mr-4 size-6 transition-transform hover:scale-125 " />
+                </Link>
+                <Link
                   href="mailto:hello@workerai.co"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <EnvelopeClosedIcon className="mr-4 h-6 w-6 transition-transform hover:scale-125 " />
-                </a>
+                  <EnvelopeClosedIcon className="mr-4 size-6 transition-transform hover:scale-125 " />
+                </Link>
               </div>
             </div>
           </div>
@@ -93,7 +93,7 @@ const Footer = () => {
                 {footerLink.links.map((link) => (
                   <li key={link.name} >
                     <div className="hover:text-muted-foreground  ">
-                      <a href={link.href}>{link.name}</a>
+                      <Link href={link.href}>{link.name}</Link>
                     </div>
                   </li>
                 ))}

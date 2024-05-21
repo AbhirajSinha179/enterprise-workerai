@@ -1,9 +1,8 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import Alert from "@/components/blog/blogs/alert"
-import CoverImage from "@/components/blog/blogs/cover-image"
-import markdownStyles from "@/components/blog/blogs/markdown-styles.module.css"
+import CoverImage from "@/components/blogs/cover-image"
+import markdownStyles from "@/components/blogs/markdown-styles.module.css"
 import { getAllPosts, getPostBySlug } from "@/lib/api"
 import markdownToHtml from "@/lib/markdownToHtml"
 
@@ -16,7 +15,10 @@ export default async function Post({ params }: Params) {
   const content = await markdownToHtml(post.content || "")
   return (
     <main>
-      <Alert preview={post.preview} />
+      <div
+        className="bg-secondary-foreground w-full py-6"
+      >
+      </div>
       <div className="container mx-auto px-5" >
         <h2 className="mb-20 mt-8 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
           <Link href="/blog" className="hover:underline">
@@ -54,9 +56,8 @@ export function generateMetadata({ params }: Params): Metadata {
   if (!post) {
     return notFound()
   }
-  const CMS_NAME = "Markdown"
 
-  const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`
+  const title = `${post.title} | Worker AI Blog`
 
   return {
     title,

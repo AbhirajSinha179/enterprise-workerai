@@ -1,5 +1,6 @@
 import Link from "next/link"
-import CoverImage from "./cover-image"
+// import CoverImage from "./cover-image"
+import CoverImage from "@/components/blogs/cover-image"
 type Props = {
   title: string
   coverImage: string

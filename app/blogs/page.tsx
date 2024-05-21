@@ -1,6 +1,6 @@
 import React from "react"
-import { HeroPost } from "@/components/blog/blogs/hero-post"
-import { MoreStories } from "@/components/blog/blogs/more-stories"
+import { HeroPost } from "@/components/blogs/hero-post"
+import { MoreStories } from "@/components/blogs/more-stories"
 import { getAllPosts } from "@/lib/api"
 
 const blogs = () => {

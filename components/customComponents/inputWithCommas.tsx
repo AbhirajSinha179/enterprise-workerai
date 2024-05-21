@@ -1,9 +1,8 @@
 import { X } from "lucide-react"
-import { useState, ChangeEvent, KeyboardEvent } from "react"
-import { Badge } from "../ui/badge"
+import { ChangeEvent, KeyboardEvent, useState } from "react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "../ui/button"
 
 export default function InputWithCommas() {
     const [selectedOptions, setSelectedOptions] = useState<string[]>([])
@@ -56,7 +55,7 @@ export default function InputWithCommas() {
                         <Badge variant="secondary">
                             <div className="flex items-center justify-around gap-1">
                                 <div>{option}</div>
-                                <X className="h-4 w-4" />
+                                <X className="size-4" />
                             </div>
                         </Badge>
                     </button>

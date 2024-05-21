@@ -21,7 +21,7 @@ export function Menu({ isOpen }: MenuProps) {
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
-      <nav className="mt-8 h-full w-full">
+      <nav className="mt-8 size-full">
         <ul className="flex min-h-[calc(100vh-48px-36px-16px-32px)] flex-col items-start space-y-1 px-2 lg:min-h-[calc(100vh-32px-40px-32px)]">
           {menuList.map(({ groupLabel, menus }, index) => (
             <li className={cn("w-full", groupLabel ? "pt-5" : "")} key={index}>
@@ -34,7 +34,7 @@ export function Menu({ isOpen }: MenuProps) {
                   <Tooltip delayDuration={100}>
                     <TooltipTrigger className="w-full">
                       <div className="flex w-full items-center justify-center">
-                        <Ellipsis className="h-5 w-5" />
+                        <Ellipsis className="size-5" />
                       </div>
                     </TooltipTrigger>
                     <TooltipContent side="right">
@@ -87,7 +87,7 @@ export function Menu({ isOpen }: MenuProps) {
             <TooltipProvider disableHoverableContent>
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
-                  <Button onClick={() => {}} variant="outline" className="mt-5 h-10 w-full justify-center">
+                  <Button onClick={() => { }} variant="outline" className="mt-5 h-10 w-full justify-center">
                     <span className={cn(isOpen === false ? "" : "mr-4")}>
                       <LogOut size={18} />
                     </span>

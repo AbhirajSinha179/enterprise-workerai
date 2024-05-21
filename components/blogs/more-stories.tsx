@@ -1,4 +1,4 @@
-import { PostPreview } from "./post-preview"
+import { PostPreview } from "@/components/blogs/post-preview"
 
 type Post = {
   slug: string
