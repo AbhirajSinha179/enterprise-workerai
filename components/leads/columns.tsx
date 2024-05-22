@@ -36,18 +36,18 @@ export const columns: ColumnDef<Task>[] = [
     {
         accessorKey: "name",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Name" />
+            <DataTableColumnHeader column={column} title="Name" className="flex justify-center mx-5" />
         ),
-        cell: ({ row }) => <div className="w-[80px]">{row.getValue("name")}</div>,
+        cell: ({ row }) => <div className="w-[100px] flex justify-center mx-5">{row.getValue("name")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
     {
         accessorKey: "company",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Company" />
+            <DataTableColumnHeader column={column} title="Company" className="flex justify-center mx-5" />
         ),
-        cell: ({ row }) => <div className="w-[80px]">{row.getValue("company")}</div>,
+        cell: ({ row }) => <div className="w-[100px] flex justify-center">{row.getValue("company")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
