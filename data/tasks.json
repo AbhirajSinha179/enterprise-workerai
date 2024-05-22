@@ -4,9 +4,7 @@
     "name": "Jack",
     "email": "Jack@example.com",
     "company": "Amazon",
-    "title": "You can't compress the program without quantifying the open-source SSD pixel!",
     "status": "doneFirst",
-    "label": "documentation",
     "engaged": "no"
   },
   {
@@ -14,9 +12,7 @@
     "name": "Joh",
     "email": "Joh@example.com",
     "company": "Flipkart",
-    "title": "The SMS interface is down, copy the bluetooth bus so we can quantify the VGA card!",
     "status": "doneSecond",
-    "label": "bug",
     "engaged": "yes"
   },
   {
@@ -24,9 +20,7 @@
     "name": "Jeff",
     "email": "Jeff@example.com",
     "company": "Myntra",
-    "title": "The SMS interface is down, copy the bluetooth bus so we can quantify the VGA card!",
     "status": "doneThird",
-    "label": "bug",
     "engaged": "yes"
   },
   {
@@ -34,9 +28,7 @@
     "name": "Jelly",
     "email": "Jelly@example.com",
     "company": "Ajio",
-    "title": "The SMS interface is down, copy the bluetooth bus so we can quantify the VGA card!",
     "status": "canceled",
-    "label": "bug",
     "engaged": "no"
   }
 ]

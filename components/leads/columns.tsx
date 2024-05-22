@@ -7,8 +7,18 @@ import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { labels, priorities, statuses } from "@/data/data"
 import { Task } from "@/data/schema"
+import { Button } from "../ui/button"
+import { Delete, Recycle, Trash, Trash2 } from "lucide-react"
+
+
+function handleDelete(row: Task) {
+    // Code to delete the row
+    console.log(`Deleting row with id ${row.id}`);
+}
+
 
 export const columns: ColumnDef<Task>[] = [
+
     {
         id: "select",
         header: ({ table }) => (
@@ -102,7 +112,7 @@ export const columns: ColumnDef<Task>[] = [
             }
 
             return (
-                <div className="flex items-center  flex justify-center mr-5">
+                <div className="flex items-center  flex justify-center mr-5 truncate">
                     {priority.icon && (
                         <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
                     )}
@@ -115,6 +125,8 @@ export const columns: ColumnDef<Task>[] = [
     },
     {
         id: "actions",
-        cell: ({ row }) => <DataTableRowActions row={row} />,
+        cell: ({ row }) => (
+            <Button onClick={() => handleDelete(row.original)} variant="ghost" ><Trash2 className="size-4" /></Button>
+        ),
     },
 ]
