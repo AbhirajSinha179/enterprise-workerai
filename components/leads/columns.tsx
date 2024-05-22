@@ -33,37 +33,47 @@ export const columns: ColumnDef<Task>[] = [
         enableSorting: false,
         enableHiding: false,
     },
+    // {
+    //     accessorKey: "id",
+    //     header: ({ column }) => (
+    //         <DataTableColumnHeader column={column} title="ID" />
+    //     ),
+    //     cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+    //     enableSorting: false,
+    //     enableHiding: false,
+    // },
     {
-        accessorKey: "id",
+        accessorKey: "name",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Task" />
+            <DataTableColumnHeader column={column} title="Name" />
         ),
-        cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+        cell: ({ row }) => <div className="w-[80px]">{row.getValue("name")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
     {
-        accessorKey: "title",
+        accessorKey: "company",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Title" />
+            <DataTableColumnHeader column={column} title="Company" />
         ),
-        cell: ({ row }) => {
-            const label = labels.find((label) => label.value === row.original.label)
-
-            return (
-                <div className="flex space-x-2">
-                    {label && <Badge variant="outline">{label.label}</Badge>}
-                    <span className="max-w-[500px] truncate font-medium">
-                        {row.getValue("title")}
-                    </span>
-                </div>
-            )
-        },
+        cell: ({ row }) => <div className="w-[80px]">{row.getValue("company")}</div>,
+        enableSorting: false,
+        enableHiding: false,
     },
+    {
+        accessorKey: "email",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="email" />
+        ),
+        cell: ({ row }) => <div className="w-[80px] mx-10">{row.getValue("email")}</div>,
+        enableSorting: false,
+        enableHiding: false,
+    },
+
     {
         accessorKey: "status",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Status" />
+            <DataTableColumnHeader column={column} title="Workflow Stage" />
         ),
         cell: ({ row }) => {
             const status = statuses.find(
@@ -79,7 +89,6 @@ export const columns: ColumnDef<Task>[] = [
                     {status.icon && (
                         <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
                     )}
-                    <span>{status.label}</span>
                 </div>
             )
         },
@@ -88,13 +97,13 @@ export const columns: ColumnDef<Task>[] = [
         },
     },
     {
-        accessorKey: "priority",
+        accessorKey: "engaged",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Priority" />
+            <DataTableColumnHeader column={column} title="Engaged" />
         ),
         cell: ({ row }) => {
             const priority = priorities.find(
-                (priority) => priority.value === row.getValue("priority")
+                (priority) => priority.value === row.getValue("engaged")
             )
 
             if (!priority) {
@@ -106,7 +115,7 @@ export const columns: ColumnDef<Task>[] = [
                     {priority.icon && (
                         <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
                     )}
-                    <span>{priority.label}</span>
+                    {/* <span>{engaged.label}</span> */}
                 </div>
             )
         },

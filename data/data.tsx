@@ -3,11 +3,37 @@ import {
     ArrowRightIcon,
     ArrowUpIcon,
     CheckCircledIcon,
-    CircleIcon,
     CrossCircledIcon,
-    QuestionMarkCircledIcon,
-    StopwatchIcon,
 } from "@radix-ui/react-icons"
+import { Badge } from "@/components/ui/badge";
+const DoubleCheckIcon = () => (
+    <div className="flex items-center space-x-1 mx-2">
+        <CheckCircledIcon />
+        <CheckCircledIcon />
+    </div>
+);
+const SingleCheckIcon = () => (
+    <div className="flex items-center space-x-1 mx-2">
+        <CheckCircledIcon />
+    </div>
+);
+const TripleCheckIcon = () => (
+    <div className="flex items-center space-x-1 mx-2">
+        <CheckCircledIcon />
+        <CheckCircledIcon />
+        <CheckCircledIcon />
+    </div>
+);
+const NotEngaged = () => (
+    <div className="flex items-center space-x-1 mx-2">
+        <Badge > Not Engaged</Badge>
+    </div>
+);
+const Engaged = () => (
+    <div className="flex items-center space-x-1 mx-2">
+        <Badge>Engaged</Badge>
+    </div>
+);
 
 export const labels = [
     {
@@ -26,24 +52,19 @@ export const labels = [
 
 export const statuses = [
     {
-        value: "backlog",
-        label: "Backlog",
-        icon: QuestionMarkCircledIcon,
+        value: "doneFirst",
+        label: "DoneFirst",
+        icon: SingleCheckIcon,
     },
     {
-        value: "todo",
-        label: "Todo",
-        icon: CircleIcon,
+        value: "doneSecond",
+        label: "DoneSecond",
+        icon: DoubleCheckIcon,
     },
     {
-        value: "in progress",
-        label: "In Progress",
-        icon: StopwatchIcon,
-    },
-    {
-        value: "done",
-        label: "Done",
-        icon: CheckCircledIcon,
+        value: "doneThird",
+        label: "DoneThird",
+        icon: TripleCheckIcon,
     },
     {
         value: "canceled",
@@ -54,18 +75,13 @@ export const statuses = [
 
 export const priorities = [
     {
-        label: "Low",
-        value: "low",
-        icon: ArrowDownIcon,
+        label: "Yes",
+        value: "yes",
+        icon: Engaged,
     },
     {
-        label: "Medium",
-        value: "medium",
-        icon: ArrowRightIcon,
-    },
-    {
-        label: "High",
-        value: "high",
-        icon: ArrowUpIcon,
+        label: "No",
+        value: "no",
+        icon: NotEngaged,
     },
 ]
