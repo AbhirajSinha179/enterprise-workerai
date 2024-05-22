@@ -33,15 +33,6 @@ export const columns: ColumnDef<Task>[] = [
         enableSorting: false,
         enableHiding: false,
     },
-    // {
-    //     accessorKey: "id",
-    //     header: ({ column }) => (
-    //         <DataTableColumnHeader column={column} title="ID" />
-    //     ),
-    //     cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
-    //     enableSorting: false,
-    //     enableHiding: false,
-    // },
     {
         accessorKey: "name",
         header: ({ column }) => (
@@ -63,9 +54,9 @@ export const columns: ColumnDef<Task>[] = [
     {
         accessorKey: "email",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="email" />
+            <DataTableColumnHeader column={column} title="Email" className=" flex justify-center w-[200px]   " />
         ),
-        cell: ({ row }) => <div className="w-[80px] mx-10">{row.getValue("email")}</div>,
+        cell: ({ row }) => <div className="w-[200px] flex justify-center ">{row.getValue("email")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
@@ -73,7 +64,7 @@ export const columns: ColumnDef<Task>[] = [
     {
         accessorKey: "status",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Workflow Stage" />
+            <DataTableColumnHeader column={column} title="Workflow Stage" className=" w-[150px]  flex justify-center mr-10" />
         ),
         cell: ({ row }) => {
             const status = statuses.find(
@@ -85,7 +76,7 @@ export const columns: ColumnDef<Task>[] = [
             }
 
             return (
-                <div className="flex w-[100px] items-center">
+                <div className="flex w-[150px]  items-center justify-center ">
                     {status.icon && (
                         <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
                     )}
@@ -99,7 +90,7 @@ export const columns: ColumnDef<Task>[] = [
     {
         accessorKey: "engaged",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Engaged" />
+            <DataTableColumnHeader column={column} title="Engaged" className=" flex justify-center mr-5" />
         ),
         cell: ({ row }) => {
             const priority = priorities.find(
@@ -111,11 +102,10 @@ export const columns: ColumnDef<Task>[] = [
             }
 
             return (
-                <div className="flex items-center">
+                <div className="flex items-center  flex justify-center mr-5">
                     {priority.icon && (
                         <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
                     )}
-                    {/* <span>{engaged.label}</span> */}
                 </div>
             )
         },
