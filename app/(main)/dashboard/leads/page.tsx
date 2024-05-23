@@ -1,5 +1,3 @@
-import { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import { z } from "zod"
 import { promises as fs } from "fs"
@@ -7,7 +5,6 @@ import path from "path"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { columns } from "@/components/leads/columns"
 import { DataTable } from "@/components/leads/data-table"
-import { UserNav } from "@/components/leads/user-nav"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -60,7 +57,6 @@ export default async function Leads() {
             </p>
           </div>
           <div className="flex items-center space-x-2">
-            <UserNav />
           </div>
         </div>
         <DataTable data={tasks} columns={columns} />

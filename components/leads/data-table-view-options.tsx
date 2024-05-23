@@ -16,12 +16,20 @@ import {
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
 }
+function handleCSV() {
+  console.log("CSV export Button clicked");
+}
 
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
+      <Button variant="ghost"
+        size="sm"
+        onClick={() => handleCSV()}>
+        Export .CSV
+      </Button>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"

@@ -27,7 +27,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -67,9 +66,13 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
 
+  const selectedRows = rowSelection;
+  const hasSelectedRows = Object.keys(rowSelection).length > 0;
+  console.log("Selected rows are :", hasSelectedRows)
+
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} />
+      <DataTableToolbar table={table} hasSelectedRows={hasSelectedRows} selectedRows={selectedRows} />
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -121,6 +124,7 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <DataTablePagination table={table} />
+
     </div>
   )
 }

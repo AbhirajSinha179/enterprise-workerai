@@ -1,32 +1,23 @@
 "use client"
-
+import { CheckCircledIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
+import { Trash2 } from "lucide-react"
 import { DataTableColumnHeader } from "@/components/leads/data-table-column-header"
-import { DataTableRowActions } from "@/components/leads/data-table-row-actions"
+import { DataTableColumnActions } from "@/components/leads/data-table-row-actions"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { labels, priorities, statuses } from "@/data/data"
+import { engaged, statuses } from "@/data/data"
 import { Task } from "@/data/schema"
-import { Button } from "../ui/button"
-import { Delete, Recycle, Trash, Trash2 } from "lucide-react"
-
-
-function handleDelete(row: Task) {
-    // Code to delete the row
-    console.log(`Deleting row with id ${row.id}`);
+function handleDelete(row: any) {
+    console.log(`Deleting row with id ${row.id}`)
 }
-
-
 export const columns: ColumnDef<Task>[] = [
-
     {
         id: "select",
         header: ({ table }) => (
             <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
+                checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
                 onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
                 aria-label="Select all"
                 className="translate-y-[2px]"
@@ -46,27 +37,45 @@ export const columns: ColumnDef<Task>[] = [
     {
         accessorKey: "name",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Name" className="flex justify-center mx-5" />
+            <DataTableColumnHeader
+                column={column}
+                title="Name"
+                className="mx-5 flex justify-center"
+                sortAscending={""}
+                sortDescending={""}
+            />
         ),
-        cell: ({ row }) => <div className="w-[100px] flex justify-center mx-5">{row.getValue("name")}</div>,
+        cell: ({ row }) => <div className="mx-5 flex w-[100px] justify-center">{row.getValue("name")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
     {
         accessorKey: "company",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Company" className="flex justify-center mx-5" />
+            <DataTableColumnHeader
+                column={column}
+                title="Company"
+                className="mx-5 flex justify-center"
+                sortAscending={""}
+                sortDescending={""}
+            />
         ),
-        cell: ({ row }) => <div className="w-[100px] flex justify-center">{row.getValue("company")}</div>,
+        cell: ({ row }) => <div className="flex w-[100px] justify-center">{row.getValue("company")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
     {
         accessorKey: "email",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Email" className=" flex justify-center w-[200px]   " />
+            <DataTableColumnHeader
+                column={column}
+                title="Email"
+                className=" flex w-[200px] justify-center   "
+                sortAscending={""}
+                sortDescending={""}
+            />
         ),
-        cell: ({ row }) => <div className="w-[200px] flex justify-center ">{row.getValue("email")}</div>,
+        cell: ({ row }) => <div className="flex w-[200px] justify-center ">{row.getValue("email")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
@@ -74,22 +83,27 @@ export const columns: ColumnDef<Task>[] = [
     {
         accessorKey: "status",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Workflow Stage" className=" w-[150px]  flex justify-center mr-10" />
+            <DataTableColumnHeader
+                column={column}
+                title="Workflow Stage"
+                className=" mr-10  flex w-[150px] justify-center"
+                sortAscending="Asc"
+                sortDescending="Dsc"
+            />
         ),
         cell: ({ row }) => {
-            const status = statuses.find(
-                (status) => status.value === row.getValue("status")
-            )
-
+            const status = statuses.find((status) => status.value === row.getValue("status"))
             if (!status) {
                 return null
             }
-
             return (
-                <div className="flex w-[150px]  items-center justify-center ">
-                    {status.icon && (
-                        <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                    )}
+                <div className="flex w-[150px] items-center justify-center space-x-1 ">
+                    {status.number &&
+                        Array.from({ length: status.number }, (v: number) => (
+                            <div key={v}>
+                                <CheckCircledIcon />
+                            </div>
+                        ))}
                 </div>
             )
         },
@@ -100,21 +114,31 @@ export const columns: ColumnDef<Task>[] = [
     {
         accessorKey: "engaged",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Engaged" className=" flex justify-center mr-5" />
+            <DataTableColumnHeader
+                column={column}
+                title="Engaged"
+                className=" mr-5 flex justify-center"
+                sortAscending="Engaged"
+                sortDescending="Not Engaged"
+            />
         ),
         cell: ({ row }) => {
-            const priority = priorities.find(
-                (priority) => priority.value === row.getValue("engaged")
-            )
+            const engagement = engaged.find((engagement) => engagement.value === row.getValue("engaged"))
 
-            if (!priority) {
+            if (!engagement) {
                 return null
             }
 
             return (
-                <div className="flex items-center  flex justify-center mr-5 truncate">
-                    {priority.icon && (
-                        <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+                <div className="flex w-[150px] items-center justify-center space-x-1">
+                    {engagement.number === 0 ? (
+                        <div className="mx-2 flex items-center space-x-1">
+                            <Badge>Engaged</Badge>
+                        </div>
+                    ) : (
+                        <div className="mx-2 flex items-center space-x-1">
+                            <Badge> Not Engaged</Badge>
+                        </div>
                     )}
                 </div>
             )
@@ -125,8 +149,11 @@ export const columns: ColumnDef<Task>[] = [
     },
     {
         id: "actions",
+        // header: ({ column }) => <DataTableColumnActions column={column} />,
         cell: ({ row }) => (
-            <Button onClick={() => handleDelete(row.original)} variant="ghost" ><Trash2 className="size-4" /></Button>
+            <Button onClick={() => handleDelete(row)} variant="ghost">
+                <Trash2 className="size-4" />
+            </Button>
         ),
     },
 ]
