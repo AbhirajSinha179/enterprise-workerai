@@ -9,13 +9,13 @@ import { Input } from "@/components/ui/input"
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
   hasSelectedRows: Boolean
-  selectedRows: string
+  selectedRows: Record<string, boolean>
 
 }
-function handleExport(selectedRows: string) {
+function handleExport(selectedRows: Record<string, boolean>) {
   console.log("Multiple Export: ", selectedRows);
 }
-function handleMultipleDelete(selectedRows: string) {
+function handleMultipleDelete(selectedRows: Record<string, boolean>) {
   console.log("Multiple Delete : ", selectedRows);
 }
 
@@ -50,8 +50,8 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <div className={`flex mx-2 ${hasSelectedRows ? 'opacity-100 transition-opacity duration-500' : 'opacity-0'} `}>
-        <Button onClick={() => alert('Export clicked')} variant={"secondary"} size="sm" className="mx-2">Export</Button>
-        <Button onClick={() => alert('Delete clicked')} variant={"secondary"} size="sm" >Delete</Button>
+        <Button onClick={() => handleExport(selectedRows)} variant={"secondary"} size="sm" className="mx-2">Export</Button>
+        <Button onClick={() => handleMultipleDelete(selectedRows)} variant={"secondary"} size="sm" >Delete</Button>
       </div>
 
 
