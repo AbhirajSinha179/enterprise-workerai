@@ -93,3 +93,18 @@ export function getMenuList(pathname: string): Group[] {
     },
   ]
 }
+
+export const getLandingNavList = () => [
+  {
+    href: "/",
+    label: "Home",
+  },
+  {
+    href: "/about",
+    label: "About",
+  },
+  {
+    href: "/contact",
+    label: "Contact",
+  },
+]

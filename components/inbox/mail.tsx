@@ -1,17 +1,7 @@
 "use client"
 
 import {
-  AlertCircle,
-  Archive,
-  ArchiveX,
-  File,
-  Inbox as InboxIcon,
-  MessagesSquare,
   Search,
-  Send,
-  ShoppingCart,
-  Trash2,
-  Users2,
 } from "lucide-react"
 import * as React from "react"
 
@@ -33,7 +23,6 @@ import {
 } from "@/components/ui/tabs"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { useMail } from "@/contexts/MailContext"
-import { cn } from "@/lib/utils"
 
 interface MailProps {
   accounts?: {
@@ -44,17 +33,15 @@ interface MailProps {
   mails: Mail[]
   defaultLayout?: number[] | undefined
   defaultCollapsed?: boolean
-  navCollapsedSize: number
+  navCollapsedSize?: number
 }
 
 export function Inbox({
   // accounts,
   mails,
   defaultLayout = [265, 440, 655],
-  defaultCollapsed = false,
   // navCollapsedSize,
 }: MailProps) {
-  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
   const {config} = useMail()
 
   return (

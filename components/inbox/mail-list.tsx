@@ -5,8 +5,8 @@ import { Mail } from "@/components/inbox/data"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 // import { Separator } from "@/components/ui/separator"
-import { cn } from "@/lib/utils"
 import { useMail } from "@/contexts/MailContext"
+import { cn } from "@/lib/utils"
 
 interface MailListProps {
   items: Mail[]
@@ -36,7 +36,7 @@ export function MailList({ items }: MailListProps) {
               <div className="flex items-center">
                 <div className="flex items-center gap-2">
                   <div className="text-md font-semibold">{item.name}</div>
-                  {!item.read && <span className="flex h-2 w-2 rounded-full bg-blue-600" />}
+                  {!item.read && <span className="flex size-2 rounded-full bg-blue-600" />}
                 </div>
                 <div
                   className={cn(

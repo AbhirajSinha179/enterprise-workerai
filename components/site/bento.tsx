@@ -22,9 +22,9 @@ export function BentoGridLanding() {
     </BentoGrid>
   )
 }
-const Skeleton = () => (
-  <div className="dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex size-full min-h-24 flex-1   rounded-xl border border-transparent  bg-neutral-100 [mask-image:radial-gradient(ellipse_at_center,white,transparent)] dark:border-white/[0.2] dark:bg-black"></div>
-)
+// const Skeleton = () => (
+//   <div className="dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex size-full min-h-24 flex-1   rounded-xl border border-transparent  bg-neutral-100 [mask-image:radial-gradient(ellipse_at_center,white,transparent)] dark:border-white/[0.2] dark:bg-black"></div>
+// )
 
 const SkeletonOne = () => {
   const variants = {
@@ -196,7 +196,7 @@ const SkeletonFour = () => {
           Delusional
         </p>
       </motion.div>
-      <motion.div className="relative z-20 flex h-full w-1/3 flex-col items-center justify-center rounded-2xl border border-neutral-200 bg-white p-4 dark:border-white/[0.1] dark:bg-black">
+      <motion.div className="relative z-5 flex h-full w-1/3 flex-col items-center justify-center rounded-2xl border border-neutral-200 bg-white p-4 dark:border-white/[0.1] dark:bg-black">
         <Image
           src="/assets/images/dashboard_random_mockup.jpg"
           alt="avatar"

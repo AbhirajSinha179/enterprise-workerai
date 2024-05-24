@@ -3,7 +3,6 @@ import Link from "next/link"
 
 import { Menu } from "@/components/sidebar/menu"
 import { SidebarToggle } from "@/components/sidebar/sidebar-toggle"
-import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 // import { useLockedBody } from "@/hooks/useBodyLock";
 import { useSidebarContext } from "../layout/layout-context"
