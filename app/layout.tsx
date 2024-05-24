@@ -21,7 +21,7 @@ const myFont = localFont({
     },
     {
       path: '../public/fonts/GeneralSans-Medium.woff2',
-      weight: '500',
+      weight: '600',
       style: 'normal',
     },
     {

@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { ContentLayout } from "@/components/layout/content-layout"
+import EmailList from "@/components/scheduler/email-list"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -25,7 +26,7 @@ export default function Emails() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <main className="flex items-center justify-center">Random emails</main>
+      <main><EmailList /></main>
     </ContentLayout>
   )
 }
