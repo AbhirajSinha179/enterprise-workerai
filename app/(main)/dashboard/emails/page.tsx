@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { ContentLayout } from "@/components/layout/content-layout"
+import EmailList from "@/components/scheduler/email-list"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,7 +9,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import EmailList from "@/components/scheduler/email-list"
 
 export default function Emails() {
   return (
