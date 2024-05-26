@@ -1,17 +1,7 @@
 "use client"
 
 import {
-  AlertCircle,
-  Archive,
-  ArchiveX,
-  File,
-  Inbox as InboxIcon,
-  MessagesSquare,
   Search,
-  Send,
-  ShoppingCart,
-  Trash2,
-  Users2,
 } from "lucide-react"
 import * as React from "react"
 
@@ -25,15 +15,14 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { Separator } from "@/components/ui/separator"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
-import { useMail } from "@/contexts/MailContext"
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { useMail } from "@/contexts/MailContext"
 
 interface MailProps {
   accounts?: {
@@ -44,17 +33,15 @@ interface MailProps {
   mails: Mail[]
   defaultLayout?: number[] | undefined
   defaultCollapsed?: boolean
-  navCollapsedSize: number
+  navCollapsedSize?: number
 }
 
 export function Inbox({
   // accounts,
   mails,
   defaultLayout = [265, 440, 655],
-  defaultCollapsed = false,
   // navCollapsedSize,
 }: MailProps) {
-  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
   const {config} = useMail()
 
   return (
@@ -88,10 +75,10 @@ export function Inbox({
               </TabsList>
             </div>
             <Separator />
-            <div className="bg-default p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="p-4 backdrop-blur supports-[backdrop-filter]:bg-background/0">
               <form>
                 <div className="relative">
-                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Search className="absolute left-2 top-2.5 size-4 text-muted-foreground" />
                   <Input placeholder="Search" className="pl-8" />
                 </div>
               </form>
