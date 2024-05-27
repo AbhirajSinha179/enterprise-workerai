@@ -1,5 +1,7 @@
-import localFont from 'next/font/local'
+import localFont from "next/font/local"
 import "styles/tailwind.css"
+import Footer from "@/components/global/footer"
+// import { Navbar } from "@/components/navbar/navbar"
 import { ThemeProvider } from "@/providers/theme-provider"
 
 const myFont = localFont({
@@ -33,7 +35,7 @@ const myFont = localFont({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={myFont.className}>
-      <body className="antialiased scroll-smooth p-0 m-0 ">
+      <body className="m-0 scroll-smooth p-0 antialiased ">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
         </ThemeProvider>

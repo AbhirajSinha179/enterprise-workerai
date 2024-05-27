@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { ContentLayout } from "@/components/layout/content-layout";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/components/ui/breadcrumb";
+import Link from "next/link"
+import { ContentLayout } from "@/components/layout/content-layout"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/components/ui/breadcrumb"
 
 export default function DashboardHome() {
   return (

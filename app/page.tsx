@@ -5,11 +5,8 @@ import Link from "next/link"
 import { SiteNav } from "@/components/navbar/site-nav"
 import { BentoGridLanding } from "@/components/site/bento"
 import { Button } from "@/components/ui/button"
-// import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { LP_GRID_ITEMS } from "lp-items"
 import { Input } from "@/components/ui/input"
-// import { Button } from "components/Button/Button"
-
+import { LP_GRID_ITEMS } from "lp-items"
 export const metadata: Metadata = {
   title: "Worker AI",
   twitter: {
@@ -117,6 +114,7 @@ export default function Web() {
                 <div className="bg-primary-100 dark:bg-primary-900 mb-4 flex size-10 items-center justify-center rounded-full p-1.5 text-blue-700 lg:size-12">
                   {singleItem.icon}
                 </div>
+
                 <h3 className="mb-2 text-xl font-bold dark:text-white">{singleItem.title}</h3>
                 <p className="text-gray-500 dark:text-gray-400">{singleItem.description}</p>
               </div>
