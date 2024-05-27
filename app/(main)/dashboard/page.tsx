@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+// here tabs list comp needs to be configured. either remove it entirely or add the correct props
 
 export default function DashboardHome() {
   return (
@@ -29,7 +30,6 @@ export default function DashboardHome() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <main className="flex items-center justify-center">Dashboard</main>
         {/* <ScrollArea className="h-full"> */}
         <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
           <div className="flex items-center justify-between space-y-2">
@@ -42,12 +42,12 @@ export default function DashboardHome() {
             </div>
           </div>
           <Tabs defaultValue="overview" className="space-y-4">
-            <TabsList>
+            {/* <TabsList>
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="analytics" disabled>
                 Analytics
               </TabsTrigger>
-            </TabsList>
+            </TabsList> */}
             <TabsContent value="overview" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card>

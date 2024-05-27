@@ -12,6 +12,7 @@ const Blogs = async () => {
     <>
       <div className="mt-20">
         <div className="container mx-auto px-5">
+          <h1 className=" text-5xl leading-tight lg:text-7xl font-extrabold">Blogs by Worker AI</h1>
           {heroPost && (
             <HeroPost
               title={heroPost.title}
@@ -24,7 +25,7 @@ const Blogs = async () => {
         </div>
       </div>
     </>
-  );
+  )
 };
 
 export default Blogs;
