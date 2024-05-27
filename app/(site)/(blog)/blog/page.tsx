@@ -4,7 +4,7 @@ import { MoreStories } from "@/components/blogs/more-stories";
 import { getAllPosts } from "@/lib/api";
 
 const Blogs = async () => {
-  const allPosts = await getAllPosts();
+  const allPosts = getAllPosts();
   const heroPost = allPosts[0];
   const morePosts = allPosts.slice(1);
 

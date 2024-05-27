@@ -14,8 +14,7 @@ export type Post = {
   preview?: boolean
 }
 
-const postsDirectory = join(process.cwd(), "/app/_posts")
-
+const postsDirectory = join(process.cwd(), "app/(site)/(blog)/_posts")
 export function getPostSlugs() {
   return fs.readdirSync(postsDirectory)
 }
