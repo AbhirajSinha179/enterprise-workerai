@@ -2,16 +2,16 @@
 import { CheckCircledIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
 import { Trash2 } from "lucide-react"
+import { engaged, statuses } from "@/app/(main)/dashboard/(leads)/data/data"
+import { Leads } from "@/app/(main)/dashboard/(leads)/data/schema"
 import { DataTableColumnHeader } from "@/components/leads/data-table-column-header"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { engaged, statuses } from "@/app/(main)/dashboard/(leads)/data/data"
-import { Task } from "@/app/(main)/dashboard/(leads)/data/schema"
 function handleDelete(row: any) {
     console.log(`Deleting row with id ${row.id}`)
 }
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Leads>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -148,7 +148,6 @@ export const columns: ColumnDef<Task>[] = [
     },
     {
         id: "actions",
-        // header: ({ column }) => <DataTableColumnActions column={column} />,
         cell: ({ row }) => (
             <Button onClick={() => handleDelete(row)} variant="ghost">
                 <Trash2 className="size-4" />
