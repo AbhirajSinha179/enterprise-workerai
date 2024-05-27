@@ -26,14 +26,14 @@ export function DataTableViewOptions<TData>({
   return (
     <DropdownMenu>
       <Button variant="ghost"
-        size="sm"
+        size="lg"
         onClick={() => handleCSV()}>
         Export .CSV
       </Button>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          size="sm"
+          size="lg"
           className="mx-2 hidden h-8 lg:flex"
         >
           <MixerHorizontalIcon className="mr-2 size-4" />

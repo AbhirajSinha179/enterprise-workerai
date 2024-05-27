@@ -7,16 +7,19 @@ import { Input } from "@/components/ui/input"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
-  hasSelectedRows: Boolean
+  hasSelectedRows: boolean
   selectedRows: Record<string, boolean>
   actionButtons: boolean
 }
+
 function handleExport(selectedRows: Record<string, boolean>) {
-  console.log("Multiple Export: ", selectedRows);
+  console.log("Multiple Export: ", selectedRows)
 }
+
 function handleMultipleDelete(selectedRows: Record<string, boolean>) {
-  console.log("Multiple Delete : ", selectedRows);
+  console.log("Multiple Delete : ", selectedRows)
 }
+
 export function DataTableToolbar<TData>({
   table,
   hasSelectedRows,
@@ -24,40 +27,54 @@ export function DataTableToolbar<TData>({
   actionButtons,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
-  console.log("this is sis is s", selectedRows)
 
   return (
     <div className="flex items-center justify-between">
-      <div className="flex flex-1 items-center ">
+      <div className="flex flex-1 items-center">
         <Input
-          placeholder="Search by name "
+          placeholder="Search by name"
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="h-8 w-96 focus-visible:ring-offset-0"
+          className="h-10 w-96 focus-visible:ring-offset-0"
         />
         {isFiltered && (
           <Button
             variant="ghost"
             onClick={() => table.resetColumnFilters()}
-            className="h-8 mx-2 "
+            className="h-8 mx-2"
           >
             Reset
             <Cross2Icon className="ml-2 size-4" />
           </Button>
         )}
       </div>
-      <div className={`flex mx-2 ${hasSelectedRows ? 'opacity-100 transition-opacity duration-500' : 'opacity-0'} `}>
-        <Button onClick={() => handleExport(selectedRows)} variant={"secondary"} size="sm" className="mx-2">Export</Button>
-        <Button onClick={() => handleMultipleDelete(selectedRows)} variant={"secondary"} size="sm" >Delete</Button>
-
+      <div
+        className={`flex mx-2 ${hasSelectedRows
+          ? 'opacity-100 transition-opacity duration-500'
+          : 'opacity-0'
+          }`}
+      >
+        {actionButtons && (
+          <Button
+            onClick={() => handleExport(selectedRows)}
+            variant="secondary"
+            size="lg"
+            className="mx-2"
+          >
+            Export
+          </Button>
+        )}
+        <Button
+          onClick={() => handleMultipleDelete(selectedRows)}
+          variant="secondary"
+          size="lg"
+        >
+          Delete
+        </Button>
       </div>
-      {actionButtons && (
-        <>
-          <DataTableViewOptions table={table} />
-        </>
-      )}
+      {actionButtons && <DataTableViewOptions table={table} />}
     </div>
   )
 }

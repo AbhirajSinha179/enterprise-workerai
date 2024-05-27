@@ -4,6 +4,7 @@ import path from "path"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { DataTable } from "@/components/leads/data-table"
 import { columns } from "@/components/mailbox/columns"
+import { Button } from "@/components/ui/button"
 import { mailsSchema } from "../data/schema"
 
 async function getMails() {
@@ -20,6 +21,16 @@ export default async function MailboxPage() {
 
   return (
     <ContentLayout title="Mailbox">
+      <div className="flex justify-center m-5 ">
+        <Button size="lg"  >
+          <div className="text-xl font-semibold">
+            Connect a Mail Box
+          </div>
+
+        </Button>
+
+      </div>
+
       <DataTable data={tasks} columns={columns} isActionButton={false} />
     </ContentLayout>
   );

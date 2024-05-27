@@ -1,10 +1,10 @@
 "use client"
 import { ColumnDef } from "@tanstack/react-table"
 import { Trash2 } from "lucide-react"
-import { unread } from "@/app/(site)/(mailbox)/data/data"
+// import { unread } from "@/app/(site)/(mailbox)/data/data"
 import { Mails } from "@/app/(site)/(mailbox)/data/schema"
 import { DataTableColumnHeader } from "@/components/leads/data-table-column-header"
-import { Badge } from "@/components/ui/badge"
+// import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 function handleDelete(row: any) {
@@ -32,55 +32,55 @@ export const columns: ColumnDef<Mails>[] = [
         enableSorting: false,
         enableHiding: false,
     },
-    {
-        accessorKey: "unread",
-        header: ({ column }) => (
-            <DataTableColumnHeader
-                column={column}
-                title=""
-                className=" "
-                sortAscending={""}
-                sortDescending={""}
-            />
-        ),
-        cell: ({ row }) => {
-            const engagement = unread.find((engagement) => engagement.value === row.getValue("unread"))
+    // {
+    //     accessorKey: "unread",
+    //     header: ({ column }) => (
+    //         <DataTableColumnHeader
+    //             column={column}
+    //             title=""
+    //             className=" "
+    //             sortAscending={""}
+    //             sortDescending={""}
+    //         />
+    //     ),
+    //     cell: ({ row }) => {
+    //         const engagement = unread.find((engagement) => engagement.value === row.getValue("unread"))
 
-            if (!engagement) {
-                return null
-            }
+    //         if (!engagement) {
+    //             return null
+    //         }
 
-            return (
-                <div className=" space-x-1">
-                    {engagement.number === 0 ? (
-                        <></>
-                    ) : (
-                        <div className=" flex items-center space-x-1">
-                            <Badge>Unread</Badge>
-                        </div>
-                    )}
-                </div>
-            )
-        },
-        enableSorting: false,
-        enableHiding: false,
+    //         return (
+    //             <div className=" space-x-1">
+    //                 {engagement.number === 0 ? (
+    //                     <></>
+    //                 ) : (
+    //                     <div className=" flex items-center space-x-1">
+    //                         <Badge>Unread</Badge>
+    //                     </div>
+    //                 )}
+    //             </div>
+    //         )
+    //     },
+    //     enableSorting: false,
+    //     enableHiding: false,
 
-    },
-    {
-        accessorKey: "name",
-        header: ({ column }) => (
-            <DataTableColumnHeader
-                column={column}
-                title="Name"
-                className=" flex justify-start  w-[100px]"
-                sortAscending={""}
-                sortDescending={""}
-            />
-        ),
-        cell: ({ row }) => <div className=" flex w-[100px]   justify-start ">{row.getValue("name")}</div>,
-        enableSorting: false,
-        enableHiding: false,
-    },
+    // },
+    // {
+    //     accessorKey: "name",
+    //     header: ({ column }) => (
+    //         <DataTableColumnHeader
+    //             column={column}
+    //             title="Name"
+    //             className=" flex justify-start  w-[100px]"
+    //             sortAscending={""}
+    //             sortDescending={""}
+    //         />
+    //     ),
+    //     cell: ({ row }) => <div className=" flex w-[100px]   justify-start ">{row.getValue("name")}</div>,
+    //     enableSorting: false,
+    //     enableHiding: false,
+    // },
     {
         accessorKey: "email",
         header: ({ column }) => (
@@ -93,6 +93,36 @@ export const columns: ColumnDef<Mails>[] = [
             />
         ),
         cell: ({ row }) => <div className="flex w-[200px] justify-center  ">{row.getValue("email")}</div>,
+        enableSorting: false,
+        enableHiding: false,
+    },
+    {
+        accessorKey: "domain",
+        header: ({ column }) => (
+            <DataTableColumnHeader
+                column={column}
+                title="Domain"
+                className=" flex w-[200px] justify-center     "
+                sortAscending={""}
+                sortDescending={""}
+            />
+        ),
+        cell: ({ row }) => <div className="flex w-[200px] justify-center  ">{row.getValue("domain")}</div>,
+        enableSorting: false,
+        enableHiding: false,
+    },
+    {
+        accessorKey: "warmupCapacity",
+        header: ({ column }) => (
+            <DataTableColumnHeader
+                column={column}
+                title="Warmup Capacity"
+                className=" flex w-[200px] justify-center     "
+                sortAscending={""}
+                sortDescending={""}
+            />
+        ),
+        cell: ({ row }) => <div className="flex w-[200px] justify-center  ">{row.getValue("warmupCapacity")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
