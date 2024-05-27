@@ -6,6 +6,7 @@ import { DataTable } from "@/components/leads/data-table"
 import { columns } from "@/components/mailbox/columns"
 import { Button } from "@/components/ui/button"
 import { mailsSchema } from "../data/schema"
+import Link from "next/link"
 
 async function getMails() {
   const data = await fs.readFile(
@@ -22,13 +23,15 @@ export default async function MailboxPage() {
   return (
     <ContentLayout title="Mailbox">
       <div className="flex justify-center m-5 ">
-        <Button size="lg"  >
-          <div className="text-xl font-semibold">
-            Connect a Mail Box
-          </div>
+        <Link href="/mailbox/form">
 
-        </Button>
+          <Button size="lg">
+            <div className="text-xl font-semibold">
+              Connect a Mail Box
+            </div>
+          </Button>
 
+        </Link>
       </div>
 
       <DataTable data={tasks} columns={columns} isActionButton={false} />
