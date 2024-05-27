@@ -1,4 +1,4 @@
-import { Bookmark, LayoutGrid, Settings, SquarePen, Tag, Users, Album } from "lucide-react"
+import { Bookmark, LayoutGrid, Settings, SquarePen, Tag, Users } from "lucide-react"
 
 type Submenu = {
   href: string
@@ -83,7 +83,7 @@ export function getMenuList(pathname: string): Group[] {
           submenus: [],
         },
         {
-          href: "/dashboard/outboundSetting",
+          href: "/dashboard/outbound",
           label: "Outbound",
           active: pathname.includes("/account"),
           icon: Settings,

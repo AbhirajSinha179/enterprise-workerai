@@ -5,7 +5,6 @@ import { join } from "path"
 export type Post = {
   slug: string
   title: string
-  date: string
   coverImage: string
   excerpt: string
   ogImage: {
@@ -15,8 +14,7 @@ export type Post = {
   preview?: boolean
 }
 
-const postsDirectory = join(process.cwd(), "/app/_posts")
-
+const postsDirectory = join(process.cwd(), "app/(site)/(blog)/_posts")
 export function getPostSlugs() {
   return fs.readdirSync(postsDirectory)
 }
@@ -32,9 +30,6 @@ export function getPostBySlug(slug: string) {
 
 export function getAllPosts(): Post[] {
   const slugs = getPostSlugs()
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+  const posts = slugs.map((slug) => getPostBySlug(slug))
   return posts
 }

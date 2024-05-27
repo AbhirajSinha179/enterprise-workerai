@@ -46,14 +46,14 @@ export default function SelectDemo() {
           ))}
         </SelectContent>
       </Select>
-      <div className="no-scrollbar flex max-h-16 flex-wrap gap-2 overflow-y-auto rounded-md bg-primary-foreground p-2">
-        {selectedOptions.map((option) => (
-          <button key={option} onClick={() => handleRemove(option)}>
+      <div className="flex max-h-16 flex-wrap gap-x-2 gap-y-1 overflow-y-auto rounded-md bg-primary-foreground px-2 pb-1">
+        {selectedOptions.map((option, ind) => (
+          <button key={ind} onClick={() => handleRemove(option)}>
             <Badge variant="secondary">
               <div className="flex items-center justify-around gap-1">
                 <div>{option}</div>
                 {/* icon chota crow, x ko clickable banao, but in a circular button (define button ka width and height) */}
-                <X className="h-4 w-4" />
+                <X className="size-4" />
               </div>
             </Badge>
           </button>

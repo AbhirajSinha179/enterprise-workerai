@@ -38,7 +38,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="m-0 scroll-smooth p-0 antialiased ">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
-          <Footer />
         </ThemeProvider>
       </body>
     </html>
