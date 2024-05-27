@@ -2,6 +2,7 @@ import Link from "next/link"
 import { z } from "zod"
 import { promises as fs } from "fs"
 import path from "path"
+import { taskSchema } from "@/app/(main)/dashboard/(leads)/data/schema"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { columns } from "@/components/leads/columns"
 import { DataTable } from "@/components/leads/data-table"
@@ -13,19 +14,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { taskSchema } from "@/data/schema"
 
 
 async function getTasks() {
   const data = await fs.readFile(
-    // path.join(process.cwd(), "app/(app)/examples/tasks/data/tasks.json")
-    path.join(process.cwd(), "/data/tasks.json")
+    path.join(process.cwd(), "app/(main)/dashboard/(leads)/data/tasks.json")
   )
-
-  // use fetch to get data with pagination
-  // use response, check Nextjs docs for fetching and validating data
-  // also understand what server actions, dynamic fetching is like
-
   const tasks = JSON.parse(data.toString())
 
   return z.array(taskSchema).parse(tasks)

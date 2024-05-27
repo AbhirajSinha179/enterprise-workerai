@@ -6,8 +6,8 @@ import { DataTableColumnHeader } from "@/components/leads/data-table-column-head
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { engaged, statuses } from "@/data/data"
-import { Task } from "@/data/schema"
+import { engaged, statuses } from "@/app/(main)/dashboard/(leads)/data/data"
+import { Task } from "@/app/(main)/dashboard/(leads)/data/schema"
 function handleDelete(row: any) {
     console.log(`Deleting row with id ${row.id}`)
 }
