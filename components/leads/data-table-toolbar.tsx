@@ -1,5 +1,4 @@
 "use client"
-
 import { Cross2Icon } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"
 import { DataTableViewOptions } from "@/components/leads/data-table-view-options"
@@ -10,7 +9,7 @@ interface DataTableToolbarProps<TData> {
   table: Table<TData>
   hasSelectedRows: Boolean
   selectedRows: Record<string, boolean>
-
+  actionButtons: boolean
 }
 function handleExport(selectedRows: Record<string, boolean>) {
   console.log("Multiple Export: ", selectedRows);
@@ -18,11 +17,11 @@ function handleExport(selectedRows: Record<string, boolean>) {
 function handleMultipleDelete(selectedRows: Record<string, boolean>) {
   console.log("Multiple Delete : ", selectedRows);
 }
-
 export function DataTableToolbar<TData>({
   table,
   hasSelectedRows,
-  selectedRows
+  selectedRows,
+  actionButtons,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
   console.log("this is sis is s", selectedRows)
@@ -52,10 +51,13 @@ export function DataTableToolbar<TData>({
       <div className={`flex mx-2 ${hasSelectedRows ? 'opacity-100 transition-opacity duration-500' : 'opacity-0'} `}>
         <Button onClick={() => handleExport(selectedRows)} variant={"secondary"} size="sm" className="mx-2">Export</Button>
         <Button onClick={() => handleMultipleDelete(selectedRows)} variant={"secondary"} size="sm" >Delete</Button>
+
       </div>
-
-
-      <DataTableViewOptions table={table} />
+      {actionButtons && (
+        <>
+          <DataTableViewOptions table={table} />
+        </>
+      )}
     </div>
   )
 }

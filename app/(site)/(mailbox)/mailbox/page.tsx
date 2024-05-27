@@ -20,7 +20,7 @@ export default async function MailboxPage() {
 
   return (
     <ContentLayout title="Mailbox">
-      <DataTable data={tasks} columns={columns} />
+      <DataTable data={tasks} columns={columns} isActionButton={false} />
     </ContentLayout>
   );
 }

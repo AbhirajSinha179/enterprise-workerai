@@ -53,7 +53,7 @@ export default async function Leads() {
           <div className="flex items-center space-x-2">
           </div>
         </div>
-        <DataTable data={tasks} columns={columns} />
+        <DataTable data={tasks} columns={columns} isActionButton={true} />
       </div>
     </ContentLayout>
   )

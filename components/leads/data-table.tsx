@@ -30,11 +30,13 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  isActionButton: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  isActionButton,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -69,10 +71,11 @@ export function DataTable<TData, TValue>({
   const selectedRows = rowSelection;
   const hasSelectedRows = Object.keys(rowSelection).length > 0;
   console.log("Selected rows are :", hasSelectedRows)
+  console.log("Top action buttons : ", isActionButton)
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} hasSelectedRows={hasSelectedRows} selectedRows={selectedRows} />
+      <DataTableToolbar table={table} hasSelectedRows={hasSelectedRows} selectedRows={selectedRows} actionButtons={isActionButton} />
       <div className="rounded-md border">
         <Table>
           <TableHeader>
