@@ -15,7 +15,7 @@ type Inputs = z.infer<typeof FormDataSchema>;
 const steps = [
     {
         id: 'Step 1',
-        name: 'Start',
+        name: '',
         fields: ['firstName', 'lastName', 'email']
     },
     {
@@ -23,9 +23,7 @@ const steps = [
         name: '',
         fields: ['country', 'state', 'city', 'street', 'zip']
     },
-    { id: 'Step 3', name: '' },
-    { id: 'Step 4', name: '' },
-    { id: 'Step 5', name: '' }
+    { id: 'Step 3', name: '' }
 ];
 
 export default function Form() {
@@ -338,14 +336,51 @@ export default function Form() {
                 )}
                 {currentStep === 2 && (
 
-                    <>
-                        {imap === "True" && (
-                            <div>
-                                hehheheh
-                            </div>
-                        )
-                        }
-                    </>
+                    <motion.div
+                        initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}>
+                        <>
+                            {imap === "True" && (
+                                <div className="flex justify-center">
+                                    <div className="shadow-md rounded-lg p-6  w-1/2 bg-muted">
+                                        <h1 className="text-2xl font-bold mb-4">Connect Your Google Account</h1>
+                                        <p className="mb-6">Allow Instantly to access your Google workspace. You only need to do this once per domain.</p>
+                                        <ol className="list-decimal list-inside mb-6 space-y-4">
+                                            <li>
+                                                Go to your
+                                                <Link href="https://admin.google.com/" className="text-blue-600 px-1" target="_blank">
+                                                    Google Workspace Admin Panel
+                                                </Link>
+                                                .
+                                            </li>
+                                            <li>
+                                                Click <span className="font-semibold">Add App</span> and then select{' '}
+                                                <span className="font-semibold">OAuth App Name or Client ID</span>.
+                                            </li>
+                                            <li>
+                                                Use the following Client-ID to search for Instantly:
+                                                <div className="bg-gray-100 p-2 rounded-md mt-2">
+                                                    536726988839-pt93ora4685dtb1emb0pp2vjgjoI5mls.apps.googleusercontent.com
+                                                </div>
+                                            </li>
+                                            <li>
+                                                Select and approve Instantly to access your Google Workspace.
+                                            </li>
+                                        </ol>
+                                        <div className="flex justify-center">
+                                            <button className="bg-primary font-bold text-primary-foreground py-2 px-4 rounded hover:-translate-y-1 
+                                            hover:scale-110 duration-300">
+                                                Login
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                            }
+                        </>
+                    </motion.div>
+
                 )}
             </form>
 
