@@ -49,7 +49,8 @@ export default function Form() {
 
     const next = async (provider: string) => {
         setSelectedProvider(provider);
-        const fields = steps[currentStep].fields;
+        const step = steps[currentStep];
+        const fields = step?.fields || [];
         const output = await trigger(fields as FieldName[], { shouldFocus: true });
 
         if (!output) return;
