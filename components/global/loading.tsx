@@ -1,6 +1,6 @@
 import React from "react"
 
-const Loading = () => {
+const LoadingSign = () => {
   return (
     <div role="status">
       <svg
@@ -23,4 +23,4 @@ const Loading = () => {
   )
 }
 
-export default Loading
+export default LoadingSign

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ModeToggle } from "@/components/global/mode-toggle"
 // import { UserNav } from "@/components/admin-panel/user-nav"
-// import { SheetMenu } from "@/components/sidebar/sheet-menu"
+import { SheetMenu } from "@/components/sidebar/sheet-menu"
 import { Button } from "../ui/button"
 
 export function SiteNav() {
@@ -9,7 +9,7 @@ export function SiteNav() {
     <header className="dark:supports-backdrop-blur:bg-background/60 supports-backdrop-blur:bg-background/70 sticky top-0 z-10 mx-auto w-full shadow backdrop-blur-sm ">
       <div className="mx-2 flex h-16 max-w-6xl items-center justify-between sm:mx-auto sm:h-20 sm:p-2">
         <div className="flex items-center space-x-4 lg:space-x-0 rtl:space-x-reverse">
-          {/* <SheetMenu /> */}
+          <SheetMenu />
           <Link href={"/"}>
             <h1 className="text-lg font-bold dark:text-white  sm:block md:text-2xl">WorkerAI</h1>
           </Link>
