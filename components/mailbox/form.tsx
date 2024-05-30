@@ -3,12 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from 'framer-motion';
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from 'react';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from 'zod';
 import { FormDataSchema } from '@/app/(main)/dashboard/(mailbox)/data/formSchema';
 import { Button } from "../ui/button";
-import Link from "next/link";
 
 type Inputs = z.infer<typeof FormDataSchema>;
 
@@ -34,11 +34,10 @@ export default function Form() {
     const delta = currentStep - previousStep;
 
     const {
-        register,
+
         handleSubmit,
         reset,
         trigger,
-        formState: { errors }
     } = useForm<Inputs>({
         resolver: zodResolver(FormDataSchema)
     });
