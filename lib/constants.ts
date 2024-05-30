@@ -1,4 +1,4 @@
-import { Bookmark, LayoutGrid, Settings, SquarePen, Tag, Users } from "lucide-react"
+import { ArrowBigRightDash, Bookmark, LayoutGrid, LucideSquareArrowOutUpRight, Mail, PersonStanding, PersonStandingIcon, Settings, SquarePen, Tag, Timer, Users } from "lucide-react"
 
 type Submenu = {
   href: string
@@ -36,38 +36,28 @@ export function getMenuList(pathname: string): Group[] {
       ],
     },
     {
-      groupLabel: "Contents",
+      groupLabel: "Workspace",
       menus: [
         {
-          href: "",
-          label: "Posts",
-          active: pathname.includes("/posts"),
-          icon: SquarePen,
+          href: `${DASHBOARD_PATH}/emails`,
+          label: "Scheduler",
+          active: pathname.includes("/emails"),
+          icon: Timer,
           submenus: [
-            {
-              href: "/posts",
-              label: "All Posts",
-              active: pathname === "/posts",
-            },
-            {
-              href: "/posts/new",
-              label: "New Post",
-              active: pathname === "/posts/new",
-            },
           ],
         },
         {
           href: `${DASHBOARD_PATH}/inbox`,
           label: "Inbox",
           active: pathname.includes("/inbox"),
-          icon: Bookmark,
+          icon: Mail,
           submenus: [],
         },
         {
-          href: "/dashboard/leads",
+          href: `${DASHBOARD_PATH}/leads`,
           label: "Leads",
-          active: pathname.includes("/tags"),
-          icon: Tag,
+          active: pathname.includes("/leads"),
+          icon: ArrowBigRightDash,
           submenus: [],
         },
       ],
@@ -86,7 +76,7 @@ export function getMenuList(pathname: string): Group[] {
           href: "/dashboard/outbound",
           label: "Outbound",
           active: pathname.includes("/account"),
-          icon: Settings,
+          icon: LucideSquareArrowOutUpRight, // change this icon
           submenus: [],
         },
       ],

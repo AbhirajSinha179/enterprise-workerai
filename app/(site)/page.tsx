@@ -13,14 +13,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   openGraph: {
-    url: "https://next-enterprise.vercel.app/",
-    images: [
-      {
-        width: 1200,
-        height: 630,
-        url: "https://raw.githubusercontent.com/Blazity/next-enterprise/main/.github/assets/project-logo.png",
-      },
-    ],
+    // url: "https://next-enterprise.vercel.app/",
+    // images: [
+    //   {
+    //     width: 1200,
+    //     height: 630,
+    //     url: "https://raw.githubusercontent.com/Blazity/next-enterprise/main/.github/assets/project-logo.png",
+    //   },
+    // ],
   },
 }
 
