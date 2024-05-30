@@ -44,16 +44,37 @@ export default function Form() {
     });
 
     const processForm: SubmitHandler<Inputs> = data => {
-        console.log(data);
+        console.log("Form submitted:", data);
         reset();
     };
 
     type FieldName = keyof Inputs;
 
-    const nextGoogle = async (recived: string) => {
-        setImap(recived);
-        next("");
-    }
+    const handleGoogleClick = async () => {
+        console.log("Google button clicked");
+        await next('Google');
+    };
+
+    const handleMicrosoftClick = async () => {
+        console.log("Microsoft button clicked");
+        await next('Microsoft');
+    };
+
+    const handleImapEnabledClick = async () => {
+        console.log("IMAP enabled button clicked");
+        setImap("True");
+        await next("");
+    };
+
+    const handleSmtpEnabledClick = async () => {
+        console.log("SMTP enabled button clicked");
+        setImap("False");
+        // await next("");
+    };
+
+    const handleLoginClick = () => {
+        console.log("Login button clicked");
+    };
 
     const next = async (provider: string) => {
         if (provider) {
@@ -63,7 +84,7 @@ export default function Form() {
         const fields = step?.fields || [];
         const output = await trigger(fields as FieldName[], { shouldFocus: true });
 
-        if (!output) return;
+        if (!output) { return; }
 
         if (currentStep < steps.length - 1) {
             if (currentStep === steps.length - 2) {
@@ -72,10 +93,10 @@ export default function Form() {
             setPreviousStep(currentStep);
             setCurrentStep(step => step + 1);
         }
-        console.log("selected provider: ", selectedProvider)
     };
 
     const prev = () => {
+        console.log("Previous button clicked");
         if (currentStep > 0) {
             setPreviousStep(currentStep);
             setCurrentStep(step => step - 1);
@@ -120,13 +141,13 @@ export default function Form() {
             </nav>
             {/* Navigation */}
             {currentStep !== 0 && (
-                <div className='mt-20 pt-5'>
+                <div className='mt-20 flex bg-green-900 max-w-fit'>
                     <div className='flex justify-between'>
                         <button
                             type='button'
                             onClick={prev}
                             disabled={currentStep === 0}
-                            className='rounded bg-primary px-2 py-1 text-sm font-semibold text-primary-foreground shadow-sm ring-1 ring-inset  hover:bg-muted-foreground disabled:cursor-not-allowed disabled:opacity-50'
+                            className='rounded bg-primary px-2 py-1 text-sm font-semibold text-primary-foreground shadow-sm ring-1 ring-inset hover:bg-muted-foreground disabled:cursor-not-allowed disabled:opacity-50'
                         >
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
@@ -147,7 +168,6 @@ export default function Form() {
                 </div>
             )}
 
-
             {/* Form */}
             <form className='mt-12 py-12' onSubmit={handleSubmit(processForm)}>
                 {currentStep === 0 && (
@@ -165,9 +185,9 @@ export default function Form() {
                             <div className="flex flex-col space-y-4 h-auto py-5 px-50 w-full justify-center items-center">
                                 <div className="flex items-center p-4 border rounded-lg shadow-md 
                                 justify-center w-1/3 transition ease-in-out delay-150 hover:-translate-y-1 
-                                hover:scale-110 duration-300" onClick={() => next('Google')}>
+                                hover:scale-110 duration-300" onClick={handleGoogleClick}>
                                     <Image
-                                        src="/assets/mailbox/googleLogo.png"
+                                        src="/assets/mailbox/search.png"
                                         alt="Google logo"
                                         className="mr-4"
                                         width={40}
@@ -180,7 +200,7 @@ export default function Form() {
                                 </div>
                                 <div className="flex items-center p-4 border rounded-lg shadow-md
                                  justify-center w-1/3 transition ease-in-out delay-150 hover:-translate-y-1
-                                  hover:scale-110 duration-300" onClick={() => next('Microsoft')}>
+                                  hover:scale-110 duration-300" onClick={handleMicrosoftClick}>
                                     <Image
                                         src="/assets/mailbox/microsoftLogo.png"
                                         alt="Microsoft logo"
@@ -204,7 +224,7 @@ export default function Form() {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                     >
-                        <div className=" flex  justify-center items-center p-4  ">
+                        <div className=" flex  justify-center items-center -mt-20  ">
                             {selectedProvider === "Google" && (
                                 <div className=" shadow-md rounded-lg p-6 max-w-md w-full bg-muted">
                                     <h1 className="text-2xl font-bold mb-4">Connect Your Google Account</h1>
@@ -239,12 +259,13 @@ export default function Form() {
                                         </li>
                                     </ol>
                                     <div className="flex justify-center">
-                                        <button className="bg-primary font-bold text-primary-foreground py-2 px-4 rounded hover:-translate-y-1 
+                                        <button
+                                            type="button"
+                                            className="bg-primary font-bold text-primary-foreground py-2 px-4 rounded hover:-translate-y-1 
                                             hover:scale-110 duration-300"
-                                            onClick={() => nextGoogle("True")}>
+                                            onClick={handleImapEnabledClick}>
                                             Yes, IMAP has been enabled
                                         </button>
-
                                     </div>
                                 </div>
                             )}
@@ -321,28 +342,28 @@ export default function Form() {
                                         </div>
                                     </div>
                                     <div className="flex justify-center pt-10 ">
-                                        <Button className="bg-primary font-bold text-primary-foreground py-2 px-4 rounded hover:-translate-y-1 
-                                            hover:scale-110 duration-300" onClick={() => next("")}>
+                                        <Button
+                                            type="button"
+                                            className="bg-primary font-bold text-primary-foreground py-2 px-4 rounded hover:-translate-y-1 
+                                            hover:scale-110 duration-300"
+                                            onClick={handleSmtpEnabledClick}>
                                             Yes, SMTP has been enabled
                                         </Button>
-
                                     </div>
                                 </div>
                             )}
-
                         </div>
-
                     </motion.div>
                 )}
-                {currentStep === 2 && (
 
+                {currentStep === 2 && (
                     <motion.div
                         initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}>
                         <>
                             {imap === "True" && (
-                                <div className="flex justify-center">
+                                <div className="flex justify-center -mt-20">
                                     <div className="shadow-md rounded-lg p-6  w-1/2 bg-muted">
                                         <h1 className="text-2xl font-bold mb-4">Connect Your Google Account</h1>
                                         <p className="mb-6">Allow Instantly to access your Google workspace. You only need to do this once per domain.</p>
@@ -360,7 +381,7 @@ export default function Form() {
                                             </li>
                                             <li>
                                                 Use the following Client-ID to search for Instantly:
-                                                <div className="bg-gray-100 p-2 rounded-md mt-2">
+                                                <div className="bg-foreground text-background p-2 rounded-md mt-2 truncate">
                                                     536726988839-pt93ora4685dtb1emb0pp2vjgjoI5mls.apps.googleusercontent.com
                                                 </div>
                                             </li>
@@ -369,22 +390,22 @@ export default function Form() {
                                             </li>
                                         </ol>
                                         <div className="flex justify-center">
-                                            <button className="bg-primary font-bold text-primary-foreground py-2 px-4 rounded hover:-translate-y-1 
-                                            hover:scale-110 duration-300">
+                                            <button
+                                                type="button"
+                                                className="bg-primary font-bold text-primary-foreground py-2 px-4 rounded hover:-translate-y-1 
+                                                hover:scale-110 duration-300"
+                                                onClick={handleLoginClick}>
                                                 Login
                                             </button>
                                         </div>
                                     </div>
                                 </div>
-                            )
-                            }
+                            )}
+
                         </>
                     </motion.div>
-
                 )}
             </form>
-
-
         </div>
-    )
+    );
 }
