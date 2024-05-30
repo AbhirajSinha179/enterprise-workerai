@@ -24,10 +24,10 @@ async function getEmails() {
 
   const res = {
     json: async () => [
-      { id: 1, subject: "Hello", body: "Hello, world!", date: "2024-01-01", scheduled: false },
-      { id: 2, subject: "Hi", body: "Hi, world!", date: "2024-01-02", scheduled: true },
-      { id: 3, subject: "Hey", body: "Hey, world!", date: "2024-01-03", scheduled: false },
-      { id: 4, subject: "Hola", body: "Hola, world!", date: "2024-01-04", scheduled: true}
+      { id: 1, subject: "Hello", body: "Hello, world!", date: "2024-01-01", scheduled: false, recipient: "anshuman@workerai.co" },
+      { id: 2, subject: "Hi", body: "Hi, world!", date: "2024-01-02", scheduled: true, recipient: "rohit@workerai.co" },
+      { id: 3, subject: "Hey", body: "Hey, world!", date: "2024-01-03", scheduled: false, recipient: "ayan@workerai.co" },
+      { id: 4, subject: "Hola", body: "Hola, world!", date: "2024-01-04", scheduled: true, recipient: "raj@workerai.co"}
     ],
   }
 

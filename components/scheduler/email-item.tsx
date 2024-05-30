@@ -18,11 +18,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
-import {  useState } from "react"
+import { useState, useTransition } from "react"
 import { toast } from "sonner"
 
 export default function EmailItem({ item }: any) {
-
+  const [subject, setSubject] = useState(item.subject)
+  const [body, setBody] = useState(item.body)
+  const [startTransition, isPending] = useTransition()
 
   const handleApprove = async () => {
     // const res = await fetch("https://...", { method: "POST" });
@@ -31,15 +33,17 @@ export default function EmailItem({ item }: any) {
     // }
   }
 
-  const handleEdit = () => {
-    toast("Email successfully edited", 
-      {
-        description: "Sunday, December 03, 2023 at 9:00 AM",
+  const handleEdit = async () => {
+    setTimeout(() => {
+      console.log(subject, body)
+      toast("Email successfully edited", {
+        description: new Date().toLocaleTimeString(),
         action: {
           label: "Undo",
           onClick: () => console.log("Undo"),
         },
-      });
+      })
+    }, 500)
     // const res = await fetch("https://...", { method: "PUT" });
     // if (!res.ok) {
     //   throw new Error("Failed to edit email");
@@ -65,9 +69,9 @@ export default function EmailItem({ item }: any) {
               })}
             </div>
           </div>
-          <div className="text-md font-medium">{item.subject}</div>
+          <div className="text-md font-medium">{subject}</div>
         </div>
-        <div className="text-xs text-muted-foreground">{item.body}</div>
+        <div className="text-xs text-muted-foreground">{body}</div>
         <div className="mt-2 flex w-full items-center justify-between">
           <Button onClick={() => handleDelete} variant="outline" size="icon" className="size-8">
             <Trash size={6} className="size-4" />
@@ -89,14 +93,26 @@ export default function EmailItem({ item }: any) {
                     <Label htmlFor="subject" className="text-right">
                       Subject
                     </Label>
-                    <Input id="subject" defaultValue={item.subject ?? ""} className="col-span-3" />
+                    <Input
+                      id="subject"
+                      defaultValue={item.subject ?? ""}
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
+                      className="col-span-3"
+                    />
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="body" className="text-right">
                       Email Body
                     </Label>
                     {/* <Input id="body" defaultValue={item.body ?? ""} className="col-span-3" /> */}
-                    <Textarea id="body" defaultValue={item.body ?? ""} className="col-span-3 max-h-[300px]" />
+                    <Textarea
+                      id="body"
+                      defaultValue={item.body ?? ""}
+                      value={body}
+                      onChange={(e) => setBody(e.target.value)}
+                      className="col-span-3 max-h-[300px]"
+                    />
                   </div>
                 </div>
                 <DialogFooter>
