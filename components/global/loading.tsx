@@ -2,7 +2,7 @@ import React from "react"
 
 const LoadingSign = () => {
   return (
-    <div role="status">
+    <div role="status" className="w-full h-screen flex items-center justify-center">
       <svg
         aria-hidden="true"
         className="mr-2 inline size-10 animate-spin fill-primary-foreground text-gray-200 dark:text-primary-foreground/30 "

@@ -5,15 +5,20 @@ import { toast } from "sonner";
 import { Button } from "../ui/button"
 
 export function EmailList({ emails }: any) {
+
   const handleApproveAll = () => {
+    
     console.log("Approve All")
-    toast("All emails approved")
+    toast("Pending emails have been scheduled", {
+      description: new Date().toLocaleTimeString(),
+    })
   }
+
   return (
     <main className="flex w-full flex-col items-center">
       <div className="mt-6 flex w-full items-center justify-between">
         <h1 className="text-2xl font-bold">Pending Emails</h1>
-        <Button>Approve All</Button>
+        <Button onClick={handleApproveAll}>Approve All</Button>
       </div>
       <ul className="my-4 w-full space-y-4">
         {emails.map((item: any) => (

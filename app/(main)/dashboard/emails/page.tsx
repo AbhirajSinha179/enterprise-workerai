@@ -35,8 +35,7 @@ async function getEmails() {
 }
 
 export default async function Emails() {
-  const emails = await getEmails()
-  
+  const emails = await getEmails();
 
   return (
     <ContentLayout title="Scheduler">
@@ -58,7 +57,8 @@ export default async function Emails() {
           <TabsTrigger value="pending">Pending</TabsTrigger>
           <TabsTrigger value="scheduled">Scheduled</TabsTrigger>
         </TabsList>
-        {!emails && <div>No emails yet bitch</div>}
+        {/* need to show something when no emails present */}
+        {!emails && <div>No emails yet bitch</div>} 
         <TabsContent value="pending" className="space-y-4">
           <EmailList emails={emails.filter(email => email.scheduled===false)} />
         </TabsContent>
