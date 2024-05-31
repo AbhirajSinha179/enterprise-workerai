@@ -2,7 +2,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Trash2 } from "lucide-react"
 // import { unread } from "@/app/(site)/(mailbox)/data/data"
-import { Mails } from "@/app/(site)/(mailbox)/data/schema"
+import { Mails } from "@/app/(main)/dashboard/(mailbox)/data/schema"
 import { DataTableColumnHeader } from "@/components/leads/data-table-column-header"
 // import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"

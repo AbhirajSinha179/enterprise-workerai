@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { z } from "zod"
 import { promises as fs } from "fs"
 import path from "path"
@@ -9,10 +10,9 @@ import { mailsSchema } from "../data/schema"
 
 async function getMails() {
   const data = await fs.readFile(
-    path.join(process.cwd(), "/app/(site)/(mailbox)/data/mails.json")
+    path.join(process.cwd(), "app/(main)/dashboard/(mailbox)/data/mails.json")
   )
   const mails = JSON.parse(data.toString())
-
   return z.array(mailsSchema).parse(mails)
 }
 
@@ -21,14 +21,15 @@ export default async function MailboxPage() {
 
   return (
     <ContentLayout title="Mailbox">
-      <div className="flex justify-center m-5 ">
-        <Button size="lg"  >
-          <div className="text-xl font-semibold">
-            Connect a Mail Box
-          </div>
+      <div className="flex  mt-10  justify-end">
+        <Link href="/dashboard/mailbox/form">
+          <Button size="sm">
+            <div className=" font-semibold text-sm">
+              Connect a Mail Box
+            </div>
+          </Button>
 
-        </Button>
-
+        </Link>
       </div>
 
       <DataTable data={tasks} columns={columns} isActionButton={false} />

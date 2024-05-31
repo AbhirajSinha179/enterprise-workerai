@@ -31,48 +31,56 @@ export function DataTableToolbar<TData>({
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center">
-        <Input
-          placeholder="Search by name"
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="h-10 w-96 focus-visible:ring-offset-0"
-        />
-        {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={() => table.resetColumnFilters()}
-            className="h-8 mx-2"
-          >
-            Reset
-            <Cross2Icon className="ml-2 size-4" />
-          </Button>
+        {actionButtons && (
+          <>
+            <Input
+              placeholder="Search by name"
+              value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+              onChange={(event) =>
+                table.getColumn("name")?.setFilterValue(event.target.value)
+              }
+              className="h-10 w-96 focus-visible:ring-offset-0"
+            />
+            {isFiltered && (
+              <Button
+                variant="ghost"
+                onClick={() => table.resetColumnFilters()}
+                className="h-8 mx-2"
+              >
+                Reset
+                <Cross2Icon className="ml-2 size-4" />
+              </Button>
+            )}
+          </>
         )}
+
       </div>
       <div
         className={`flex mx-2 ${hasSelectedRows
-          ? 'opacity-100 transition-opacity duration-500'
+          ? 'opacity-100 transition-opacity duration-300'
           : 'opacity-0'
           }`}
       >
         {actionButtons && (
-          <Button
-            onClick={() => handleExport(selectedRows)}
-            variant="secondary"
-            size="lg"
-            className="mx-2"
-          >
-            Export
-          </Button>
-        )}
-        <Button
-          onClick={() => handleMultipleDelete(selectedRows)}
-          variant="secondary"
-          size="lg"
-        >
-          Delete
-        </Button>
+          <>
+            <Button
+              onClick={() => handleExport(selectedRows)}
+              variant="secondary"
+              size="lg"
+              className="mx-2"
+            >
+              Export
+            </Button>
+            <Button
+              onClick={() => handleMultipleDelete(selectedRows)}
+              variant="secondary"
+              size="lg"
+            >
+              Delete
+            </Button>
+          </>
+        )
+        }
       </div>
       {actionButtons && <DataTableViewOptions table={table} />}
     </div>
