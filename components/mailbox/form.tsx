@@ -103,10 +103,10 @@ export default function Form() {
     };
 
     return (
-        <div className=''>
+        < >
             {/* steps */}
-            <nav aria-label='Progress'>
-                <ol className='space-y-4 md:flex md:space-x-8 md:space-y-0'>
+            <nav aria-label='Progress' >
+                <ol className='space-y-4 md:flex md:space-x-8 md:space-y-0 '>
                     {steps.map((step, index) => (
                         <li key={step.name} className='md:flex-1'>
                             {currentStep > index ? (
@@ -140,7 +140,7 @@ export default function Form() {
             </nav>
             {/* Navigation */}
             {currentStep !== 0 && (
-                <div className='mt-20 flex bg-green-900 max-w-fit'>
+                <div className='mt-10 flex '>
                     <div className='flex justify-between'>
                         <button
                             type='button'
@@ -168,14 +168,14 @@ export default function Form() {
             )}
 
             {/* Form */}
-            <form className='mt-12 py-12' onSubmit={handleSubmit(processForm)}>
+            <form onSubmit={handleSubmit(processForm)} >
                 {currentStep === 0 && (
                     <motion.div
                         initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                     >
-                        <div className="flex justify-center">
+                        <div className="flex justify-center mt-8">
                             <h1 className='text-4xl font-semibold leading-7 text-primary'>
                                 Connect a new email account
                             </h1>
@@ -184,7 +184,7 @@ export default function Form() {
                             <div className="flex flex-col space-y-4 h-auto py-5 px-50 w-full justify-center items-center">
                                 <div className="flex items-center p-4 border rounded-lg shadow-md 
                                 justify-center w-1/3 transition ease-in-out delay-150 hover:-translate-y-1 
-                                hover:scale-110 duration-300" onClick={handleGoogleClick}>
+                                hover:scale-110 duration-300 cursor-pointer " onClick={handleGoogleClick}>
                                     <Image
                                         src="/assets/mailbox/search.png"
                                         alt="Google logo"
@@ -199,7 +199,7 @@ export default function Form() {
                                 </div>
                                 <div className="flex items-center p-4 border rounded-lg shadow-md
                                  justify-center w-1/3 transition ease-in-out delay-150 hover:-translate-y-1
-                                  hover:scale-110 duration-300" onClick={handleMicrosoftClick}>
+                                  hover:scale-110 duration-300 cursor-pointer " onClick={handleMicrosoftClick}>
                                     <Image
                                         src="/assets/mailbox/microsoftLogo.png"
                                         alt="Microsoft logo"
@@ -223,7 +223,7 @@ export default function Form() {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                     >
-                        <div className=" flex  justify-center items-center -mt-20  ">
+                        <div className=" flex  justify-center items-center   ">
                             {selectedProvider === "Google" && (
                                 <div className=" shadow-md rounded-lg p-6 max-w-md w-full bg-muted">
                                     <h1 className="text-2xl font-bold mb-4">Connect Your Google Account</h1>
@@ -362,7 +362,7 @@ export default function Form() {
                         transition={{ duration: 0.3, ease: 'easeInOut' }}>
                         <>
                             {imap === "True" && (
-                                <div className="flex justify-center -mt-20">
+                                <div className="flex justify-center ">
                                     <div className="shadow-md rounded-lg p-6  w-1/2 bg-muted">
                                         <h1 className="text-2xl font-bold mb-4">Connect Your Google Account</h1>
                                         <p className="mb-6">Allow Instantly to access your Google workspace. You only need to do this once per domain.</p>
@@ -380,9 +380,12 @@ export default function Form() {
                                             </li>
                                             <li>
                                                 Use the following Client-ID to search for Instantly:
-                                                <div className="bg-foreground text-background p-2 rounded-md mt-2 truncate">
-                                                    536726988839-pt93ora4685dtb1emb0pp2vjgjoI5mls.apps.googleusercontent.com
+                                                <div className="bg-foreground text-wrap flex overflow-auto">
+                                                    <code className="text-background p-2 rounded-md mt-2 whitespace-normal">
+                                                        536726988839-pt93ora4685dtb1emb0pp2vjgjoI5mls.apps.googleusercontent.com
+                                                    </code>
                                                 </div>
+
                                             </li>
                                             <li>
                                                 Select and approve Instantly to access your Google Workspace.
@@ -405,6 +408,6 @@ export default function Form() {
                     </motion.div>
                 )}
             </form>
-        </div>
+        </>
     );
 }
