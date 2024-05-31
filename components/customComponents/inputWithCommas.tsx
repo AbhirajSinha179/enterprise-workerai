@@ -38,8 +38,8 @@ export default function InputWithCommas() {
     }
 
     return (
-        <div className="min-w-8">
-            <div className="flex w-full max-w-sm items-center space-x-2 p-4">
+        <div className="w-full ">
+            <div className="flex w-full  items-center space-x-2 ">
                 <Input
                     type="text"
                     placeholder="Input"
@@ -47,9 +47,12 @@ export default function InputWithCommas() {
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                 />
-                <Button type="button" onClick={addOptionsFromInput}>Submit</Button>
+
             </div>
-            <div className="no-scrollbar flex max-h-16 flex-wrap gap-2 overflow-y-auto rounded-md bg-primary-foreground p-2">
+            <div className="my-4 flex justify-end">
+                <Button type="button" onClick={addOptionsFromInput} size={'sm'}>Submit</Button>
+            </div>
+            <div className="no-scrollbar flex max-h-16 flex-wrap gap-2 overflow-y-auto rounded-md bg-primary-foreground">
                 {selectedOptions.map((option) => (
                     <button key={option} onClick={() => handleRemove(option)}>
                         <Badge variant="secondary">
