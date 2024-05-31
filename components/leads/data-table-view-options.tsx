@@ -27,7 +27,9 @@ export function DataTableViewOptions<TData>({
     <DropdownMenu>
       <Button variant="ghost"
         size="lg"
-        onClick={() => handleCSV()}>
+        onClick={() => handleCSV()}
+        className="mx-2 hidden h-8 lg:flex"
+      >
         Export .CSV
       </Button>
       <DropdownMenuTrigger asChild>
