@@ -1,7 +1,7 @@
 import localFont from "next/font/local"
 import "styles/tailwind.css"
-import Footer from "@/components/global/footer"
 // import { Navbar } from "@/components/navbar/navbar"
+import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "@/providers/theme-provider"
 
 const myFont = localFont({
@@ -38,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="m-0 scroll-smooth p-0 antialiased ">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

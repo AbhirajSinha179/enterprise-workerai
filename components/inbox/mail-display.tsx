@@ -27,7 +27,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center p-2">
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="ghost" size="icon" disabled={!mail}>
@@ -95,7 +95,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
             </Popover>
             <TooltipContent>Snooze</TooltipContent>
           </Tooltip>
-        </div>
+        </div> */}
         <div className="ml-auto flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
@@ -106,7 +106,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
             </TooltipTrigger>
             <TooltipContent>Reply</TooltipContent>
           </Tooltip>
-          <Tooltip>
+          {/* <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="ghost" size="icon" disabled={!mail}>
                 <ReplyAll className="size-4" />
@@ -123,7 +123,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
               </Button>
             </TooltipTrigger>
             <TooltipContent>Forward</TooltipContent>
-          </Tooltip>
+          </Tooltip> */}
         </div>
         <Separator orientation="vertical" className="mx-2 h-6" />
         <DropdownMenu>
@@ -136,8 +136,8 @@ export function MailDisplay({ mail }: MailDisplayProps) {
           <DropdownMenuContent align="end">
             <DropdownMenuItem>Mark as unread</DropdownMenuItem>
             <DropdownMenuItem>Star thread</DropdownMenuItem>
-            <DropdownMenuItem>Add label</DropdownMenuItem>
-            <DropdownMenuItem>Mute thread</DropdownMenuItem>
+            {/* <DropdownMenuItem>Add label</DropdownMenuItem>
+            <DropdownMenuItem>Mute thread</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -175,9 +175,6 @@ export function MailDisplay({ mail }: MailDisplayProps) {
               <div className="grid gap-4">
                 <Textarea className="p-4" placeholder={`Reply ${mail.name}...`} />
                 <div className="flex items-center">
-                  <Label htmlFor="mute" className="flex items-center gap-2 text-xs font-normal">
-                    <Switch id="mute" aria-label="Mute thread" /> Mute this thread
-                  </Label>
                   <Button onClick={(e) => e.preventDefault()} size="sm" className="ml-auto">
                     Send
                   </Button>

@@ -50,8 +50,8 @@ export default async function Leads() {
               Here&apos;s all the leads available.
             </p>
           </div>
-          <div className="flex items-center space-x-2">
-          </div>
+          {/* <div className="flex items-center space-x-2">
+          </div> */}
         </div>
         <DataTable data={tasks} columns={columns} isActionButton={true} />
       </div>

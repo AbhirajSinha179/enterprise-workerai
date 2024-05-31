@@ -2,32 +2,32 @@ import { MoveRight } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { SiteNav } from "@/components/navbar/site-nav"
 import { BentoGridLanding } from "@/components/site/bento"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { LP_GRID_ITEMS } from "lp-items"
+
 export const metadata: Metadata = {
   title: "Worker AI",
   twitter: {
     card: "summary_large_image",
   },
   openGraph: {
-    url: "https://next-enterprise.vercel.app/",
-    images: [
-      {
-        width: 1200,
-        height: 630,
-        url: "https://raw.githubusercontent.com/Blazity/next-enterprise/main/.github/assets/project-logo.png",
-      },
-    ],
+    // url: "https://next-enterprise.vercel.app/",
+    // images: [
+    //   {
+    //     width: 1200,
+    //     height: 630,
+    //     url: "https://raw.githubusercontent.com/Blazity/next-enterprise/main/.github/assets/project-logo.png",
+    //   },
+    // ],
   },
 }
 
 export default function Web() {
   return (
     <>
-      <SiteNav />
+      {/* <SiteNav /> */}
       <section className="relative">
         {/* absolute blue bg glow for bg effect */}
         <div className="absolute left-0 top-0 z-[-1] size-full">
@@ -44,7 +44,7 @@ export default function Web() {
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center md:my-20 lg:py-16">
           <div className="mx-auto place-self-center">
             <h1 className="mb-4 max-w-7xl text-4xl tracking-tight dark:text-white md:text-5xl xl:text-6xl">
-              Adapt <MoveRight className="hidden sm:inline-block sm:size-12 " /> Automate
+              Adapt <MoveRight className="hidden sm:inline-block sm:size-12 " /> Automate 
               <MoveRight className="hidden sm:inline-block sm:size-12" /> Accelerate
             </h1>
 
@@ -57,21 +57,21 @@ export default function Web() {
               <span className="font-semibold text-foreground">automation</span>, from prospecting{" "}
               <span className="font-semibold text-foreground">leads</span> to deal closure
             </p>
-            <div className="mx-auto flex max-w-sm flex-wrap items-center justify-center gap-2">
-              <Input placeholder="Your email goes here" type="email" className="flex-1 w-24" />
+            <form className="mx-auto flex max-w-xl flex-wrap items-center justify-center gap-2">
+              <Input placeholder="Your email goes here" type="email" className="inline-flex flex-1 min-w-fit" />
               <Button
                 variant="secondary"
+                type="submit"
                 asChild
                 className="inline-flex flex-1 h-12 min-w-fit animate-shimmer items-center justify-center
-                  rounded-md border bg-[length:200%_100%] px-6 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2
-                  
+                  rounded-md border bg-[length:200%_100%] px-6 font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-offset-1
                 dark:border-slate-800 dark:bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] dark:text-slate-300 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-50"
               >
-                <Link href="https://vercel.com/new/git/external?repository-url=https://github.com/Blazity/next-enterprise">
-                  Learn more
+                <Link href={"/"}>
+                Learn More
                 </Link>
               </Button>
-            </div>
+            </form>
           </div>
         </div>
       </section>
