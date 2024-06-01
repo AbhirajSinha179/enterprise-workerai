@@ -1,16 +1,17 @@
 "use client";
 
-import EmailItem from "./email-item"
+import { format } from "date-fns";
 import { toast } from "sonner";
+import EmailItem from "./email-item"
 import { Button } from "../ui/button"
 
 export function EmailList({ emails }: any) {
 
   const handleApproveAll = () => {
-    
+
     console.log("Approve All")
     toast("Pending emails have been scheduled", {
-      description: new Date().toLocaleTimeString(),
+      description: format(new Date(), "PPpp"),
     })
   }
 

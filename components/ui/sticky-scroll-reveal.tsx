@@ -19,17 +19,18 @@ export const StickyScroll = ({
   const ref = useRef<any>(null)
   const { scrollYProgress } = useScroll({
     // uncomment line 22 and comment line 23 if you DONT want the overflow container and want to have it change on the entire page scroll
-    // target: ref
-    container: ref,
+    target: ref,
+    // container: ref,
     offset: ["start start", "end start"],
   })
   const cardLength = content.length
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const cardsBreakpoints = content.map((_, index) => index / cardLength)
+    const cardsBreakpoints: number[] = content.map((_, index) => index / cardLength);
     const closestBreakpointIndex = cardsBreakpoints.reduce((acc, breakpoint, index) => {
       const distance = Math.abs(latest - breakpoint)
-      if (distance < Math.abs(latest - cardsBreakpoints[acc])) {
+      const previousDistance = cardsBreakpoints[acc] ? Math.abs(latest - (cardsBreakpoints[acc] as number)) : 10000;
+      if (distance < previousDistance) {
         return index
       }
       return acc
@@ -88,7 +89,7 @@ export const StickyScroll = ({
         }}
         className={cn("sticky top-10 hidden h-96 w-96 overflow-hidden rounded-md bg-white lg:block", contentClassName)}
       >
-        {content[activeCard].content ?? null}
+        {content[activeCard]?.content}
       </motion.div>
     </motion.div>
   )

@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
-import { formatDistanceToNow } from "date-fns";
+import { format } from "date-fns";
 
 export function ScheduledEmailList({ emails }: any) {
+
   return (
     <main className="flex w-full flex-col items-center">
       <div className="mt-6 flex w-full items-center justify-between">
@@ -15,11 +16,9 @@ export function ScheduledEmailList({ emails }: any) {
           >
             <div className="flex w-full flex-col gap-1">
               <div className="flex items-center">
-                <div className="text-2xl font-semibold">{item.id}</div>
+                <div className="text-2xl font-semibold">{item.recipient}</div>
                 <div className={cn("ml-auto")}>
-                  {formatDistanceToNow(new Date(item.date), {
-                    addSuffix: true,
-                  })}
+                {format(new Date(item.date), "PP")}
                 </div>
               </div>
               <div className="text-md font-medium">{item.subject}</div>

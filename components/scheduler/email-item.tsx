@@ -1,12 +1,12 @@
 "use client"
 
-import { formatDistanceToNow } from "date-fns"
+import { format } from "date-fns"
 import { Trash } from "lucide-react"
 // import Link from "next/link"
-import { cn } from "@/lib/utils"
+import { useRouter } from "next/navigation"
+import { useState, useTransition } from "react"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
   Dialog,
   DialogClose,
@@ -17,20 +17,33 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { useState, useTransition } from "react"
-import { toast } from "sonner"
+import { cn } from "@/lib/utils"
 
 export default function EmailItem({ item }: any) {
-  const [subject, setSubject] = useState(item.subject)
-  const [body, setBody] = useState(item.body)
-  const [startTransition, isPending] = useTransition()
+  const router = useRouter();
+  const [subject, setSubject] = useState(item?.subject)
+  const [body, setBody] = useState(item?.body)
+  const [isPending, startTransition] = useTransition()
+  const [isFetching, setIsFetching] = useState(false);
+
+  const isMutating = isPending || isFetching;
 
   const handleApprove = async () => {
     // const res = await fetch("https://...", { method: "POST" });
     // if (!res.ok) {
     //   throw new Error("Failed to approve email");
     // }
+    setIsFetching(true);
+    setTimeout(() => {
+      setIsFetching(false);
+      startTransition(() => {
+        router.refresh();
+      })
+
+    }, 1000)
   }
 
   const handleEdit = async () => {
@@ -62,12 +75,8 @@ export default function EmailItem({ item }: any) {
       <div className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all")}>
         <div className="flex w-full flex-col gap-1">
           <div className="flex items-center">
-            <div className="text-2xl font-semibold">{item.id}</div>
-            <div className={cn("ml-auto")}>
-              {formatDistanceToNow(new Date(item.date), {
-                addSuffix: true,
-              })}
-            </div>
+            <div className="text-2xl font-semibold">{item.recipient}</div>
+            <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
           </div>
           <div className="text-md font-medium">{subject}</div>
         </div>

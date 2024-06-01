@@ -149,7 +149,7 @@ export default function Form() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className=" flex  items-center justify-center   ">
+            <div className="flex items-center justify-center">
               {selectedProvider === "Google" && <SecondFormGoogle handleImapEnabledClick={handleImapEnabledClick} />}
               {selectedProvider === "Microsoft" && (
                 <SecondFormMicrosoft handleSmtpEnabledClick={handleSmtpEnabledClick} />

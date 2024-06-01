@@ -6,6 +6,7 @@ import { SidebarToggle } from "@/components/sidebar/sidebar-toggle"
 import { cn } from "@/lib/utils"
 // import { useLockedBody } from "@/hooks/useBodyLock";
 import { useSidebarContext } from "../layout/layout-context"
+import { WorkerAILogo } from "../global/logo"
 
 export function Sidebar() {
   const { collapsed, setCollapsed } = useSidebarContext()
@@ -26,14 +27,14 @@ export function Sidebar() {
             collapsed ? "translate-x-1" : "translate-x-0"
           )}
         >
-          <PanelsTopLeft className="mr-1 size-6" />
+          <WorkerAILogo className="mr-1 size-8" />
           <h1
             className={cn(
-              "whitespace-nowrap font-sans text-lg font-bold transition-[transform,opacity,display] duration-300 ease-in-out",
+              "whitespace-nowrap text-xl font-bold transition-[transform,opacity,display] duration-300 ease-in-out",
               collapsed ? "hidden -translate-x-96 opacity-0" : "translate-x-0 opacity-100"
             )}
           >
-            Worker AI
+            WorkerAI
           </h1>
         </Link>
         <Menu isOpen={!collapsed} />
