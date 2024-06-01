@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { mails } from "@/components/inbox/data"
+import { Inbox } from "@/components/inbox/mail"
 import { ContentLayout } from "@/components/layout/content-layout"
 import {
   Breadcrumb,
@@ -8,8 +10,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Inbox } from "@/components/inbox/mail"
-import { mails } from "@/components/inbox/data"
 
 export default function InboxPage() {
   return (
