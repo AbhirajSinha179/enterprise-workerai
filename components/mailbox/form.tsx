@@ -223,7 +223,7 @@ export default function Form() {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                     >
-                        <div className=" flex  justify-center items-center   ">
+                        <div className=" flex  justify-center items-center my-2  ">
                             {selectedProvider === "Google" && (
                                 <div className=" shadow-md rounded-lg p-6 max-w-md w-full bg-muted">
                                     <h1 className="text-2xl font-bold mb-4">Connect Your Google Account</h1>
@@ -380,12 +380,11 @@ export default function Form() {
                                             </li>
                                             <li>
                                                 Use the following Client-ID to search for Instantly:
-                                                <div className="bg-foreground text-wrap flex overflow-auto">
+                                                <div className="bg-foreground overflow-y-auto overflow-x-hidden">
                                                     <code className="text-background p-2 rounded-md mt-2 whitespace-normal">
                                                         536726988839-pt93ora4685dtb1emb0pp2vjgjoI5mls.apps.googleusercontent.com
                                                     </code>
                                                 </div>
-
                                             </li>
                                             <li>
                                                 Select and approve Instantly to access your Google Workspace.

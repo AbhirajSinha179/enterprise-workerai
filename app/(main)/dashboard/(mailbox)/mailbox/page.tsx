@@ -21,14 +21,17 @@ export default async function MailboxPage() {
 
   return (
     <ContentLayout title="Mailbox">
-      <div className="flex  mt-10  justify-end">
-        <Link href="/dashboard/mailbox/form">
-          <Button size="sm">
-            <div className=" font-semibold text-sm">
-              Connect a Mail Box
-            </div>
-          </Button>
 
+      <div className="">
+        <Link href="/dashboard/mailbox/form">
+          <div className="flex  justify-between">
+            <h1 className="text-2xl font-bold ">Mailbox</h1>
+            <Button size="sm">
+              <div className=" font-semibold text-sm">
+                Connect a Mail Box
+              </div>
+            </Button>
+          </div>
         </Link>
       </div>
 
