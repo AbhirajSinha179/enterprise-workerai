@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { motion } from "framer-motion"
+import { ChevronLeft } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -9,7 +10,6 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { FormDataSchema } from "@/app/(main)/dashboard/(mailbox)/data/formSchema"
 import { Button } from "../ui/button"
-import { ChevronLeft } from "lucide-react"
 
 type Inputs = z.infer<typeof FormDataSchema>
 
