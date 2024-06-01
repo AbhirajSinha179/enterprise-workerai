@@ -6,6 +6,7 @@ import { BentoGridLanding } from "@/components/site/bento"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { LP_GRID_ITEMS } from "lp-items"
+import { StickyScroll } from "@/components/ui/sticky-scroll-reveal"
 
 export const metadata: Metadata = {
   title: "Worker AI",
@@ -23,6 +24,55 @@ export const metadata: Metadata = {
     // ],
   },
 }
+
+const content = [
+  {
+    title: "Collaborative Editing",
+    description:
+      "Work together in real time with your team, clients, and stakeholders. Collaborate on documents, share ideas, and make decisions quickly. With our platform, you can streamline your workflow and increase productivity.",
+    content: (
+      <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
+        Collaborative Editing
+      </div>
+    ),
+  },
+  {
+    title: "Real time changes",
+    description:
+      "See changes as they happen. With our platform, you can track every modification in real time. No more confusion about the latest version of your project. Say goodbye to the chaos of version control and embrace the simplicity of real-time updates.",
+    content: (
+      <div className="flex h-full  w-full items-center justify-center text-white">
+        <Image
+          src="/linear.webp"
+          width={300}
+          height={300}
+          className="h-full w-full object-cover"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Version control",
+    description:
+      "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+    content: (
+      <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] text-white">
+        Version control
+      </div>
+    ),
+  },
+  {
+    title: "Running out of content",
+    description:
+      "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+    content: (
+      <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
+        Running out of content
+      </div>
+    ),
+  },
+]
 
 export default function Web() {
   return (
@@ -106,6 +156,17 @@ export default function Web() {
           </div>
         </div>
       </section>
+      {/* <section className="relative" id="sticky-scroll">
+        <StickyScroll content={content} />
+        <div className="absolute left-0 top-0 z-[-1] size-full">
+          <div className="overflow-x-hidden">
+            <div className="absolute left-0 h-32 w-[95%] -rotate-45 overflow-x-hidden bg-[#369DFD]/70 blur-[337.4px]"></div>
+          </div>
+          <div className="overflow-x-hidden">
+            <div className="absolute right-0 top-[145%] h-64 w-[17%] overflow-x-hidden bg-[#369DFD]/20 blur-[110px]"></div>
+          </div>
+        </div>
+      </section> */}
       <section>
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
           <div className="justify-center space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-3">

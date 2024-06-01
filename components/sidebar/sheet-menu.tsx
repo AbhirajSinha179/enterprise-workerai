@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Menu } from "@/components/sidebar/menu"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/sheet"
+import { WorkerAILogo } from "../global/logo"
 
 export function SheetMenu() {
   return (
@@ -17,8 +18,8 @@ export function SheetMenu() {
         <SheetHeader>
           <Button className="flex items-center justify-center pb-2 pt-1" variant="link" asChild>
             <Link href="/dashboard" className="flex items-center gap-2">
-              <PanelsTopLeft className="mr-1 size-6" />
-              <h1 className="text-lg font-bold">Brand</h1>
+              <WorkerAILogo className="mr-1 size-8" />
+              <h1 className="text-lg">WorkerAI</h1>
             </Link>
           </Button>
         </SheetHeader>
