@@ -338,13 +338,16 @@ const SecondFormMicrosoft = ({ handleSmtpEnabledClick }: { handleSmtpEnabledClic
       </div>
     </div>
     <div className="flex justify-center pt-10 ">
-      <Button
-        type="button"
-        className="rounded bg-primary px-4 py-2 font-bold text-primary-foreground transition duration-300 hover:-translate-y-1 hover:scale-110"
-        onClick={handleSmtpEnabledClick}
-      >
-        Yes, SMTP has been enabled
-      </Button>
+      <Link href={'/dashboard/mailbox/form/test'}>
+
+        <Button
+          type="button"
+          className="rounded bg-primary px-4 py-2 font-bold text-primary-foreground transition duration-300 hover:-translate-y-1 hover:scale-110"
+          onClick={handleSmtpEnabledClick}
+        >
+          Yes, SMTP has been enabled
+        </Button>
+      </Link>
     </div>
   </div>
 )
