@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { ChevronLeft } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
@@ -33,6 +34,10 @@ export default function Form() {
   const [selectedProvider, setSelectedProvider] = useState<string | null>(null)
   const [imap, setImap] = useState<string | null>(null)
   const delta = currentStep - previousStep
+  const searchParams = useSearchParams();
+  const userName = searchParams.get('userName')
+  const userPassword = searchParams.get('password')
+  console.log("user Data : ", userName, userPassword)
 
   const { handleSubmit, reset, trigger } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
@@ -378,7 +383,9 @@ const ThirdFormGoogle = ({ handleLoginClick }: { handleLoginClick: () => void })
                                                 hover:-translate-y-1 hover:scale-110"
           onClick={handleLoginClick}
         >
-          Login
+          <Link href={'/dashboard/mailbox/form/test'}>
+            Login
+          </Link>
         </button>
       </div>
     </div>
