@@ -21,8 +21,10 @@ interface MailDisplayProps {
   mail: Mail | null
 }
 
+// TODO: Need to change to threads, in order to display full email conversations
+
 export function MailDisplay({ mail }: MailDisplayProps) {
-  const today = new Date()
+  // const today = new Date()
 
   return (
     <div className="flex h-full flex-col">
