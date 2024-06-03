@@ -1,8 +1,4 @@
 import Link from "next/link"
-import { z } from "zod"
-import { promises as fs } from "fs"
-import path from "path"
-import { leadsSchema } from "@/app/(main)/dashboard/(leads)/data/schema"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { columns } from "@/components/leads/columns"
 import { DataTable } from "@/components/leads/data-table"
@@ -14,15 +10,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import leadsData from "../data/leads"
 
 
 async function getLeads() {
-  const data = await fs.readFile(
-    path.join(process.cwd(), "app/(main)/dashboard/(leads)/data/leads.json")
-  )
-  const leads = JSON.parse(data.toString())
+  return leadsData
 
-  return z.array(leadsSchema).parse(leads)
 }
 
 export default async function Leads() {
