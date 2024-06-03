@@ -9,11 +9,12 @@ import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
-import { FormDataSchema } from "@/app/(main)/dashboard/(mailbox)/data/formSchema"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 
+
+
+export const FormDataSchema = z.object({})
 type Inputs = z.infer<typeof FormDataSchema>
-
 const steps = [
   {
     id: "Step 1",
