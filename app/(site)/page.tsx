@@ -2,11 +2,12 @@ import { MoveRight } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
+import InputSpotlightBorder from "@/components/custom-components/input-spotlight-border"
 import { BentoGridLanding } from "@/components/site/bento"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { LP_GRID_ITEMS } from "lp-items"
 import { StickyScroll } from "@/components/ui/sticky-scroll-reveal"
+import { LP_GRID_ITEMS } from "lp-items"
 
 export const metadata: Metadata = {
   title: "Worker AI",
@@ -31,7 +32,7 @@ const content = [
     description:
       "Work together in real time with your team, clients, and stakeholders. Collaborate on documents, share ideas, and make decisions quickly. With our platform, you can streamline your workflow and increase productivity.",
     content: (
-      <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
+      <div className="flex size-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
         Collaborative Editing
       </div>
     ),
@@ -41,12 +42,12 @@ const content = [
     description:
       "See changes as they happen. With our platform, you can track every modification in real time. No more confusion about the latest version of your project. Say goodbye to the chaos of version control and embrace the simplicity of real-time updates.",
     content: (
-      <div className="flex h-full  w-full items-center justify-center text-white">
+      <div className="flex size-full  items-center justify-center text-white">
         <Image
           src="/linear.webp"
           width={300}
           height={300}
-          className="h-full w-full object-cover"
+          className="size-full object-cover"
           alt="linear board demo"
         />
       </div>
@@ -57,7 +58,7 @@ const content = [
     description:
       "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
     content: (
-      <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] text-white">
+      <div className="flex size-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] text-white">
         Version control
       </div>
     ),
@@ -67,7 +68,7 @@ const content = [
     description:
       "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
     content: (
-      <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
+      <div className="flex size-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
         Running out of content
       </div>
     ),
@@ -78,48 +79,53 @@ export default function Web() {
   return (
     <>
       {/* <SiteNav /> */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+      <div className="absolute top-0 z-[-2] h-screen w-screen bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
       <section className="relative">
-        {/* absolute blue bg glow for bg effect */}
-        <div className="absolute left-0 top-0 z-[-1] size-full">
-          <div className="overflow-x-hidden">
-            <div className="absolute left-0 h-32 w-[95%] -rotate-45 overflow-x-hidden bg-[#369DFD]/70 blur-[337.4px]"></div>
-          </div>
-          <div className="overflow-x-hidden">
-            <div className="absolute left-0 top-full h-32 w-[90%] -rotate-45 overflow-x-hidden bg-[#369DFD]/40 blur-[337.4px]"></div>
-          </div>
-          <div className="overflow-x-hidden">
-            <div className="absolute right-0 top-[145%] h-40 w-[17%] overflow-x-hidden bg-[#369DFD]/20 blur-[110px]"></div>
-          </div>
-        </div>
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center md:my-20 lg:py-16">
           <div className="mx-auto place-self-center">
-            <h1 className="mb-4 max-w-7xl text-4xl tracking-tight dark:text-white md:text-5xl xl:text-6xl">
-              Adapt <MoveRight className="hidden sm:inline-block sm:size-12 " /> Automate 
+            <h1 className="mb-4 max-w-7xl text-4xl font-thin tracking-tight dark:text-white md:text-5xl  xl:text-6xl">
+              Adapt <MoveRight className="hidden sm:inline-block sm:size-12 " /> Automate
               <MoveRight className="hidden sm:inline-block sm:size-12" /> Accelerate
             </h1>
 
-            <h1 className="mb-6 max-w-6xl text-xl leading-none tracking-tight dark:text-white md:text-3xl lg:mb-8 lg:text-6xl">
-              Hyper-scale your outbounds with Worker AI
+            <h1 className="mb-6 max-w-6xl text-xl font-thin leading-none tracking-tight dark:text-white md:text-3xl lg:mb-8  lg:text-6xl">
+              Hyper-scale your outbounds with{" "}
+              <span className="animate-text-gradient inline-flex bg-gradient-to-r from-[#b2a8fd] via-[#8678f9] to-[#c7d2fe] bg-[200%_auto] bg-clip-text font-normal text-transparent">
+                WorkerAI
+              </span>
             </h1>
 
-            <p className="mx-auto mb-6 max-w-xl text-sm text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
-              Redefining B2B <span className="font-semibold text-foreground">sales</span> with end-to-end{" "}
-              <span className="font-semibold text-foreground">automation</span>, from prospecting{" "}
-              <span className="font-semibold text-foreground">leads</span> to deal closure
+            <p className="mx-auto mb-6 max-w-xl text-sm/loose font-thin text-opacity-85 md:text-lg lg:mb-8 lg:text-xl">
+              Redefining B2B{" "}
+              {/* <span className="animate-text-gradient inline-flex bg-gradient-to-r from-[#b2a8fd] via-[#8678f9] to-[#c7d2fe] bg-[200%_auto] bg-clip-text text-xl text-transparent">
+                sales
+              </span>{" "} */}
+              <span className="bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text text-xl font-normal text-transparent">
+                sales
+              </span>{" "}
+              with end-to-end{" "}
+              <span className="bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text text-xl font-normal text-transparent">
+                automation
+              </span>
+              , from prospecting{" "}
+              <span className="bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text text-xl font-normal text-transparent">
+                leads
+              </span>{" "}
+              to deal closure
             </p>
             <form className="mx-auto flex max-w-xl flex-wrap items-center justify-center gap-2">
-              <Input placeholder="Your email goes here" type="email" className="inline-flex flex-1 min-w-fit" />
+              {/* <Input placeholder="Your email goes here" type="email" className="inline-flex min-w-fit flex-1" /> */}
+              <InputSpotlightBorder />
               <Button
                 variant="secondary"
                 type="submit"
                 asChild
-                className="inline-flex flex-1 h-12 min-w-fit animate-shimmer items-center justify-center
+                className="inline-flex h-12 min-w-fit flex-1 animate-shimmer items-center justify-center
                   rounded-md border bg-[length:200%_100%] px-6 font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-offset-1
                 dark:border-slate-800 dark:bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] dark:text-slate-300 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-50"
               >
-                <Link href={"/"}>
-                Learn More
-                </Link>
+                <Link href={"/"}>Join the Waitlist</Link>
               </Button>
             </form>
           </div>
@@ -143,10 +149,10 @@ export default function Web() {
         </div>
       </section>
       <section className="relative" id="bento-layout">
+        {/* <div class="absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,transparent_40%,#63e_100%)]"></div> */}
         <div className="mx-2 max-w-screen-2xl sm:mx-auto">
           <BentoGridLanding />
         </div>
-        {/* another absolute bg thingy for blurry glow */}
         <div className="absolute left-0 top-0 z-[-1] size-full">
           <div className="overflow-x-hidden">
             <div className="absolute left-0 h-32 w-[95%] -rotate-45 overflow-x-hidden bg-[#369DFD]/70 blur-[337.4px]"></div>
