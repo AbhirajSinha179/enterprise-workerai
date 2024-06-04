@@ -9,6 +9,12 @@ import { Input } from "@/components/ui/input"
 import { StickyScroll } from "@/components/ui/sticky-scroll-reveal"
 import { LP_GRID_ITEMS } from "lp-items"
 
+// TODO: Add metadata, dashboard images
+// TODO: Add sticky scroll reveal
+// TODO: Make Join the Waitlist form functional, use inputRef
+
+
+
 export const metadata: Metadata = {
   title: "Worker AI",
   twitter: {
