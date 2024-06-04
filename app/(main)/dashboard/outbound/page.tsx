@@ -1,7 +1,7 @@
 "use client"
 import { ChangeEvent, useEffect, useState } from "react"
-import InputWithCommas from "@/components/customComponents/inputWithCommas"
-import MultiSelectBadge from "@/components/customComponents/multipleSelectChip"
+import InputWithCommas from "@/components/custom-components/input-with-commas"
+import MultiSelectBadge from "@/components/custom-components/multiple-select-chip"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { Button } from "@/components/ui/button"
 import {

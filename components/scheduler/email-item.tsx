@@ -4,7 +4,7 @@ import { format } from "date-fns"
 import { Trash } from "lucide-react"
 // import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,53 +22,48 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
-export default function EmailItem({ item }: any) {
-  const router = useRouter();
+export default function EmailItem({ item, handleApprove, handleEdit, handleDelete }: { item: any, handleApprove: any, handleEdit: any, handleDelete: any }) {
   const [subject, setSubject] = useState(item?.subject)
   const [body, setBody] = useState(item?.body)
-  const [isPending, startTransition] = useTransition()
-  const [isFetching, setIsFetching] = useState(false);
 
-  const isMutating = isPending || isFetching;
+  // const handleApprove = async () => {
+  //   // const res = await fetch("https://...", { method: "POST" });
+  //   // if (!res.ok) {
+  //   //   throw new Error("Failed to approve email");
+  //   // }
+  //   setIsFetching(true);
+  //   setTimeout(() => {
+  //     setIsFetching(false);
+  //     startTransition(() => {
+  //       router.refresh();
+  //     })
 
-  const handleApprove = async () => {
-    // const res = await fetch("https://...", { method: "POST" });
-    // if (!res.ok) {
-    //   throw new Error("Failed to approve email");
-    // }
-    setIsFetching(true);
-    setTimeout(() => {
-      setIsFetching(false);
-      startTransition(() => {
-        router.refresh();
-      })
+  //   }, 1000)
+  // }
 
-    }, 1000)
-  }
+  // const handleEdit = async () => {
+  //   setTimeout(() => {
+  //     console.log(subject, body)
+  //     toast("Email successfully edited", {
+  //       description: new Date().toLocaleTimeString(),
+  //       action: {
+  //         label: "Undo",
+  //         onClick: () => console.log("Undo"),
+  //       },
+  //     })
+  //   }, 500)
+  //   // const res = await fetch("https://...", { method: "PUT" });
+  //   // if (!res.ok) {
+  //   //   throw new Error("Failed to edit email");
+  //   // }
+  // }
 
-  const handleEdit = async () => {
-    setTimeout(() => {
-      console.log(subject, body)
-      toast("Email successfully edited", {
-        description: new Date().toLocaleTimeString(),
-        action: {
-          label: "Undo",
-          onClick: () => console.log("Undo"),
-        },
-      })
-    }, 500)
-    // const res = await fetch("https://...", { method: "PUT" });
-    // if (!res.ok) {
-    //   throw new Error("Failed to edit email");
-    // }
-  }
-
-  const handleDelete = async () => {
-    // const res = await fetch("https://...", { method: "DELETE" });
-    // if (!res.ok) {
-    //   throw new Error("Failed to delete email");
-    // }
-  }
+  // const handleDelete = async () => {
+  //   // const res = await fetch("https://...", { method: "DELETE" });
+  //   // if (!res.ok) {
+  //   //   throw new Error("Failed to delete email");
+  //   // }
+  // }
 
   return (
     <>
@@ -78,11 +73,11 @@ export default function EmailItem({ item }: any) {
             <div className="text-2xl font-semibold">{item.recipient}</div>
             <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
           </div>
-          <div className="text-md font-medium">{subject}</div>
+          <div className="text-md font-medium">{item.subject}</div>
         </div>
-        <div className="text-xs text-muted-foreground">{body}</div>
+        <div className="text-xs text-muted-foreground">{item.body}</div>
         <div className="mt-2 flex w-full items-center justify-between">
-          <Button onClick={() => handleDelete} variant="outline" size="icon" className="size-8">
+          <Button onClick={() => handleDelete(item?.recipient)} variant="outline" size="icon" className="size-8">
             <Trash size={6} className="size-4" />
           </Button>
           <div className="space-x-4">
@@ -126,14 +121,15 @@ export default function EmailItem({ item }: any) {
                 </div>
                 <DialogFooter>
                   <DialogClose asChild>
-                    <Button type="submit" onClick={handleEdit}>
+                    <Button type="submit" onClick={() =>
+                       handleEdit(item.recipient, subject, body)}>
                       Save changes
                     </Button>
                   </DialogClose>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <Button onClick={() => handleApprove} asChild className="h-8 min-w-fit cursor-pointer">
+            <Button onClick={() => handleApprove(item?.recipient)} asChild className="h-8 min-w-fit cursor-pointer">
               <span>Smart Schedule</span>
             </Button>
           </div>
