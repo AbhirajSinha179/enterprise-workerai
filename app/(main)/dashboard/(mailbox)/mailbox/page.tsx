@@ -1,4 +1,6 @@
+
 import Link from "next/link"
+// import { useSearchParams } from "next/navigation"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { DataTable } from "@/components/leads/data-table"
 import { columns } from "@/components/mailbox/columns"
@@ -9,8 +11,21 @@ async function getMails() {
   return mailsData
 }
 
+// async function getUserData() {
+//   return Promise.resolve({});
+// }
+
+
 export default async function MailboxPage() {
-  const tasks = await getMails()
+  const mails = await getMails()
+  // const searchParams = useSearchParams();
+  // const userName = searchParams.get('userName')
+  // const userPassword = searchParams.get('password')
+  // console.log("user Data : ", userName, userPassword)
+  // const userEmail = "abcs";
+  // const userDomain = "asssfs";
+  // const userWarmup = "1212";
+
 
   return (
     <ContentLayout title="Mailbox">
@@ -28,7 +43,7 @@ export default async function MailboxPage() {
         </Link>
       </div>
 
-      <DataTable data={tasks} columns={columns} isActionButton={false} />
+      <DataTable data={mails} columns={columns} isActionButton={false} />
     </ContentLayout>
   );
 }

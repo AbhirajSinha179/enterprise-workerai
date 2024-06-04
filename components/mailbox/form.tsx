@@ -5,7 +5,6 @@ import { motion } from "framer-motion"
 import { ChevronLeft } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
@@ -35,10 +34,7 @@ export default function Form() {
   const [selectedProvider, setSelectedProvider] = useState<string | null>(null)
   const [imap, setImap] = useState<string | null>(null)
   const delta = currentStep - previousStep
-  const searchParams = useSearchParams();
-  const userName = searchParams.get('userName')
-  const userPassword = searchParams.get('password')
-  console.log("user Data : ", userName, userPassword)
+
 
   const { handleSubmit, reset, trigger } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),

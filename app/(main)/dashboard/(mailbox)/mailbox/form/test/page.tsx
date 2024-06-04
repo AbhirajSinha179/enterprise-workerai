@@ -42,7 +42,7 @@ export default function MailboxPage() {
                 />
                 <Link
                     href={{
-                        pathname: '/dashboard/mailbox/form',
+                        pathname: '/dashboard/mailbox',
                         query: { userName, password }
                     }}
                     passHref
