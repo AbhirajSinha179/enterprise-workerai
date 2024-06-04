@@ -36,7 +36,7 @@ const InputSpotlightBorder = () => {
 
   return (
     <>
-      <div className="relative w-full">
+      <div className="relative w-full flex-1">
         <input
           onMouseMove={handleMouseMove}
           onFocus={handleFocus}

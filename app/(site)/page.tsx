@@ -95,7 +95,7 @@ export default function Web() {
               <MoveRight className="hidden sm:inline-block sm:size-12" /> Accelerate
             </h1>
 
-            <h1 className="mb-6 max-w-6xl text-xl font-thin leading-none tracking-tight dark:text-white md:text-3xl lg:mb-8  lg:text-6xl">
+            <h1 className="mb-6 max-w-6xl text-4xl font-thin leading-none tracking-tight dark:text-white md:text-5xl lg:mb-8 xl:text-6xl">
               Hyper-scale your outbounds with{" "}
               <span className="animate-text-gradient inline-flex bg-gradient-to-r from-[#b2a8fd] via-[#8678f9] to-[#c7d2fe] bg-[200%_auto] bg-clip-text font-normal text-transparent">
                 WorkerAI
@@ -107,15 +107,15 @@ export default function Web() {
               {/* <span className="animate-text-gradient inline-flex bg-gradient-to-r from-[#b2a8fd] via-[#8678f9] to-[#c7d2fe] bg-[200%_auto] bg-clip-text text-xl text-transparent">
                 sales
               </span>{" "} */}
-              <span className="bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text text-xl font-normal text-transparent">
+              <span className="bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text font-normal text-transparent">
                 sales
               </span>{" "}
               with end-to-end{" "}
-              <span className="bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text text-xl font-normal text-transparent">
+              <span className="bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text font-normal text-transparent">
                 automation
               </span>
               , from prospecting{" "}
-              <span className="bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text text-xl font-normal text-transparent">
+              <span className="bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text font-normal text-transparent">
                 leads
               </span>{" "}
               to deal closure
@@ -127,7 +127,7 @@ export default function Web() {
                 variant="secondary"
                 type="submit"
                 asChild
-                className="inline-flex h-12 min-w-fit flex-1 animate-shimmer items-center justify-center
+                className="inline-flex h-12 min-w-fit flex-[0.5] animate-shimmer items-center justify-center
                   rounded-md border bg-[length:200%_100%] px-6 font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-offset-1
                 dark:border-slate-800 dark:bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] dark:text-slate-300 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-50"
               >
