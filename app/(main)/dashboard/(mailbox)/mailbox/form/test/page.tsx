@@ -7,15 +7,20 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 export default function MailboxPage() {
-    const [userName, setUserName] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const [formData, setFormData] = useState({
+        id: '',
+        name: '',
+        email: '',
+        domain: '',
+        warmupCapacity: ''
+    });
 
-    const handleUserNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setUserName(e.target.value);
-    };
-
-    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: value
+        }));
     };
 
     const handleSubmit = () => {
@@ -28,22 +33,48 @@ export default function MailboxPage() {
             <div className="p-5 m-5">
                 <Input
                     type="text"
-                    placeholder="User Name"
-                    value={userName}
-                    onChange={handleUserNameChange}
+                    name="id"
+                    placeholder="ID"
+                    value={formData.id}
+                    onChange={handleChange}
                     className="mt-5"
                 />
                 <Input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    className="mt-10"
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="mt-5"
+                />
+                <Input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="mt-5"
+                />
+                <Input
+                    type="text"
+                    name="domain"
+                    placeholder="Domain"
+                    value={formData.domain}
+                    onChange={handleChange}
+                    className="mt-5"
+                />
+                <Input
+                    type="text"
+                    name="warmupCapacity"
+                    placeholder="Warmup Capacity"
+                    value={formData.warmupCapacity}
+                    onChange={handleChange}
+                    className="mt-5"
                 />
                 <Link
                     href={{
                         pathname: '/dashboard/mailbox',
-                        query: { userName, password }
+                        query: { ...formData }
                     }}
                     passHref
                 >
