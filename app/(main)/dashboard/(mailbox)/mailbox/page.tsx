@@ -1,38 +1,58 @@
+"use client"
 import Link from "next/link"
-import { z } from "zod"
-import { promises as fs } from "fs"
-import path from "path"
+import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { DataTable } from "@/components/leads/data-table"
 import { columns } from "@/components/mailbox/columns"
 import { Button } from "@/components/ui/button"
-import { mailsSchema } from "../data/schema"
+import mailsData from "../data/mailsData"
 
-async function getMails() {
-  const data = await fs.readFile(
-    path.join(process.cwd(), "app/(main)/dashboard/(mailbox)/data/mails.json")
-  )
-  const mails = JSON.parse(data.toString())
-  return z.array(mailsSchema).parse(mails)
+function getMails() {
+  return mailsData
 }
 
-export default async function MailboxPage() {
-  const tasks = await getMails()
+export default function MailboxPage() {
+  const [mails, setMails] = useState(getMails())
+  const searchParams = useSearchParams()
+
+  const id = searchParams.get('id')
+  const name = searchParams.get('name')
+  const email = searchParams.get('email')
+  const domain = searchParams.get('domain')
+  const warmupCapacity = searchParams.get('warmupCapacity')
+
+  useEffect(() => {
+    if (id && name && email && domain && warmupCapacity) {
+      const newMail = {
+        id,
+        name,
+        email,
+        domain,
+        warmupCapacity,
+      }
+      console.log("New Mail Data: ", newMail)
+
+      setMails(prevMails => [...prevMails, newMail])
+    }
+  }, [id, name, email, domain, warmupCapacity])
 
   return (
     <ContentLayout title="Mailbox">
-      <div className="flex  mt-10  justify-end">
+      <div className="">
         <Link href="/dashboard/mailbox/form">
-          <Button size="sm">
-            <div className=" font-semibold text-sm">
-              Connect a Mail Box
-            </div>
-          </Button>
-
+          <div className="flex justify-between">
+            <h1 className="text-2xl font-bold">Mailbox</h1>
+            <Button size="sm">
+              <div className="font-semibold text-sm">
+                Connect a Mail Box
+              </div>
+            </Button>
+          </div>
         </Link>
       </div>
 
-      <DataTable data={tasks} columns={columns} isActionButton={false} />
+      <DataTable data={mails} columns={columns} isActionButton={false} />
     </ContentLayout>
-  );
+  )
 }

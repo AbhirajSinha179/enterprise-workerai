@@ -2,17 +2,18 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { motion } from "framer-motion"
+import { ChevronLeft } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
-import { FormDataSchema } from "@/app/(main)/dashboard/(mailbox)/data/formSchema"
-import { Button } from "../ui/button"
-import { ChevronLeft } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
+
+
+export const FormDataSchema = z.object({})
 type Inputs = z.infer<typeof FormDataSchema>
-
 const steps = [
   {
     id: "Step 1",
@@ -33,6 +34,7 @@ export default function Form() {
   const [selectedProvider, setSelectedProvider] = useState<string | null>(null)
   const [imap, setImap] = useState<string | null>(null)
   const delta = currentStep - previousStep
+
 
   const { handleSubmit, reset, trigger } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
@@ -333,13 +335,16 @@ const SecondFormMicrosoft = ({ handleSmtpEnabledClick }: { handleSmtpEnabledClic
       </div>
     </div>
     <div className="flex justify-center pt-10 ">
-      <Button
-        type="button"
-        className="rounded bg-primary px-4 py-2 font-bold text-primary-foreground transition duration-300 hover:-translate-y-1 hover:scale-110"
-        onClick={handleSmtpEnabledClick}
-      >
-        Yes, SMTP has been enabled
-      </Button>
+      <Link href={'/dashboard/mailbox/form/test'}>
+
+        <Button
+          type="button"
+          className="rounded bg-primary px-4 py-2 font-bold text-primary-foreground transition duration-300 hover:-translate-y-1 hover:scale-110"
+          onClick={handleSmtpEnabledClick}
+        >
+          Yes, SMTP has been enabled
+        </Button>
+      </Link>
     </div>
   </div>
 )
@@ -378,7 +383,9 @@ const ThirdFormGoogle = ({ handleLoginClick }: { handleLoginClick: () => void })
                                                 hover:-translate-y-1 hover:scale-110"
           onClick={handleLoginClick}
         >
-          Login
+          <Link href={'/dashboard/mailbox/form/test'}>
+            Login
+          </Link>
         </button>
       </div>
     </div>
