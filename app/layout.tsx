@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={myFont.className}>
       <body className="m-0 scroll-smooth p-0 antialiased ">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark">
           {children}
           <Toaster />
         </ThemeProvider>
