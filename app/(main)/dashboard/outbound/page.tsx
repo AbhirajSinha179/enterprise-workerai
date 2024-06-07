@@ -29,7 +29,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-
 const formSchema = z.object({
   value: z.array(z.string()).nonempty("Please select at least one person"),
 });
@@ -49,6 +48,9 @@ export default function OutboundSetting() {
     maxFiles: 5,
     maxSize: 1024 * 1024 * 4,
     multiple: true,
+    accept: {
+      'text/csv': ['.csv']
+    },
   };
 
   const multiForm = useForm<FormSchema>({
@@ -113,7 +115,7 @@ export default function OutboundSetting() {
         </div>
 
         <div className=" flex my-2 h-[120px]">
-          <div className="outline-dashed outline-1 outline-muted  rounded-md w-full mx-2">
+          <div className="outline-dashed outline-1 outline-muted rounded-md w-full mx-2">
             <FileUploader
               value={files}
               onValueChange={setFiles}
@@ -159,7 +161,6 @@ export default function OutboundSetting() {
                   ))}
               </FileUploaderContent>
             </FileUploader>
-
           </div>
 
           <div className="flex flex-col justify-center mx-1">

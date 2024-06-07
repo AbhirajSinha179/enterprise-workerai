@@ -79,7 +79,6 @@ export const FileUploader = forwardRef<
         const {
             maxFiles = 1,
             maxSize = 4 * 1024 * 1024,
-            multiple = true,
         } = dropzoneOptions;
 
         const reSelectAll = maxFiles === 1 ? true : reSelect;
@@ -93,6 +92,55 @@ export const FileUploader = forwardRef<
             },
             [value, onValueChange]
         );
+
+        const dropzoneState = useDropzone({
+            ...dropzoneOptions,
+            onDrop: useCallback(
+                (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
+                    const files = acceptedFiles;
+
+                    if (!files) {
+                        toast.error("File error, probably too big");
+                        return;
+                    }
+
+                    const newValues: File[] = value ? [...value] : [];
+
+                    if (reSelectAll) {
+                        newValues.splice(0, newValues.length);
+                    }
+
+                    files.forEach((file) => {
+                        if (newValues.length < maxFiles) {
+                            newValues.push(file);
+                        }
+                    });
+
+                    onValueChange(newValues);
+
+                    if (rejectedFiles.length > 0) {
+                        for (let i = 0; i < rejectedFiles.length; i++) {
+                            const error = rejectedFiles[i]?.errors[0];
+                            if (error) {
+                                if (error.code === "file-too-large") {
+                                    toast.error(
+                                        `File is too large. Max size is ${maxSize / 1024 / 1024}MB`
+                                    );
+                                    break;
+                                }
+                                if (error.message) {
+                                    toast.error(error.message);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                },
+                [reSelectAll, value, maxFiles, maxSize, onValueChange]
+            ),
+            onDropRejected: () => setIsFileTooBig(true),
+            onDropAccepted: () => setIsFileTooBig(false),
+        });
 
         const handleKeyDown = useCallback(
             (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -129,7 +177,7 @@ export const FileUploader = forwardRef<
                     moveNext();
                 } else if (e.key === prevKey) {
                     movePrev();
-                } else if (e.key === "Enter" || e.key === "Space") {
+                } else if (e.key === "Enter" || e.key === " ") {
                     if (activeIndex === -1) {
                         dropzoneState.inputRef.current?.click();
                     }
@@ -146,51 +194,7 @@ export const FileUploader = forwardRef<
                     setActiveIndex(-1);
                 }
             },
-            [value, activeIndex, removeFileFromSet]
-        );
-
-        const onDrop = useCallback(
-            (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
-                const files = acceptedFiles;
-
-                if (!files) {
-                    toast.error("File error, probably too big");
-                    return;
-                }
-
-                const newValues: File[] = value ? [...value] : [];
-
-                if (reSelectAll) {
-                    newValues.splice(0, newValues.length);
-                }
-
-                files.forEach((file) => {
-                    if (newValues.length < maxFiles) {
-                        newValues.push(file);
-                    }
-                });
-
-                onValueChange(newValues);
-
-                if (rejectedFiles.length > 0) {
-                    for (let i = 0; i < rejectedFiles.length; i++) {
-                        const error = rejectedFiles[i]?.errors[0];
-                        if (error) {
-                            if (error.code === "file-too-large") {
-                                toast.error(
-                                    `File is too large. Max size is ${maxSize / 1024 / 1024}MB`
-                                );
-                                break;
-                            }
-                            if (error.message) {
-                                toast.error(error.message);
-                                break;
-                            }
-                        }
-                    }
-                }
-            },
-            [reSelectAll, value, maxFiles, maxSize, onValueChange]
+            [value, activeIndex, removeFileFromSet, orientation, direction, dropzoneState.inputRef]
         );
 
         useEffect(() => {
@@ -201,21 +205,6 @@ export const FileUploader = forwardRef<
             }
             setIsLOF(false);
         }, [value, maxFiles]);
-
-        const opts = {
-            ...dropzoneOptions,
-            accept: { 'text/csv': ['.csv'] }, // Ensure only CSV files are accepted
-            maxFiles,
-            maxSize,
-            multiple,
-        };
-
-        const dropzoneState = useDropzone({
-            ...opts,
-            onDrop,
-            onDropRejected: () => setIsFileTooBig(true),
-            onDropAccepted: () => setIsFileTooBig(false),
-        });
 
         return (
             <FileUploaderContext.Provider
@@ -271,7 +260,7 @@ export const FileUploaderContent = forwardRef<
                 ref={ref}
                 className={cn(
                     "flex rounded-xl gap-1",
-                    orientation === "horizontal" ? "flex-raw flex-wrap" : "flex-col",
+                    orientation === "horizontal" ? "flex-row flex-wrap" : "flex-col",
                     className
                 )}
             >
