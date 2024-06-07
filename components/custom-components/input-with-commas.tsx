@@ -31,6 +31,7 @@ export default function InputWithCommas() {
             setSelectedOptions((prev) => [...prev, ...newValues])
             setInputValue("")
         }
+        console.log(selectedOptions)
     }
 
     const handleRemove = (value: string) => {
@@ -38,32 +39,35 @@ export default function InputWithCommas() {
     }
 
     return (
-        <div className="w-full ">
-            <div className="flex w-full  items-center space-x-2 ">
-                <Input
-                    type="text"
-                    placeholder="Input"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                />
+        <div className="flex flex-row">
+            <div className="w-full flex flex-col ml-2 ">
+                <div className="flex items-center   ">
+                    <Input
+                        type="text"
+                        placeholder="Add comma to separate"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        onKeyDown={handleKeyDown}
+                    />
 
+                </div>
+                <div className="no-scrollbar flex max-h-16 flex-wrap gap-2 overflow-y-auto rounded-md bg-transparent py-2">
+                    {selectedOptions.map((option) => (
+                        <button key={option} onClick={() => handleRemove(option)}>
+                            <Badge variant="secondary">
+                                <div className="flex items-center justify-around gap-1">
+                                    <div>{option}</div>
+                                    <X className="size-4" />
+                                </div>
+                            </Badge>
+                        </button>
+                    ))}
+                </div>
             </div>
-            <div className="my-4 flex justify-end">
-                <Button type="button" onClick={addOptionsFromInput} size={'sm'}>Submit</Button>
-            </div>
-            <div className="no-scrollbar flex max-h-16 flex-wrap gap-2 overflow-y-auto rounded-md bg-primary-foreground">
-                {selectedOptions.map((option) => (
-                    <button key={option} onClick={() => handleRemove(option)}>
-                        <Badge variant="secondary">
-                            <div className="flex items-center justify-around gap-1">
-                                <div>{option}</div>
-                                <X className="size-4" />
-                            </div>
-                        </Badge>
-                    </button>
-                ))}
+            <div className=" flex  mx-2  ">
+                <Button type="button" onClick={addOptionsFromInput} >Submit</Button>
             </div>
         </div>
     )
+
 }

@@ -28,6 +28,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import InputWithCommas from "@/components/custom-components/input-with-commas";
 
 const formSchema = z.object({
   value: z.array(z.string()).nonempty("Please select at least one person"),
@@ -39,6 +40,11 @@ const users = [
   { name: "ThePrimeagen" },
   { name: "Shadcn" },
   { name: "Theo" },
+];
+const locations = [
+  { name: "India" },
+  { name: "USA" },
+  { name: "Germany" },
 ];
 
 export default function OutboundSetting() {
@@ -72,48 +78,7 @@ export default function OutboundSetting() {
 
   return (
     <ContentLayout title="Outbound Settings">
-      <div className="flex flex-col ">
-        <div className="w-full">
-          <Form {...multiForm}>
-            <form
-              onSubmit={multiForm.handleSubmit(onSubmit)}
-              className="flex items-center space-x-2 w-full p-2"
-            >
-              <FormField
-                control={multiForm.control}
-                name="value"
-                render={({ field }) => (
-                  <FormItem className="grow">
-                    <MultiSelector
-                      onValuesChange={field.onChange}
-                      values={field.value}
-                    >
-                      <MultiSelectorTrigger>
-                        <MultiSelectorInput placeholder="Select people to invite" />
-                      </MultiSelectorTrigger>
-                      <MultiSelectorContent className="z-50">
-                        <MultiSelectorList className="bg-card">
-                          {users.map((user) => (
-                            <MultiSelectorItem key={user.name} value={user.name}>
-                              <div className="flex space-x-2 justify-start w-full">
-                                <span>{user.name}</span>
-                              </div>
-                            </MultiSelectorItem>
-                          ))}
-                        </MultiSelectorList>
-                      </MultiSelectorContent>
-                    </MultiSelector>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">
-                Submit
-              </Button>
-            </form>
-          </Form>
-        </div>
-
+      <div className="flex flex-col my-5 ">
         <div className=" flex my-2 h-[120px]">
           <div className="outline-dashed outline-1 outline-muted rounded-md w-full mx-2">
             <FileUploader
@@ -167,6 +132,65 @@ export default function OutboundSetting() {
             <Button type="button" onClick={handleSubmitCSV}>Submit</Button>
           </div>
         </div>
+
+        <div className="w-full mt-5">
+          <h1 className=" w-full px-2 " >Location</h1>
+          <Form {...multiForm}>
+            <form
+              onSubmit={multiForm.handleSubmit(onSubmit)}
+              className="flex items-center space-x-2 w-full px-2"
+            >
+              <FormField
+                control={multiForm.control}
+                name="value"
+                render={({ field }) => (
+                  <FormItem className="grow">
+                    <MultiSelector
+                      onValuesChange={field.onChange}
+                      values={field.value}
+                    >
+                      <MultiSelectorTrigger>
+                        <MultiSelectorInput placeholder="Select people to invite" />
+                      </MultiSelectorTrigger>
+                      <MultiSelectorContent className="z-50">
+                        <MultiSelectorList className="bg-card">
+                          {locations.map((user) => (
+                            <MultiSelectorItem key={user.name} value={user.name}>
+                              <div className="flex space-x-2 justify-start w-full">
+                                <span>{user.name}</span>
+                              </div>
+                            </MultiSelectorItem>
+                          ))}
+                        </MultiSelectorList>
+                      </MultiSelectorContent>
+                    </MultiSelector>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </div>
+        <div className="w-full mt-5 ">
+          <h1 className="w-full px-2 mb-2">Job Titles</h1>
+          <InputWithCommas >
+          </InputWithCommas>
+        </div>
+        <div className="w-full mt-5 ">
+          <h1 className="w-full px-2 mb-2">Outbound Keywords</h1>
+          <InputWithCommas >
+          </InputWithCommas>
+        </div>
+        <div className="w-full mt-5 ">
+          <h1 className="w-full px-2 mb-2">Add blacklisted email domains</h1>
+          <InputWithCommas >
+          </InputWithCommas>
+        </div>
+
+
       </div>
     </ContentLayout>
   );
