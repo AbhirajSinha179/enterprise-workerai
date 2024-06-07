@@ -81,7 +81,7 @@ export const FileUploader = forwardRef<
             maxSize = 4 * 1024 * 1024,
         } = dropzoneOptions;
 
-        const reSelectAll = maxFiles === 1 ? true : reSelect;
+        const reSelectAll = maxFiles === 1 || reSelect;
         const direction: DirectionOptions = dir === "rtl" ? "rtl" : "ltr";
 
         const removeFileFromSet = useCallback(
