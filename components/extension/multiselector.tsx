@@ -67,7 +67,7 @@ const MultiSelector = ({
                 onValueChange([...value, val]);
             }
         },
-        [value]
+        [onValueChange, value]
     );
 
     // TODO : change from else if use to switch case statement
@@ -120,7 +120,7 @@ const MultiSelector = ({
                 }
             }
         },
-        [value, inputValue, activeIndex, loop]
+        [value, dir, activeIndex, loop, inputValue.length, onValueChange]
     );
 
     return (
@@ -189,7 +189,7 @@ const MultiSelectorTrigger = forwardRef<
                         onClick={() => onValueChange(item)}
                     >
                         <span className="sr-only">Remove {item} option</span>
-                        <RemoveIcon className="h-4 w-4 hover:stroke-destructive" />
+                        <RemoveIcon className="size-4 hover:stroke-destructive" />
                     </button>
                 </Badge>
             ))}
@@ -293,7 +293,7 @@ const MultiSelectorItem = forwardRef<
             onMouseDown={mousePreventDefault}
         >
             {children}
-            {isIncluded && <Check className="h-4 w-4" />}
+            {isIncluded && <Check className="size-4" />}
         </CommandItem>
     );
 });
