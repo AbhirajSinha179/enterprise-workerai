@@ -1,195 +1,173 @@
-"use client"
-import { ChangeEvent, useEffect, useState } from "react"
-import InputWithCommas from "@/components/custom-components/input-with-commas"
-import MultiSelectBadge from "@/components/custom-components/multiple-select-chip"
-import { ContentLayout } from "@/components/layout/content-layout"
-import { Button } from "@/components/ui/button"
+"use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Paperclip } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from "@/components/extension/multiselector";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+  FileInput,
+  FileUploader,
+  FileUploaderContent,
+  FileUploaderItem,
+} from "@/components/extension/uploader";
+import { ContentLayout } from "@/components/layout/content-layout";
+import { Button } from "@/components/ui/button";
 
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 
-const OPTIONS = [
-  "Next.js",
-  "SvelteKit",
-  "Nuxt.js",
-  "tree",
-  "track",
-  "traffic",
-  "track",
-  "recket",
-  "treat",
-  "tampon",
-  "Truck",
-  "suck",
-  "Chuck",
-]
+const formSchema = z.object({
+  value: z.array(z.string()).nonempty("Please select at least one person"),
+});
+
+type FormSchema = z.infer<typeof formSchema>;
+
+const users = [
+  { name: "ThePrimeagen" },
+  { name: "Shadcn" },
+  { name: "Theo" },
+];
 
 export default function OutboundSetting() {
-  const [csvFile, setCsvFile] = useState<File | null>(null)
-  const [inputValue, setInputValue] = useState<string>("")
-  const validateCsvType = (fileName: string): boolean => {
-    const CSV_REGEX = /\.csv$/i;
-    if (!CSV_REGEX.exec(fileName)) {
-      alert('Invalid file type');
-      return false;
-    }
-    return true;
-  }
+  const [submittedValues, setSubmittedValues] = useState(new Set<string>());
+  const [files, setFiles] = useState<File[] | null>(null);
+  const dropZoneConfig = {
+    maxFiles: 5,
+    maxSize: 1024 * 1024 * 4,
+    multiple: true,
+    accept: {
+      'text/csv': ['.csv']
+    },
+  };
 
-  const handleCsvChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const files = event.target.files;
-      const targetFile = files[0];
-      const fileName = targetFile?.name;
-      if (fileName && validateCsvType(fileName)) setCsvFile(event.target.files[0]!)
-    }
-  }
+  const multiForm = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { value: [] },
+  });
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value)
-  }
+  const onSubmit = (data: FormSchema) => {
+    toast.success("Form submitted: " + JSON.stringify(data, null, 2));
+    const newValues = new Set(submittedValues);
+    data.value.forEach((value) => newValues.add(value));
+    setSubmittedValues(newValues);
+    console.log("Submitted Values Set:", newValues);
+  };
 
   const handleSubmitCSV = () => {
-    console.log("CSV File:", csvFile)
+    console.log("CSV File:", files)
   }
-
-  const handleSubmit = () => {
-    console.log("Input Value:", inputValue)
-  }
-
-  useEffect(() => {
-    console.log("CSV File changed:", csvFile, "Input Value changed:", inputValue)
-  }, [csvFile, inputValue])
 
   return (
-    <>
-      <ContentLayout title="Outbound Settings">
-        {/* <div className="container mx-auto my-10 flex justify-between">
-          <div className="m-4 h-96 w-1/2 overflow-hidden rounded-lg bg-card shadow-md transition duration-300 hover:shadow-lg">
-            <div className="p-4">
-              <h2 className="mb-2 text-xl font-semibold">Users</h2>
-            </div>
-            <div className="flex justify-center">
-              <div className="m-4 w-5/6 rounded-md bg-background">
-                <MultiSelectBadge />
-              </div>
-            </div>
-          </div>
-          <div className="m-4 h-96 w-1/2 overflow-hidden rounded-lg bg-card shadow-md transition duration-300 hover:shadow-lg">
-            <div className="p-4">
-              <h2 className="mb-2 text-xl font-semibold ">Company data</h2>
-            </div>
-          </div>
-        </div> */}
-        {/* <div className="container mx-auto my-10 flex justify-between">
-          <div className="bg-background-600 m-4 h-96 w-full overflow-hidden rounded-lg bg-card shadow-md transition duration-300 hover:shadow-lg">
-            <h2 className="mb-2 p-4 text-xl font-semibold">Target</h2>
-            <div className="grid w-full max-w-sm items-center gap-1.5 p-4">
-              <Label htmlFor="csv">CSV file</Label>
-              <Input id="csv" type="file" onChange={handleCsvChange} />
-              <Button type="button" onClick={handleSubmitCSV}>Submit</Button>
-            </div>
-            <div className="flex w-full max-w-sm items-center space-x-2 p-4">
-              <Input type="text" placeholder="Input" value={inputValue} onChange={handleInputChange} />
-              <Button type="button" onClick={handleSubmit}>Submit</Button>
-            </div>
-            <InputWithCommas />
-          </div>
-        </div> */}
-        <div>
-          <div className="mx-5 flex justify-center my-4">
-            <Card className="w-3/4 ">
-              <CardHeader>
-                <CardTitle>Upload CSV of Leads</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid w-full  items-center gap-2.5 p-4 ">
-                  <Label htmlFor="csv">CSV file</Label>
-                  <Input id="csv" type="file" onChange={handleCsvChange} className="cursor-pointer" />
-
-                </div>
-                <div className="flex justify-end mx-4 ">
-
-                  <Button type="button" onClick={handleSubmitCSV}>Submit</Button>
-                </div>
-              </CardContent>
-              <CardFooter className="flex justify-end mx-5">
-
-              </CardFooter>
-            </Card>
-          </div>
-          <div className="mx-5 flex justify-center my-4">
-            <Card className="w-3/4 ">
-              <CardHeader>
-                <CardTitle>Location</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="  mx-4">
-                  <div className=" w-full  rounded-md py-2">
-                    <MultiSelectBadge options={OPTIONS} />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          <div className="mx-5 flex justify-center my-4">
-            <Card className="w-3/4 ">
-              <CardHeader>
-                <CardTitle>Job Titles</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="mx-5 flex justify-center my-4">
-                  <InputWithCommas />
-                </div>
-              </CardContent>
-
-            </Card>
-          </div>
-          <div className="mx-5 flex justify-center my-4">
-            <Card className="w-3/4 ">
-              <CardHeader>
-                <CardTitle>Sectors</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="  mx-4">
-                  <div className=" w-full  rounded-md py-2">
-                    <MultiSelectBadge options={OPTIONS} />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          <div className="mx-5 flex justify-center my-4">
-            <Card className="w-3/4 ">
-              <CardHeader>
-                <CardTitle>Blacklisted Email Domains</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="mx-5 flex justify-center my-4">
-                  <InputWithCommas />
-                </div>
-              </CardContent>
-
-            </Card>
-          </div>
-
+    <ContentLayout title="Outbound Settings">
+      <div className="flex flex-col ">
+        <div className="w-full">
+          <Form {...multiForm}>
+            <form
+              onSubmit={multiForm.handleSubmit(onSubmit)}
+              className="flex items-center space-x-2 w-full p-2"
+            >
+              <FormField
+                control={multiForm.control}
+                name="value"
+                render={({ field }) => (
+                  <FormItem className="grow">
+                    <MultiSelector
+                      onValuesChange={field.onChange}
+                      values={field.value}
+                    >
+                      <MultiSelectorTrigger>
+                        <MultiSelectorInput placeholder="Select people to invite" />
+                      </MultiSelectorTrigger>
+                      <MultiSelectorContent className="z-50">
+                        <MultiSelectorList className="bg-card">
+                          {users.map((user) => (
+                            <MultiSelectorItem key={user.name} value={user.name}>
+                              <div className="flex space-x-2 justify-start w-full">
+                                <span>{user.name}</span>
+                              </div>
+                            </MultiSelectorItem>
+                          ))}
+                        </MultiSelectorList>
+                      </MultiSelectorContent>
+                    </MultiSelector>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">
+                Submit
+              </Button>
+            </form>
+          </Form>
         </div>
-      </ContentLayout>
-    </>
-  )
+
+        <div className=" flex my-2 h-[120px]">
+          <div className="outline-dashed outline-1 outline-muted rounded-md w-full mx-2">
+            <FileUploader
+              value={files}
+              onValueChange={setFiles}
+              dropzoneOptions={dropZoneConfig}
+              className="relative bg-background rounded-lg py-2 "
+            >
+              <FileInput >
+                <div className="flex items-center justify-center flex-col pt-3 pb-4 w-full">
+                  <>
+                    <svg
+                      className="size-8 mb-3 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 16"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                      />
+                    </svg>
+                    <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+                      <span className="font-semibold">Click to upload</span>
+                      &nbsp; or drag and drop
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Upload CSV file
+                    </p>
+                  </>
+                </div>
+              </FileInput >
+              <FileUploaderContent>
+                {files &&
+                  files.length > 0 &&
+                  files.map((file, i) => (
+                    <FileUploaderItem key={i} index={i}>
+                      <Paperclip className="size-4 stroke-current" />
+                      <span>{file.name}</span>
+                    </FileUploaderItem>
+                  ))}
+              </FileUploaderContent>
+            </FileUploader>
+          </div>
+
+          <div className="flex flex-col justify-center mx-1">
+            <Button type="button" onClick={handleSubmitCSV}>Submit</Button>
+          </div>
+        </div>
+      </div>
+    </ContentLayout>
+  );
 }
