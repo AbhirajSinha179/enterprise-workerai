@@ -20,6 +20,7 @@ export function EmailList({ emails }: any) {
     toast("Edited the email", {
       description: format(new Date(), "PPpp"),
     })
+    console.log(emailId, subject, body)
     // PUT request
   }
 
@@ -28,6 +29,7 @@ export function EmailList({ emails }: any) {
     toast("Deleted the email", {
       description: format(new Date(), "PPpp"),
     })
+    console.log(emailId)
     // DELETE request
   }
 

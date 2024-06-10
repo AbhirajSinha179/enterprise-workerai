@@ -66,10 +66,7 @@ export default async function Emails() {
           </div>
         </TabsContent>
         <TabsContent value="scheduled" className="space-y-4">
-          <div className="bg-green-800">
-
-            <ScheduledEmailList emails={emails.filter(email => email.scheduled === true)} />
-          </div>
+          <ScheduledEmailList emails={emails.filter(email => email.scheduled === true)} />
         </TabsContent>
       </Tabs>
     </ContentLayout>
