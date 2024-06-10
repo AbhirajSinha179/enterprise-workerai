@@ -74,8 +74,8 @@ export default function OutboundSetting() {
 
   return (
     <ContentLayout title="Outbound Settings">
-      <div className="flex flex-col my-5 mx-4 ">
-        <div>
+      <div className="flex flex-col my-5 mx-4  ">
+        <div className="">
           <h1 className=" w-full px-2 " >Upload CSV </h1>
           <div className=" flex my-2 h-[120px]">
 
@@ -135,12 +135,12 @@ export default function OutboundSetting() {
 
 
 
-        <div className="w-full mt-5">
+        <div className="w-full mt-5 ">
           <h1 className=" w-full px-2 " >Location</h1>
           <Form {...multiForm}>
             <form
               onSubmit={multiForm.handleSubmit(onSubmit)}
-              className="flex items-center  w-full "
+              className="flex items-center  w-full   px-2 "
             >
               <FormField
                 control={multiForm.control}
@@ -170,7 +170,7 @@ export default function OutboundSetting() {
                   </FormItem>
                 )}
               />
-              <div className="flex mx-4">
+              <div className="flex mx-3">
                 <Button type="submit" size={"lg"}>
                   Submit
                 </Button>
