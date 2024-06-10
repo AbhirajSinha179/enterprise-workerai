@@ -39,12 +39,12 @@ export function EmailList({ emails }: any) {
   }
 
   return (
-    <main className="flex w-full flex-col items-center">
+    <main className="flex w-full flex-col items-center ">
       <div className="mt-6 flex w-full items-center justify-between">
         <h1 className="text-2xl font-bold">Pending Emails</h1>
         <Button onClick={handleApproveAll}>Approve All</Button>
       </div>
-      <ul className="my-4 w-full space-y-4">
+      <ul className="my-4 w-full space-y-4 ">
         {emails.map((item: any) => (
           <EmailItem
             handleApprove={handleApprove}

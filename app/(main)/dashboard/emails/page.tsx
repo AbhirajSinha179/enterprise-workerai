@@ -27,7 +27,7 @@ async function getEmails() {
       { id: 1, subject: "Hello", body: "Hello, world!", date: "2024-01-01", scheduled: false, recipient: "anshuman@workerai.co" },
       { id: 2, subject: "Hi", body: "Hi, world!", date: "2024-01-02", scheduled: true, recipient: "rohit@workerai.co" },
       { id: 3, subject: "Hey", body: "Hey, world!", date: "2024-01-03", scheduled: false, recipient: "ayan@workerai.co" },
-      { id: 4, subject: "Hola", body: "Hola, world!", date: "2024-01-04", scheduled: true, recipient: "raj@workerai.co"}
+      { id: 4, subject: "Hola", body: "Hola, world!", date: "2024-01-04", scheduled: true, recipient: "raj@workerai.co" }
     ],
   }
 
@@ -58,12 +58,18 @@ export default async function Emails() {
           <TabsTrigger value="scheduled">Scheduled</TabsTrigger>
         </TabsList>
         {/* need to show something when no emails present */}
-        {!emails && <div>No emails yet bitch</div>} 
+        {!emails && <div>No emails yet bitch</div>}
         <TabsContent value="pending" className="space-y-4">
-          <EmailList emails={emails.filter(email => email.scheduled===false)} />
+          <div className="">
+
+            <EmailList emails={emails.filter(email => email.scheduled === false)} />
+          </div>
         </TabsContent>
         <TabsContent value="scheduled" className="space-y-4">
-          <ScheduledEmailList emails={emails.filter(email=> email.scheduled===true)} /> 
+          <div className="bg-green-800">
+
+            <ScheduledEmailList emails={emails.filter(email => email.scheduled === true)} />
+          </div>
         </TabsContent>
       </Tabs>
     </ContentLayout>

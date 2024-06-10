@@ -18,16 +18,16 @@ export const CardChronark: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="group relative overflow-hidden rounded-xl border border-zinc-600 duration-700 hover:border-zinc-400/50 hover:bg-zinc-800/10 md:gap-8 "
+      className="group relative overflow-hidden rounded-xl border border-zinc-600 duration-300 hover:border-zinc-400/50 hover:bg-zinc-800/10 md:gap-8 "
     >
       <div className="pointer-events-none">
-        <div className="absolute inset-0 z-0  transition duration-1000 [mask-image:linear-gradient(black,transparent)]" />
+        <div className="absolute inset-0 z-0 blur transition duration-500 [mask-image:linear-gradient(black,transparent)]" />
         <motion.div
-          className="absolute inset-0 z-10  bg-gradient-to-br via-zinc-100/10  opacity-100  transition duration-1000 group-hover:opacity-30 bg-zinc-700 "
+          className="absolute inset-0 z-10  bg-gradient-to-br via-zinc-100/10  opacity-10  transition duration-500 group-hover:opacity-30 bg-zinc-700 "
           style={style}
         />
         <motion.div
-          className="absolute inset-0 z-10 opacity-0 mix-blend-overlay transition duration-1000 group-hover:opacity-100 "
+          className="absolute inset-0 z-10 opacity-0 mix-blend-overlay transition duration-500 group-hover:opacity-100 "
           style={style}
         />
       </div>
