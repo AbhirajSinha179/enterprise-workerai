@@ -64,8 +64,8 @@ export default function InputWithCommas() {
                     ))}
                 </div>
             </div>
-            <div className=" flex  mx-2  ">
-                <Button type="button" onClick={addOptionsFromInput} >Submit</Button>
+            <div className=" flex  mx-4  ">
+                <Button type="button" onClick={addOptionsFromInput} size={"lg"} >Submit</Button>
             </div>
         </div>
     )
