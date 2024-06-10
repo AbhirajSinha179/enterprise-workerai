@@ -1,12 +1,11 @@
-import { PanelsTopLeft } from "lucide-react"
 import Link from "next/link"
 
 import { Menu } from "@/components/sidebar/menu"
 import { SidebarToggle } from "@/components/sidebar/sidebar-toggle"
 import { cn } from "@/lib/utils"
 // import { useLockedBody } from "@/hooks/useBodyLock";
-import { useSidebarContext } from "../layout/layout-context"
 import { WorkerAILogo } from "../global/logo"
+import { useSidebarContext } from "../layout/layout-context"
 
 export function Sidebar() {
   const { collapsed, setCollapsed } = useSidebarContext()

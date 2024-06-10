@@ -23,6 +23,9 @@ import {
 } from "@/components/ui/tabs"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { useMail } from "@/contexts/MailContext"
+import { cn } from "@/lib/utils"
+
+const MAX_INBOX_HEIGHT = 680
 
 interface MailProps {
   accounts?: {
@@ -53,7 +56,7 @@ export function Inbox({
             sizes
           )}`
         }}
-        className="h-full max-h-[800px] items-stretch"
+        className={cn("h-full items-stretch", `max-h-[${MAX_INBOX_HEIGHT}px]`)}
       >
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
           <Tabs defaultValue="all">

@@ -3,7 +3,6 @@
 import { format } from "date-fns"
 import { Trash } from "lucide-react"
 // import Link from "next/link"
-// import { useRouter } from "next/navigation"
 import { useState } from "react"
 // import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
@@ -26,45 +25,6 @@ import { CardChronark } from "../custom-components/card-chronark"
 export default function EmailItem({ item, handleApprove, handleEdit, handleDelete }: { item: any, handleApprove: any, handleEdit: any, handleDelete: any }) {
   const [subject, setSubject] = useState(item?.subject)
   const [body, setBody] = useState(item?.body)
-
-  // const handleApprove = async () => {
-  //   // const res = await fetch("https://...", { method: "POST" });
-  //   // if (!res.ok) {
-  //   //   throw new Error("Failed to approve email");
-  //   // }
-  //   setIsFetching(true);
-  //   setTimeout(() => {
-  //     setIsFetching(false);
-  //     startTransition(() => {
-  //       router.refresh();
-  //     })
-
-  //   }, 1000)
-  // }
-
-  // const handleEdit = async () => {
-  //   setTimeout(() => {
-  //     console.log(subject, body)
-  //     toast("Email successfully edited", {
-  //       description: new Date().toLocaleTimeString(),
-  //       action: {
-  //         label: "Undo",
-  //         onClick: () => console.log("Undo"),
-  //       },
-  //     })
-  //   }, 500)
-  //   // const res = await fetch("https://...", { method: "PUT" });
-  //   // if (!res.ok) {
-  //   //   throw new Error("Failed to edit email");
-  //   // }
-  // }
-
-  // const handleDelete = async () => {
-  //   // const res = await fetch("https://...", { method: "DELETE" });
-  //   // if (!res.ok) {
-  //   //   throw new Error("Failed to delete email");
-  //   // }
-  // }
 
   return (
     <>

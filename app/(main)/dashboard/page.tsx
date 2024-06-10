@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Overview } from "@/components/dashboard/overview"
 import { RecentSales } from "@/components/dashboard/recent-sales"
 import { ContentLayout } from "@/components/layout/content-layout"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/components/ui/breadcrumb"
+// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/components/ui/breadcrumb"
 import {
   Card,
   CardContent,
@@ -40,15 +40,6 @@ export default function DashboardHome() {
   return (
     <>
       <ContentLayout title="Dashboard">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/dashboard">Home</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
         <main className="w-full space-y-4 pt-2">
           <div className="grid gap-x-4 md:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat, index) => (

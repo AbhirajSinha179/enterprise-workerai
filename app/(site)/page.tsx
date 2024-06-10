@@ -5,15 +5,7 @@ import Link from "next/link"
 import InputSpotlightBorder from "@/components/custom-components/input-spotlight-border"
 import { BentoGridLanding } from "@/components/site/bento"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { StickyScroll } from "@/components/ui/sticky-scroll-reveal"
 import { LP_GRID_ITEMS } from "lp-items"
-
-// TODO: Add metadata, dashboard images
-// TODO: Add sticky scroll reveal
-// TODO: Make Join the Waitlist form functional, use inputRef
-
-
 
 export const metadata: Metadata = {
   title: "Worker AI",
@@ -31,55 +23,10 @@ export const metadata: Metadata = {
     // ],
   },
 }
-
-const content = [
-  {
-    title: "Collaborative Editing",
-    description:
-      "Work together in real time with your team, clients, and stakeholders. Collaborate on documents, share ideas, and make decisions quickly. With our platform, you can streamline your workflow and increase productivity.",
-    content: (
-      <div className="flex size-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
-        Collaborative Editing
-      </div>
-    ),
-  },
-  {
-    title: "Real time changes",
-    description:
-      "See changes as they happen. With our platform, you can track every modification in real time. No more confusion about the latest version of your project. Say goodbye to the chaos of version control and embrace the simplicity of real-time updates.",
-    content: (
-      <div className="flex size-full  items-center justify-center text-white">
-        <Image
-          src="/linear.webp"
-          width={300}
-          height={300}
-          className="size-full object-cover"
-          alt="linear board demo"
-        />
-      </div>
-    ),
-  },
-  {
-    title: "Version control",
-    description:
-      "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
-    content: (
-      <div className="flex size-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] text-white">
-        Version control
-      </div>
-    ),
-  },
-  {
-    title: "Running out of content",
-    description:
-      "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
-    content: (
-      <div className="flex size-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
-        Running out of content
-      </div>
-    ),
-  },
-]
+// TODO: Add metadata, dashboard images
+// TODO: Add sticky scroll reveal
+// TODO: Make Join the Waitlist form functional, use
+// TODO: Adjust the tabs colours, no contrast due to tailwind config change
 
 export default function Web() {
   return (
@@ -97,7 +44,7 @@ export default function Web() {
 
             <h1 className="mb-6 max-w-6xl text-4xl font-thin leading-none tracking-tight dark:text-white md:text-5xl lg:mb-8 xl:text-6xl">
               Hyper-scale your outbounds with{" "}
-              <span className="animate-text-gradient inline-flex bg-gradient-to-r from-[#b2a8fd] via-[#8678f9] to-[#c7d2fe] bg-[200%_auto] bg-clip-text font-normal text-transparent">
+              <span className="inline-flex animate-text-gradient bg-gradient-to-r from-[#b2a8fd] via-[#8678f9] to-[#c7d2fe] bg-[200%_auto] bg-clip-text font-normal text-transparent">
                 WorkerAI
               </span>
             </h1>

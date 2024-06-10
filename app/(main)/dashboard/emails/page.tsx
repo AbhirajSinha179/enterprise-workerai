@@ -2,18 +2,15 @@ import Link from "next/link"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { EmailList } from "@/components/scheduler/email-list"
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+// import {
+//   Breadcrumb,
+//   BreadcrumbItem,
+//   BreadcrumbLink,
+//   BreadcrumbList,
+//   BreadcrumbPage,
+//   BreadcrumbSeparator,
+// } from "@/components/ui/breadcrumb"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-// import { truncate } from "lodash"
-// import { Button } from "@/components/ui/button"
 
 async function getEmails() {
   // const res = await fetch("https://...", { cache: "no-store" });
@@ -27,7 +24,9 @@ async function getEmails() {
       { id: 1, subject: "Hello", body: "Hello, world!", date: "2024-01-01", scheduled: false, recipient: "anshuman@workerai.co" },
       { id: 2, subject: "Hi", body: "Hi, world!", date: "2024-01-02", scheduled: true, recipient: "rohit@workerai.co" },
       { id: 3, subject: "Hey", body: "Hey, world!", date: "2024-01-03", scheduled: false, recipient: "ayan@workerai.co" },
-      { id: 4, subject: "Hola", body: "Hola, world!", date: "2024-01-04", scheduled: true, recipient: "raj@workerai.co" }
+      { id: 4, subject: "Hola", body: "Hola, world!", date: "2024-01-04", scheduled: true, recipient: "raj@workerai.co" },
+      { id: 5, subject: "Namaste", body: "Namaste, world!", date: "2024-01-05", scheduled: false, recipient: "abhiraj@workerai.co" },
+      { id: 6, subject: "Bonjour", body: "Bonjour, world!", date: "2024-01-06", scheduled: false, recipient: "rando@workerai.co" }
     ],
   }
 
@@ -39,19 +38,6 @@ export default async function Emails() {
 
   return (
     <ContentLayout title="Scheduler">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/dashboard">Home</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Emails</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
       <Tabs defaultValue="pending" className="mt-4 space-y-4">
         <TabsList>
           <TabsTrigger value="pending">Pending</TabsTrigger>

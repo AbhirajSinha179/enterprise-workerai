@@ -5,6 +5,9 @@ interface NavbarProps {
   title: string
 }
 
+// TODO add user avatar / login info with mode toggle once auth is configured
+// TODO also add search bar which will be for navigating across features
+
 export function Navbar({ title }: NavbarProps) {
   return (
     <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-10 w-full bg-background/95 shadow backdrop-blur dark:shadow-secondary">
