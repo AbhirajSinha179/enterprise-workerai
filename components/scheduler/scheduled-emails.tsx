@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 export function ScheduledEmailList({ emails }: any) {
 
@@ -18,7 +18,7 @@ export function ScheduledEmailList({ emails }: any) {
               <div className="flex items-center">
                 <div className="text-2xl font-semibold">{item.recipient}</div>
                 <div className={cn("ml-auto")}>
-                {format(new Date(item.date), "PP")}
+                  {format(new Date(item.date), "PP")}
                 </div>
               </div>
               <div className="text-md font-medium">{item.subject}</div>

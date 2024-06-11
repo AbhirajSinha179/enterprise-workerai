@@ -21,6 +21,7 @@ export function EmailList({ emails }: any) {
     toast("Edited the email", {
       description: format(new Date(), "PPpp"),
     })
+    console.log(emailId, subject, body)
     // PUT request
   }
 
@@ -29,6 +30,7 @@ export function EmailList({ emails }: any) {
     toast("Deleted the email", {
       description: format(new Date(), "PPpp"),
     })
+    console.log(emailId)
     // DELETE request
   }
 
@@ -40,12 +42,12 @@ export function EmailList({ emails }: any) {
   }
 
   return (
-    <main className="flex w-full flex-col items-center">
+    <main className="flex w-full flex-col items-center ">
       <div className="mt-6 flex w-full items-center justify-between">
         <h1 className="text-2xl font-bold">Pending Emails</h1>
         <Button onClick={handleApproveAll}>Approve and Smart Schedule All</Button>
       </div>
-      <ul className="my-4 w-full space-y-4">
+      <ul className="my-4 w-full space-y-4 ">
         {emails.map((item: any) => (
           <EmailItem
             handleApprove={handleApprove}

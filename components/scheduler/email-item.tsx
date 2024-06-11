@@ -27,8 +27,9 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
 
   return (
     <>
-      <div className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all")}>
-        <div className="flex w-full flex-col gap-1">
+
+      <div className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all ")}>
+        <div className="flex w-full flex-col gap-1  ">
           <div className="flex items-center">
             <div className="text-2xl font-semibold">{item.recipient}</div>
             <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
@@ -82,7 +83,7 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                 <DialogFooter>
                   <DialogClose asChild>
                     <Button type="submit" onClick={() =>
-                       handleEdit(item.recipient, subject, body)}>
+                      handleEdit(item.recipient, subject, body)}>
                       Save changes
                     </Button>
                   </DialogClose>
