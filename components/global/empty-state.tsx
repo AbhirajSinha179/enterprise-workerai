@@ -1,16 +1,18 @@
-
-import { BanIcon } from 'lucide-react';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface EmptyStateProps {
     message: string;
+    icon: ReactNode;
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({ message }) => {
+const EmptyState: React.FC<EmptyStateProps> = ({ message, icon }) => {
     return (
-        <div className="flex flex-col items-center justify-center h-full p-6 text-center mt-10 ">
-            <BanIcon width={70} height={70} ></BanIcon>
-            <h1 className=" text-foreground mt-5 font-semibold">{message}</h1>
+        <div className="flex flex-col items-center justify-center h-full p-6 text-center mt-5">
+            <div className="mb-4">
+                {icon}
+            </div>
+            <h2 className="text-foreground my-4 font-semibold">{message}</h2>
+            <p style={{ fontSize: '16px' }}>There are currently no leads available. Please check back later or Upload CSV.</p>
         </div>
     );
 };
