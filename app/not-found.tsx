@@ -9,12 +9,15 @@ const Custom404: React.FC = () => {
             <Card className="p-8 text-center bg-muted shadow-lg">
                 <h1 className="text-9xl font-bold text-foreground">404</h1>
                 <p className="text-2xl mt-4 text-foreground">The page you requested could not be found</p>
-                <div className="mt-6">
-                    <Button>
-                        {/* <Link href="/dashboard"> */}
+                <div className="mt-6  flex   space-x-4 justify-center">
+                    <Button className=''>
                         <Link href="/.">
-                            {/* <a className="text-white">Go to Dashboard</a> */}
                             Return to home
+                        </Link>
+                    </Button>
+                    <Button>
+                        <Link href="/dashboard">
+                            Return to Dashboard
                         </Link>
                     </Button>
                 </div>
