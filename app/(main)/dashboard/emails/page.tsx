@@ -1,16 +1,9 @@
-import Link from "next/link"
-import { ContentLayout } from "@/components/layout/content-layout"
-import { EmailList } from "@/components/scheduler/email-list"
-import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails"
-// import {
-//   Breadcrumb,
-//   BreadcrumbItem,
-//   BreadcrumbLink,
-//   BreadcrumbList,
-//   BreadcrumbPage,
-//   BreadcrumbSeparator,
-// } from "@/components/ui/breadcrumb"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Link from "next/link";
+import EmptyState from "@/components/global/empty-state";
+import { ContentLayout } from "@/components/layout/content-layout";
+import { EmailList } from "@/components/scheduler/email-list";
+import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 async function getEmails() {
   // const res = await fetch("https://...", { cache: "no-store" });
@@ -21,10 +14,10 @@ async function getEmails() {
 
   const res = {
     json: async () => [
-      { id: 1, subject: "Hello", body: "Hello, world!", date: "2024-01-01", scheduled: false, recipient: "anshuman@workerai.co" },
       { id: 2, subject: "Hi", body: "Hi, world!", date: "2024-01-02", scheduled: true, recipient: "rohit@workerai.co" },
-      { id: 3, subject: "Hey", body: "Hey, world!", date: "2024-01-03", scheduled: false, recipient: "ayan@workerai.co" },
       { id: 4, subject: "Hola", body: "Hola, world!", date: "2024-01-04", scheduled: true, recipient: "raj@workerai.co" },
+      { id: 3, subject: "Hey", body: "Hey, world!", date: "2024-01-03", scheduled: false, recipient: "ayan@workerai.co" },
+      { id: 1, subject: "Hello", body: "Hello, world!", date: "2024-01-01", scheduled: false, recipient: "anshuman@workerai.co" },
       { id: 5, subject: "Namaste", body: "Namaste, world!", date: "2024-01-05", scheduled: false, recipient: "abhiraj@workerai.co" },
       { id: 6, subject: "Bonjour", body: "Bonjour, world!", date: "2024-01-06", scheduled: false, recipient: "rando@workerai.co" }
     ],
@@ -35,6 +28,8 @@ async function getEmails() {
 
 export default async function Emails() {
   const emails = await getEmails();
+  const pendingEmails = emails.filter(email => !email.scheduled);
+  const scheduledEmails = emails.filter(email => email.scheduled);
 
   return (
     <ContentLayout title="Scheduler">
@@ -43,13 +38,38 @@ export default async function Emails() {
           <TabsTrigger value="pending">Pending</TabsTrigger>
           <TabsTrigger value="scheduled">Scheduled</TabsTrigger>
         </TabsList>
-        {/* need to show something when no emails present */}
-        {!emails && <div>No emails yet bitch</div>}
+
         <TabsContent value="pending" className="space-y-4">
-          <EmailList emails={emails.filter(email => email.scheduled === false)} />
+          {pendingEmails.length === 0 ? (
+            <div>
+              <div className="mt-6 flex w-full items-center justify-between">
+                <h1 className="text-2xl font-bold">Pending Emails</h1>
+              </div>
+              <EmptyState
+                message="No pending emails available."
+              />
+            </div>
+
+
+          ) : (
+            <EmailList emails={pendingEmails} />
+          )}
         </TabsContent>
+
         <TabsContent value="scheduled" className="space-y-4">
-          <ScheduledEmailList emails={emails.filter(email => email.scheduled === true)} />
+          {scheduledEmails.length === 0 ? (
+            <div>
+              <div className="mt-6 flex w-full items-center justify-between">
+                <h1 className="text-2xl font-bold">Scheduled Emails</h1>
+              </div>
+              <EmptyState
+                message="No scheduled emails available."
+              />
+            </div>
+
+          ) : (
+            <ScheduledEmailList emails={scheduledEmails} />
+          )}
         </TabsContent>
       </Tabs>
     </ContentLayout>
