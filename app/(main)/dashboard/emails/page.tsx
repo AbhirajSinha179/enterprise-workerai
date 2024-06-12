@@ -1,7 +1,9 @@
-import Link from "next/link";
+import { CalendarIcon, ClockIcon } from "lucide-react";
+// import Link from "next/link";
 import EmptyState from "@/components/global/empty-state";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { EmailList } from "@/components/scheduler/email-list";
+import InteractiveButton from "@/components/scheduler/inertactive-button"; // Import the new Client Component
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -23,7 +25,7 @@ async function getEmails() {
     ],
   }
 
-  return res.json()
+  return res.json();
 }
 
 export default async function Emails() {
@@ -46,11 +48,11 @@ export default async function Emails() {
                 <h1 className="text-2xl font-bold">Pending Emails</h1>
               </div>
               <EmptyState
-                message="No pending emails available."
+                headerMessage="No pending Emails "
+                containerMessage="Go to Scheduled to check currently scheduled emails"
+                icon={<ClockIcon size={80} />}
               />
             </div>
-
-
           ) : (
             <EmailList emails={pendingEmails} />
           )}
@@ -63,15 +65,15 @@ export default async function Emails() {
                 <h1 className="text-2xl font-bold">Scheduled Emails</h1>
               </div>
               <EmptyState
-                message="No scheduled emails available."
+                headerMessage="No emails scheduled at the moment!"
+                icon={<CalendarIcon size={80} />}
               />
             </div>
-
           ) : (
             <ScheduledEmailList emails={scheduledEmails} />
           )}
         </TabsContent>
       </Tabs>
     </ContentLayout>
-  )
+  );
 }

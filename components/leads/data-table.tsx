@@ -14,6 +14,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table"
+import { UserXIcon } from "lucide-react"
 import * as React from "react"
 
 
@@ -28,7 +29,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import EmptyState from "../global/empty-state"
-import { UserXIcon } from "lucide-react"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -121,7 +121,10 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  <EmptyState message="No Leads Present" icon={<UserXIcon size={80} />} />
+                  <EmptyState
+                    headerMessage="No Leads Present"
+                    icon={<UserXIcon size={80} />}
+                    containerMessage="There are currently no leads available. Please check back later or Upload CSV." />
                 </TableCell>
               </TableRow>
             )}

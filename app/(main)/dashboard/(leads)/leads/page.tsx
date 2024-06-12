@@ -1,8 +1,7 @@
-import Link from "next/link"
-import EmptyState from "@/components/global/empty-state"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { columns } from "@/components/leads/columns"
 import { DataTable } from "@/components/leads/data-table"
+import leadsData from "../data/leads"
 // import {
 //   Breadcrumb,
 //   BreadcrumbItem,
@@ -11,7 +10,6 @@ import { DataTable } from "@/components/leads/data-table"
 //   BreadcrumbPage,
 //   BreadcrumbSeparator,
 // } from "@/components/ui/breadcrumb"
-import leadsData from "../data/leads"
 async function getLeads() {
   return leadsData
 }
