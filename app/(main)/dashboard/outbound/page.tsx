@@ -6,20 +6,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import InputWithCommas from "@/components/custom-components/input-with-commas";
-import {
-  MultiSelector,
-  MultiSelectorContent,
-  MultiSelectorInput,
-  MultiSelectorItem,
-  MultiSelectorList,
-  MultiSelectorTrigger,
-} from "@/components/extension/multiselector";
-import {
-  FileInput,
-  FileUploader,
-  FileUploaderContent,
-  FileUploaderItem,
-} from "@/components/extension/uploader";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { Button } from "@/components/ui/button";
 
@@ -29,6 +15,20 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from "@/components/ui/multiselector";
+import {
+  FileInput,
+  FileUploader,
+  FileUploaderContent,
+  FileUploaderItem,
+} from "@/components/ui/uploader";
 
 const formSchema = z.object({
   value: z.array(z.string()).nonempty("Please select at least one person"),
