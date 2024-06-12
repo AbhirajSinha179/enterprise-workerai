@@ -3,7 +3,6 @@ import { CalendarIcon, ClockIcon } from "lucide-react";
 import EmptyState from "@/components/global/empty-state";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { EmailList } from "@/components/scheduler/email-list";
-import InteractiveButton from "@/components/scheduler/inertactive-button"; // Import the new Client Component
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 

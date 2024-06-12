@@ -1,6 +1,6 @@
 "use client"
 
-import { ClockIcon, InboxIcon, MailOpenIcon, Search } from "lucide-react"
+import { InboxIcon, MailOpenIcon, Search } from "lucide-react"
 import * as React from "react"
 
 import EmptyState from "@/components/global/empty-state" // Ensure this import is correct
