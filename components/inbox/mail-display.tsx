@@ -64,12 +64,31 @@ export function MailDisplay({ mail }: MailDisplayProps) {
       </div>
       <Separator />
       {mail ? (
-        <div className="flex m-4">
-          <Timeline>
-            <TimelineItem status="done">
-              <TimelineHeading>
-                <div className="flex items-start p-4">
-                  <div className="flex items-start gap-4 text-sm">
+        <div className="flex flex-1  flex-col justify-between">
+          <div className="flex m-4">
+            <Timeline>
+              <TimelineItem status="done">
+                <TimelineHeading>
+                  <div className="flex justify-between items-start p-4">
+                    <div className="flex items-start gap-4 text-sm  ">
+                      <div className="grid gap-1">
+                        <div className="font-semibold">{mail.name}</div>
+                        <div className="line-clamp-1 text-xs">{mail.subject}</div>
+                        <div className="line-clamp-1 text-xs">
+                          <span className="font-medium">Reply-To:</span> {mail.email}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex ">
+                      {mail.date && (
+                        <div className="ml-auto text-xs text-muted-foreground">{format(new Date(mail.date), "PPpp")}</div>
+                      )}
+                    </div>
+                  </div>
+                </TimelineHeading>
+                <TimelineDot
+                  status="custom"
+                  customIcon={
                     <Avatar>
                       <AvatarImage alt={mail.name} />
                       <AvatarFallback>
@@ -79,48 +98,73 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                           .join("")}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="grid gap-1">
-                      <div className="font-semibold">{mail.name}</div>
-                      <div className="line-clamp-1 text-xs">{mail.subject}</div>
-                      <div className="line-clamp-1 text-xs">
-                        <span className="font-medium">Reply-To:</span> {mail.email}
+                  }
+                />
+                <TimelineLine />
+                <TimelineContent>
+                  <div className="flex-1 whitespace-pre-wrap p-4 text-sm">{mail.text}</div>
+                </TimelineContent>
+
+              </TimelineItem>
+              <TimelineItem status="done">
+                <TimelineHeading>
+                  <div className="flex ">
+                    <div className="flex items-start p-4 ">
+                      <div className="flex items-start gap-4 text-sm  ">
+                        <div className="grid gap-1">
+                          <div className="font-semibold">{mail.name}</div>
+                          <div className="line-clamp-1 text-xs">{mail.subject}</div>
+                          <div className="line-clamp-1 text-xs">
+                            <span className="font-medium">Reply-To:</span> {mail.email}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex ">
+                        {mail.date && (
+                          <div className="ml-auto text-xs text-muted-foreground">{format(new Date(mail.date), "PPpp")}</div>
+                        )}
                       </div>
                     </div>
                   </div>
-                  {mail.date && (
-                    <div className="ml-auto text-xs text-muted-foreground">{format(new Date(mail.date), "PPpp")}</div>
-                  )}
+                </TimelineHeading>
+                <TimelineDot
+                  status="custom"
+                  customIcon={
+                    <Avatar>
+                      <AvatarImage alt={mail.name} />
+                      <AvatarFallback>
+                        {mail.name
+                          .split(" ")
+                          .map((chunk) => chunk[0])
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                  }
+                />
+
+                <TimelineContent>
+                  <div className="flex-1 whitespace-pre-wrap p-4 text-sm">{mail.text}</div>
+                </TimelineContent>
+
+              </TimelineItem>
+            </Timeline>
+          </div>
+          <div className="p-4">
+            <form>
+              <div className="grid gap-4">
+                <Textarea className="p-4" placeholder={`Reply ${mail.name}...`} />
+                <div className="flex items-center">
+                  <Button onClick={(e) => e.preventDefault()} size="sm" className="ml-auto">
+                    Send
+                  </Button>
                 </div>
-
-              </TimelineHeading>
-              <TimelineDot status="done" />
-              <TimelineLine done />
-              <TimelineContent>
-                Before diving into coding, it is crucial to plan your software project
-                thoroughly. This involves defining the project scope, setting clear
-                objectives, and identifying the target audience. Additionally,
-                creating a timeline and allocating resources appropriately will
-                contribute to a successful development process.
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem status="done">
-              <TimelineHeading side="right" >
-                Design
-              </TimelineHeading>
-              <TimelineDot status="done" />
-              <TimelineLine done />
-              <TimelineContent>
-                Designing your software involves creating a blueprint that outlines
-                the structure, user interface, and functionality of your application.
-                Consider user experience (UX) principles, wireframing, and prototyping
-                to ensure an intuitive and visually appealing design.
-              </TimelineContent>
-            </TimelineItem>
-          </Timeline>
-
-
+              </div>
+            </form>
+          </div>
 
         </div>
+
+
       ) : (
         <div className="p-8 text-center text-muted-foreground">No message selected</div>
       )}
