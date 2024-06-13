@@ -1,3 +1,4 @@
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs"
 import Link from "next/link"
 // import { ModeToggle } from "@/components/global/mode-toggle"
 // import { UserNav } from "@/components/admin-panel/user-nav"
@@ -5,7 +6,6 @@ import Link from "next/link"
 // import { Button } from "../ui/button"
 import { WorkerAILogo } from "../global/logo"
 // import { ArrowBigRight } from "lucide-react"
-import { SignInButton, SignedOut, SignedIn } from "@clerk/nextjs"
 
 export function SiteNav() {
   return (

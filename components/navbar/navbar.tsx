@@ -1,6 +1,6 @@
+import { UserButton } from "@clerk/nextjs"
 import { ModeToggle } from "@/components/global/mode-toggle"
 import { SheetMenu } from "@/components/sidebar/sheet-menu"
-import { UserButton } from "@clerk/nextjs"
 
 interface NavbarProps {
   title: string
