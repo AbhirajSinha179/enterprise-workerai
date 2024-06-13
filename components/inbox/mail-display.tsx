@@ -13,6 +13,7 @@ import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import MailItem from "./thread-item"
 import { ScrollArea } from "../ui/scroll-area"
 
 interface MailDisplayProps {
@@ -71,7 +72,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                   </Avatar>
                 </div>
 
-                <div className="bg-white mx-auto m-4 h-[160px] w-px">
+                <div className="bg-muted mx-auto my-2 h-[19vh] w-px">
                 </div>
                 <div>
                   <Avatar>
@@ -85,68 +86,20 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                   </Avatar>
                 </div>
               </div>
-              <div className="flex flex-col  justify-between " >
-                <div>
-                  <div className="">
-                    <div className=" overflow-auto ">
-                      <div className="flex  p-4">
-                        <div className="flex items-start gap-4 text-sm">
-                          <div className="grid gap-1">
-                            <div className="font-semibold">{mail.name}</div>
-                            <div className="line-clamp-1 text-xs">{mail.subject}</div>
-                            <div className="line-clamp-1 text-xs">
-                              <span className="font-medium">Reply-To:</span> {mail.email}
-                            </div>
-                          </div>
-                        </div>
-                        {mail.date && (
-                          <div className="ml-auto text-xs text-muted-foreground">{format(new Date(mail.date), "PPpp")}</div>
-                        )}
-                      </div>
-                      {/* <Separator /> */}
-                      <div className="flex-1 whitespace-pre-wrap p-4 text-sm">{mail.text}</div>
-
-                      <Separator className="mt-auto" />
-                      {/* Thread starts  */}
-                      <div className="flex flex-col ">
-                        <div className="flex   text-sm  justify-start  p-2 mt-2 mx-2">
-                          <div className="">
-                            <div className="font-semibold">{mail.name}</div>
-                          </div>
-                        </div>
-                        <div className="flex whitespace-pre-wrap p-4 text-sm ">{mail.text}</div>
-                        <Separator className="mt-auto" />
-                      </div>
-                      <div className="flex flex-col ">
-                        <div className="flex   text-sm  justify-start  p-2 mt-2 mx-2">
-                          <div className="">
-                            <div className="font-semibold">{mail.name}</div>
-                          </div>
-                        </div>
-                        <div className="flex whitespace-pre-wrap p-4 text-sm ">{mail.text}</div>
-                        <Separator className="mt-auto" />
-                      </div>
-                      <div className="flex flex-col ">
-                        <div className="flex   text-sm  justify-start  p-2 mt-2 mx-2">
-                          <div className="">
-                            <div className="font-semibold">{mail.name}</div>
-                          </div>
-                        </div>
-                        <div className="flex whitespace-pre-wrap p-4 text-sm ">{mail.text}</div>
-                        <Separator className="mt-auto" />
-                      </div>
-                    </div>
-
+              <div className="flex flex-col justify-between">
+                <div className="">
+                  <div className="overflow-auto">
+                    <MailItem mail={mail} />
+                  </div>
+                  <div className="overflow-auto">
+                    <MailItem mail={mail} />
+                  </div>
+                  <div className="overflow-auto">
+                    <MailItem mail={mail} />
                   </div>
 
-                  {/* </ScrollArea> */}
                 </div>
-
-
-
               </div>
-
-
             </div>
 
           </ScrollArea>
