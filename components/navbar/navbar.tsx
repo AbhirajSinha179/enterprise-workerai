@@ -1,3 +1,4 @@
+import { UserButton } from "@clerk/nextjs"
 import { ModeToggle } from "@/components/global/mode-toggle"
 import { SheetMenu } from "@/components/sidebar/sheet-menu"
 
@@ -16,8 +17,9 @@ export function Navbar({ title }: NavbarProps) {
           <SheetMenu />
           <h1 className=" tracking-wide font-bold">{title}</h1>
         </div>
-        <div className="flex flex-1 items-center justify-end space-x-2">
+        <div className="flex flex-1 items-center justify-end space-x-4">
           <ModeToggle />
+          <UserButton />
         </div>
       </div>
     </header>
