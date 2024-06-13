@@ -44,31 +44,31 @@ export function MailDisplay({ mail }: MailDisplayProps) {
       </div>
       <Separator />
       {mail ? (
-        <ScrollArea>
-          <div className="flex flex-1 flex-col justify-between">
-            <div className="flex m-4 h-[65vh] overflow-auto">
-              {/* when full thread data available can map through it  */}
+        <div className="flex flex-1 flex-col justify-between">
+          <div className="flex m-4 h-[80vh]">
+            {/* when full thread data available can map through it  */}
+            <ScrollArea>
               <Timeline>
                 <MailTimelineItem mail={mail} showLine={true} />
                 <MailTimelineItem mail={mail} showLine={true} />
                 <MailTimelineItem mail={mail} showLine={false} />
               </Timeline>
-            </div>
-            <div className="px-4 py-2">
-              <form>
-                <div className="grid gap-2">
-                  <Textarea className="p-4" placeholder={`Reply to ${mail.name}...`} />
-                  <div className="flex items-center">
-                    <Button onClick={(e) => e.preventDefault()} size="sm" className="ml-auto">
-                      Send
-                    </Button>
-                  </div>
-                </div>
-              </form>
-            </div>
+            </ScrollArea>
           </div>
+          {/* <div className="px-4 py-2">
+            <form>
+              <div className="grid gap-2">
+                <Textarea className="p-4" placeholder={`Reply to ${mail.name}...`} />
+                <div className="flex items-center">
+                  <Button onClick={(e) => e.preventDefault()} size="sm" className="ml-auto">
+                    Send
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </div> */}
+        </div>
 
-        </ScrollArea>
 
       ) : (
         <div className="p-8 text-center text-muted-foreground">No message selected</div>
