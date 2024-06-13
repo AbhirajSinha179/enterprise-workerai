@@ -5,16 +5,24 @@ import { format } from "date-fns"
 import { MoreVertical, Reply } from "lucide-react"
 
 import { Mail } from "@/components/inbox/data"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 // import { Calendar } from "@/components/ui/calendar"
 import { DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
-import { Textarea } from "@/components/ui/textarea"
+// import { Textarea } from "@/components/ui/textarea"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import MailItem from "./thread-item"
-import { ScrollArea } from "../ui/scroll-area"
+// import MailItem from "./thread-item"
+// import { ScrollArea } from "../ui/scroll-area"
+import {
+  Timeline,
+  TimelineContent,
+  TimelineDot,
+  TimelineHeading,
+  TimelineItem,
+  TimelineLine,
+} from "../ui/timeline"
 
 interface MailDisplayProps {
   mail: Mail | null
@@ -56,68 +64,38 @@ export function MailDisplay({ mail }: MailDisplayProps) {
       </div>
       <Separator />
       {mail ? (
-        <div className="flex flex-1 flex-col">
-          <ScrollArea className="h-[70vh]">
-            <div className="flex flex-row">
-              <div className="flex p-4 flex-col  ">
-                <div>
-                  <Avatar>
-                    <AvatarImage alt={mail.name} />
-                    <AvatarFallback>
-                      {mail.name
-                        .split(" ")
-                        .map((chunk) => chunk[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                </div>
+        <div className="flex m-4">
+          <Timeline>
+            <TimelineItem status="done">
+              <TimelineHeading>
+                Plan!
 
-                <div className="bg-muted mx-auto my-2 h-[19vh] w-px">
-                </div>
-                <div>
-                  <Avatar>
-                    <AvatarImage alt={mail.name} />
-                    <AvatarFallback>
-                      {mail.name
-                        .split(" ")
-                        .map((chunk) => chunk[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <div className="">
-                  <div className="overflow-auto">
-                    <MailItem mail={mail} />
-                  </div>
-                  <div className="overflow-auto">
-                    <MailItem mail={mail} />
-                  </div>
-                  <div className="overflow-auto">
-                    <MailItem mail={mail} />
-                  </div>
+              </TimelineHeading>
+              <TimelineDot status="done" />
+              <TimelineLine done />
+              <TimelineContent>
+                Before diving into coding, it is crucial to plan your software project
+                thoroughly. This involves defining the project scope, setting clear
+                objectives, and identifying the target audience. Additionally,
+                creating a timeline and allocating resources appropriately will
+                contribute to a successful development process.
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem status="done">
+              <TimelineHeading side="right" >
+                Design
+              </TimelineHeading>
+              <TimelineDot status="done" />
+              <TimelineLine done />
+              <TimelineContent>
+                Designing your software involves creating a blueprint that outlines
+                the structure, user interface, and functionality of your application.
+                Consider user experience (UX) principles, wireframing, and prototyping
+                to ensure an intuitive and visually appealing design.
+              </TimelineContent>
+            </TimelineItem>
+          </Timeline>
 
-                </div>
-              </div>
-            </div>
-
-          </ScrollArea>
-
-
-
-          <div className="p-2    flex ">
-            <form className="w-full">
-              <div className="grid gap-4">
-                <Textarea className="p-4" placeholder={`Reply ${mail.name}...`} />
-                <div className="flex items-center">
-                  <Button onClick={(e) => e.preventDefault()} size="sm" className="ml-auto">
-                    Send
-                  </Button>
-                </div>
-              </div>
-            </form>
-          </div>
 
 
         </div>
