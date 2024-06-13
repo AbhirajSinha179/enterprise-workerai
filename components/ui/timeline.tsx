@@ -1,7 +1,6 @@
 import { CheckIcon, Cross1Icon } from "@radix-ui/react-icons"
 import { cva, VariantProps } from "class-variance-authority"
 import React from "react"
-
 import { cn } from "@/lib/utils"
 
 const timelineVariants = cva("grid", {
