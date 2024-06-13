@@ -7,6 +7,7 @@ import { BentoGridLanding } from "@/components/site/bento"
 import { Button } from "@/components/ui/button"
 import { LP_GRID_ITEMS } from "lp-items"
 
+
 export const metadata: Metadata = {
   title: "Worker AI",
   twitter: {
@@ -29,11 +30,12 @@ export const metadata: Metadata = {
 // TODO: Adjust the tabs colours, no contrast due to tailwind config change
 
 export default function Web() {
+
   return (
-    <>
+    <main className="overflow-hidden">
       {/* <SiteNav /> */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-      <div className="absolute top-0 z-[-2] h-screen w-screen bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+      <div className="absolute inset-0 z-[-1] overflow-hidden bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+      <div className="fixed top-0 h-screen w-screen overflow-hidden bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
       <section className="relative">
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center md:my-20 lg:py-16">
           <div className="mx-auto place-self-center">
@@ -142,6 +144,6 @@ export default function Web() {
           </div>
         </div>
       </section>
-    </>
+    </main>
   )
 }
