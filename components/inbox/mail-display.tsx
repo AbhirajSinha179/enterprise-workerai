@@ -5,13 +5,13 @@ import { format } from "date-fns"
 import { MoreVertical, Reply } from "lucide-react"
 
 import { Mail } from "@/components/inbox/data"
-// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-// import { Calendar } from "@/components/ui/calendar"
+import { Calendar } from "@/components/ui/calendar"
 import { DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
-// import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 // import MailItem from "./thread-item"
 // import { ScrollArea } from "../ui/scroll-area"
@@ -68,7 +68,29 @@ export function MailDisplay({ mail }: MailDisplayProps) {
           <Timeline>
             <TimelineItem status="done">
               <TimelineHeading>
-                Plan!
+                <div className="flex items-start p-4">
+                  <div className="flex items-start gap-4 text-sm">
+                    <Avatar>
+                      <AvatarImage alt={mail.name} />
+                      <AvatarFallback>
+                        {mail.name
+                          .split(" ")
+                          .map((chunk) => chunk[0])
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="grid gap-1">
+                      <div className="font-semibold">{mail.name}</div>
+                      <div className="line-clamp-1 text-xs">{mail.subject}</div>
+                      <div className="line-clamp-1 text-xs">
+                        <span className="font-medium">Reply-To:</span> {mail.email}
+                      </div>
+                    </div>
+                  </div>
+                  {mail.date && (
+                    <div className="ml-auto text-xs text-muted-foreground">{format(new Date(mail.date), "PPpp")}</div>
+                  )}
+                </div>
 
               </TimelineHeading>
               <TimelineDot status="done" />
