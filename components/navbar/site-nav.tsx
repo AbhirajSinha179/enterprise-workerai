@@ -7,6 +7,8 @@ import Link from "next/link"
 import { WorkerAILogo } from "../global/logo"
 // import { ArrowBigRight } from "lucide-react"
 
+// TODO need to check nav background for transparency issue
+
 export function SiteNav() {
   return (
     <header className="dark:supports-backdrop-blur:bg-background/60 supports-backdrop-blur:bg-background/70 sticky top-0 z-10 mx-auto w-full shadow backdrop-blur-sm ">
@@ -40,7 +42,10 @@ export function SiteNav() {
         <div className="mr-2 flex items-center justify-end space-x-4 md:order-2 rtl:space-x-reverse">
           <Link href={"/dashboard"}>
             <SignedOut>
-              <SignInButton />
+              <button className="relative inline-flex h-12 w-full items-center justify-center rounded-md bg-white px-6 font-medium text-gray-950 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50">
+                <div className="absolute -inset-0.5 -z-10 rounded-lg bg-gradient-to-b from-[#c7d2fe] to-[#8678f9] opacity-75 blur" />
+                <SignInButton />
+              </button>
             </SignedOut>
             <SignedIn>
               <button className="relative inline-flex h-12 w-full items-center justify-center rounded-md bg-white px-6 font-medium text-gray-950 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50">

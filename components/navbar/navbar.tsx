@@ -6,7 +6,6 @@ interface NavbarProps {
   title: string
 }
 
-// TODO add user avatar / login info with mode toggle once auth is configured
 // TODO also add search bar which will be for navigating across features
 
 export function Navbar({ title }: NavbarProps) {
