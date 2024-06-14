@@ -10,6 +10,14 @@ import { ContentLayout } from "@/components/layout/content-layout";
 import { Button } from "@/components/ui/button";
 
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
   Form,
   FormField,
   FormItem,
@@ -32,29 +40,21 @@ import {
 
 
 
-import Link from "next/link"
-import { CircleUser, Menu, Package2, Search } from "lucide-react"
+// import Link from "next/link"
+// import { CircleUser, Menu, Package2, Search } from "lucide-react"
 
 // import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+// import { Checkbox } from "@/components/ui/checkbox"
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+//   DropdownMenuLabel,
+//   DropdownMenuSeparator,
+//   DropdownMenuTrigger,
+// } from "@/components/ui/dropdown-menu"
+// import { Input } from "@/components/ui/input"
+// import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 
 
@@ -242,60 +242,19 @@ export default function OutboundSetting() {
             {/* <Button>Save</Button> */}
           </CardFooter>
         </Card>
-        <Card x-chunk="dashboard-04-chunk-1">
-          <CardHeader>
-            <CardTitle>Job Titles</CardTitle>
-            <CardDescription>
-              Lorem, ipsum dolor sit amet consectetur adipisicing
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="w-full mt-5 ">
-              {/* <h1 className="w-full px-2 mb-2">Job Titles</h1> */}
-              <InputWithCommas >
-              </InputWithCommas>
-            </div>
-          </CardContent>
-          <CardFooter className="border-t px-6 py-4">
-            <Button>Save</Button>
-          </CardFooter>
-        </Card>
-        <Card x-chunk="dashboard-04-chunk-1">
-          <CardHeader>
-            <CardTitle>Outbound Keywords</CardTitle>
-            <CardDescription>
-              Lorem, ipsum dolor sit amet consectetur adipisicing
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="w-full mt-5 ">
-              {/* <h1 className="w-full px-2 mb-2">Job Titles</h1> */}
-              <InputWithCommas >
-              </InputWithCommas>
-            </div>
-          </CardContent>
-          <CardFooter className="border-t px-6 py-4">
-            <Button>Save</Button>
-          </CardFooter>
-        </Card>
-        <Card x-chunk="dashboard-04-chunk-1">
-          <CardHeader>
-            <CardTitle>Add blacklisted email domains</CardTitle>
-            <CardDescription>
-              Lorem, ipsum dolor sit amet consectetur adipisicing
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="w-full mt-5 ">
-              {/* <h1 className="w-full px-2 mb-2">Job Titles</h1> */}
-              <InputWithCommas >
-              </InputWithCommas>
-            </div>
-          </CardContent>
-          <CardFooter className="border-t px-6 py-4">
-            <Button>Save</Button>
-          </CardFooter>
-        </Card>
+        <InputWithCommas
+          cardTitle="Job Titles"
+          cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing"
+        />
+        <InputWithCommas
+          cardTitle="Outbound Keywords"
+          cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing"
+        />
+        <InputWithCommas
+          cardTitle="Add blacklisted email domains"
+          cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing"
+        />
+
       </div>
 
     </ContentLayout>
