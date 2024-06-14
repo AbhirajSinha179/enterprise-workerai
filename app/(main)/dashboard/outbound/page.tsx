@@ -65,14 +65,14 @@ export default function OutboundSetting() {
         <CSVUpload cardTitle="Upload CSV" cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing" />
 
         <Card x-chunk="dashboard-04-chunk-1">
-          <CardHeader className="mx-2">
+          <CardHeader className="mx-3">
             <CardTitle>Location</CardTitle>
             <CardDescription>
               Lorem, ipsum dolor sit amet consectetur adipisicing
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="w-full mt-5 ">
+            <div className="w-full  ">
               <Form {...multiForm}>
                 <form
                   id="locationForm"
