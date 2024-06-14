@@ -4,9 +4,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
-import InputWithCommas from "@/components/custom-components/input-with-commas";
 import { ContentLayout } from "@/components/layout/content-layout";
 import CSVUpload from "@/components/outbound/csvUploader";
+import InputWithCommas from "@/components/outbound/input-with-commas";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -65,7 +65,7 @@ export default function OutboundSetting() {
         <CSVUpload cardTitle="Upload CSV" cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing" />
 
         <Card x-chunk="dashboard-04-chunk-1">
-          <CardHeader>
+          <CardHeader className="mx-2">
             <CardTitle>Location</CardTitle>
             <CardDescription>
               Lorem, ipsum dolor sit amet consectetur adipisicing

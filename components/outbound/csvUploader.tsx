@@ -48,7 +48,7 @@ export default function CSVUpload({ cardTitle, cardDescription }: CSVUploader) {
             </CardHeader>
             <CardContent>
                 <div className="flex my-2">
-                    <div className="outline-dashed outline-1 outline-muted rounded-md w-full mx-2">
+                    <div className="outline-dashed outline-1 outline-muted rounded-md w-full mx-1">
                         <FileUploader
                             value={files}
                             onValueChange={setFiles}
@@ -97,7 +97,7 @@ export default function CSVUpload({ cardTitle, cardDescription }: CSVUploader) {
                     </div>
                 </div>
             </CardContent>
-            <CardFooter className="border-t px-5 py-4">
+            <CardFooter className="border-t  p-4">
                 <div className="flex flex-col justify-center mx-3">
                     <Button type="button" onClick={handleSubmitCSV} size={"lg"}>Submit</Button>
                 </div>
