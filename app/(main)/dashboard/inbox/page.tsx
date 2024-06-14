@@ -1,4 +1,4 @@
-import Link from "next/link"
+// import Link from "next/link"
 import { mails } from "@/components/inbox/data"
 import { Inbox } from "@/components/inbox/mail"
 import { ContentLayout } from "@/components/layout/content-layout"

@@ -1,4 +1,20 @@
-import { ArrowBigRightDash, BarChart, Bookmark, Clock10, InboxIcon, LayoutGrid, LucideSquareArrowOutUpRight, Mail, PersonStanding, PersonStandingIcon, Settings, SquarePen, Tag, Users } from "lucide-react"
+import {
+  ArrowBigRightDash,
+  BarChart,
+  Bookmark,
+  Calendar,
+  Clock10,
+  InboxIcon,
+  LayoutGrid,
+  LucideSquareArrowOutUpRight,
+  Mail,
+  PersonStanding,
+  PersonStandingIcon,
+  Settings,
+  SquarePen,
+  Tag,
+  Users,
+} from "lucide-react"
 
 type Submenu = {
   href: string
@@ -42,9 +58,8 @@ export function getMenuList(pathname: string): Group[] {
           href: `${DASHBOARD_PATH}/emails`,
           label: "Scheduler",
           active: pathname.includes("/emails"),
-          icon: Clock10,
-          submenus: [
-          ],
+          icon: Calendar,
+          submenus: [],
         },
         {
           href: `${DASHBOARD_PATH}/inbox`,
@@ -140,7 +155,7 @@ export const getLandingNavList = () => [
 //       </div>
 //     ),
 //   },
-//   { 
+//   {
 //     title: "Version control",
 //     description:
 //       "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
