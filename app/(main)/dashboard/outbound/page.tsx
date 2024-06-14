@@ -75,14 +75,15 @@ export default function OutboundSetting() {
             <div className="w-full mt-5 ">
               <Form {...multiForm}>
                 <form
+                  id="locationForm"
                   onSubmit={multiForm.handleSubmit(onSubmit)}
-                  className="flex items-center  w-full  px-2 "
+                  className="flex items-center w-full px-2"
                 >
                   <FormField
                     control={multiForm.control}
                     name="value"
                     render={({ field }) => (
-                      <FormItem className="w-full  pr-2">
+                      <FormItem className="w-full pr-2">
                         <MultiSelector
                           onValuesChange={field.onChange}
                           values={field.value}
@@ -106,16 +107,17 @@ export default function OutboundSetting() {
                       </FormItem>
                     )}
                   />
-                  <div className="flex  mx-2">
-                    <Button type="submit" size={"lg"}>
-                      Submit
-                    </Button>
-                  </div>
                 </form>
               </Form>
             </div>
           </CardContent>
-          <CardFooter className="border-t px-6 py-4"></CardFooter>
+          <CardFooter className="border-t px-6 py-4">
+            <div className="flex mx-2">
+              <Button type="submit" form="locationForm" size={"lg"}>
+                Submit
+              </Button>
+            </div>
+          </CardFooter>
         </Card>
 
         <InputWithCommas
