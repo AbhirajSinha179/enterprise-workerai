@@ -107,7 +107,7 @@ export function Inbox({
         <ResizablePanel defaultSize={defaultLayout[2]}>
           <MailDisplay
             // change mail to thread
-            mail={threads.find((item: ThreadList) => item.threadid === config.selected) || null}
+            threadData={threads.find((item: ThreadList) => item.threadid === config.selected) || null}
           />
         </ResizablePanel>
       </ResizablePanelGroup>

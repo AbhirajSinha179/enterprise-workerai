@@ -10,11 +10,17 @@ import { ScrollArea } from "../ui/scroll-area";
 import { Timeline } from "../ui/timeline";
 
 interface MailDisplayProps {
-  mail: any | null;
+  // threadData: any | null;
+  // threadData: Mail[];
+  threadData: ThreadList | null;
+}
+interface ThreadList {
+  threadid: string,
+  thread: Mail[]
 }
 
-export function MailDisplay({ mail }: MailDisplayProps) {
-  const thread = mail.thread;
+export function MailDisplay({ threadData }: MailDisplayProps) {
+  const thread = threadData?.thread;
 
   return (
     <div className="flex h-full flex-col">
@@ -22,7 +28,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
         <div className="ml-auto flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!threadData}>
                 <Reply className="size-4" />
                 <span className="sr-only">Reply</span>
               </Button>
@@ -33,7 +39,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
         <Separator orientation="vertical" className="mx-2 h-6" />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" disabled={!mail}>
+            <Button variant="ghost" size="icon" disabled={!threadData}>
               <MoreVertical className="size-4" />
               <span className="sr-only">More</span>
             </Button>
