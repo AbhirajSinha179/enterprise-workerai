@@ -1,5 +1,6 @@
 import { X } from "lucide-react"
 import { ChangeEvent, KeyboardEvent, useState } from "react"
+import { toast } from "sonner"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,6 +12,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+
 
 interface InputWithCommasProps {
     cardTitle: string;
@@ -44,6 +46,9 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
             setSelectedOptions((prev) => [...prev, ...newValues])
             setInputValue("")
         }
+        toast.success(`${cardTitle} Submitted`, {
+            description: `${newValues.join(", ")}`,
+        })
         console.log(selectedOptions)
     }
 
@@ -92,5 +97,4 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
             </CardFooter>
         </Card>
     )
-
 }
