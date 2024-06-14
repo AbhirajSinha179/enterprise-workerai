@@ -4,16 +4,18 @@ import MailTimelineItem from "@/components/inbox/thread-item";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
+// import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Timeline } from "../ui/timeline";
 import { ScrollArea } from "../ui/scroll-area";
+import { Timeline } from "../ui/timeline";
 
 interface MailDisplayProps {
-  mail: Mail | null;
+  mail: any | null;
 }
 
 export function MailDisplay({ mail }: MailDisplayProps) {
+  const thread = mail.thread;
+
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center p-2">
@@ -43,15 +45,15 @@ export function MailDisplay({ mail }: MailDisplayProps) {
         </DropdownMenu>
       </div>
       <Separator />
-      {mail ? (
+      {thread ? (
         <div className="flex flex-1 flex-col justify-between">
           <div className="flex m-4 h-[80vh]">
             {/* when full thread data available can map through it  */}
             <ScrollArea>
               <Timeline>
-                <MailTimelineItem mail={mail} showLine={true} />
-                <MailTimelineItem mail={mail} showLine={true} />
-                <MailTimelineItem mail={mail} showLine={false} />
+                {thread.map((message: Mail) => (
+                  <MailTimelineItem key={message.id} mail={message} showLine={true} />
+                ))}
               </Timeline>
             </ScrollArea>
           </div>
@@ -68,8 +70,6 @@ export function MailDisplay({ mail }: MailDisplayProps) {
             </form>
           </div> */}
         </div>
-
-
       ) : (
         <div className="p-8 text-center text-muted-foreground">No message selected</div>
       )}
