@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input"
 
 interface InputWithCommasProps {
     cardTitle: string;
-    cardDescription: string;
+    cardDescription: string | null;
 }
 
 export default function InputWithCommas({ cardTitle, cardDescription }: InputWithCommasProps) {

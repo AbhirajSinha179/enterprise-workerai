@@ -1,12 +1,12 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Paperclip } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import InputWithCommas from "@/components/custom-components/input-with-commas";
 import { ContentLayout } from "@/components/layout/content-layout";
+import CSVUpload from "@/components/outbound/csvUploader";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -16,7 +16,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   Form,
   FormField,
@@ -31,39 +31,12 @@ import {
   MultiSelectorList,
   MultiSelectorTrigger,
 } from "@/components/ui/multiselector";
-import {
-  FileInput,
-  FileUploader,
-  FileUploaderContent,
-  FileUploaderItem,
-} from "@/components/ui/uploader";
-
-
-
-// import Link from "next/link"
-// import { CircleUser, Menu, Package2, Search } from "lucide-react"
-
-// import { Button } from "@/components/ui/button"
-// import { Checkbox } from "@/components/ui/checkbox"
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuLabel,
-//   DropdownMenuSeparator,
-//   DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu"
-// import { Input } from "@/components/ui/input"
-// import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-
-
 
 const formSchema = z.object({
   value: z.array(z.string()).nonempty("Please select at least one person"),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
-
 
 const locations = [
   { name: "India" },
@@ -73,16 +46,6 @@ const locations = [
 
 export default function OutboundSetting() {
   const [submittedValues, setSubmittedValues] = useState(new Set<string>());
-  const [files, setFiles] = useState<File[] | null>(null);
-  const dropZoneConfig = {
-    maxFiles: 5,
-    maxSize: 1024 * 1024 * 4,
-    multiple: true,
-    accept: {
-      'text/csv': ['.csv']
-    },
-  };
-
   const multiForm = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: { value: [] },
@@ -96,106 +59,20 @@ export default function OutboundSetting() {
     console.log("Submitted Values Set:", newValues);
   };
 
-  const handleSubmitCSV = () => {
-    console.log("CSV File:", files)
-  }
-
   return (
     <ContentLayout title="Outbound Settings">
       <div className="grid gap-6">
-        {/* <Card x-chunk="dashboard-04-chunk-1">
-          <CardHeader>
-            <CardTitle>Upload </CardTitle>
-            <CardDescription>
-              Lorem, ipsum dolor sit amet consectetur adipisicing
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form>
-              <Input placeholder="Store Name" />
-            </form>
-          </CardContent>
-          <CardFooter className="border-t px-6 py-4">
-            <Button>Save</Button>
-          </CardFooter>
-        </Card> */}
-        <Card x-chunk="dashboard-04-chunk-2">
-          <CardHeader>
-            <CardTitle className=" mx-1">Upload Csv</CardTitle>
-            <CardDescription className=" mx-1">
-              Lorem, ipsum dolor sit amet consectetur adipisicing
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div >
-              {/* <h1 className=" w-full px-2 " >Upload CSV </h1> */}
-              <div className=" flex my-2 ">
-                <div className="outline-dashed outline-1 outline-muted rounded-md w-full mx-2">
-                  <FileUploader
-                    value={files}
-                    onValueChange={setFiles}
-                    dropzoneOptions={dropZoneConfig}
-                    className="relative bg-background rounded-lg py-2 "
-                  >
-                    <FileInput >
-                      <div className="flex items-center justify-center flex-col pt-3 pb-4 w-full">
-                        <>
-                          <svg
-                            className="size-8 mb-3 text-gray-500 dark:text-gray-400"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 20 16"
-                          >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                            />
-                          </svg>
-                          <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
-                            <span className="font-semibold">Click to upload</span>
-                            &nbsp; or drag and drop
-                          </p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            Upload CSV file
-                          </p>
-                        </>
-                      </div>
-                    </FileInput >
-                    <FileUploaderContent>
-                      {files &&
-                        files.length > 0 &&
-                        files.map((file, i) => (
-                          <FileUploaderItem key={i} index={i}>
-                            <Paperclip className="size-4 stroke-current" />
-                            <span>{file.name}</span>
-                          </FileUploaderItem>
-                        ))}
-                    </FileUploaderContent>
-                  </FileUploader>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-          <CardFooter className="border-t px-5 py-4">
-            <div className="flex flex-col justify-center mx-3">
-              <Button type="button" onClick={handleSubmitCSV} size={"lg"}>Submit</Button>
-            </div>
-          </CardFooter>
-        </Card>
+        <CSVUpload cardTitle="Upload CSV" cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing" />
+
         <Card x-chunk="dashboard-04-chunk-1">
           <CardHeader>
-            <CardTitle>Location </CardTitle>
+            <CardTitle>Location</CardTitle>
             <CardDescription>
               Lorem, ipsum dolor sit amet consectetur adipisicing
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="w-full mt-5 ">
-              {/* <h1 className=" w-full px-2 " >Location</h1> */}
               <Form {...multiForm}>
                 <form
                   onSubmit={multiForm.handleSubmit(onSubmit)}
@@ -238,10 +115,9 @@ export default function OutboundSetting() {
               </Form>
             </div>
           </CardContent>
-          <CardFooter className="border-t px-6 py-4">
-            {/* <Button>Save</Button> */}
-          </CardFooter>
+          <CardFooter className="border-t px-6 py-4"></CardFooter>
         </Card>
+
         <InputWithCommas
           cardTitle="Job Titles"
           cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing"
@@ -254,9 +130,7 @@ export default function OutboundSetting() {
           cardTitle="Add blacklisted email domains"
           cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing"
         />
-
       </div>
-
     </ContentLayout>
   );
 }
