@@ -1,3 +1,4 @@
+
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs"
 import Link from "next/link"
 // import { ModeToggle } from "@/components/global/mode-toggle"
@@ -11,7 +12,9 @@ import { WorkerAILogo } from "../global/logo"
 
 export function SiteNav() {
   return (
-    <header className="dark:supports-backdrop-blur:bg-background/60 supports-backdrop-blur:bg-background/70 sticky top-0 z-10 mx-auto w-full shadow backdrop-blur-sm ">
+    <header className={`dark:supports-backdrop-blur:bg-background/60 supports-backdrop-blur:bg-background/70 sticky top-0 z-20 mx-auto w-full  border-none backdrop-blur-sm dark:backdrop-filter-none`}    >
+      <div className="absolute w-full h-[120%] block dark:bg-gradient-to-t from-transparent to-black/90 md:to-black/70 -z-10  bg-blend-overlay ">
+      </div>
       <div className="mx-2 flex h-20 max-w-6xl items-center justify-between sm:mx-auto sm:p-2">
         <div className="flex items-center space-x-4 lg:space-x-0 rtl:space-x-reverse">
           {/* <SheetMenu /> */}
