@@ -121,6 +121,39 @@ export const getLandingNavList = () => [
   },
 ]
 
+export const landingConfig = {
+  hero: {
+    title: "Adapt Automate Accelerate",
+    description: "Hyper-scale your outbounds with WorkerAI",
+    cta: "Join the Waitlist",
+  },
+  imageCover: {
+    // title: "Orthodox sales systems are slowing down your business growth.",
+    // description: "Understand how to get through this bs",
+    imageUri: "/assets/images/dashboard_random_mockup.jpg",
+  },
+  features: {
+    title: "Orthodox sales systems are slowing down your business growth.",
+    description: "Understand how to get through this bs",
+    features: [
+      {
+        title: "Feature 2",
+        description: "Manual lead research and email personalization are time-consuming, reducing productivity.",
+      },
+      {
+        title: "Feature 1",
+        description:
+          "Traditional sales methods struggle to scale efficiently, needing more manpower for larger prospect lists.",
+      },
+      {
+        title: "Feature 3",
+        description: "Inconsistent and untimely follow-ups lead to missed opportunities and lower conversion rates.",
+      },
+    ],
+    imageUri: "/assets/images/landing_features.png",
+  },
+}
+
 // export const content = [
 //   {
 //     title: "Collaborative Editing",
