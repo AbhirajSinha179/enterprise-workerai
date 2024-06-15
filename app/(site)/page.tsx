@@ -7,7 +7,6 @@ import { BentoGridLanding } from "@/components/site/bento"
 import { Button } from "@/components/ui/button"
 import { LP_GRID_ITEMS } from "lp-items"
 
-
 export const metadata: Metadata = {
   title: "Worker AI",
   twitter: {
@@ -28,9 +27,49 @@ export const metadata: Metadata = {
 // TODO: Add sticky scroll reveal
 // TODO: Make Join the Waitlist form functional, use
 // TODO: Adjust the tabs colours, no contrast due to tailwind config change
+// TODO: Footer info + border changes
+// TODO: new section
+
+const GradientSeparator = () => (
+  <>
+    <div className=" h-16 w-0.5 rounded-t-full bg-gradient-to-b from-[#b2a8fd] via-violet-200 to-transparent sm:h-20  sm:w-2"></div>
+  </>
+)
+
+export const landingConfig = {
+  hero: {
+    title: "Adapt Automate Accelerate",
+    description: "Hyper-scale your outbounds with WorkerAI",
+    cta: "Join the Waitlist",
+  },
+  imageCover: {
+    // title: "Orthodox sales systems are slowing down your business growth.",
+    // description: "Understand how to get through this bs",
+    imageUri: "/assets/images/dashboard_random_mockup.jpg",
+  },
+  features: {
+    title: "Orthodox sales systems are slowing down your business growth.",
+    description: "Understand how to get through this bs",
+    features: [
+      {
+        title: "Feature 2",
+        description: "Manual lead research and email personalization are time-consuming, reducing productivity.",
+      },
+      {
+        title: "Feature 1",
+        description:
+          "Traditional sales methods struggle to scale efficiently, needing more manpower for larger prospect lists.",
+      },
+      {
+        title: "Feature 3",
+        description: "Inconsistent and untimely follow-ups lead to missed opportunities and lower conversion rates.",
+      },
+    ],
+    imageUri: "/assets/images/landing_features.png",
+  },
+}
 
 export default function Web() {
-
   return (
     <main className="overflow-hidden">
       {/* <SiteNav /> */}
@@ -103,8 +142,31 @@ export default function Web() {
           <p className="text-sm md:text-lg">Understand how to get through this bs</p>
         </div>
       </section>
+
+      <section id="features" className="relative min-h-screen">
+        <div className="mx-auto my-6 max-w-4xl rounded-xl border border-transparent bg-white shadow-xl shadow-input transition duration-200 dark:border-white/[0.2] dark:bg-black dark:shadow-none">
+          <Image
+            src={landingConfig.features.imageUri}
+            alt="Hero image"
+            width={1200}
+            height={900}
+            className="w-full rounded-md bg-cover bg-center"
+          />
+        </div>
+        <div className="mx-auto my-16 grid max-w-7xl place-content-center gap-12 p-4 md:my-48 md:grid-cols-3">
+          <div className="absolute inset-0 z-[-1] overflow-hidden bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+          {landingConfig.features.features.map((feature) => (
+            <div key={feature?.title} className="flex flex-1 items-center gap-x-4">
+              <GradientSeparator />
+              <div>
+                <p className="md:text-lg">{feature?.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="relative" id="bento-layout">
-        {/* <div class="absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,transparent_40%,#63e_100%)]"></div> */}
         <div className="mx-2 max-w-screen-2xl sm:mx-auto">
           <BentoGridLanding />
         </div>

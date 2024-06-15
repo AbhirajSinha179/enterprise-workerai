@@ -60,7 +60,14 @@ export const getAllEmails = async () => {
           date: new Date(),
         },
       ]
-    }
+    },
   }
   return emails.json()
+}
+
+export const testApiRequest = async () => {
+  const response = await fetch("http://localhost:3000/")
+  const data = response.body
+  console.log(data)
+  return data
 }
