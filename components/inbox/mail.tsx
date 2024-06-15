@@ -23,15 +23,20 @@ interface MailProps {
     email: string
     icon: React.ReactNode
   }[]
-  mails: Mail[]
+  threads: ThreadList[]
   defaultLayout?: number[] | undefined
   defaultCollapsed?: boolean
   navCollapsedSize?: number
 }
 
+interface ThreadList {
+  threadid: string,
+  thread: Mail[]
+}
+
 export function Inbox({
   // accounts,
-  mails,
+  threads,
   defaultLayout = [265, 440, 655],
   // navCollapsedSize,
 }: MailProps) {
@@ -75,33 +80,34 @@ export function Inbox({
               </form>
             </div>
             <TabsContent value="all" className="m-0">
-              {mails.length === 0 ? (
+              {threads.length === 0 ? (
                 <EmptyState
-                  headerMessage="No Email"
+                  headerMessage="No Emails Yet"
                   containerMessage=""
                   icon={<InboxIcon size={60} />}
                 />
               ) : (
-                <MailList items={mails} />
+                <MailList items={threads} />
               )}
             </TabsContent>
-            <TabsContent value="unread" className="m-0">
-              {mails.filter((item) => !item.read).length === 0 ? (
+            {/* <TabsContent value="unread" className="m-0">
+              {mails.filter((item: any) => !item.read).length === 0 ? (
                 <EmptyState
                   headerMessage="No unread Emails"
                   containerMessage=""
                   icon={<MailOpenIcon size={60} />}
                 />
               ) : (
-                <MailList items={mails.filter((item) => !item.read)} />
+                <MailList items={mails.filter((item: any) => !item.read)} />
               )}
-            </TabsContent>
+            </TabsContent> */}
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
           <MailDisplay
-            mail={mails.find((item) => item.id === config.selected) || null}
+            // change mail to thread
+            threadData={threads.find((item: ThreadList) => item.threadid === config.selected) || null}
           />
         </ResizablePanel>
       </ResizablePanelGroup>

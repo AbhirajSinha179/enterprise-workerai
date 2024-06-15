@@ -1,5 +1,5 @@
 // import Link from "next/link"
-import { mails } from "@/components/inbox/data"
+import { threads } from "@/components/inbox/data"
 import { Inbox } from "@/components/inbox/mail"
 import { ContentLayout } from "@/components/layout/content-layout"
 // import {
@@ -15,7 +15,7 @@ export default function InboxPage() {
   return (
     <>
       <ContentLayout title="Inbox">
-        <Inbox mails={mails} />
+        <Inbox threads={threads} />
       </ContentLayout>
     </>
   )

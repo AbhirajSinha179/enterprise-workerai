@@ -3,14 +3,17 @@
 import React from "react";
 
 import { createContext, useState } from 'react';
-import { Mail, mails } from '@/components/inbox/data';
+// import { Mail, mails } from '@/components/inbox/data';
+import { Thread, threads } from "@/components/inbox/data"
 
 type Config = {
-  selected: Mail['id'] | null;
+  selected: Thread['threadid'] | null;
 };
 
+// Mail["id"]
+
 const initialConfig: Config = {
-  selected: mails[0]?.id ?? null,
+  selected: threads[0]?.threadid ?? null,
 };
 
 export const MailContext = createContext<{
@@ -18,7 +21,7 @@ export const MailContext = createContext<{
   setConfig: React.Dispatch<React.SetStateAction<Config>>;
 }>({
   config: initialConfig,
-  setConfig: () => {},
+  setConfig: () => { },
 });
 
 export const MailProvider = ({ children }: React.PropsWithChildren) => {
