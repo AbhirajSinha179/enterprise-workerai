@@ -1,5 +1,7 @@
-"use server"
+// "use server"
 import { auth, clerkClient } from "@clerk/nextjs/server"
+
+// ! NOT USING THIS ACTION AS OF NOW, CLERK ONBOARDING ROUTING IS NOT WORKING WITH MIDDLEWARE CURRENTLY
 
 interface onboardingProps{
   username: string
