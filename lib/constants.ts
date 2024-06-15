@@ -1,18 +1,11 @@
 import {
   ArrowBigRightDash,
   BarChart,
-  Bookmark,
   Calendar,
-  Clock10,
   InboxIcon,
   LayoutGrid,
   LucideSquareArrowOutUpRight,
   Mail,
-  PersonStanding,
-  PersonStandingIcon,
-  Settings,
-  SquarePen,
-  Tag,
   Users,
 } from "lucide-react"
 

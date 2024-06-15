@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 
 const GradientSeparator = () => (
   <>
-    <div className=" h-16 w-0.5 rounded-t-full bg-gradient-to-b from-[#b2a8fd] via-violet-200 to-transparent sm:h-20  sm:w-2"></div>
+    <div className=" h-16 w-1 rounded-t-full bg-gradient-to-b from-[#b2a8fd] via-violet-200 to-transparent md:h-20 md:w-2"></div>
   </>
 )
 
@@ -159,7 +159,7 @@ export default function Web() {
             <div key={feature?.title} className="flex flex-1 items-center gap-x-4">
               <GradientSeparator />
               <div>
-                <p className="md:text-lg">{feature?.description}</p>
+                <p className="md:text-lg flex-1 grow">{feature?.description}</p>
               </div>
             </div>
           ))}

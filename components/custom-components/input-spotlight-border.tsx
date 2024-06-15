@@ -58,7 +58,7 @@ const InputSpotlightBorder = () => {
             WebkitMaskImage: `radial-gradient(30% 30px at ${position.x}px ${position.y}px, black 45%, transparent)`,
           }}
           aria-hidden="true"
-          className="pointer-events-none absolute left-0 top-0 z-10 h-12 w-full cursor-default rounded-md border border-[#8678F9] bg-[transparent] p-3.5 opacity-0  transition-opacity duration-500 placeholder:select-none"
+          className="pointer-events-none absolute left-0 top-0 z-10 h-12 w-full cursor-default rounded-md border border-[#8678F9] bg-transparent p-3.5 opacity-0  transition-opacity duration-500 placeholder:select-none"
         />
       </div>
     </>
