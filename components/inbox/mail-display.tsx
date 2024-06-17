@@ -1,22 +1,21 @@
+
 import { MoreVertical, Reply } from "lucide-react";
 import { Mail } from "@/components/inbox/data";
 import MailTimelineItem from "@/components/inbox/thread-item";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
-// import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ScrollArea } from "../ui/scroll-area";
 import { Timeline } from "../ui/timeline";
 
 interface MailDisplayProps {
-  // threadData: any | null;
-  // threadData: Mail[];
   threadData: ThreadList | null;
 }
+
 interface ThreadList {
-  threadid: string,
-  thread: Mail[]
+  threadid: string;
+  thread: Mail[];
 }
 
 export function MailDisplay({ threadData }: MailDisplayProps) {
@@ -54,27 +53,19 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
       {thread ? (
         <div className="flex flex-1 flex-col justify-between">
           <div className="flex m-4 h-[80vh]">
-            {/* when full thread data available can map through it  */}
             <ScrollArea>
               <Timeline>
-                {thread.map((message: Mail) => (
-                  <MailTimelineItem key={message.id} mail={message} showLine={true} />
+                {thread.map((message: Mail, index: number) => (
+                  <MailTimelineItem
+                    key={message.id}
+                    mail={message}
+                    showLine={true}
+                    isLast={index === thread.length - 1}
+                  />
                 ))}
               </Timeline>
             </ScrollArea>
           </div>
-          {/* <div className="px-4 py-2">
-            <form>
-              <div className="grid gap-2">
-                <Textarea className="p-4" placeholder={`Reply to ${mail.name}...`} />
-                <div className="flex items-center">
-                  <Button onClick={(e) => e.preventDefault()} size="sm" className="ml-auto">
-                    Send
-                  </Button>
-                </div>
-              </div>
-            </form>
-          </div> */}
         </div>
       ) : (
         <div className="p-8 text-center text-muted-foreground">No message selected</div>
