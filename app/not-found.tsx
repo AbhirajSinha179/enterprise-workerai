@@ -7,7 +7,7 @@ import Link from "next/link"
 
 export default function Component() {
     return (
-        <div className="flex flex-col min-h-[100vh]">
+        <div className="flex flex-col min-h-screen">
             <main className="flex-1 flex flex-col items-center justify-center gap-4">
                 <div className="flex flex-col items-center justify-center space-y-2 text-center">
                     <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800">Error 404</div>

@@ -1,9 +1,11 @@
-export {}
+// ! This file is not being used, but it is here to show how to add global types
 
-declare global {
-  interface CustomJwtSessionClaims {
-    metadata: {
-      onboardingComplete?: boolean
-    }
-  }
-}
+// export {}
+
+// declare global {
+//   interface CustomJwtSessionClaims {
+//     metadata: {
+//       onboardingComplete?: boolean
+//     }
+//   }
+// }
