@@ -1,7 +1,17 @@
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
 
 export function ScheduledEmailList({ emails }: any) {
+  const renderStatusIcons = (status: number) => {
+    return (
+      <div className="flex items-center space-x-1  my-1">
+        {Array.from({ length: status }).map((_, index) => (
+          <CheckCircledIcon key={index} width={20} height={20} />
+        ))}
+      </div>
+    )
+  }
 
   return (
     <main className="flex w-full flex-col items-center">
@@ -24,6 +34,9 @@ export function ScheduledEmailList({ emails }: any) {
               <div className="text-md font-medium">{item.subject}</div>
             </div>
             <div className="text-xs text-muted-foreground">{item.body}</div>
+            <div>
+              {item.status && renderStatusIcons(item.status)}
+            </div>
           </div>
         ))}
       </ul>
