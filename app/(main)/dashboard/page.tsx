@@ -1,4 +1,4 @@
-import { Eye, MailOpen, Send, Target } from "lucide-react";
+import { Eye, MailOpen, Plus, Send, Star, Target } from "lucide-react";
 import Link from "next/link"
 import { Overview } from "@/components/dashboard/overview"
 import { RecentSales } from "@/components/dashboard/recent-sales"
@@ -14,6 +14,11 @@ import {
 
 
 const stats = [
+  {
+    title: "Unique Leads",
+    value: "122",
+    icon: Star,
+  },
   {
     title: "Total Sent",
     value: "2350",
@@ -41,7 +46,7 @@ export default function DashboardHome() {
     <>
       <ContentLayout title="Dashboard">
         <main className="w-full space-y-4 pt-2">
-          <div className="grid gap-x-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-x-4 md:grid-cols-2 lg:grid-cols-5">
             {stats.map((stat, index) => (
               <Card key={index}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
