@@ -25,6 +25,7 @@ const dropZoneConfig = {
         'text/csv': ['.csv']
     },
 };
+
 interface CSVUploader {
     cardTitle: string;
     cardDescription: string;
@@ -33,9 +34,32 @@ interface CSVUploader {
 export default function CSVUpload({ cardTitle, cardDescription }: CSVUploader) {
     const [files, setFiles] = useState<File[] | null>(null);
 
-    const handleSubmitCSV = () => {
-        toast.success("CSV File(s) submitted: " + (files ? files.map(f => f.name).join(", ") : "No files"));
-        console.log("CSV File(s):", files);
+    const handleSubmitCSV = async () => {
+        if (!files) {
+            toast.error("No files selected");
+            return;
+        }
+
+        const formData = new FormData();
+        files.forEach(file => {
+            formData.append('csvFiles', file);
+        });
+
+        try {
+            const response = await fetch('http://localhost:3000/uploadcsv', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                toast.success("CSV File(s) submitted successfully");
+            } else {
+                toast.error("Failed to submit CSV File(s)");
+            }
+        } catch (error) {
+            toast.error("An error occurred while submitting CSV File(s)");
+            console.error("Error:", error);
+        }
     };
 
     return (
