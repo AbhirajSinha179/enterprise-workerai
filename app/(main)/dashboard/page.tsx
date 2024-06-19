@@ -46,9 +46,9 @@ export default function DashboardHome() {
     <>
       <ContentLayout title="Dashboard">
         <main className="w-full space-y-4 pt-2">
-          <div className="grid gap-x-4 md:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-x-4 md:grid-cols-3 lg:grid-cols-5">
             {stats.map((stat, index) => (
-              <Card key={index}>
+              <Card key={index} className="overflow-x-auto">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
                   <stat.icon
@@ -58,13 +58,13 @@ export default function DashboardHome() {
                   />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-4xl font-bold">{stat.value}</div>
+                  <div className="text-4xl font-bold  ">{stat.value}</div>
                 </CardContent>
               </Card>
             ))}
           </div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
-            <Card className="col-span-4">
+          <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1">
+            <Card>
               <CardHeader>
                 <CardTitle>Overview</CardTitle>
               </CardHeader>
@@ -72,7 +72,7 @@ export default function DashboardHome() {
                 <Overview />
               </CardContent>
             </Card>
-            <Card className="col-span-4 md:col-span-3">
+            <Card className="overflow-y-auto">
               <CardHeader>
                 <CardTitle>Recent Response</CardTitle>
                 <CardDescription>12 Unread</CardDescription>
