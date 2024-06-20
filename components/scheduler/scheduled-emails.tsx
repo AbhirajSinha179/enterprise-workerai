@@ -28,15 +28,9 @@ export function ScheduledEmailList({ emails }: any) {
             <div className="flex w-full flex-col gap-1">
               <div className="flex items-center justify-between">
                 <div className="text-2xl font-semibold">{item.recipient}</div>
-                <div className=" flex  ">
-                  <div className="">
-                    {item.status && renderStatusIcons(item.status)}
-                  </div>
-                  <div className="flex items-center h-6 mx-2">
-                    <Separator orientation="vertical" />
-                  </div>
-                  <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
-                </div>
+                {item.status && renderStatusIcons(item.status)}
+                <Separator orientation="vertical" className="flex items-center h-6 mx-2" />
+                <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
               </div>
               <div className="text-md font-medium">{item.subject}</div>
             </div>

@@ -20,6 +20,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 import { CheckCircledIcon } from "@radix-ui/react-icons"; // Ensure this is the correct path for your icon
 import { Separator } from "../ui/separator"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export default function EmailItem({ item, handleApprove, handleEdit, handleDelete }: { item: any, handleApprove: any, handleEdit: any, handleDelete: any }) {
   const [subject, setSubject] = useState(item?.subject)
@@ -42,9 +48,19 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
           <div className="flex justify-between">
             <div className="text-2xl font-semibold flex">{item.recipient}</div>
             <div className=" flex  ">
-              <div className="">
-                {item.status && renderStatusIcons(item.status)}
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="">
+                      {item.status && renderStatusIcons(item.status)}
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{item.status} Email sent</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
               <div className="flex items-center h-6 mx-2">
                 <Separator orientation="vertical" />
               </div>
