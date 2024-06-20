@@ -20,7 +20,7 @@ async function getEmails() {
       { id: 3, subject: "Hey", body: "Hey, world!", date: "2024-01-03", scheduled: false, recipient: "ayan@workerai.co", status: "3" },
       { id: 1, subject: "Hello", body: "Hello, world!", date: "2024-01-01", scheduled: false, recipient: "anshuman@workerai.co", status: "1" },
       { id: 5, subject: "Namaste", body: "Namaste, world!", date: "2024-01-05", scheduled: false, recipient: "abhiraj@workerai.co", status: "2" },
-      { id: 6, subject: "Bonjour", body: "Bonjour, world!", date: "2024-01-06", scheduled: false, recipient: "rando@workerai.co", status: "3" }
+      { id: 6, subject: "Jonpur", body: "DabDab", date: "2024-01-06", scheduled: false, recipient: "ArvindBhaiya@workerai.co", status: "3" }
     ],
   }
 

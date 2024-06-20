@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
+import { Separator } from "../ui/separator";
 
 export function ScheduledEmailList({ emails }: any) {
   const renderStatusIcons = (status: number) => {
@@ -25,19 +26,23 @@ export function ScheduledEmailList({ emails }: any) {
             className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all")}
           >
             <div className="flex w-full flex-col gap-1">
-              <div className="flex items-center">
+              <div className="flex items-center justify-between">
                 <div className="text-2xl font-semibold">{item.recipient}</div>
-                <div className={cn("ml-auto")}>
-                  {format(new Date(item.date), "PP")}
+                <div className=" flex  ">
+                  <div className="">
+                    {item.status && renderStatusIcons(item.status)}
+                  </div>
+                  <div className="flex items-center h-6 mx-2">
+                    <Separator orientation="vertical" />
+                  </div>
+                  <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
                 </div>
               </div>
               <div className="text-md font-medium">{item.subject}</div>
             </div>
             <div className="text-xs text-muted-foreground">{item.body}</div>
-            <div>
-              {item.status && renderStatusIcons(item.status)}
-            </div>
           </div>
+
         ))}
       </ul>
     </main>

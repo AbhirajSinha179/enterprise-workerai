@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
-import { DatePickerWithRange } from "@/components/dashboard/DatePickerWithRange";
+import { DatePickerWithRange } from "@/components/ui/DatePickerWithRange";
 
 const ViewButton: React.FC = () => {
     const [selectedColumn, setSelectedColumn] = useState("recent");

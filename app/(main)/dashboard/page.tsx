@@ -102,6 +102,7 @@ const DashboardHome: React.FC = () => {
               </div>
             </div>
           </div>
+
         </main>
       </ContentLayout>
     </>

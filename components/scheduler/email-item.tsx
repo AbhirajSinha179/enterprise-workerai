@@ -19,6 +19,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 import { CheckCircledIcon } from "@radix-ui/react-icons"; // Ensure this is the correct path for your icon
+import { Separator } from "../ui/separator"
 
 export default function EmailItem({ item, handleApprove, handleEdit, handleDelete }: { item: any, handleApprove: any, handleEdit: any, handleDelete: any }) {
   const [subject, setSubject] = useState(item?.subject)
@@ -38,17 +39,22 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
     <>
       <div className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all")}>
         <div className="flex w-full flex-col gap-1">
-          <div className="flex items-center">
-            <div className="text-2xl font-semibold">{item.recipient}</div>
-            <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
+          <div className="flex justify-between">
+            <div className="text-2xl font-semibold flex">{item.recipient}</div>
+            <div className=" flex  ">
+              <div className="">
+                {item.status && renderStatusIcons(item.status)}
+              </div>
+              <div className="flex items-center h-6 mx-2">
+                <Separator orientation="vertical" />
+              </div>
+              <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
+            </div>
           </div>
           <div className="text-md font-medium">{item.subject}</div>
 
         </div>
         <div className="text-xs text-muted-foreground">{item.body}</div>
-        <div>
-          {item.status && renderStatusIcons(item.status)}
-        </div>
         <div className="mt-2 flex w-full items-center justify-between">
           <Button onClick={() => handleDelete(item?.recipient)} variant="outline" size="icon" className="size-8">
             <Trash size={6} className="size-4" />
