@@ -1,7 +1,7 @@
 "use client"
 
 import { SignOutButton } from "@clerk/nextjs"
-import { Ellipsis, LogOut } from "lucide-react"
+import { Ellipsis, LogOut, MailIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -88,7 +88,7 @@ export function Menu({ isOpen }: MenuProps) {
             <TooltipProvider disableHoverableContent>
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
-                  <Button onClick={() => {}} variant="outline" className="mt-5 h-10 w-full justify-center">
+                  <Button onClick={() => { }} variant="outline" className="mt-5 h-10 w-full justify-center">
                     <span className={cn(isOpen === false ? "" : "mr-4")}>
                       <LogOut size={18} />
                     </span>
@@ -101,6 +101,24 @@ export function Menu({ isOpen }: MenuProps) {
               </Tooltip>
             </TooltipProvider>
           </li> */}
+
+          {isOpen == true && <div className="flex w-full grow items-end  ">
+
+            <div className=" mx-auto flex flex-row  px-2 ">
+              <MailIcon className="my-auto mx-2"></MailIcon>
+              <Link href="mailto:hello@workerai.co" target="_blank"  >
+                <Button variant="link" size={"useLink"}>
+                  <h1 className="font-semibold text-base">
+
+                    help@workerai.co
+                  </h1>
+                </Button>
+              </Link>
+
+            </div>
+
+          </div>}
+
         </ul>
       </nav>
     </ScrollArea>

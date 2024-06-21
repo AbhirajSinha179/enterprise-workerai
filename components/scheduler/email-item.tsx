@@ -2,9 +2,7 @@
 
 import { format } from "date-fns"
 import { Trash } from "lucide-react"
-// import Link from "next/link"
 import { useState } from "react"
-// import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -20,21 +18,57 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
+import { CheckCircledIcon } from "@radix-ui/react-icons"; // Ensure this is the correct path for your icon
+import { Separator } from "../ui/separator"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export default function EmailItem({ item, handleApprove, handleEdit, handleDelete }: { item: any, handleApprove: any, handleEdit: any, handleDelete: any }) {
   const [subject, setSubject] = useState(item?.subject)
   const [body, setBody] = useState(item?.body)
 
+  const renderStatusIcons = (status: number) => {
+    return (
+      <div className="flex items-center space-x-1  my-1">
+        {Array.from({ length: status }).map((_, index) => (
+          <CheckCircledIcon key={index} width={20} height={20} />
+        ))}
+      </div>
+    )
+  }
+
   return (
     <>
+      <div className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all")}>
+        <div className="flex w-full flex-col gap-1">
+          <div className="flex justify-between">
+            <div className="text-2xl font-semibold flex">{item.recipient}</div>
+            <div className=" flex  ">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="">
+                      {item.status && renderStatusIcons(item.status)}
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{item.status} Email sent</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
 
-      <div className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all ")}>
-        <div className="flex w-full flex-col gap-1  ">
-          <div className="flex items-center">
-            <div className="text-2xl font-semibold">{item.recipient}</div>
-            <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
+              <div className="flex items-center h-6 mx-2">
+                <Separator orientation="vertical" />
+              </div>
+              <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
+            </div>
           </div>
           <div className="text-md font-medium">{item.subject}</div>
+
         </div>
         <div className="text-xs text-muted-foreground">{item.body}</div>
         <div className="mt-2 flex w-full items-center justify-between">
@@ -70,7 +104,6 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                     <Label htmlFor="body" className="text-right">
                       Email Body
                     </Label>
-                    {/* <Input id="body" defaultValue={item.body ?? ""} className="col-span-3" /> */}
                     <Textarea
                       id="body"
                       defaultValue={item.body ?? ""}

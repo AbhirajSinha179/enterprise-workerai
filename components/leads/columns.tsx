@@ -8,6 +8,13 @@ import { DataTableColumnHeader } from "@/components/leads/data-table-column-head
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+// import { Button } from "@/components/ui/button"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 function handleDelete(row: any) {
     console.log(`Deleting row with id ${row.id}`)
 }
@@ -97,14 +104,26 @@ export const columns: ColumnDef<Leads>[] = [
             }
             return (
                 <div className="flex w-[150px] items-center justify-center space-x-1 ">
-                    {status.number &&
-                        Array.from({ length: status.number }, (v: number) => (
-                            <div key={v}>
-                                <CheckCircledIcon />
-                            </div>
-                        ))}
+                    {status.number && (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <div className="flex space-x-1">
+                                        {Array.from({ length: status.number }, (_, index) => (
+                                            <div key={index} >
+                                                <CheckCircledIcon />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>{status.number} Emails sent</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    )}
                 </div>
-            )
+            );
         },
         filterFn: (row, id, value) => {
             return value.includes(row.getValue(id))

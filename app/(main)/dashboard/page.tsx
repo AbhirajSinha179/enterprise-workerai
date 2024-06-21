@@ -1,19 +1,29 @@
-import { Eye, MailOpen, Send, Target } from "lucide-react";
-import Link from "next/link"
-import { Overview } from "@/components/dashboard/overview"
-import { RecentSales } from "@/components/dashboard/recent-sales"
-import { ContentLayout } from "@/components/layout/content-layout"
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/components/ui/breadcrumb"
+import { Eye, MailOpen, Send, Star, Target, LucideIcon } from "lucide-react";
+import Link from "next/link";
+import { Overview } from "@/components/dashboard/overview";
+import { RecentSales } from "@/components/dashboard/recent-sales";
+import { ContentLayout } from "@/components/layout/content-layout";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle
-} from "@/components/ui/card"
+} from "@/components/ui/card";
+import ViewButton from "@/components/dashboard/ViewButton";  // Import the ViewButton component
 
+interface Stat {
+  title: string;
+  value: string;
+  icon: LucideIcon;
+}
 
-const stats = [
+const stats: Stat[] = [
+  {
+    title: "Unique Leads",
+    value: "122",
+    icon: Star,
+  },
   {
     title: "Total Sent",
     value: "2350",
@@ -36,51 +46,67 @@ const stats = [
   },
 ];
 
-export default function DashboardHome() {
+const DashboardHome: React.FC = () => {
   return (
     <>
       <ContentLayout title="Dashboard">
-        <main className="w-full space-y-4 pt-2">
-          <div className="grid gap-x-4 md:grid-cols-2 lg:grid-cols-4">
-            {stats.map((stat, index) => (
-              <Card key={index}>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-                  <stat.icon
-                    className="size-4 text-muted-foreground"
-                    width={24}
-                    height={24}
-                  />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-4xl font-bold">{stat.value}</div>
-                </CardContent>
-              </Card>
-            ))}
+        <main className="w-full space-y-4">
+          <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
+            <div className="flex items-center justify-between space-y-2">
+              <div>
+                <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+                <p className="text-muted-foreground">
+                  Here&apos;s all the analytics available.
+                </p>
+              </div>
+              <div className="p-4">
+                <ViewButton />  {/* Use the ViewButton component */}
+              </div>
+            </div>
+            <div>
+              <div className="grid gap-x-4 md:grid-cols-3 lg:grid-cols-5 my-4">
+                {stats.map((stat, index) => (
+                  <Card key={index} className="overflow-x-auto">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
+                      <stat.icon
+                        className="size-4 text-muted-foreground"
+                        width={24}
+                        height={24}
+                      />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold">{stat.value}</div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+              <div className="grid gap-5 md:grid-cols-1 lg:grid-cols-1">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Overview</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pl-2">
+                    <Overview />
+                  </CardContent>
+                </Card>
+                <Card className="overflow-y-auto">
+                  <CardHeader>
+                    <CardTitle>Recent Response</CardTitle>
+                    <CardDescription>12 Unread</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <RecentSales />
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
-            <Card className="col-span-4">
-              <CardHeader>
-                <CardTitle>Overview</CardTitle>
-              </CardHeader>
-              <CardContent className="pl-2">
-                <Overview />
-              </CardContent>
-            </Card>
-            <Card className="col-span-4 md:col-span-3">
-              <CardHeader>
-                <CardTitle>Recent Response</CardTitle>
-                <CardDescription>12 Unread</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <RecentSales />
-              </CardContent>
-            </Card>
-          </div>
+
         </main>
-
-
       </ContentLayout>
     </>
   )
 }
+
+export default DashboardHome;
