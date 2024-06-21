@@ -1,12 +1,9 @@
-"use client"
-
-import { format } from "date-fns"
-import { Trash } from "lucide-react"
-// import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useState, useTransition } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { format } from "date-fns";
+import { Trash, RefreshCw } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -16,59 +13,51 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 
 export default function EmailItem({ item }: any) {
   const router = useRouter();
-  const [subject, setSubject] = useState(item?.subject)
-  const [body, setBody] = useState(item?.body)
-  const [isPending, startTransition] = useTransition()
+  const [subject, setSubject] = useState(item?.subject);
+  const [body, setBody] = useState(item?.body);
+  const [isPending, startTransition] = useTransition();
   const [isFetching, setIsFetching] = useState(false);
 
   const isMutating = isPending || isFetching;
 
   const handleApprove = async () => {
-    // const res = await fetch("https://...", { method: "POST" });
-    // if (!res.ok) {
-    //   throw new Error("Failed to approve email");
-    // }
     setIsFetching(true);
     setTimeout(() => {
       setIsFetching(false);
       startTransition(() => {
         router.refresh();
-      })
-
-    }, 1000)
-  }
+      });
+    }, 1000);
+  };
 
   const handleEdit = async () => {
     setTimeout(() => {
-      console.log(subject, body)
+      console.log(subject, body);
       toast("Email successfully edited", {
         description: new Date().toLocaleTimeString(),
         action: {
           label: "Undo",
           onClick: () => console.log("Undo"),
         },
-      })
-    }, 500)
-    // const res = await fetch("https://...", { method: "PUT" });
-    // if (!res.ok) {
-    //   throw new Error("Failed to edit email");
-    // }
-  }
+      });
+    }, 500);
+  };
 
   const handleDelete = async () => {
-    // const res = await fetch("https://...", { method: "DELETE" });
-    // if (!res.ok) {
-    //   throw new Error("Failed to delete email");
-    // }
-  }
+    // Implement delete logic here
+  };
+
+  const handleRegenerateResponse = async () => {
+    // Implement regenerate response logic here
+  };
 
   return (
     <>
@@ -82,9 +71,14 @@ export default function EmailItem({ item }: any) {
         </div>
         <div className="text-xs text-muted-foreground">{body}</div>
         <div className="mt-2 flex w-full items-center justify-between">
-          <Button onClick={() => handleDelete} variant="outline" size="icon" className="size-8">
-            <Trash size={6} className="size-4" />
-          </Button>
+          <div className="flex items-center space-x-2">
+            <Button onClick={handleDelete} variant="outline" size="icon" className="size-8">
+              <Trash size={6} className="size-4" />
+            </Button>
+            <Button onClick={handleRegenerateResponse} variant="outline" size="icon" className="size-8">
+              <RefreshCw size={6} className="size-4" />
+            </Button>  
+          </div>
           <div className="space-x-4">
             <Dialog>
               <DialogTrigger asChild>
@@ -114,7 +108,6 @@ export default function EmailItem({ item }: any) {
                     <Label htmlFor="body" className="text-right">
                       Email Body
                     </Label>
-                    {/* <Input id="body" defaultValue={item.body ?? ""} className="col-span-3" /> */}
                     <Textarea
                       id="body"
                       defaultValue={item.body ?? ""}
@@ -133,12 +126,12 @@ export default function EmailItem({ item }: any) {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <Button onClick={() => handleApprove} asChild className="h-8 min-w-fit cursor-pointer">
+            <Button onClick={handleApprove} asChild className="h-8 min-w-fit cursor-pointer">
               <span>Smart Schedule</span>
             </Button>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
