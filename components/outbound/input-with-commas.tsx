@@ -59,8 +59,8 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
     return (
         <Card x-chunk="dashboard-04-chunk-1">
             <CardHeader className="mx-3 ">
-                <CardTitle>{cardTitle}</CardTitle>
-                <CardDescription>{cardDescription}</CardDescription>
+                <CardTitle className="text-foreground">{cardTitle}</CardTitle>
+                <CardDescription className="text-foreground">{cardDescription}</CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="w-full  ">
@@ -72,6 +72,7 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
                                 value={inputValue}
                                 onChange={handleInputChange}
                                 onKeyDown={handleKeyDown}
+                                className="bg-foreground text-muted"
                             />
 
                         </div>
@@ -79,7 +80,7 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
                             {selectedOptions.map((option) => (
                                 <button key={option} onClick={() => handleRemove(option)}>
                                     <Badge variant="secondary">
-                                        <div className="flex items-center justify-around gap-1">
+                                        <div className="flex items-center justify-around gap-1 text-foreground">
                                             <div>{option}</div>
                                             <X className="size-4" />
                                         </div>

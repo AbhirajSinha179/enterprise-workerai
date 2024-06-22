@@ -58,12 +58,12 @@ export function Overview() {
       >
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+            <stop offset="5%" stopColor="#F4EEE0" stopOpacity={0.8} />
+            <stop offset="95%" stopColor="#F4EEE0" stopOpacity={0} />
           </linearGradient>
           <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#435BD5" stopOpacity={1.0} />
-            <stop offset="95%" stopColor="#435BD5" stopOpacity={0} />
+            <stop offset="5%" stopColor="#F4EEE0" stopOpacity={1.0} />
+            <stop offset="95%" stopColor="#F4EEE0" stopOpacity={0} />
           </linearGradient>
         </defs>
         <XAxis dataKey="name" />
@@ -79,7 +79,7 @@ export function Overview() {
         <Area
           type="monotone"
           dataKey="pv"
-          stroke="#435BD5"
+          stroke="#F4EEE0"
           fillOpacity={1}
           fill="url(#colorPv)"
         />

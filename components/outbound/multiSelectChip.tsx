@@ -54,12 +54,13 @@ export default function MultiSelectCard({ cardTitle, cardDescription, options }:
         setSubmittedValues(newValues);
         console.log("Submitted Values Set:", newValues);
     };
+    //primary for text ie creame 
 
     return (
         <Card x-chunk="dashboard-04-chunk-1">
             <CardHeader className="mx-3">
-                <CardTitle>{cardTitle}</CardTitle>
-                <CardDescription>{cardDescription}</CardDescription>
+                <CardTitle className="text-primary">{cardTitle}</CardTitle>
+                <CardDescription className="text-primary">{cardDescription}</CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="w-full">
@@ -78,11 +79,11 @@ export default function MultiSelectCard({ cardTitle, cardDescription, options }:
                                             onValuesChange={field.onChange}
                                             values={field.value}
                                         >
-                                            <MultiSelectorTrigger>
+                                            <MultiSelectorTrigger className="bg-foreground">
                                                 <MultiSelectorInput placeholder="Select options" />
                                             </MultiSelectorTrigger>
                                             <MultiSelectorContent className="z-50">
-                                                <MultiSelectorList className="bg-card">
+                                                <MultiSelectorList className="bg-muted">
                                                     {options.map((option) => (
                                                         <MultiSelectorItem key={option.name} value={option.name}>
                                                             <div className="flex space-x-2 justify-start w-full">
