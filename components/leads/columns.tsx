@@ -15,6 +15,20 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Label } from "../ui/label"
+import { Input } from "../ui/input"
+import { Textarea } from "../ui/textarea"
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
 function handleDelete(row: any) {
     console.log(`Deleting row with id ${row.id}`)
 }
@@ -168,9 +182,38 @@ export const columns: ColumnDef<Leads>[] = [
     {
         id: "actions",
         cell: ({ row }) => (
-            <Button onClick={() => handleDelete(row)} variant="ghost">
-                <Trash2 className="size-4" />
-            </Button>
+
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="outline">
+                        <Trash2 className="size-4" />
+                    </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[725px]">
+                    <DialogHeader>
+                        <DialogTitle>Delete this Lead</DialogTitle>
+                        <DialogDescription>
+                            Do you want to blacklist this lead ?
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <div className="space-x-2">
+                                <Button>
+                                    No
+                                </Button>
+                                <Button onClick={() => handleDelete(row)} variant="destructive">
+                                    Yes
+                                </Button>
+                            </div>
+
+                        </DialogClose>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+
+
         ),
     },
 ]

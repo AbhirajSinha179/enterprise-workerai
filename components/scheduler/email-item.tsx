@@ -71,9 +71,9 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
 
         </div>
         <div className="text-xs text-muted-foreground">{item.body}</div>
-        <div className="mt-2 flex w-full items-center justify-between">
-          <Button onClick={() => handleDelete(item?.recipient)} variant="outline" size="icon" className="size-8">
-            <Trash size={6} className="size-4" />
+        <div className="mt-2 flex w-full items-center justify-between py-0.5">
+          <Button onClick={() => handleDelete(item?.recipient)} variant="outline" size="icon" className="size-10">
+            <Trash size={6} className="size-5" />
           </Button>
           <div className="space-x-4">
             <Dialog>
@@ -123,7 +123,7 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <Button onClick={() => handleApprove(item?.recipient)} asChild className="h-8 min-w-fit cursor-pointer">
+            <Button onClick={() => handleApprove(item?.recipient)} asChild className="h-10 min-w-fit cursor-pointer">
               <span>Smart Schedule</span>
             </Button>
           </div>
