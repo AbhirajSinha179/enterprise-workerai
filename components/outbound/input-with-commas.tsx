@@ -72,7 +72,7 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
                                 value={inputValue}
                                 onChange={handleInputChange}
                                 onKeyDown={handleKeyDown}
-                                className="bg-foreground text-muted"
+                                className="bg-muted text-foreground"
                             />
 
                         </div>

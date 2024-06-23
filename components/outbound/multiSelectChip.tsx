@@ -79,7 +79,7 @@ export default function MultiSelectCard({ cardTitle, cardDescription, options }:
                                             onValuesChange={field.onChange}
                                             values={field.value}
                                         >
-                                            <MultiSelectorTrigger className="bg-foreground">
+                                            <MultiSelectorTrigger className="bg-muted">
                                                 <MultiSelectorInput placeholder="Select options" />
                                             </MultiSelectorTrigger>
                                             <MultiSelectorContent className="z-50">
