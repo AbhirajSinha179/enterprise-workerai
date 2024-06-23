@@ -109,7 +109,6 @@ export function Menu({ isOpen }: MenuProps) {
               <Link href="mailto:hello@workerai.co" target="_blank"  >
                 <Button variant="link" size={"useLink"}>
                   <h1 className="font-semibold text-base">
-
                     help@workerai.co
                   </h1>
                 </Button>
