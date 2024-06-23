@@ -61,10 +61,20 @@ export function Inbox({
                 >
                   All mail
                 </TabsTrigger>
-                <TabsTrigger
+                {/* <TabsTrigger
                   value="unread"
                 >
                   Unread
+                </TabsTrigger> */}
+                <TabsTrigger
+                  value="reply"
+                >
+                  Reply
+                </TabsTrigger>
+                <TabsTrigger
+                  value="followup"
+                >
+                  Follow Ups
                 </TabsTrigger>
               </TabsList>
             </div>
