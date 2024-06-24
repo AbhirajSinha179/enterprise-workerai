@@ -4,29 +4,10 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import { Button } from "@/components/ui/button";
-
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import {
-    Form,
-    FormField,
-    FormItem,
-    FormMessage,
-} from "@/components/ui/form";
-import {
-    MultiSelector,
-    MultiSelectorContent,
-    MultiSelectorInput,
-    MultiSelectorItem,
-    MultiSelectorList,
-    MultiSelectorTrigger,
-} from "@/components/ui/multiselector";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { MultiSelector, MultiSelectorContent, MultiSelectorInput, MultiSelectorItem, MultiSelectorList, MultiSelectorTrigger } from "@/components/ui/multiselector";
+import { submitLocations } from "@/app/api/outbound/uploadLocation";
 
 const formSchema = z.object({
     value: z.array(z.string()).nonempty("Please select at least one option"),
@@ -47,12 +28,19 @@ export default function MultiSelectCard({ cardTitle, cardDescription, options }:
         defaultValues: { value: [] },
     });
 
-    const onSubmit = (data: FormSchema) => {
+    const onSubmit = async (data: FormSchema) => {
         toast.success("Options submitted");
         const newValues = new Set(submittedValues);
         data.value.forEach((value) => newValues.add(value));
         setSubmittedValues(newValues);
-        console.log("Submitted Values Set:", newValues);
+
+        try {
+            await submitLocations(Array.from(newValues));
+            console.log("Submitted Values Set:", newValues);
+        } catch (error) {
+            console.error("Error submitting data:", error);
+            toast.error("Failed to submit data");
+        }
     };
 
     return (

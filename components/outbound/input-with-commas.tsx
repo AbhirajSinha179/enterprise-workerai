@@ -12,6 +12,9 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { submitJobTitles } from "@/app/api/outbound/uploadjobtitles";
+import { submitkeywords } from "@/app/api/outbound/uploadKeyword";
+import { submitBlocklisted } from "@/app/api/outbound/uploadBlackListed";
 
 interface InputWithCommasProps {
     cardTitle: string;
@@ -39,13 +42,13 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
         }
     };
 
-    const addOptionsFromInput = () => {
+    const addOptionsFromInput = async () => {
         const newValues = inputValue.split(",").map(v => v.trim()).filter(v => v && !selectedOptions.includes(v));
         if (newValues.length > 0) {
             setSelectedOptions((prev) => [...prev, ...newValues]);
             setInputValue("");
         }
-        submitData([...selectedOptions, ...newValues]);
+        await submitData([...selectedOptions, ...newValues]);
         toast.success(`${cardTitle} Submitted`, {
             description: `${newValues.join(", ")}`,
         });
@@ -56,23 +59,19 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
     };
 
     const submitData = async (data: string[]) => {
-        console.log("data passed : ", data)
         try {
-            const response = await fetch("http://localhost:3000/uploadjobtitles", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-
-                body: JSON.stringify({ locations: data }), // Pass the selected options as an array
-            });
-            if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
+            if (cardTitle === "Job Titles") {
+                await submitJobTitles(data);
+            } else if (cardTitle === "Outbound Keywords") {
+                await submitkeywords(data);
+            } else if (cardTitle === "Blacklisted email domains") {
+                console.log("tuasafads")
+                await submitBlocklisted(data);
             }
-            const result = await response.json();
-            console.log("Success:", result);
+            toast.success(`${cardTitle} submitted successfully`);
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Error submitting data:", error);
+            toast.error("Failed to submit data");
         }
     };
 
