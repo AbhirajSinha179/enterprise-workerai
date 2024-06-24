@@ -29,7 +29,7 @@ export function ScheduledEmailList({ emails }: any) {
         {emails.map((item: any) => (
           <div
             key={item.id}
-            className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all")}
+            className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all bg-card")}
           >
             <div className="flex w-full flex-col gap-1">
               <div className="flex justify-between">
