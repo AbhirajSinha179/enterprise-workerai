@@ -1,6 +1,6 @@
 "use server"
 
-export async function submitkeywords(data: string[]) {
+export async function submitKeywords(data: string[]) {
   try {
     const response = await fetch("http://localhost:3000/uploadkeywords/", {
       method: "POST",

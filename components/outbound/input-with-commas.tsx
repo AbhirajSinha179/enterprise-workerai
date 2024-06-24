@@ -3,17 +3,10 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { submitJobTitles } from "@/app/api/outbound/uploadjobtitles";
-import { submitkeywords } from "@/app/api/outbound/uploadKeyword";
+import { submitKeywords } from "@/app/api/outbound/uploadKeyword";
 import { submitBlocklisted } from "@/app/api/outbound/uploadBlackListed";
 
 interface InputWithCommasProps {
@@ -48,10 +41,15 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
             setSelectedOptions((prev) => [...prev, ...newValues]);
             setInputValue("");
         }
-        await submitData([...selectedOptions, ...newValues]);
-        toast.success(`${cardTitle} Submitted`, {
-            description: `${newValues.join(", ")}`,
-        });
+        try {
+            await submitData([...selectedOptions, ...newValues]);
+            toast.success(`${cardTitle} Submitted`, {
+                description: `${newValues.join(", ")}`,
+            });
+        } catch (error) {
+            console.error("Error submitting data:", error);
+            toast.error("Failed to submit data");
+        }
     };
 
     const handleRemove = (value: string) => {
@@ -63,15 +61,15 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
             if (cardTitle === "Job Titles") {
                 await submitJobTitles(data);
             } else if (cardTitle === "Outbound Keywords") {
-                await submitkeywords(data);
+                await submitKeywords(data);
             } else if (cardTitle === "Blacklisted email domains") {
-                console.log("tuasafads")
                 await submitBlocklisted(data);
             }
             toast.success(`${cardTitle} submitted successfully`);
         } catch (error) {
             console.error("Error submitting data:", error);
             toast.error("Failed to submit data");
+            throw error;
         }
     };
 

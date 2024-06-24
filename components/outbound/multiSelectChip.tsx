@@ -29,13 +29,13 @@ export default function MultiSelectCard({ cardTitle, cardDescription, options }:
     });
 
     const onSubmit = async (data: FormSchema) => {
-        toast.success("Options submitted");
         const newValues = new Set(submittedValues);
         data.value.forEach((value) => newValues.add(value));
         setSubmittedValues(newValues);
 
         try {
             await submitLocations(Array.from(newValues));
+            toast.success("Options submitted");
             console.log("Submitted Values Set:", newValues);
         } catch (error) {
             console.error("Error submitting data:", error);
