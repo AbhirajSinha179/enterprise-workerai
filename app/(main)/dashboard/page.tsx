@@ -67,7 +67,7 @@ const DashboardHome = () => {
               {stats.map((stat, index) => (
                 <Card key={index} className="overflow-x-auto">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
+                    <CardTitle className="text-sm font-medium text-muted-foreground ">{stat.title}</CardTitle>
                     <stat.icon
                       className="size-4 text-muted-foreground"
                       width={24}
@@ -75,7 +75,7 @@ const DashboardHome = () => {
                     />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-4xl font-bold">{stat.value}</div>
+                    <div className="text-4xl font-bold text-foreground">{stat.value}</div>
                   </CardContent>
                 </Card>
               ))}
@@ -83,7 +83,7 @@ const DashboardHome = () => {
             <div className="grid gap-5 md:grid-cols-1 lg:grid-cols-1">
               <Card>
                 <CardHeader>
-                  <CardTitle>Overview</CardTitle>
+                  <CardTitle className="text-foreground">Overview</CardTitle>
                 </CardHeader>
                 <CardContent className="pl-2">
                   <Overview />
@@ -91,7 +91,7 @@ const DashboardHome = () => {
               </Card>
               <Card className="overflow-y-auto">
                 <CardHeader>
-                  <CardTitle>Recent Response</CardTitle>
+                  <CardTitle className="text-foreground">Recent Response</CardTitle>
                   <CardDescription>12 Unread</CardDescription>
                 </CardHeader>
                 <CardContent>
