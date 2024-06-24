@@ -65,14 +65,14 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
             <CardContent>
                 <div className="w-full  ">
                     <div className="w-full flex flex-col ml-2 ">
-                        <div className="flex items-center   ">
+                        <div className="flex items-center  mr-7 ">
                             <Input
                                 type="text"
                                 placeholder="Add comma to separate"
                                 value={inputValue}
                                 onChange={handleInputChange}
                                 onKeyDown={handleKeyDown}
-                                className="bg-muted text-foreground"
+                                className="bg-muted text-foreground h-11 rounded-xl"
                             />
 
                         </div>
