@@ -65,7 +65,7 @@ export const columns: ColumnDef<Leads>[] = [
                 sortDescending={""}
             />
         ),
-        cell: ({ row }) => <div className="mx-5 flex w-[100px] justify-center">{row.getValue("name")}</div>,
+        cell: ({ row }) => <div className="mx-5 flex w-[100px] justify-center text-foreground">{row.getValue("name")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
@@ -80,7 +80,7 @@ export const columns: ColumnDef<Leads>[] = [
                 sortDescending={""}
             />
         ),
-        cell: ({ row }) => <div className="flex w-[100px] justify-center">{row.getValue("company")}</div>,
+        cell: ({ row }) => <div className="flex w-[100px] justify-center text-foreground">{row.getValue("company")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
@@ -95,7 +95,7 @@ export const columns: ColumnDef<Leads>[] = [
                 sortDescending={""}
             />
         ),
-        cell: ({ row }) => <div className="flex w-[200px] justify-center ">{row.getValue("email")}</div>,
+        cell: ({ row }) => <div className="flex w-[200px] justify-center text-foreground ">{row.getValue("email")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
@@ -117,12 +117,12 @@ export const columns: ColumnDef<Leads>[] = [
                 return null
             }
             return (
-                <div className="flex w-[150px] items-center justify-center space-x-1 ">
+                <div className="flex w-[150px] items-center justify-center space-x-1  ">
                     {status.number && (
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <div className="flex space-x-1">
+                                    <div className="flex space-x-1 ">
                                         {Array.from({ length: status.number }, (_, index) => (
                                             <div key={index} >
                                                 <CheckCircledIcon />

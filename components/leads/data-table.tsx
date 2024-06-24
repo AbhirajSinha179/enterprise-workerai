@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} hasSelectedRows={hasSelectedRows} selectedRows={selectedRows} actionButtons={isActionButton} />
-      <div className="rounded-md border">
+      <div className="rounded-md border  bg-card">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
