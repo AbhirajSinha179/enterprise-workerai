@@ -56,7 +56,7 @@ export function ScheduledEmailList({ emails }: any) {
               </div>
               <div className="text-md font-medium">{item.subject}</div>
             </div>
-            <div className="text-xs text-muted-foreground">{item.body}</div>
+            <div className="text-xs text-foreground">{item.body}</div>
           </div>
 
         ))}

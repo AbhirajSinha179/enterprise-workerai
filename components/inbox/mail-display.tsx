@@ -99,7 +99,7 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
           </div>
         </div>
       ) : (
-        <div className="p-8 text-center text-muted-foreground">No message selected</div>
+        <div className="p-8 text-center text-foreground">No message selected</div>
       )}
     </div>
   );

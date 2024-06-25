@@ -27,7 +27,7 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
                     </div>
                     <div className="flex">
                         {mail.date && (
-                            <div className="ml-auto text-xs text-muted-foreground">
+                            <div className="ml-auto text-xs text-foreground">
                                 {format(new Date(mail.date), "PPpp")}
                             </div>
                         )}

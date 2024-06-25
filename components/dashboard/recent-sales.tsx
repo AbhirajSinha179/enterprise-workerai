@@ -21,8 +21,8 @@ export function RecentSales() {
             <AvatarFallback>AI</AvatarFallback>
           </Avatar>
           <div className="ml-4 space-y-1">
-            <p className="text-sm font-medium leading-none text-muted-foreground">{sale.name}</p>
-            <p className="text-sm text-muted-foreground">{sale.email}</p>
+            <p className="text-sm font-medium leading-none text-foreground">{sale.name}</p>
+            <p className="text-sm text-foreground">{sale.email}</p>
           </div>
 
         </div>

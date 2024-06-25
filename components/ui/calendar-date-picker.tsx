@@ -520,10 +520,10 @@ export const CalendarDatePicker = React.forwardRef<
                         }
 
                       >
-                        <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-muted-foreground">
+                        <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-foreground">
                           <SelectValue placeholder="Month" />
                         </SelectTrigger>
-                        <SelectContent className="bg-muted text-muted-foreground">
+                        <SelectContent className="bg-muted text-foreground">
                           {months.map((month, idx) => (
                             <SelectItem key={idx} value={month}>
                               {month}
@@ -537,10 +537,10 @@ export const CalendarDatePicker = React.forwardRef<
                         }
                         value={yearFrom ? yearFrom.toString() : undefined}
                       >
-                        <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-muted-foreground">
+                        <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-foreground">
                           <SelectValue placeholder="Year" />
                         </SelectTrigger>
-                        <SelectContent className="bg-muted text-muted-foreground">
+                        <SelectContent className="bg-muted text-foreground">
                           {years.map((year, idx) => (
                             <SelectItem key={idx} value={year.toString()}>
                               {year}
@@ -556,10 +556,10 @@ export const CalendarDatePicker = React.forwardRef<
                         }
                         value={monthTo ? months[monthTo.getMonth()] : undefined}
                       >
-                        <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-muted-foreground">
+                        <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-foreground">
                           <SelectValue placeholder="Month" />
                         </SelectTrigger>
-                        <SelectContent className="bg-muted text-muted-foreground">
+                        <SelectContent className="bg-muted text-foreground">
                           {months.map((month, idx) => (
                             <SelectItem key={idx} value={month}>
                               {month}
@@ -573,10 +573,10 @@ export const CalendarDatePicker = React.forwardRef<
                         }
                         value={yearTo ? yearTo.toString() : undefined}
                       >
-                        <SelectTrigger className="w-[122px] text-muted-foreground focus:ring-0 focus:ring-offset-0 font-medium bg-card ">
+                        <SelectTrigger className="w-[122px] text-foreground focus:ring-0 focus:ring-offset-0 font-medium bg-card ">
                           <SelectValue placeholder="Year" />
                         </SelectTrigger>
-                        <SelectContent className="bg-muted text-muted-foreground">
+                        <SelectContent className="bg-muted text-foreground">
                           {years.map((year, idx) => (
                             <SelectItem key={idx} value={year.toString()}>
                               {year}

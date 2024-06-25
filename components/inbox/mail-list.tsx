@@ -43,7 +43,7 @@ export function MailList({ items }: MailListProps) {
                   <div
                     className={cn(
                       "ml-auto text-xs",
-                      config.selected === thread.id ? "text-foreground" : "text-muted-foreground"
+                      config.selected === thread.id ? "text-foreground" : "text-foreground"
                     )}
                   >
                     {formatDistanceToNow(new Date(thread.thread[0].date), {
@@ -53,7 +53,7 @@ export function MailList({ items }: MailListProps) {
                 </div>
                 <div className="text-xs font-medium">{thread.thread[0].subject}</div>
               </div>
-              <div className="line-clamp-2 text-xs text-muted-foreground">{thread.thread[0].text.substring(0, 300)}</div>
+              <div className="line-clamp-2 text-xs text-foreground">{thread.thread[0].text.substring(0, 300)}</div>
               {thread.thread[0].labels.length ? (
                 <div className="flex items-center gap-2">
                   {thread.thread[0].labels.map((label: string) => (

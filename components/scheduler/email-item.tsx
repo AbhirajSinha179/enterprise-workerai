@@ -72,7 +72,7 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
             <div className="text-md font-medium">{item.subject}</div>
 
           </div>
-          <div className="text-xs text-muted-foreground">{item.body}</div>
+          <div className="text-xs text-foreground">{item.body}</div>
           <div className="mt-2 flex w-full items-center justify-between py-0.5">
             <Button onClick={() => handleDelete(item?.recipient)} variant="outline" size="icon" className="size-10">
               <Trash size={6} className="size-5" />

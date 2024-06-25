@@ -39,7 +39,7 @@ const timelineItemVariants = cva("grid items-center gap-x-2", {
   variants: {
     status: {
       done: "text-primary",
-      default: "text-muted-foreground",
+      default: "text-foreground",
     },
   },
   defaultVariants: {
@@ -106,7 +106,7 @@ const TimelineDot = React.forwardRef<HTMLDivElement, TimelineDotProps>(
 TimelineDot.displayName = "TimelineDot"
 
 const timelineContentVariants = cva(
-  "row-start-2 row-end-2 pb-8 text-muted-foreground",
+  "row-start-2 row-end-2 pb-8 text-foreground",
   {
     variants: {
       side: {
@@ -145,7 +145,7 @@ const timelineHeadingVariants = cva(
       },
       variant: {
         primary: "text-base font-medium text-primary",
-        secondary: "text-sm font-light text-muted-foreground",
+        secondary: "text-sm font-light text-foreground",
       },
     },
     defaultVariants: {

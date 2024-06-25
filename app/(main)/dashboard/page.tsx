@@ -53,7 +53,7 @@ const DashboardHome = () => {
           <div className="flex  space-y-2 space-x-10">
             <div>
               <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
-              <p className="text-muted-foreground">
+              <p className="text-foreground">
                 Here&apos;s all the analytics available.
               </p>
             </div>
@@ -67,9 +67,9 @@ const DashboardHome = () => {
               {stats.map((stat, index) => (
                 <Card key={index} className="overflow-x-auto">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-muted-foreground ">{stat.title}</CardTitle>
+                    <CardTitle className="text-sm font-medium text-foreground ">{stat.title}</CardTitle>
                     <stat.icon
-                      className="size-4 text-muted-foreground"
+                      className="size-4 text-foreground"
                       width={24}
                       height={24}
                     />

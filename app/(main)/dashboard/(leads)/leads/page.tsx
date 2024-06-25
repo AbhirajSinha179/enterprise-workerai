@@ -23,7 +23,7 @@ export default async function Leads() {
         <div className="flex items-center justify-between space-y-2">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">Leads</h2>
-            <p className="text-muted-foreground">
+            <p className="text-foreground">
               Here&apos;s all the leads available.
             </p>
           </div>
