@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { submitJobTitles } from "@/app/api/outbound/uploadjobtitles";
 import { submitKeywords } from "@/app/api/outbound/uploadKeyword";
 import { submitBlocklisted } from "@/app/api/outbound/uploadBlackListed";
+import { LoadingSpinner } from "@/components/ui/spinner"; // Adjust the import path as necessary
 
 interface InputWithCommasProps {
     cardTitle: string;
@@ -17,6 +18,7 @@ interface InputWithCommasProps {
 export default function InputWithCommas({ cardTitle, cardDescription }: InputWithCommasProps) {
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
     const [inputValue, setInputValue] = useState<string>("");
+    const [loading, setLoading] = useState(false);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -41,7 +43,12 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
             setSelectedOptions((prev) => [...prev, ...newValues]);
             setInputValue("");
         }
+        if (selectedOptions.length === 0 && newValues.length === 0) {
+            toast.error("Please add at least one option before submitting.");
+            return;
+        }
         try {
+            setLoading(true);
             await submitData([...selectedOptions, ...newValues]);
             toast.success(`${cardTitle} Submitted`, {
                 description: `${newValues.join(", ")}`,
@@ -49,6 +56,8 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
         } catch (error) {
             console.error("Error submitting data:", error);
             toast.error("Failed to submit data");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -75,40 +84,48 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
 
     return (
         <Card x-chunk="dashboard-04-chunk-1">
-            <CardHeader className="mx-3 ">
+            <CardHeader className="mx-3">
                 <CardTitle>{cardTitle}</CardTitle>
                 <CardDescription>{cardDescription}</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="w-full">
-                    <div className="w-full flex flex-col ml-2">
-                        <div className="flex items-center">
-                            <Input
-                                type="text"
-                                placeholder="Add comma to separate"
-                                value={inputValue}
-                                onChange={handleInputChange}
-                                onKeyDown={handleKeyDown}
-                            />
-                        </div>
-                        <div className="no-scrollbar flex max-h-16 flex-wrap gap-2 overflow-y-auto rounded-md bg-transparent py-2">
-                            {selectedOptions.map((option) => (
-                                <button key={option} onClick={() => handleRemove(option)}>
-                                    <Badge variant="secondary">
-                                        <div className="flex items-center justify-around gap-1">
-                                            <div>{option}</div>
-                                            <X className="size-4" />
-                                        </div>
-                                    </Badge>
-                                </button>
-                            ))}
+                {loading ? (
+                    <div className="flex justify-center items-center h-full">
+                        <LoadingSpinner />
+                    </div>
+                ) : (
+                    <div className="w-full">
+                        <div className="w-full flex flex-col ml-2">
+                            <div className="flex items-center">
+                                <Input
+                                    type="text"
+                                    placeholder="Add comma to separate"
+                                    value={inputValue}
+                                    onChange={handleInputChange}
+                                    onKeyDown={handleKeyDown}
+                                />
+                            </div>
+                            <div className="no-scrollbar flex max-h-16 flex-wrap gap-2 overflow-y-auto rounded-md bg-transparent py-2">
+                                {selectedOptions.map((option) => (
+                                    <button key={option} onClick={() => handleRemove(option)}>
+                                        <Badge variant="secondary">
+                                            <div className="flex items-center justify-around gap-1">
+                                                <div>{option}</div>
+                                                <X className="size-4" />
+                                            </div>
+                                        </Badge>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
             </CardContent>
             <CardFooter className="border-t p-4">
                 <div className="flex mx-4">
-                    <Button type="button" onClick={addOptionsFromInput} size={"lg"}>Submit</Button>
+                    <Button type="button" onClick={addOptionsFromInput} size={"lg"} disabled={loading}>
+                        Submit
+                    </Button>
                 </div>
             </CardFooter>
         </Card>

@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { MultiSelector, MultiSelectorContent, MultiSelectorInput, MultiSelectorItem, MultiSelectorList, MultiSelectorTrigger } from "@/components/ui/multiselector";
+import { LoadingSpinner } from "@/components/ui/spinner";
 import { submitLocations } from "@/app/api/outbound/uploadLocation";
 
 const formSchema = z.object({
-    value: z.array(z.string()).nonempty("Please select at least one option"),
+    value: z.array(z.string()),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -23,16 +24,23 @@ interface LocationCardProps {
 
 export default function MultiSelectCard({ cardTitle, cardDescription, options }: LocationCardProps) {
     const [submittedValues, setSubmittedValues] = useState(new Set<string>());
+    const [loading, setLoading] = useState(false);
     const multiForm = useForm<FormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: { value: [] },
     });
 
     const onSubmit = async (data: FormSchema) => {
+        if (data.value.length === 0) {
+            toast.error("Please select at least one option.");
+            return;
+        }
+
         const newValues = new Set(submittedValues);
         data.value.forEach((value) => newValues.add(value));
         setSubmittedValues(newValues);
 
+        setLoading(true);
         try {
             await submitLocations(Array.from(newValues));
             toast.success("Options submitted");
@@ -40,6 +48,8 @@ export default function MultiSelectCard({ cardTitle, cardDescription, options }:
         } catch (error) {
             console.error("Error submitting data:", error);
             toast.error("Failed to submit data");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -50,48 +60,54 @@ export default function MultiSelectCard({ cardTitle, cardDescription, options }:
                 <CardDescription>{cardDescription}</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="w-full">
-                    <Form {...multiForm}>
-                        <form
-                            id="locationForm"
-                            onSubmit={multiForm.handleSubmit(onSubmit)}
-                            className="flex items-center w-full px-2"
-                        >
-                            <FormField
-                                control={multiForm.control}
-                                name="value"
-                                render={({ field }) => (
-                                    <FormItem className="w-full pr-2">
-                                        <MultiSelector
-                                            onValuesChange={field.onChange}
-                                            values={field.value}
-                                        >
-                                            <MultiSelectorTrigger>
-                                                <MultiSelectorInput placeholder="Select options" />
-                                            </MultiSelectorTrigger>
-                                            <MultiSelectorContent className="z-50">
-                                                <MultiSelectorList className="bg-card">
-                                                    {options.map((option) => (
-                                                        <MultiSelectorItem key={option.name} value={option.name}>
-                                                            <div className="flex space-x-2 justify-start w-full">
-                                                                <span>{option.name}</span>
-                                                            </div>
-                                                        </MultiSelectorItem>
-                                                    ))}
-                                                </MultiSelectorList>
-                                            </MultiSelectorContent>
-                                        </MultiSelector>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </form>
-                    </Form>
-                </div>
+                {loading ? (
+                    <div className="flex justify-center items-center h-full">
+                        <LoadingSpinner size={45} />
+                    </div>
+                ) : (
+                    <div className="w-full">
+                        <Form {...multiForm}>
+                            <form
+                                id="locationForm"
+                                onSubmit={multiForm.handleSubmit(onSubmit)}
+                                className="flex items-center w-full px-2"
+                            >
+                                <FormField
+                                    control={multiForm.control}
+                                    name="value"
+                                    render={({ field }) => (
+                                        <FormItem className="w-full pr-2">
+                                            <MultiSelector
+                                                onValuesChange={field.onChange}
+                                                values={field.value}
+                                            >
+                                                <MultiSelectorTrigger>
+                                                    <MultiSelectorInput placeholder="Select options" />
+                                                </MultiSelectorTrigger>
+                                                <MultiSelectorContent className="z-50">
+                                                    <MultiSelectorList className="bg-card">
+                                                        {options.map((option) => (
+                                                            <MultiSelectorItem key={option.name} value={option.name}>
+                                                                <div className="flex space-x-2 justify-start w-full">
+                                                                    <span>{option.name}</span>
+                                                                </div>
+                                                            </MultiSelectorItem>
+                                                        ))}
+                                                    </MultiSelectorList>
+                                                </MultiSelectorContent>
+                                            </MultiSelector>
+                                            <FormMessage className="text-white" />
+                                        </FormItem>
+                                    )}
+                                />
+                            </form>
+                        </Form>
+                    </div>
+                )}
             </CardContent>
             <CardFooter className="border-t px-6 py-4">
                 <div className="flex mx-2">
-                    <Button type="submit" form="locationForm" size={"lg"}>
+                    <Button type="submit" form="locationForm" size={"lg"} disabled={loading}>
                         Submit
                     </Button>
                 </div>
