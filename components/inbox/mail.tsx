@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { useMail } from "@/contexts/MailContext"
 import { cn } from "@/lib/utils"
-import { MailProps, ThreadList } from "@/app/types/mails"
+import { MailProps, ThreadList } from "@/types/interface"
 
 const MAX_INBOX_HEIGHT = 680
 

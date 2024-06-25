@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ScrollArea } from "../ui/scroll-area";
 import { Timeline } from "../ui/timeline";
-import { MailDisplayProps } from "@/app/types/mails";
+import { MailDisplayProps } from "@/types/interface";
 
 export function MailDisplay({ threadData }: MailDisplayProps) {
   const thread = threadData?.thread;
