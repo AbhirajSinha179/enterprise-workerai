@@ -42,6 +42,7 @@ html {
   }
 
   .dark {
+    /* --background: #31363f; */
     --background: 210, 2.5%, 15.69%;
     --foreground: 42, 47.62%, 91.76%;
 
