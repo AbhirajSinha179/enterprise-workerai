@@ -18,6 +18,26 @@ export const threadSchema = z.object({
 
 export const threadsSchema = z.array(threadSchema)
 
+export interface SchedularEmail {
+  id: number
+  subject: string
+  body: string
+  date: string
+  scheduled: boolean
+  recipient: string
+}
+
+export const emailSchemaSchedular = z.object({
+  id: z.number(),
+  subject: z.string(),
+  body: z.string(),
+  date: z.string(),
+  scheduled: z.boolean(),
+  recipient: z.string(),
+})
+
+export const schedularEmailSchema = z.array(emailSchemaSchedular)
+
 export interface Email {
   id: string
   name: string
