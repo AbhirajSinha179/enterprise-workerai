@@ -1,5 +1,5 @@
 // app/lib/data-fetching.ts
-import { threadsSchema } from "./schema"
+import { threadsSchema } from "@/types/interface"
 
 async function getData() {
   const res = await fetch("http://localhost:3000/threads")

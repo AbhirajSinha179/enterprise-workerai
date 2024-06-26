@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { MultiSelector, MultiSelectorContent, MultiSelectorInput, MultiSelectorItem, MultiSelectorList, MultiSelectorTrigger } from "@/components/ui/multiselector";
 import { LoadingSpinner } from "@/components/ui/spinner";
-import { submitLocations } from "@/app/api/outbound/uploadLocation";
+import { submitLocations } from "@/lib/actions";
 
 const formSchema = z.object({
     value: z.array(z.string()),

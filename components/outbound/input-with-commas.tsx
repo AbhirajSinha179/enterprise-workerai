@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { submitJobTitles } from "@/app/api/outbound/uploadjobtitles";
-import { submitKeywords } from "@/app/api/outbound/uploadKeyword";
-import { submitBlocklisted } from "@/app/api/outbound/uploadBlackListed";
+import { submitJobTitles } from "@/lib/actions";
+import { submitKeywords } from "@/lib/actions";
+import { submitBlocklisted } from "@/lib/actions";
 import { LoadingSpinner } from "@/components/ui/spinner"; // Adjust the import path as necessary
 
 interface InputWithCommasProps {
