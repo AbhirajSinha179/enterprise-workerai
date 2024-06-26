@@ -1,3 +1,5 @@
+"use client"
+
 import { format } from "date-fns";
 import { Trash, RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
