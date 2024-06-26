@@ -88,3 +88,43 @@ export interface ThreadList {
   threadid: string
   thread: Email[]
 }
+
+export interface StatDashboard {
+  title: string
+  value: string
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
+}
+export interface DataGraph {
+  name: string
+  uv: number
+  pv: number
+  amt: number
+}
+export interface SalesDataItem {
+  name: string
+  email: string
+}
+
+export const statDashboardSchema = z.object({
+  title: z.string(),
+  value: z.string(),
+  icon: z.string(),
+})
+
+export const dataGraphSchema = z.object({
+  name: z.string(),
+  uv: z.number(),
+  pv: z.number(),
+  amt: z.number(),
+})
+
+export const salesDataItemSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+})
+
+export const dashboardDataSchema = z.object({
+  statsDashboard: z.array(statDashboardSchema),
+  dataGraph: z.array(dataGraphSchema),
+  recentSalesData: z.array(salesDataItemSchema),
+})
