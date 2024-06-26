@@ -13,63 +13,64 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { cn } from "@/lib/utils"
+import { CheckCircledIcon } from "@radix-ui/react-icons"; // Ensure this is the correct path for your icon
+import { Separator } from "../ui/separator"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
-export default function EmailItem({ item }: any) {
-  const router = useRouter();
-  const [subject, setSubject] = useState(item?.subject);
-  const [body, setBody] = useState(item?.body);
-  const [isPending, startTransition] = useTransition();
-  const [isFetching, setIsFetching] = useState(false);
+export default function EmailItem({ item, handleApprove, handleEdit, handleDelete }: { item: any, handleApprove: any, handleEdit: any, handleDelete: any }) {
+  const [subject, setSubject] = useState(item?.subject)
+  const [body, setBody] = useState(item?.body)
 
-  const isMutating = isPending || isFetching;
-
-  const handleApprove = async () => {
-    setIsFetching(true);
-    setTimeout(() => {
-      setIsFetching(false);
-      startTransition(() => {
-        router.refresh();
-      });
-    }, 1000);
-  };
-
-  const handleEdit = async () => {
-    setTimeout(() => {
-      console.log(subject, body);
-      toast("Email successfully edited", {
-        description: new Date().toLocaleTimeString(),
-        action: {
-          label: "Undo",
-          onClick: () => console.log("Undo"),
-        },
-      });
-    }, 500);
-  };
-
-  const handleDelete = async () => {
-    // Implement delete logic here
-  };
-
-  const handleRegenerateResponse = async () => {
-    // Implement regenerate response logic here
-  };
+  const renderStatusIcons = (status: number) => {
+    return (
+      <div className="flex items-center space-x-1  my-1">
+        {Array.from({ length: status }).map((_, index) => (
+          <CheckCircledIcon key={index} width={20} height={20} />
+        ))}
+      </div>
+    )
+  }
 
   return (
     <>
       <div className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all")}>
         <div className="flex w-full flex-col gap-1">
-          <div className="flex items-center">
-            <div className="text-2xl font-semibold">{item.recipient}</div>
-            <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
+          <div className="flex justify-between">
+            <div className="text-2xl font-semibold flex">{item.recipient}</div>
+            <div className=" flex  ">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="">
+                      {item.status && renderStatusIcons(item.status)}
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{item.status} Email sent</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
+              <div className="flex items-center h-6 mx-2">
+                <Separator orientation="vertical" />
+              </div>
+              <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
+            </div>
           </div>
-          <div className="text-md font-medium">{subject}</div>
+          <div className="text-md font-medium">{item.subject}</div>
+
         </div>
-        <div className="text-xs text-muted-foreground">{body}</div>
+        <div className="text-xs text-muted-foreground">{item.body}</div>
         <div className="mt-2 flex w-full items-center justify-between">
           <div className="flex items-center space-x-2">
             <Button onClick={handleDelete} variant="outline" size="icon" className="size-8">
@@ -119,14 +120,15 @@ export default function EmailItem({ item }: any) {
                 </div>
                 <DialogFooter>
                   <DialogClose asChild>
-                    <Button type="submit" onClick={handleEdit}>
+                    <Button type="submit" onClick={() =>
+                      handleEdit(item.recipient, subject, body)}>
                       Save changes
                     </Button>
                   </DialogClose>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <Button onClick={handleApprove} asChild className="h-8 min-w-fit cursor-pointer">
+            <Button onClick={() => handleApprove(item?.recipient)} asChild className="h-8 min-w-fit cursor-pointer">
               <span>Smart Schedule</span>
             </Button>
           </div>

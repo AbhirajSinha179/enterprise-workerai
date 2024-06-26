@@ -1,28 +1,21 @@
 "use client"
 
-import {
-  Search,
-} from "lucide-react"
+import { InboxIcon, MailOpenIcon, Search } from "lucide-react"
 import * as React from "react"
 
+import EmptyState from "@/components/global/empty-state" // Ensure this import is correct
 import { type Mail } from "@/components/inbox/data"
 import { MailDisplay } from "@/components/inbox/mail-display"
 import { MailList } from "@/components/inbox/mail-list"
 import { Input } from "@/components/ui/input"
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable"
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
 import { Separator } from "@/components/ui/separator"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { useMail } from "@/contexts/MailContext"
+import { cn } from "@/lib/utils"
+
+const MAX_INBOX_HEIGHT = 680
 
 interface MailProps {
   accounts?: {
@@ -30,30 +23,33 @@ interface MailProps {
     email: string
     icon: React.ReactNode
   }[]
-  mails: Mail[]
+  threads: ThreadList[]
   defaultLayout?: number[] | undefined
   defaultCollapsed?: boolean
   navCollapsedSize?: number
 }
 
+interface ThreadList {
+  threadid: string,
+  thread: Mail[]
+}
+
 export function Inbox({
   // accounts,
-  mails,
+  threads,
   defaultLayout = [265, 440, 655],
   // navCollapsedSize,
 }: MailProps) {
-  const {config} = useMail()
+  const { config } = useMail()
 
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes: number[]) => {
-          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-            sizes
-          )}`
+          document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`
         }}
-        className="h-full max-h-[800px] items-stretch"
+        className={cn("h-full items-stretch", `max-h-[${MAX_INBOX_HEIGHT}px]`)}
       >
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
           <Tabs defaultValue="all">
@@ -84,17 +80,34 @@ export function Inbox({
               </form>
             </div>
             <TabsContent value="all" className="m-0">
-              <MailList items={mails} />
+              {threads.length === 0 ? (
+                <EmptyState
+                  headerMessage="No Emails Yet"
+                  containerMessage=""
+                  icon={<InboxIcon size={60} />}
+                />
+              ) : (
+                <MailList items={threads} />
+              )}
             </TabsContent>
-            <TabsContent value="unread" className="m-0">
-              <MailList items={mails.filter((item) => !item.read)} />
-            </TabsContent>
+            {/* <TabsContent value="unread" className="m-0">
+              {mails.filter((item: any) => !item.read).length === 0 ? (
+                <EmptyState
+                  headerMessage="No unread Emails"
+                  containerMessage=""
+                  icon={<MailOpenIcon size={60} />}
+                />
+              ) : (
+                <MailList items={mails.filter((item: any) => !item.read)} />
+              )}
+            </TabsContent> */}
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
           <MailDisplay
-            mail={mails.find((item) => item.id === config.selected) || null}
+            // change mail to thread
+            threadData={threads.find((item: ThreadList) => item.threadid === config.selected) || null}
           />
         </ResizablePanel>
       </ResizablePanelGroup>

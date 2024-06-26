@@ -1,6 +1,7 @@
 "use client"
 
-import { Ellipsis, LogOut } from "lucide-react"
+import { SignOutButton } from "@clerk/nextjs"
+import { Ellipsis, LogOut, MailIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -22,7 +23,7 @@ export function Menu({ isOpen }: MenuProps) {
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
       <nav className="mt-8 size-full">
-        <ul className="flex min-h-[calc(100vh-48px-36px-16px-32px)] flex-col items-start space-y-1 px-2 lg:min-h-[calc(100vh-32px-40px-32px)]">
+        <ul className="flex min-h-[calc(100vh-48px-36px-16px-32px)] flex-col items-start space-y-1 px-2 lg:min-h-[calc(100vh-32px-40px-32px-40px)]">
           {menuList.map(({ groupLabel, menus }, index) => (
             <li className={cn("w-full", groupLabel ? "pt-5" : "")} key={index}>
               {(isOpen && groupLabel) || isOpen === undefined ? (
@@ -83,7 +84,7 @@ export function Menu({ isOpen }: MenuProps) {
               )}
             </li>
           ))}
-          <li className="flex w-full grow items-end">
+          {/* <li className="flex w-full grow items-end">
             <TooltipProvider disableHoverableContent>
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
@@ -99,7 +100,25 @@ export function Menu({ isOpen }: MenuProps) {
                 {isOpen === false && <TooltipContent side="right">Sign out</TooltipContent>}
               </Tooltip>
             </TooltipProvider>
-          </li>
+          </li> */}
+
+          {isOpen == true && <div className="flex w-full grow items-end  ">
+
+            <div className=" mx-auto flex flex-row  px-2 ">
+              <MailIcon className="my-auto mx-2"></MailIcon>
+              <Link href="mailto:hello@workerai.co" target="_blank"  >
+                <Button variant="link" size={"useLink"}>
+                  <h1 className="font-semibold text-base">
+
+                    help@workerai.co
+                  </h1>
+                </Button>
+              </Link>
+
+            </div>
+
+          </div>}
+
         </ul>
       </nav>
     </ScrollArea>

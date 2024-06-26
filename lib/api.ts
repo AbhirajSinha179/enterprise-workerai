@@ -33,3 +33,41 @@ export function getAllPosts(): Post[] {
   const posts = slugs.map((slug) => getPostBySlug(slug))
   return posts
 }
+
+export const getAllEmails = async () => {
+  const emails = {
+    json: async () => {
+      return [
+        {
+          id: "1",
+          recipient: "[RECIPIENT]",
+          subject: "[SUBJECT]",
+          body: "[BODY]",
+          date: new Date(),
+        },
+        {
+          id: "2",
+          recipient: "[RECIPIENT]",
+          subject: "[SUBJECT]",
+          body: "[BODY]",
+          date: new Date(),
+        },
+        {
+          id: "3",
+          recipient: "[RECIPIENT]",
+          subject: "[SUBJECT]",
+          body: "[BODY]",
+          date: new Date(),
+        },
+      ]
+    },
+  }
+  return emails.json()
+}
+
+export const testApiRequest = async () => {
+  const response = await fetch("http://localhost:3000/")
+  const data = response.body
+  console.log(data)
+  return data
+}
