@@ -39,13 +39,11 @@ export function Inbox({
               <TabsList className="ml-auto">
                 <TabsTrigger
                   value="all"
-                  className="text-zinc-600 dark:text-zinc-200"
                 >
                   All mail
                 </TabsTrigger>
                 <TabsTrigger
                   value="unread"
-                  className="text-zinc-600 dark:text-zinc-200"
                 >
                   Unread
                 </TabsTrigger>
