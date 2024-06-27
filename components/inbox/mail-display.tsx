@@ -8,15 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ScrollArea } from "../ui/scroll-area";
 import { Timeline } from "../ui/timeline";
-
-interface MailDisplayProps {
-  threadData: ThreadList | null;
-}
-
-interface ThreadList {
-  threadid: string;
-  thread: Mail[];
-}
+import { MailDisplayProps } from "@/types/interface";
 
 export function MailDisplay({ threadData }: MailDisplayProps) {
   const thread = threadData?.thread;
