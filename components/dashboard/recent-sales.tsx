@@ -10,6 +10,9 @@ interface RecentSalesProp {
 }
 
 export function RecentSales({ data }: RecentSalesProp) {
+  if (!data || data.length === 0) {
+    return <div className="mx-10 font-medium text-center">Sorry no data found</div>;
+  }
   return (
     <div className="space-y-8">
       {data.map((sale) => (
