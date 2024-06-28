@@ -8,6 +8,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { ScrollArea } from "../ui/scroll-area";
 import { Timeline } from "../ui/timeline";
 import { MailDisplayProps } from "@/types/interface";
+import { useState } from "react";
+import { Textarea } from "../ui/textarea";
 
 export function MailDisplay({ threadData }: MailDisplayProps) {
   const [replyContent, setReplyContent] = useState<string>("");
