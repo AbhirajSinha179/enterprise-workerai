@@ -314,6 +314,7 @@ export const mails = [
 ]
 
 export type Mail = (typeof mails)[number]
+//gets the type of any element within the mails array.
 export type Thread = (typeof threads)[number]
 
 export const accounts = [
