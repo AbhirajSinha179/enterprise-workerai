@@ -10,6 +10,8 @@ import { Timeline } from "../ui/timeline";
 import { MailDisplayProps } from "@/types/interface";
 import { useState } from "react";
 import { Textarea } from "../ui/textarea";
+import { submitReplyContent } from "@/lib/actions";
+import { toast } from "sonner";
 
 export function MailDisplay({ threadData }: MailDisplayProps) {
   const [replyContent, setReplyContent] = useState<string>("");
@@ -19,15 +21,23 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
     setReplyContent(event.target.value);
   };
 
-  const handleReplySubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleReplySubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!replyContent.trim()) return;
-    console.log("Reply content:", replyContent);
-    setReplyContent("");
+
+    try {
+      const result = await submitReplyContent(replyContent);
+      console.log("Reply submitted:", result);
+      toast.success("Message sent successfully!");
+      setReplyContent("");
+    } catch (error) {
+      console.error("Error submitting the reply:", error);
+      toast.error("Failed to send the message.");
+    }
   };
 
   return (
-    <div className="flex h-full flex-col ">
+    <div className="flex h-full flex-col">
       <div className="flex items-center p-2">
         <div className="ml-auto flex items-center gap-2">
           <Tooltip>
@@ -58,7 +68,7 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
       {thread ? (
         <div className="flex flex-1 flex-col justify-between">
           <div className="flex mx-4 h-[60vh]">
-            <ScrollArea  >
+            <ScrollArea>
               <Timeline>
                 {thread.map((message: Mail, index: number) => (
                   <MailTimelineItem
@@ -71,10 +81,10 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
               </Timeline>
             </ScrollArea>
           </div>
-          <Separator className=" bg-card" />
-          <div className="p-4 ">
+          <Separator className="bg-card" />
+          <div className="p-4">
             <form onSubmit={handleReplySubmit}>
-              <div className="grid gap-4">
+              <div className="grid gap-4 mx-2">
                 <Textarea
                   className="p-4 bg-card"
                   placeholder="Reply..."
