@@ -182,38 +182,29 @@ export const columns: ColumnDef<Leads>[] = [
     {
         id: "actions",
         cell: ({ row }) => (
-
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button variant="outline">
+                    <Button variant="ghost">
                         <Trash2 className="size-4" />
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[725px]">
+                <DialogContent className="w-1/6">
                     <DialogHeader>
                         <DialogTitle>Delete this Lead</DialogTitle>
                         <DialogDescription>
-                            Do you want to blacklist this lead ?
+                            Do you want to blacklist this lead?
                         </DialogDescription>
                     </DialogHeader>
-                    <DialogFooter>
-                        <DialogClose asChild>
-                            <div className="space-x-2">
-                                <Button>
-                                    No
-                                </Button>
-                                <Button onClick={() => handleDelete(row)} variant="destructive">
-                                    Yes
-                                </Button>
-                            </div>
-
-                        </DialogClose>
+                    <DialogFooter className="flex justify-between space-x-2">
+                        <Button onClick={() => handleDelete(row)} variant="destructive" className="flex-1">
+                            Delete
+                        </Button>
+                        <Button className="flex-1">
+                            Cancel
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
-
-
-
         ),
     },
 ]
