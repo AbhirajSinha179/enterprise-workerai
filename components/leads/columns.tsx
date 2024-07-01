@@ -28,9 +28,13 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import { toast } from "sonner"
 
 function handleDelete(row: any) {
-    console.log(`Deleting row with id ${row.id}`)
+    console.log(`Deleting row with id ${row.id}`);
+    toast.success(`Deleted ${row.id}`, {
+        description: `${row.id} was deleted.`
+    });
 }
 export const columns: ColumnDef<Leads>[] = [
     {
@@ -196,12 +200,18 @@ export const columns: ColumnDef<Leads>[] = [
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter className="flex justify-between space-x-2">
-                        <Button onClick={() => handleDelete(row)} variant="destructive" className="flex-1">
-                            Delete
-                        </Button>
-                        <Button className="flex-1">
-                            Cancel
-                        </Button>
+                        <DialogClose asChild>
+
+                            <Button onClick={() => handleDelete(row)} variant="destructive" className="flex-1">
+                                Delete
+                            </Button>
+                        </DialogClose>
+                        <DialogClose asChild>
+                            <Button className="flex-1">
+                                Cancel
+                            </Button>
+                        </DialogClose>
+
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
