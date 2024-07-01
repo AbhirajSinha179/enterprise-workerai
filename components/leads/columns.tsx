@@ -15,9 +15,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Label } from "../ui/label"
-import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
 import {
     Dialog,
     DialogClose,
@@ -44,7 +41,7 @@ export const columns: ColumnDef<Leads>[] = [
                 checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
                 onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
                 aria-label="Select all"
-                className="translate-y-[2px]"
+                className="translate-y-[2px] ml-5"
             />
         ),
         cell: ({ row }) => (
@@ -52,7 +49,7 @@ export const columns: ColumnDef<Leads>[] = [
                 checked={row.getIsSelected()}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
                 aria-label="Select row"
-                className="translate-y-[2px]"
+                className="translate-y-[2px] ml-5"
             />
         ),
         enableSorting: false,
@@ -64,12 +61,12 @@ export const columns: ColumnDef<Leads>[] = [
             <DataTableColumnHeader
                 column={column}
                 title="Name"
-                className="mx-5 flex justify-center"
+                className="mx-2 flex justify-center  w-[100px] ml-10"
                 sortAscending={""}
                 sortDescending={""}
             />
         ),
-        cell: ({ row }) => <div className="mx-5 flex w-[100px] justify-center text-foreground">{row.getValue("name")}</div>,
+        cell: ({ row }) => <div className="mx-5 flex w-[100px] justify-center text-foreground ml-10">{row.getValue("name")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
@@ -79,12 +76,12 @@ export const columns: ColumnDef<Leads>[] = [
             <DataTableColumnHeader
                 column={column}
                 title="Company"
-                className="mx-5 flex justify-center"
+                className=" flex justify-center w-[100px] "
                 sortAscending={""}
                 sortDescending={""}
             />
         ),
-        cell: ({ row }) => <div className="flex w-[100px] justify-center text-foreground">{row.getValue("company")}</div>,
+        cell: ({ row }) => <div className="flex w-[100px] justify-center text-foreground ">{row.getValue("company")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
@@ -94,12 +91,12 @@ export const columns: ColumnDef<Leads>[] = [
             <DataTableColumnHeader
                 column={column}
                 title="Email"
-                className=" flex w-[200px] justify-center   "
+                className=" flex  justify-center   w-[200px]  "
                 sortAscending={""}
                 sortDescending={""}
             />
         ),
-        cell: ({ row }) => <div className="flex w-[200px] justify-center text-foreground ">{row.getValue("email")}</div>,
+        cell: ({ row }) => <div className="flex  w-[200px]  justify-center text-foreground ">{row.getValue("email")}</div>,
         enableSorting: false,
         enableHiding: false,
     },
@@ -110,7 +107,7 @@ export const columns: ColumnDef<Leads>[] = [
             <DataTableColumnHeader
                 column={column}
                 title="Workflow Stage"
-                className=" mr-10  flex w-[150px] justify-center"
+                className="   flex justify-center w-[150px] "
                 sortAscending="Asc"
                 sortDescending="Dsc"
             />
@@ -121,7 +118,7 @@ export const columns: ColumnDef<Leads>[] = [
                 return null
             }
             return (
-                <div className="flex w-[150px] items-center justify-center space-x-1  ">
+                <div className="flex  items-center justify-center space-x-1  w-[150px]  ">
                     {status.number && (
                         <TooltipProvider>
                             <Tooltip>
@@ -153,7 +150,7 @@ export const columns: ColumnDef<Leads>[] = [
             <DataTableColumnHeader
                 column={column}
                 title="Engaged"
-                className=" mr-5 flex justify-center"
+                className="  flex justify-center w-[150px] "
                 sortAscending="Engaged"
                 sortDescending="Not Engaged"
             />
@@ -166,7 +163,7 @@ export const columns: ColumnDef<Leads>[] = [
             }
 
             return (
-                <div className="flex w-[150px] items-center justify-center space-x-1">
+                <div className="flex w-[150px] items-center justify-center   ">
                     {engagement.number === 0 ? (
                         <div className="mx-2 flex items-center space-x-1">
                             <Badge>Engaged</Badge>
