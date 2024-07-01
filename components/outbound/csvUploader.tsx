@@ -87,7 +87,7 @@ export default function CSVUpload({ cardTitle, cardDescription }: CSVUploader) {
                                 value={files}
                                 onValueChange={setFiles}
                                 dropzoneOptions={dropZoneConfig}
-                                className="relative bg-background rounded-lg py-2"
+                                className="relative bg-muted rounded-lg py-2"
                             >
                                 <FileInput>
                                     <div className="flex items-center justify-center flex-col pt-3 pb-4 w-full">
