@@ -27,7 +27,7 @@ export function Menu({ isOpen }: MenuProps) {
           {menuList.map(({ groupLabel, menus }, index) => (
             <li className={cn("w-full", groupLabel ? "pt-5" : "")} key={index}>
               {(isOpen && groupLabel) || isOpen === undefined ? (
-                <p className="max-w-[248px] truncate px-4 pb-2 text-sm font-medium text-muted-foreground">
+                <p className="max-w-[248px] truncate px-4 pb-2 text-sm font-medium text-foreground">
                   {groupLabel}
                 </p>
               ) : !isOpen && isOpen !== undefined && groupLabel ? (
@@ -109,7 +109,6 @@ export function Menu({ isOpen }: MenuProps) {
               <Link href="mailto:hello@workerai.co" target="_blank"  >
                 <Button variant="link" size={"useLink"}>
                   <h1 className="font-semibold text-base">
-
                     help@workerai.co
                   </h1>
                 </Button>

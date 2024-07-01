@@ -103,6 +103,7 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
                                     value={inputValue}
                                     onChange={handleInputChange}
                                     onKeyDown={handleKeyDown}
+                                    className="bg-muted mr-6 h-11"
                                 />
                             </div>
                             <div className="no-scrollbar flex max-h-16 flex-wrap gap-2 overflow-y-auto rounded-md bg-transparent py-2">

@@ -7,8 +7,16 @@ import { DataTableColumnHeader } from "@/components/leads/data-table-column-head
 // import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
+import { toast } from "sonner"
+
+
+
 function handleDelete(row: any) {
-    console.log(`Deleting row with id ${row.id}`)
+    console.log(`Deleting row with id ${row.id}`);
+    toast.success(`Deleted ${row.id}`, {
+        description: `${row.id} was deleted.`
+    });
 }
 export const columns: ColumnDef<Mails>[] = [
     {
@@ -18,7 +26,7 @@ export const columns: ColumnDef<Mails>[] = [
                 checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
                 onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
                 aria-label="Select all"
-                className="translate-y-[2px]"
+                className="translate-y-[2px] ml-5"
             />
         ),
         cell: ({ row }) => (
@@ -26,7 +34,7 @@ export const columns: ColumnDef<Mails>[] = [
                 checked={row.getIsSelected()}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
                 aria-label="Select row"
-                className="translate-y-[2px]"
+                className="translate-y-[2px] ml-5"
             />
         ),
         enableSorting: false,
@@ -130,9 +138,35 @@ export const columns: ColumnDef<Mails>[] = [
     {
         id: "actions",
         cell: ({ row }) => (
-            <Button onClick={() => handleDelete(row)} variant="ghost">
-                <Trash2 className="size-4  " />
-            </Button>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="ghost">
+                        <Trash2 className="size-4" />
+                    </Button>
+                </DialogTrigger>
+                <DialogContent className="w-1/6">
+                    <DialogHeader>
+                        <DialogTitle>Delete this Lead</DialogTitle>
+                        <DialogDescription>
+                            Do you want to blacklist this lead?
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter className="flex justify-between space-x-2">
+                        <DialogClose asChild>
+
+                            <Button onClick={() => handleDelete(row)} variant="destructive" className="flex-1">
+                                Delete
+                            </Button>
+                        </DialogClose>
+                        <DialogClose asChild>
+                            <Button className="flex-1">
+                                Cancel
+                            </Button>
+                        </DialogClose>
+
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         ),
     },
 ]

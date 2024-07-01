@@ -52,12 +52,13 @@ export default function MultiSelectCard({ cardTitle, cardDescription, options }:
             setLoading(false);
         }
     };
+    //primary for text ie creame 
 
     return (
         <Card x-chunk="dashboard-04-chunk-1">
             <CardHeader className="mx-3">
-                <CardTitle>{cardTitle}</CardTitle>
-                <CardDescription>{cardDescription}</CardDescription>
+                <CardTitle className="text-primary">{cardTitle}</CardTitle>
+                <CardDescription className="text-primary">{cardDescription}</CardDescription>
             </CardHeader>
             <CardContent>
                 {loading ? (
@@ -70,7 +71,7 @@ export default function MultiSelectCard({ cardTitle, cardDescription, options }:
                             <form
                                 id="locationForm"
                                 onSubmit={multiForm.handleSubmit(onSubmit)}
-                                className="flex items-center w-full px-2"
+                                className="flex items-center w-full px-2 "
                             >
                                 <FormField
                                     control={multiForm.control}
@@ -81,14 +82,14 @@ export default function MultiSelectCard({ cardTitle, cardDescription, options }:
                                                 onValuesChange={field.onChange}
                                                 values={field.value}
                                             >
-                                                <MultiSelectorTrigger>
+                                                <MultiSelectorTrigger className="bg-muted">
                                                     <MultiSelectorInput placeholder="Select options" />
                                                 </MultiSelectorTrigger>
                                                 <MultiSelectorContent className="z-50">
-                                                    <MultiSelectorList className="bg-card">
+                                                    <MultiSelectorList className="bg-muted ">
                                                         {options.map((option) => (
-                                                            <MultiSelectorItem key={option.name} value={option.name}>
-                                                                <div className="flex space-x-2 justify-start w-full">
+                                                            <MultiSelectorItem key={option.name} value={option.name} >
+                                                                <div className="flex space-x-2 justify-start w-full ">
                                                                     <span>{option.name}</span>
                                                                 </div>
                                                             </MultiSelectorItem>

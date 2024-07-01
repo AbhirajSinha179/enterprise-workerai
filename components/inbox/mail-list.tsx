@@ -16,8 +16,8 @@ export function MailList({ items }: MailListProps) {
           <button
             key={thread.threadid}
             className={cn(
-              "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-              config.selected === thread.threadid && "bg-muted"
+              "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-muted",
+              config.selected === thread.threadid && ""
             )}
             onClick={() =>
               setConfig((prevConfig) => ({

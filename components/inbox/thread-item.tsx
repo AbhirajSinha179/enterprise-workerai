@@ -18,16 +18,16 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
                 <div className="flex justify-between items-start p-4 ">
                     <div className="flex items-start gap-4 text-sm">
                         <div className="grid gap-1">
-                            <div className="font-semibold">{mail.name}</div>
-                            <div className="line-clamp-1 text-xs">{mail.subject}</div>
-                            <div className="line-clamp-1 text-xs">
+                            <div className="font-semibold text-foreground">{mail.name}</div>
+                            <div className="line-clamp-1 text-xs text-foreground">{mail.subject}</div>
+                            <div className="line-clamp-1 text-xs text-foreground">
                                 <span className="font-medium">Reply-To:</span> {mail.email}
                             </div>
                         </div>
                     </div>
                     <div className="flex">
                         {mail.date && (
-                            <div className="ml-auto text-xs text-muted-foreground">
+                            <div className="ml-auto text-xs text-foreground">
                                 {format(new Date(mail.date), "PPpp")}
                             </div>
                         )}

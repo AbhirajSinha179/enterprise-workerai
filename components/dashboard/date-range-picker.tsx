@@ -29,7 +29,7 @@ export function CalendarDateRangePicker({
                         variant={'outline'}
                         className={cn(
                             'w-[260px] justify-start text-left font-normal',
-                            !date && 'text-muted-foreground'
+                            !date && 'text-foreground'
                         )}
                     >
                         <CalendarIcon className="mr-2 size-4" />

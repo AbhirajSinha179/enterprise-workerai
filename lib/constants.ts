@@ -69,13 +69,6 @@ export function getMenuList(pathname: string): Group[] {
           submenus: [],
         },
         {
-          href: `${DASHBOARD_PATH}/analytics`,
-          label: "Analytics",
-          active: pathname.includes("/analytics"),
-          icon: BarChart,
-          submenus: [],
-        },
-        {
           href: `${DASHBOARD_PATH}/mailbox`,
           label: "Mailbox",
           active: pathname.includes("/mailbox"),
@@ -88,17 +81,10 @@ export function getMenuList(pathname: string): Group[] {
       groupLabel: "Settings",
       menus: [
         {
-          href: "/users",
-          label: "Users",
-          active: pathname.includes("/users"),
-          icon: Users,
-          submenus: [],
-        },
-        {
           href: "/dashboard/outbound",
           label: "Outbound",
           active: pathname.includes("/account"),
-          icon: LucideSquareArrowOutUpRight, // change this icon
+          icon: Users,
           submenus: [],
         },
       ],
