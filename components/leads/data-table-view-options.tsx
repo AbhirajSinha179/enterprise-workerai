@@ -25,7 +25,7 @@ export function DataTableViewOptions<TData>({
 }: DataTableViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
-      <Button variant="default"
+      <Button
         size="lg"
         onClick={() => handleCSV()}>
         Upload CSV
@@ -34,13 +34,13 @@ export function DataTableViewOptions<TData>({
         <Button
           variant="ghost"
           size="lg"
-          className="mx-2 hidden lg:flex"
+          className="mx-2 hidden lg:flex "
         >
           <MixerHorizontalIcon className="mr-2 size-4" />
           View
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
+      <DropdownMenuContent align="end" className="w-[150px] bg-muted">
         <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table

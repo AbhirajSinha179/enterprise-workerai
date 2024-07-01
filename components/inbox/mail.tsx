@@ -42,10 +42,20 @@ export function Inbox({
                 >
                   All mail
                 </TabsTrigger>
-                <TabsTrigger
+                {/* <TabsTrigger
                   value="unread"
                 >
                   Unread
+                </TabsTrigger> */}
+                <TabsTrigger
+                  value="reply"
+                >
+                  Reply
+                </TabsTrigger>
+                <TabsTrigger
+                  value="followup"
+                >
+                  Follow Ups
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -53,7 +63,7 @@ export function Inbox({
             <div className="p-4 backdrop-blur supports-[backdrop-filter]:bg-background/0">
               <form>
                 <div className="relative">
-                  <Search className="absolute left-2 top-4 size-4 text-muted-foreground" />
+                  <Search className="absolute left-2 top-4 size-4 text-foreground" />
                   <Input placeholder="Search" className="pl-8" />
                 </div>
               </form>

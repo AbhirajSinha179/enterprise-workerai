@@ -40,12 +40,20 @@ export function EmailList({ emails }: any) {
       description: format(new Date(), "PPpp"),
     })
   }
+  const handleAutopilot = async () => {
+    console.log("Autopilot")
+    toast("Autopilot"
+    )
+  }
 
   return (
     <main className="flex w-full flex-col items-center ">
       <div className="mt-6 flex w-full items-center justify-between">
         <h1 className="text-2xl font-bold">Pending Emails</h1>
-        <Button onClick={handleApproveAll}>Approve and Smart Schedule All</Button>
+        <div>
+          <Button onClick={handleAutopilot} className="mx-2">Autopilot</Button>
+          <Button onClick={handleApproveAll}>Approve and Smart Schedule All</Button>
+        </div>
       </div>
       <ul className="my-4 w-full space-y-4 ">
         {emails.map((item: any) => (

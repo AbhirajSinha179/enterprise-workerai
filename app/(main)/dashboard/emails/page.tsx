@@ -41,6 +41,7 @@ export default async function Emails() {
 
         <TabsContent value="pending" className="space-y-4">
           {pendingEmails.length === 0 ? (
+
             <div>
               <div className="mt-6 flex w-full items-center justify-between">
                 <h1 className="text-2xl font-bold">Pending Emails</h1>

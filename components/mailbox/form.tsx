@@ -207,7 +207,7 @@ const FirstForm = ({
         <div
           className="flex w-1/3 cursor-pointer items-center justify-center rounded-lg 
                                 border p-4 shadow-md transition delay-150 duration-300 
-                                ease-in-out hover:-translate-y-1 hover:scale-110 "
+                                ease-in-out hover:-translate-y-1 hover:scale-110  bg-card"
           onClick={handleGoogleClick}
         >
           <Image src="/assets/mailbox/search.png" alt="Google logo" className="mr-4" width={40} height={40} />
@@ -219,7 +219,7 @@ const FirstForm = ({
         <div
           className="flex w-1/3 cursor-pointer items-center justify-center rounded-lg
                                  border p-4 shadow-md transition delay-150 duration-300
-                                  ease-in-out hover:-translate-y-1 hover:scale-110 "
+                                  ease-in-out hover:-translate-y-1 hover:scale-110 bg-card "
           onClick={handleMicrosoftClick}
         >
           <Image src="/assets/mailbox/microsoftLogo.png" alt="Microsoft logo" className="mr-4" width={40} height={40} />
@@ -234,7 +234,7 @@ const FirstForm = ({
 )
 
 const SecondFormGoogle = ({ handleImapEnabledClick }: { handleImapEnabledClick: () => void }) => (
-  <div className=" w-full max-w-md rounded-lg bg-muted p-6 shadow-md">
+  <div className=" w-full max-w-md rounded-lg bg-card p-6 shadow-md">
     <h1 className="mb-4 text-2xl font-bold">Connect Your Google Account</h1>
     <p className="mb-6">
       First, let’s
@@ -276,7 +276,7 @@ const SecondFormGoogle = ({ handleImapEnabledClick }: { handleImapEnabledClick: 
 )
 
 const SecondFormMicrosoft = ({ handleSmtpEnabledClick }: { handleSmtpEnabledClick: () => void }) => (
-  <div className="   w-full rounded-lg bg-muted  p-6 shadow-md ">
+  <div className="   w-full rounded-lg bg-card  p-6 shadow-md ">
     <h1 className="mb-4 text-2xl font-bold text-foreground">Connect Your Microsoft Account</h1>
     <p className="mb-6">
       First, let’s
@@ -286,7 +286,7 @@ const SecondFormMicrosoft = ({ handleSmtpEnabledClick }: { handleSmtpEnabledClic
       access for your Microsoft account.
     </p>
     <div className="flex flex-col gap-8 md:flex-row ">
-      <div className="w-full rounded-lg bg-card p-4 shadow">
+      <div className="w-full rounded-lg bg-muted p-4 shadow">
         <h2 className="mb-2 text-xl font-semibold">Microsoft accounts purchased directly from Microsoft</h2>
         <ol className="list-inside list-decimal space-y-2">
           <li>
@@ -315,7 +315,7 @@ const SecondFormMicrosoft = ({ handleSmtpEnabledClick }: { handleSmtpEnabledClic
           <li>Wait for one hour and connect your account to Instantly.</li>
         </ol>
       </div>
-      <div className="w-full rounded-lg bg-card p-4 shadow">
+      <div className="w-full rounded-lg bg-muted p-4 shadow">
         <h2 className="mb-2 text-xl font-semibold">Microsoft accounts purchased from GoDaddy</h2>
         <ol className="list-inside list-decimal space-y-2">
           <li>
@@ -351,7 +351,7 @@ const SecondFormMicrosoft = ({ handleSmtpEnabledClick }: { handleSmtpEnabledClic
 
 const ThirdFormGoogle = ({ handleLoginClick }: { handleLoginClick: () => void }) => (
   <div className="flex justify-center ">
-    <div className="w-1/2 rounded-lg bg-muted  p-6 shadow-md">
+    <div className="w-1/2 rounded-lg bg-card  p-6 shadow-md">
       <h1 className="mb-4 text-2xl font-bold">Connect Your Google Account</h1>
       <p className="mb-6">Allow Instantly to access your Google workspace. You only need to do this once per domain.</p>
       <ol className="mb-6 list-inside list-decimal space-y-4">

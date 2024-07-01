@@ -70,8 +70,8 @@ export default function CSVUpload({ cardTitle, cardDescription }: CSVUploader) {
     return (
         <Card x-chunk="dashboard-04-chunk-2">
             <CardHeader>
-                <CardTitle className=" mx-1"> {cardTitle}</CardTitle>
-                <CardDescription className=" mx-1">
+                <CardTitle className=" mx-1 text-primary"> {cardTitle}</CardTitle>
+                <CardDescription className=" mx-1 text-primary">
                     {cardDescription}
                 </CardDescription>
             </CardHeader>
@@ -87,7 +87,7 @@ export default function CSVUpload({ cardTitle, cardDescription }: CSVUploader) {
                                 value={files}
                                 onValueChange={setFiles}
                                 dropzoneOptions={dropZoneConfig}
-                                className="relative bg-background rounded-lg py-2"
+                                className="relative bg-muted rounded-lg py-2"
                             >
                                 <FileInput>
                                     <div className="flex items-center justify-center flex-col pt-3 pb-4 w-full">

@@ -56,16 +56,16 @@ export function DataTableColumnHeader<TData, TValue>({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-            <ArrowUpIcon className="mr-2 size-3.5 text-muted-foreground/70" />
+            <ArrowUpIcon className="mr-2 size-3.5 text-foreground/70" />
             {sortAscending}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-            <ArrowDownIcon className="mr-2 size-3.5 text-muted-foreground/70" />
+            <ArrowDownIcon className="mr-2 size-3.5 text-foreground/70" />
             {sortDescending}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
-            <EyeNoneIcon className="mr-2 size-3.5 text-muted-foreground/70" />
+            <EyeNoneIcon className="mr-2 size-3.5 text-foreground/70" />
             Hide
           </DropdownMenuItem>
         </DropdownMenuContent>
