@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMail } from "@/contexts/MailContext";
 import { cn } from "@/lib/utils";
-import { ThreadList, MailListProps } from "@/types/interface";
+import { MailListProps, ThreadList } from "@/types/interface";
 
 export function MailList({ items }: MailListProps) {
   const { config, setConfig } = useMail();

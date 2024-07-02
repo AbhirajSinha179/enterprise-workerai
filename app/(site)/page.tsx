@@ -2,11 +2,12 @@ import { MoveRight } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import InputSpotlightBorder from "@/components/custom-components/input-spotlight-border"
 import { BentoGridLanding } from "@/components/site/bento"
 import { Button } from "@/components/ui/button"
-import { LP_GRID_ITEMS } from "lp-items"
+import InputSpotlightBorder from "@/components/site/input-spotlight-border"
 import { landingConfig } from "@/lib/constants"
+import { LP_GRID_ITEMS } from "lp-items"
+import { WaitlistForm } from "@/components/site/waitlist-form"
 
 export const metadata: Metadata = {
   title: "Worker AI",
@@ -27,7 +28,6 @@ export const metadata: Metadata = {
 // TODO: Add metadata, dashboard images
 // TODO: Add sticky scroll reveal
 // TODO: Make Join the Waitlist form functional, use
-// TODO: Adjust the tabs colours, no contrast due to tailwind config change
 // TODO: Footer info + border changes
 // TODO: new section
 
@@ -43,11 +43,12 @@ export default function Web() {
       {/* <SiteNav /> */}
       <div className="absolute inset-0 z-[-1] overflow-hidden bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       <div className="fixed top-0 h-screen w-screen overflow-hidden bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-      <section className="relative">
+
+      <section className="relative min-h-screen">
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center md:my-20 lg:py-16">
           <div className="mx-auto place-self-center">
             <h1 className="mb-4 max-w-7xl text-4xl font-thin tracking-tight dark:text-white md:text-5xl  xl:text-6xl">
-              Adapt <MoveRight className="hidden sm:inline-block sm:size-12 " /> Automate
+              Adapt <MoveRight className="hidden sm:inline-block sm:size-12 " /> Automate{" "}
               <MoveRight className="hidden sm:inline-block sm:size-12" /> Accelerate
             </h1>
 
@@ -76,8 +77,7 @@ export default function Web() {
               </span>{" "}
               to deal closure
             </p>
-            <form className="mx-auto flex max-w-xl flex-wrap items-center justify-center gap-2">
-              {/* <Input placeholder="Your email goes here" type="email" className="inline-flex min-w-fit flex-1" /> */}
+            {/* <form className="mx-auto flex max-w-xl flex-wrap items-center justify-center gap-2">
               <InputSpotlightBorder />
               <Button
                 variant="secondary"
@@ -89,11 +89,10 @@ export default function Web() {
               >
                 <Link href={"/"}>Join the Waitlist</Link>
               </Button>
-            </form>
+            </form> */}
+            <WaitlistForm />
           </div>
         </div>
-      </section>
-      <section id="image-cover">
         <div className="mx-auto my-6 max-w-screen-xl rounded-xl border border-transparent bg-white shadow-xl shadow-input transition duration-200 dark:border-white/[0.2] dark:bg-black dark:shadow-none">
           <Image
             src="/assets/images/dashboard_random_mockup.jpg"
@@ -103,6 +102,8 @@ export default function Web() {
             className="rounded-md"
           />
         </div>
+      </section>
+      <section id="image-cover">
         <div className="mx-auto my-12 grid min-h-[50vh] max-w-6xl place-content-center gap-4 text-center sm:min-h-[80vh] lg:mb-8 ">
           <h1 className="text-3xl leading-none tracking-tight md:text-5xl lg:text-6xl">
             Orthodox sales systems are slowing down your business growth.
@@ -127,7 +128,7 @@ export default function Web() {
             <div key={feature?.title} className="flex flex-1 items-center gap-x-4">
               <GradientSeparator />
               <div>
-                <p className="md:text-lg flex-1 grow">{feature?.description}</p>
+                <p className="flex-1 grow md:text-lg">{feature?.description}</p>
               </div>
             </div>
           ))}

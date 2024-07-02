@@ -1,13 +1,13 @@
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
-import { Separator } from "../ui/separator";
+import { format } from "date-fns";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { cn } from "@/lib/utils";
+import { Separator } from "../ui/separator";
 
 export function ScheduledEmailList({ emails }: any) {
   const renderStatusIcons = (status: number) => {

@@ -102,7 +102,7 @@ export function Menu({ isOpen }: MenuProps) {
             </TooltipProvider>
           </li> */}
 
-          {isOpen == true && <div className="flex w-full grow items-end  ">
+          {isOpen === true && <div className="flex w-full grow items-end  ">
 
             <div className=" mx-auto flex flex-row  px-2 ">
               <MailIcon className="my-auto mx-2"></MailIcon>
