@@ -23,13 +23,11 @@ export function Menu({ isOpen }: MenuProps) {
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
       <nav className="mt-8 size-full">
-        <ul className="flex min-h-[calc(100vh-48px-36px-16px-32px)] flex-col items-start space-y-1 px-2 lg:min-h-[calc(100vh-32px-40px-32px-40px)]">
+        <ul className="flex min-h-[calc(100vh-48px-36px-16px-32px)] flex-col items-start space-y-1 px-2 lg:min-h-[calc(100vh-32px-40px-32px)]">
           {menuList.map(({ groupLabel, menus }, index) => (
             <li className={cn("w-full", groupLabel ? "pt-5" : "")} key={index}>
               {(isOpen && groupLabel) || isOpen === undefined ? (
-                <p className="max-w-[248px] truncate px-4 pb-2 text-sm font-medium text-foreground">
-                  {groupLabel}
-                </p>
+                <p className="max-w-[248px] truncate px-4 pb-2 text-sm font-medium text-foreground">{groupLabel}</p>
               ) : !isOpen && isOpen !== undefined && groupLabel ? (
                 <TooltipProvider>
                   <Tooltip delayDuration={100}>
@@ -54,7 +52,7 @@ export function Menu({ isOpen }: MenuProps) {
                         <TooltipTrigger asChild>
                           <Button
                             variant={active ? "secondary" : "ghost"}
-                            className="mb-1 h-10 w-full justify-start"
+                            className="mb-1 h-11 w-full justify-start"
                             asChild
                           >
                             <Link href={href}>
@@ -63,7 +61,7 @@ export function Menu({ isOpen }: MenuProps) {
                               </span>
                               <p
                                 className={cn(
-                                  "max-w-[200px] truncate",
+                                  "max-w-[200px] truncate text-base",
                                   isOpen === false ? "-translate-x-96 opacity-0" : "translate-x-0 opacity-100"
                                 )}
                               >
@@ -102,22 +100,18 @@ export function Menu({ isOpen }: MenuProps) {
             </TooltipProvider>
           </li> */}
 
-          {isOpen === true && <div className="flex w-full grow items-end  ">
-
-            <div className=" mx-auto flex flex-row  px-2 ">
-              <MailIcon className="my-auto mx-2"></MailIcon>
-              <Link href="mailto:hello@workerai.co" target="_blank"  >
-                <Button variant="link" size={"useLink"}>
-                  <h1 className="font-semibold text-base">
-                    help@workerai.co
-                  </h1>
-                </Button>
-              </Link>
-
+          {isOpen === true && (
+            <div className="flex w-full grow items-end">
+              <div className="mx-auto flex">
+                <MailIcon className="mr-2 my-auto"></MailIcon>
+                <Link href="mailto:hello@workerai.co" target="_blank">
+                  <Button variant="link" size={"useLink"}>
+                    <h1 className="text-base font-semibold">help@workerai.co</h1>
+                  </Button>
+                </Link>
+              </div>
             </div>
-
-          </div>}
-
+          )}
         </ul>
       </nav>
     </ScrollArea>

@@ -25,6 +25,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Card } from "../ui/card"
+import { cn } from "@/lib/utils";
+import { Separator } from "../ui/separator";
 
 export default function EmailItem({ item, handleApprove, handleEdit, handleDelete }: { item: any, handleApprove: any, handleEdit: any, handleDelete: any }) {
   const [subject, setSubject] = useState(item?.subject)
