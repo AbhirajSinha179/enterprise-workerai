@@ -41,25 +41,25 @@ export default function Web() {
   return (
     <main className="overflow-hidden">
       {/* <SiteNav /> */}
-      <div className="absolute inset-0 z-[-1] overflow-hidden bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+      <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       <div className="fixed top-0 h-screen w-screen overflow-hidden bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
 
       <section className="relative min-h-screen">
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center md:my-20 lg:py-16">
-          <div className="mx-auto place-self-center">
-            <h1 className="mb-4 max-w-7xl text-4xl font-thin tracking-tight dark:text-white md:text-5xl  xl:text-6xl">
+          <div className="mx-auto grid place-content-center min-h-[70vh] sm:min-h-[50vh]">
+            <h1 className="mb-4 max-w-9xl text-4xl font-thin tracking-tight dark:text-white md:text-5xl xl:text-7xl">
               Adapt <MoveRight className="hidden sm:inline-block sm:size-12 " /> Automate{" "}
               <MoveRight className="hidden sm:inline-block sm:size-12" /> Accelerate
             </h1>
 
-            <h1 className="mb-6 max-w-6xl text-4xl font-thin leading-none tracking-tight dark:text-white md:text-5xl lg:mb-8 xl:text-6xl">
+            <h1 className="mb-12 max-w-9xl text-4xl font-thin leading-none tracking-tight dark:text-white md:text-5xl lg:mb-12 xl:text-6xl">
               Hyper-scale your outbounds with{" "}
               <span className="inline-flex animate-text-gradient bg-gradient-to-r from-[#b2a8fd] via-[#8678f9] to-[#c7d2fe] bg-[200%_auto] bg-clip-text font-normal text-transparent">
                 WorkerAI
               </span>
             </h1>
 
-            <p className="mx-auto mb-6 max-w-xl text-sm/loose font-thin text-opacity-85 md:text-lg lg:mb-8 lg:text-xl">
+            <p className="mx-auto mb-6 max-w-4xl text-sm/loose font-thin text-opacity-95 md:text-lg lg:mb-8 lg:text-xl">
               Redefining B2B{" "}
               {/* <span className="animate-text-gradient inline-flex bg-gradient-to-r from-[#b2a8fd] via-[#8678f9] to-[#c7d2fe] bg-[200%_auto] bg-clip-text text-xl text-transparent">
                 sales
