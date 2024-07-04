@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/tooltip"
 import { Card } from "../ui/card"
 
-export default function EmailItem({ item, handleApprove, handleEdit, handleDelete }: { item: any, handleApprove: any, handleEdit: any, handleDelete: any }) {
+export default function EmailItem({ item, handleApprove, handleEdit, handleDelete, handleRegenerate }: { item: any, handleApprove: any, handleEdit: any, handleDelete: any, handleRegenerate: any }) {
   const [subject, setSubject] = useState(item?.subject)
   const [body, setBody] = useState(item?.body)
 
@@ -80,7 +80,7 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
             <div className="space-x-4">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline">Edit</Button>
+                  <Button variant="secondary">Edit</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[725px]">
                   <DialogHeader>
@@ -125,6 +125,9 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
+              <Button onClick={() => handleRegenerate(item?.recipient)} variant="secondary">
+                Regenerate
+              </Button >
               <Button onClick={() => handleApprove(item?.recipient)} asChild className="h-10 min-w-fit cursor-pointer">
                 <span>Smart Schedule</span>
               </Button>

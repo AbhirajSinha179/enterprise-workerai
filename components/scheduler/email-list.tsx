@@ -16,6 +16,15 @@ export function EmailList({ emails }: any) {
     emails = emails.filter((email: any) => email.recipient !== emailId)
   }
 
+  const handleRegenerate = async ({ emailId }: { emailId: string }) => {
+    console.log("Regenerated")
+    toast("Email Regenerated", {
+      description: format(new Date(), "PPpp") + " " + emailId,
+    })
+    // POST request
+    emails = emails.filter((email: any) => email.recipient !== emailId)
+  }
+
   const handleEdit = async ({ emailId, subject, body }: { emailId: string; subject: string; body: string }) => {
     console.log("Approved")
     toast("Edited the email", {
@@ -59,6 +68,7 @@ export function EmailList({ emails }: any) {
         {emails.map((item: any) => (
           <EmailItem
             handleApprove={handleApprove}
+            handleRegenerate={handleRegenerate}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
             key={item.id}
