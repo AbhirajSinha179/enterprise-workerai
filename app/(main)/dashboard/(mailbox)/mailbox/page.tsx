@@ -10,6 +10,7 @@ import mailsData from "../data/mailsData"
 
 function getMails() {
   return mailsData
+
 }
 
 export default function MailboxPage() {
