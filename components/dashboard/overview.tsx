@@ -15,7 +15,7 @@ interface OverviewProps {
 
 export function Overview({ data }: OverviewProps) {
   if (!data || data.length === 0) {
-    return <div className="mx-10 font-medium text-center">Sorry no data found</div>;
+    return <div className="mx-10 font-medium text-center min-h-52">Sorry no data found</div>;
   }
   return (
     <ResponsiveContainer width="100%" height={350}>
