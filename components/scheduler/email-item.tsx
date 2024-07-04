@@ -1,5 +1,6 @@
 "use client"
 
+import { CheckCircledIcon } from "@radix-ui/react-icons"; // Ensure this is the correct path for your icon
 import { format } from "date-fns"
 import { Trash } from "lucide-react"
 import { useState } from "react"
@@ -17,9 +18,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { cn } from "@/lib/utils"
-import { CheckCircledIcon } from "@radix-ui/react-icons"; // Ensure this is the correct path for your icon
-import { Separator } from "../ui/separator"
 import {
   Tooltip,
   TooltipContent,
@@ -27,6 +25,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Card } from "../ui/card"
+import { cn } from "@/lib/utils";
+import { Separator } from "../ui/separator";
 
 export default function EmailItem({ item, handleApprove, handleEdit, handleDelete, handleRegenerate }: { item: any, handleApprove: any, handleEdit: any, handleDelete: any, handleRegenerate: any }) {
   const [subject, setSubject] = useState(item?.subject)

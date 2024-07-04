@@ -4,7 +4,7 @@ import { RecentSales } from "@/components/dashboard/recent-sales";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  DataGraph, SalesDataItem, StatDashboard, dashboardDataSchema,
+  dashboardDataSchema, DataGraph, SalesDataItem, StatDashboard,
 } from "@/types/interface"
 import CalendarForm from "@/components/dashboard/CalendarForm";
 
