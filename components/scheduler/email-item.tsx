@@ -2,7 +2,7 @@
 
 import { CheckCircledIcon } from "@radix-ui/react-icons"; // Ensure this is the correct path for your icon
 import { format } from "date-fns"
-import { Trash } from "lucide-react"
+
 import { useState } from "react"
 import {Button } from "@/components/ui/button"
 import {
@@ -74,9 +74,7 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
           </div>
           <div className="text-xs text-foreground">{item.body}</div>
           <div className="mt-2 flex w-full items-center justify-between py-0.5">
-            <Button onClick={() => handleDelete(item?.recipient)} variant="outline" size="icon" className="size-10">
-              <Trash size={6} className="size-5" />
-            </Button>
+           
             <div className="space-x-4">
               <Dialog>
                 <DialogTrigger asChild>
