@@ -1,10 +1,9 @@
+// app/components/inbox/index.tsx
 "use client"
 
 import { InboxIcon, MailOpenIcon, Search } from "lucide-react"
 import * as React from "react"
-
 import EmptyState from "@/components/global/empty-state" // Ensure this import is correct
-import { type Mail } from "@/components/inbox/data"
 import { MailDisplay } from "@/components/inbox/mail-display"
 import { MailList } from "@/components/inbox/mail-list"
 import { Input } from "@/components/ui/input"
@@ -14,31 +13,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { useMail } from "@/contexts/MailContext"
 import { cn } from "@/lib/utils"
+import { MailProps, ThreadList } from "@/types/interface"
 
 const MAX_INBOX_HEIGHT = 680
 
-interface MailProps {
-  accounts?: {
-    label: string
-    email: string
-    icon: React.ReactNode
-  }[]
-  threads: ThreadList[]
-  defaultLayout?: number[] | undefined
-  defaultCollapsed?: boolean
-  navCollapsedSize?: number
-}
-
-interface ThreadList {
-  threadid: string,
-  thread: Mail[]
-}
-
 export function Inbox({
-  // accounts,
   threads,
   defaultLayout = [265, 440, 655],
-  // navCollapsedSize,
 }: MailProps) {
   const { config } = useMail()
 
@@ -58,15 +39,23 @@ export function Inbox({
               <TabsList className="ml-auto">
                 <TabsTrigger
                   value="all"
-                  className="text-zinc-600 dark:text-zinc-200"
                 >
                   All mail
                 </TabsTrigger>
-                <TabsTrigger
+                {/* <TabsTrigger
                   value="unread"
-                  className="text-zinc-600 dark:text-zinc-200"
                 >
                   Unread
+                </TabsTrigger> */}
+                <TabsTrigger
+                  value="reply"
+                >
+                  Reply
+                </TabsTrigger>
+                <TabsTrigger
+                  value="followup"
+                >
+                  Follow Ups
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -74,7 +63,7 @@ export function Inbox({
             <div className="p-4 backdrop-blur supports-[backdrop-filter]:bg-background/0">
               <form>
                 <div className="relative">
-                  <Search className="absolute left-2 top-4 size-4 text-muted-foreground" />
+                  <Search className="absolute left-2 top-4 size-4 text-foreground" />
                   <Input placeholder="Search" className="pl-8" />
                 </div>
               </form>
@@ -90,23 +79,11 @@ export function Inbox({
                 <MailList items={threads} />
               )}
             </TabsContent>
-            {/* <TabsContent value="unread" className="m-0">
-              {mails.filter((item: any) => !item.read).length === 0 ? (
-                <EmptyState
-                  headerMessage="No unread Emails"
-                  containerMessage=""
-                  icon={<MailOpenIcon size={60} />}
-                />
-              ) : (
-                <MailList items={mails.filter((item: any) => !item.read)} />
-              )}
-            </TabsContent> */}
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
           <MailDisplay
-            // change mail to thread
             threadData={threads.find((item: ThreadList) => item.threadid === config.selected) || null}
           />
         </ResizablePanel>
