@@ -13,7 +13,7 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 z-20 h-screen -translate-x-full transition-[width] duration-300 ease-in-out lg:translate-x-0 bg-muted",
+        "fixed left-0 top-0 z-20 h-screen -translate-x-full shadow-lg transition-[width] duration-300 ease-in-out dark:bg-slate-950 dark:shadow-slate-800 lg:translate-x-0",
         collapsed ? "w-[90px]" : "w-72"
       )}
     >
@@ -22,7 +22,7 @@ export function Sidebar() {
         <Link
           href="/dashboard"
           className={cn(
-            "mb-1 flex items-center gap-2 transition-transform duration-300 ease-in-out self-center",
+            "mb-1 flex items-center gap-2 self-center transition-transform duration-300 ease-in-out",
             collapsed ? "translate-x-1" : "translate-x-0"
           )}
         >

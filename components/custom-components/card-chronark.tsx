@@ -1,9 +1,10 @@
 "use client"
+import { cn } from "@/lib/utils"
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion"
 
 import { MouseEventHandler, PropsWithChildren } from "react"
 
-export const CardChronark: React.FC<PropsWithChildren> = ({ children }) => {
+export const CardChronark = ({ children, isFooter = false }: { children: React.ReactNode; isFooter: boolean }) => {
   const mouseX = useSpring(0, { stiffness: 500, damping: 100 })
   const mouseY = useSpring(0, { stiffness: 500, damping: 100 })
 
@@ -18,12 +19,15 @@ export const CardChronark: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="group relative overflow-hidden rounded-xl border border-zinc-600 duration-300 hover:border-zinc-400/50 hover:bg-zinc-800/10 md:gap-8 "
+      className={cn(
+        "group relative overflow-hidden border-t border-zinc-600 duration-300 hover:border-zinc-400/50 hover:bg-zinc-800/10 md:gap-8 ",
+        !isFooter ?? "rounded-xl border"
+      )}
     >
       <div className="pointer-events-none">
         <div className="absolute inset-0 z-0 blur transition duration-500 [mask-image:linear-gradient(black,transparent)]" />
         <motion.div
-          className="absolute inset-0 z-10  bg-gradient-to-br via-zinc-100/10  opacity-10  transition duration-500 group-hover:opacity-30 bg-zinc-700 "
+          className="absolute inset-0 z-10  bg-zinc-700 bg-gradient-to-br  via-zinc-100/10  opacity-10 transition duration-500 group-hover:opacity-30 "
           style={style}
         />
         <motion.div
@@ -36,7 +40,6 @@ export const CardChronark: React.FC<PropsWithChildren> = ({ children }) => {
     </div>
   )
 }
-
 
 //usage-
 
