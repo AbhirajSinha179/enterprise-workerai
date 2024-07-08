@@ -101,15 +101,20 @@ export function Menu({ isOpen }: MenuProps) {
           </li> */}
 
           {isOpen === true && (
-            <div className="flex w-full grow items-end">
-              <div className="mx-auto flex">
-                <MailIcon className="mr-2 my-auto"></MailIcon>
-                <Link href="mailto:hello@workerai.co" target="_blank">
-                  <Button variant="link" size={"useLink"}>
-                    <h1 className="text-base font-semibold">help@workerai.co</h1>
-                  </Button>
-                </Link>
+            <div className="flex w-full grow items-end  ">
+              <div className=" flex mx-auto flex-col">
+                <h1> Think we can do better</h1>
+                <div className="mx-auto flex">
+                  <MailIcon className="mr-2 my-auto"></MailIcon>
+                  <Link href="mailto:hello@workerai.co" target="_blank">
+                    <Button variant="link" size={"useLink"}>
+                      <h1 className="text-base font-semibold">help@workerai.co</h1>
+                    </Button>
+                  </Link>
+                </div>
               </div>
+
+
             </div>
           )}
         </ul>
