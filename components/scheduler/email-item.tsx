@@ -135,5 +135,5 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
       </Card>
 
     </>
-  )
+  );
 }
