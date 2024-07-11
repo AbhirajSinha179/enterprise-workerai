@@ -83,7 +83,7 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
     };
 
     return (
-        <Card x-chunk="dashboard-04-chunk-1">
+        <Card>
             <CardHeader className="mx-3">
                 <CardTitle>{cardTitle}</CardTitle>
                 <CardDescription>{cardDescription}</CardDescription>
@@ -103,10 +103,10 @@ export default function InputWithCommas({ cardTitle, cardDescription }: InputWit
                                     value={inputValue}
                                     onChange={handleInputChange}
                                     onKeyDown={handleKeyDown}
-                                    className="bg-muted mr-6 h-11"
+                                    className=" mr-6 h-11"
                                 />
                             </div>
-                            <div className="no-scrollbar flex max-h-16 flex-wrap gap-2 overflow-y-auto rounded-md bg-transparent py-2">
+                            <div className="no-scrollbar flex max-h-16 flex-wrap gap-2 overflow-y-auto rounded-md py-2">
                                 {selectedOptions.map((option) => (
                                     <button key={option} onClick={() => handleRemove(option)}>
                                         <Badge variant="secondary">

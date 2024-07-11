@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Inbox } from "@/components/inbox/mail";
-import { ContentLayout } from "@/components/layout/content-layout";
-import { threadsSchema, Thread } from "@/types/interface";
 import { toast } from "sonner";
 import LoadingSign from "@/components/global/loading";
+import { Inbox } from "@/components/inbox/mail";
+import { ContentLayout } from "@/components/layout/content-layout";
+import { Thread, threadsSchema } from "@/types/interface";
 
 const getData = async (): Promise<Thread[]> => {
   try {
@@ -41,7 +41,7 @@ export default function InboxPage() {
     return (
       <ContentLayout title="Inbox">
         <div className="flex justify-center items-center flex-1 h-full">
-          <div className="font-bold  justify-center items-center flex">
+          <div className="font-bold justify-center items-center flex">
             Unable to fetch data. Please try again later.
           </div>
         </div>

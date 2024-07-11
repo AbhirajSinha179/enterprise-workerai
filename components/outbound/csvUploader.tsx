@@ -68,10 +68,10 @@ export default function CSVUpload({ cardTitle, cardDescription }: CSVUploader) {
     };
 
     return (
-        <Card x-chunk="dashboard-04-chunk-2">
+        <Card>
             <CardHeader>
-                <CardTitle className=" mx-1 text-primary"> {cardTitle}</CardTitle>
-                <CardDescription className=" mx-1 text-primary">
+                <CardTitle className=" mx-1"> {cardTitle}</CardTitle>
+                <CardDescription className=" mx-1">
                     {cardDescription}
                 </CardDescription>
             </CardHeader>
