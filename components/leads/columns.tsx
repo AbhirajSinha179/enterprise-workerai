@@ -2,13 +2,11 @@
 import { CheckCircledIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
 import { Trash2 } from "lucide-react"
-import { engaged, statuses } from "@/app/(main)/dashboard/(leads)/data/data"
-import { Leads } from "@/app/(main)/dashboard/(leads)/data/schema"
+import { leadSchemaInterface } from "@/types/interface"
 import { DataTableColumnHeader } from "@/components/leads/data-table-column-header"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-// import { Button } from "@/components/ui/button"
 import {
     Tooltip,
     TooltipContent,
@@ -27,13 +25,24 @@ import {
 } from "@/components/ui/dialog"
 import { toast } from "sonner"
 
+const statuses = [
+    { value: "doneFirst", number: 1 },
+    { value: "doneSecond", number: 2 },
+    { value: "doneThird", number: 3 },
+];
+
+const engaged = [
+    { value: "yes", number: 1 },
+    { value: "no", number: 0 },
+];
+
 function handleDelete(row: any) {
     console.log(`Deleting row with id ${row.id}`);
     toast.success(`Deleted ${row.id}`, {
         description: `${row.id} was deleted.`
     });
 }
-export const columns: ColumnDef<Leads>[] = [
+export const columns: ColumnDef<leadSchemaInterface>[] = [
     {
         id: "select",
         header: ({ table }) => (

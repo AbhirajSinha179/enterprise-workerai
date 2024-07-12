@@ -105,6 +105,15 @@ export interface SalesDataItem {
   email: string
 }
 
+export interface leadSchemaInterface {
+  id: string
+  name: string
+  email: string
+  company: string
+  status: string
+  engaged: string
+}
+
 export const statDashboardSchema = z.object({
   title: z.string(),
   value: z.string(),
