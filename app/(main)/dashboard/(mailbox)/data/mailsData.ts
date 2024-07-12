@@ -7,6 +7,7 @@ const mailsData: Mails[] = [
     email: "Tom@example.com",
     domain: "example_1.com",
     warmupCapacity: "2",
+    healthScore: "Average",
   },
   {
     id: "2",
@@ -14,6 +15,7 @@ const mailsData: Mails[] = [
     email: "Track@example.com",
     domain: "example_2.com",
     warmupCapacity: "3",
+    healthScore: "Good",
   },
 ]
 

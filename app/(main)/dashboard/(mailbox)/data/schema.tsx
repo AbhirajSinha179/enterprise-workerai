@@ -5,6 +5,7 @@ export const mailsSchema = z.object({
     email: z.string(),
     domain: z.string(),
     warmupCapacity: z.string(),
+    healthScore: z.string(),
 })
 
 export type Mails = z.infer<typeof mailsSchema>

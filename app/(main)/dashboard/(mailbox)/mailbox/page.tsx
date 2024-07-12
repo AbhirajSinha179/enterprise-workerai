@@ -22,6 +22,7 @@ export default function MailboxPage() {
   const email = searchParams.get('email')
   const domain = searchParams.get('domain')
   const warmupCapacity = searchParams.get('warmupCapacity')
+  const healthScore = searchParams.get('healthScore')
 
   useEffect(() => {
     if (id && name && email && domain && warmupCapacity) {
@@ -31,6 +32,7 @@ export default function MailboxPage() {
         email,
         domain,
         warmupCapacity,
+        healthScore: healthScore || "",
       }
       console.log("New Mail Data: ", newMail)
 

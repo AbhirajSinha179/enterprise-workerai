@@ -128,3 +128,16 @@ export const dashboardDataSchema = z.object({
   dataGraph: z.array(dataGraphSchema),
   recentSalesData: z.array(salesDataItemSchema),
 })
+
+export const leadSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string().email(),
+  company: z.string(),
+  status: z.enum(["doneFirst", "doneSecond", "doneThird"]),
+  engaged: z.enum(["yes", "no"]),
+})
+
+export const leadsDataSchema = z.object({
+  leadsData: z.array(leadSchema),
+})

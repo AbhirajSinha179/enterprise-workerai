@@ -134,6 +134,21 @@ export const columns: ColumnDef<Mails>[] = [
         enableSorting: false,
         enableHiding: false,
     },
+    {
+        accessorKey: "healthScore",
+        header: ({ column }) => (
+            <DataTableColumnHeader
+                column={column}
+                title="Health Score"
+                className=" flex w-[200px] justify-center     "
+                sortAscending={""}
+                sortDescending={""}
+            />
+        ),
+        cell: ({ row }) => <div className="flex w-[200px] justify-center  ">{row.getValue("healthScore")}</div>,
+        enableSorting: false,
+        enableHiding: false,
+    },
 
     {
         id: "actions",
