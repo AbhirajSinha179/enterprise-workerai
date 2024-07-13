@@ -1,3 +1,4 @@
+import { EnvelopeOpenIcon } from "@radix-ui/react-icons"
 import {
   ArrowBigRightDash,
   BarChart,
@@ -6,6 +7,7 @@ import {
   LayoutGrid,
   LucideSquareArrowOutUpRight,
   Mail,
+  Sparkles,
   Users,
 } from "lucide-react"
 
@@ -59,6 +61,13 @@ export function getMenuList(pathname: string): Group[] {
           label: "Inbox",
           active: pathname.includes("/inbox"),
           icon: InboxIcon,
+          submenus: [],
+        },
+        {
+          href: `${DASHBOARD_PATH}/generation`,
+          label: "Email Generation",
+          active: pathname.includes("/generation"),
+          icon: Sparkles,
           submenus: [],
         },
         {
