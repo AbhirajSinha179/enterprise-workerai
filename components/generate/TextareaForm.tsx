@@ -44,9 +44,9 @@ export function TextareaForm() {
         // });
         console.log("Successs   ")
     }
-
+    // mx-8
     return (
-        <div className="">
+        <div className=" my-2">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-3">
                     <FormField
@@ -58,7 +58,7 @@ export function TextareaForm() {
                                 <FormControl>
                                     <Textarea
                                         placeholder="Pregenerated Content "
-                                        className="resize-none"
+                                        className="resize-none min-h-[50px]"
                                         {...field}
                                     />
                                 </FormControl>

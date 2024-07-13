@@ -5,6 +5,13 @@ import { ContentLayout } from "@/components/layout/content-layout";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextareaForm } from '@/components/generate/TextareaForm';
+import MultiSelectForm from '@/components/generate/MultiSelectForm';
+
+const locations = [
+    { name: "India" },
+    { name: "USA" },
+    { name: "Germany" },
+];
 
 const cardData = [
     {
@@ -48,8 +55,7 @@ export default function EmailGen() {
 
     return (
         <ContentLayout title="Inbox">
-            <div >
-
+            <div>
                 <Tabs defaultValue="prompt" className="mt-4 space-y-4">
                     <TabsList>
                         <TabsTrigger value="prompt">Prompt</TabsTrigger>
@@ -58,7 +64,7 @@ export default function EmailGen() {
                     </TabsList>
 
                     <TabsContent value="prompt" className="space-y-4 mx-2">
-                        <div className=' space-4 flex flex-row'>
+                        <div className='space-4 flex flex-row'>
                             <div className='w-3/4'>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-4">
                                     {cardData.map((card, index) => (
@@ -77,22 +83,29 @@ export default function EmailGen() {
                                         </a>
                                     ))}
                                     <div className="col-span-full">
-                                        <h1 className='font bold text-2xl my-2'>
+                                        <h1 className='font-bold text-2xl my-2'>
                                             Param 1
                                         </h1>
-                                        {/* <Card className="">
-                                        <CardHeader>
-                                            <CardTitle>Para 1 </CardTitle>
-                                        </CardHeader>
-                                        <CardDescription>
-                                            <TextareaForm />
-                                        </CardDescription>
-                                    </Card> */}
-                                        <TextareaForm></TextareaForm>
-
+                                        <TextareaForm />
+                                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+                                            <MultiSelectForm
+                                                title="Select Tone"
+                                                description="Choose one or more locations from the list below."
+                                                options={locations}
+                                            />
+                                            <MultiSelectForm
+                                                title="Select Signal"
+                                                description="Choose one or more locations from the list below."
+                                                options={locations}
+                                            />
+                                            <MultiSelectForm
+                                                title="See result"
+                                                description="Choose one or more locations from the list below."
+                                                options={locations}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
                             <div className='bg-muted w-1/4 mx-4'>
                                 <Card className={`  `}>
@@ -102,10 +115,7 @@ export default function EmailGen() {
                                     </CardHeader>
                                 </Card>
                             </div>
-
-
                         </div>
-
                     </TabsContent>
 
                     <TabsContent value="template" className="space-y-4">
@@ -120,8 +130,6 @@ export default function EmailGen() {
                         </div>
                     </TabsContent>
                 </Tabs>
-
-
             </div>
         </ContentLayout>
     );
