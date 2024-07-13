@@ -6,12 +6,26 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/ca
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextareaForm } from '@/components/generate/TextareaForm';
 import MultiSelectForm from '@/components/generate/MultiSelectForm';
+import { Textarea } from '@/components/ui/textarea';
 
 const locations = [
     { name: "India" },
     { name: "USA" },
     { name: "Germany" },
 ];
+
+const preWrittenOutput = `
+Dear [Recipient],
+
+I hope this email finds you well. I am writing to introduce you to our new product, which has been designed to help streamline your workflow and increase productivity. Our product offers a range of features that are tailored to meet the needs of professionals like yourself.
+
+We are confident that our product will provide significant value to your work, and we would be delighted to offer you a free trial to experience its benefits firsthand.
+
+Thank you for considering our offer. We look forward to your positive response.
+
+Best regards,
+[Your Name]
+`;
 
 const cardData = [
     {
@@ -104,6 +118,13 @@ export default function EmailGen() {
                                                 options={locations}
                                             />
                                         </div>
+                                        <div className=' mt-4'>
+                                            <Textarea value={preWrittenOutput} disabled className='min-h-[300px] overflow-auto' />
+                                        </div>
+                                        <h1 className='font-bold text-2xl my-2'>
+                                            Param 2
+                                        </h1>
+                                        <TextareaForm />
                                     </div>
                                 </div>
                             </div>
