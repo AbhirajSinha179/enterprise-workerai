@@ -104,6 +104,10 @@ const ParaInput = ({ index }: ParaInputProps) => {
                                         </FormItem>
                                     )}
                                 />
+                                <div>
+
+
+                                </div>
                                 <Button type="submit" className="mt-2">Submit</Button>
                             </div>
                         </form>

@@ -6,6 +6,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/ca
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ParaInput from '@/components/generate/paraInput';
 import ToneSelectForm from '@/components/generate/ToneSelectForm';
+import { Button } from '@/components/ui/button';
 
 const locations = [
     { name: "India" },
@@ -48,6 +49,7 @@ const cardData = [
 
 export default function EmailGen() {
     const [selectedCard, setSelectedCard] = useState<number | null>(null);
+    const [paraInputs, setParaInputs] = useState<number[]>([1, 2, 3]);
 
     const handleCardClick = (index: number) => {
         setSelectedCard(index);
@@ -55,6 +57,10 @@ export default function EmailGen() {
 
     const handleToneSubmit = (data: { tone: string[] }) => {
         console.log("Selected Tone:", data.tone);
+    };
+
+    const addParaInput = () => {
+        setParaInputs((prev) => [...prev, prev.length + 1]);
     };
 
     return (
@@ -92,9 +98,12 @@ export default function EmailGen() {
                                         onSubmit={handleToneSubmit}
                                     />
                                 </div>
-                                <ParaInput index={1} />
-                                <ParaInput index={2} />
-                                <ParaInput index={3} />
+                                {paraInputs.map((index) => (
+                                    <ParaInput key={index} index={index} />
+                                ))}
+                                <Button className='mt-4' onClick={addParaInput}>
+                                    Add
+                                </Button>
                             </div>
                             <div className='bg-muted w-1/4 mx-4'>
                                 <Card>
