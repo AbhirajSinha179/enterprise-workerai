@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -12,20 +13,19 @@ import {
     FormItem,
     FormMessage,
 } from "@/components/ui/form";
-import MultiSelectForm from '@/components/generate/MultiSelectForm'
-import { Textarea } from '@/components/ui/textarea'
-import React, { useState } from 'react'
+import MultiSelectForm from '@/components/generate/MultiSelectForm';
+import { Textarea } from '@/components/ui/textarea';
+import React from 'react';
 
 const FormSchema = z.object({
     prompt: z
         .string()
         .min(10, {
-            message: "Bio must be at least 10 characters.",
+            message: "Prompt must be at least 10 characters.",
         })
         .max(160, {
-            message: "Bio must not be longer than 160 characters.",
+            message: "Prompt must not be longer than 160 characters.",
         }),
-    tone: z.array(z.string()).nonempty("Select at least one tone."),
     signal: z.array(z.string()).nonempty("Select at least one signal."),
 });
 
@@ -48,25 +48,30 @@ Best regards,
 [Your Name]
 `;
 
-const ParaInput = () => {
+interface ParaInputProps {
+    index: number;
+}
+
+const ParaInput = ({ index }: ParaInputProps) => {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
     });
 
     const onSubmit = (data: z.infer<typeof FormSchema>) => {
         console.log("Submitted Data:", data);
+        toast.success("Prompt submitted");
         // Handle your submission logic here
     };
 
     return (
-        <div>
+        <div className="my-4 border-2 p-4 rounded-md">
             <div className="col-span-full">
                 <h1 className='font-bold text-2xl my-2'>
-                    Para 1
+                    Para {index}
                 </h1>
                 <div className="my-2">
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-3">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
                             <FormField
                                 control={form.control}
                                 name="prompt"
@@ -74,7 +79,7 @@ const ParaInput = () => {
                                     <FormItem>
                                         <FormControl>
                                             <Textarea
-                                                placeholder="Pregenerated Content"
+                                                placeholder="Enter the Prompt"
                                                 className="resize-none min-h-[50px]"
                                                 {...field}
                                             />
@@ -84,21 +89,6 @@ const ParaInput = () => {
                                 )}
                             />
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <FormField
-                                    control={form.control}
-                                    name="tone"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <MultiSelectForm
-                                                title="Select Tone"
-                                                description="Choose one or more tones from the list below."
-                                                options={locations}
-                                                onChange={field.onChange}
-                                            />
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
                                 <FormField
                                     control={form.control}
                                     name="signal"
@@ -115,9 +105,7 @@ const ParaInput = () => {
                                     )}
                                 />
                                 <Button type="submit" className="mt-2">Submit</Button>
-
                             </div>
-
                         </form>
                     </Form>
                 </div>

@@ -4,11 +4,14 @@ import React, { useState } from 'react';
 import { ContentLayout } from "@/components/layout/content-layout";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ParaInput from './paraInput';
+import ParaInput from '@/components/generate/paraInput';
+import ToneSelectForm from '@/components/generate/ToneSelectForm';
 
-
-
-
+const locations = [
+    { name: "India" },
+    { name: "USA" },
+    { name: "Germany" },
+];
 
 const cardData = [
     {
@@ -50,8 +53,12 @@ export default function EmailGen() {
         setSelectedCard(index);
     };
 
+    const handleToneSubmit = (data: { tone: string[] }) => {
+        console.log("Selected Tone:", data.tone);
+    };
+
     return (
-        <ContentLayout title="Inbox">
+        <ContentLayout title="Email Generation">
             <div>
                 <Tabs defaultValue="prompt" className="mt-4 space-y-4">
                     <TabsList>
@@ -67,9 +74,8 @@ export default function EmailGen() {
                                     {cardData.map((card, index) => (
                                         <a
                                             key={index}
-                                            // href={card.href}
                                             onClick={() => handleCardClick(index)}
-                                            className="block"
+                                            className="block cursor-pointer"
                                         >
                                             <Card className={` ${selectedCard === index ? 'bg-primary' : ''} w-full`}>
                                                 <CardHeader>
@@ -79,13 +85,19 @@ export default function EmailGen() {
                                             </Card>
                                         </a>
                                     ))}
-
-
                                 </div>
-                                <ParaInput />
+                                <div className='mt-5'>
+                                    <ToneSelectForm
+                                        options={locations}
+                                        onSubmit={handleToneSubmit}
+                                    />
+                                </div>
+                                <ParaInput index={1} />
+                                <ParaInput index={2} />
+                                <ParaInput index={3} />
                             </div>
                             <div className='bg-muted w-1/4 mx-4'>
-                                <Card className={`  `}>
+                                <Card>
                                     <CardHeader>
                                         <CardTitle>Lead details</CardTitle>
                                         <CardDescription>askjkdkhajsd</CardDescription>
