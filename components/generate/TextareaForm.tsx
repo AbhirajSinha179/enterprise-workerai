@@ -28,6 +28,19 @@ const FormSchema = z.object({
         }),
 });
 
+const preGeneratedContent = `
+Dear [Recipient],
+
+I hope this email finds you well. I am writing to introduce you to our new product, which has been designed to help streamline your workflow and increase productivity. Our product offers a range of features that are tailored to meet the needs of professionals like yourself.
+
+We are confident that our product will provide significant value to your work, and we would be delighted to offer you a free trial to experience its benefits firsthand.
+
+Thank you for considering our offer. We look forward to your positive response.
+
+Best regards,
+[Your Name]
+`;
+
 export function TextareaForm() {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
