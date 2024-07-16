@@ -50,9 +50,10 @@ Best regards,
 
 interface ParaInputProps {
     index: number;
+    onDelete: (index: number) => void;
 }
 
-const ParaInput = ({ index }: ParaInputProps) => {
+const ParaInput = ({ index, onDelete }: ParaInputProps) => {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
     });
@@ -66,9 +67,12 @@ const ParaInput = ({ index }: ParaInputProps) => {
     return (
         <div className="my-4 border-2 p-4 rounded-md">
             <div className="col-span-full">
-                <h1 className='font-bold text-2xl my-2'>
-                    Para {index}
-                </h1>
+                <div className="flex flex-row justify-between">
+                    <h1 className='font-bold text-2xl my-2'>
+                        Para {index}
+                    </h1>
+                    <Button variant={'destructive'} onClick={() => onDelete(index)}>Delete</Button>
+                </div>
                 <div className="my-2">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
@@ -104,10 +108,6 @@ const ParaInput = ({ index }: ParaInputProps) => {
                                         </FormItem>
                                     )}
                                 />
-                                <div>
-
-
-                                </div>
                                 <Button type="submit" className="mt-2">Submit</Button>
                             </div>
                         </form>

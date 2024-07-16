@@ -63,6 +63,10 @@ export default function EmailGen() {
         setParaInputs((prev) => [...prev, prev.length + 1]);
     };
 
+    const deleteParaInput = (index: number) => {
+        setParaInputs((prev) => prev.filter(i => i !== index));
+    };
+
     return (
         <ContentLayout title="Email Generation">
             <div>
@@ -99,13 +103,13 @@ export default function EmailGen() {
                                     />
                                 </div>
                                 {paraInputs.map((index) => (
-                                    <ParaInput key={index} index={index} />
+                                    <ParaInput key={index} index={index} onDelete={deleteParaInput} />
                                 ))}
                                 <Button className='mt-4' onClick={addParaInput}>
                                     Add
                                 </Button>
                             </div>
-                            <div className='bg-muted w-1/4 mx-4'>
+                            <div className='bg-muted w-1/4 mx-4 h-fit'>
                                 <Card>
                                     <CardHeader>
                                         <CardTitle>Lead details</CardTitle>
