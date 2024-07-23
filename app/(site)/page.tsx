@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 
 const GradientSeparator = () => (
   <>
-    <div className=" h-16 w-1 rounded-t-full bg-gradient-to-b from-[#b2a8fd] via-violet-200 to-transparent md:h-20 md:w-2"></div>
+    <div className=" h-12 w-1 rounded-t-full bg-gradient-to-b from-[#e6e3ff] via-violet-200 to-transparent md:h-20 md:w-2"></div>
   </>
 )
 
@@ -105,7 +105,7 @@ export default function Web() {
         </div>
       </section>
       <section id="image-cover">
-        <div className="mx-auto my-12 grid min-h-[50vh] max-w-6xl place-content-center gap-4 text-center sm:min-h-[80vh] lg:mb-8 ">
+        <div className="mx-auto my-12 grid min-h-[30vh] max-w-6xl place-content-center gap-4 text-center sm:min-h-[80vh] lg:mb-8 ">
           <h1 className="text-3xl leading-none tracking-tight md:text-5xl lg:text-6xl">
             Orthodox sales systems are slowing down your business growth.
           </h1>
@@ -113,7 +113,7 @@ export default function Web() {
         </div>
       </section>
 
-      <section id="features" className=" container relative my-12 sm:my-0">
+      <section id="features" className="container relative my-12 sm:my-0 ">
         <div className="mx-auto my-6 max-w-4xl rounded-xl border border-transparent bg-white shadow-xl shadow-input transition duration-200 dark:border-white/[0.2] dark:bg-black dark:shadow-none">
           <Image
             src={landingConfig.features.imageUri}
@@ -124,7 +124,7 @@ export default function Web() {
           />
         </div>
         <div className="mx-auto grid max-w-7xl place-content-center gap-12 p-4 md:my-48 md:grid-cols-3">
-          <div className="absolute inset-0 z-[-1] overflow-hidden bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+          <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
           {landingConfig.features.features.map((feature) => (
             <div key={feature?.title} className="flex flex-1 items-center gap-x-4">
               <GradientSeparator />
@@ -139,48 +139,73 @@ export default function Web() {
       <section className="relative" id="bento-layout">
         {/* <BentoGridLanding /> */}
         {/* <WobbleCardDemo /> */}
-        <div className="mx-auto sm:max-w-7xl grid w-full grid-cols-5">
-          <Image
+        <div className="mx-auto grid w-full max-w-md grid-cols-5 sm:max-w-7xl">
+          {/* <Image
             src="/assets/images/warmupcard.svg"
             alt="Hero image"
             width={600}
             height={600}
             className="col-span-5 size-full rounded-2xl"
+          /> */}
+          <Image
+            src="/assets/images/warmupcard.svg"
+            // layout="fill"
+            width={600}
+            height={600}
+            objectFit="cover"
+            alt="WorkerAI warmup"
+            className="col-span-5 hidden size-full sm:block"
+          />
+          <Image
+            src="/assets/images/warmupcard (2).svg"
+            // layout="fill"
+            width={600}
+            height={600}
+            objectFit="cover"
+            alt="WorkerAI warmup"
+            className="col-span-5 size-full sm:hidden"
           />
           <Image
             src="/assets/images/leads_card.svg"
             alt="Hero image"
             width={600}
             height={600}
-            className="col-span-5 size-full rounded-2xl sm:col-span-3"
+            className="col-span-5 size-full sm:col-span-3"
           />
           <Image
             src="/assets/images/prospects.svg"
             alt="Hero image"
             width={600}
             height={600}
-            className="col-span-5 size-full rounded-2xl sm:col-span-2"
+            className="col-span-5 size-full sm:col-span-2"
           />
           <Image
             src="/assets/images/emails_card.svg"
             alt="Hero image"
             width={600}
             height={600}
-            className="col-span-5 size-full rounded-2xl sm:col-span-2"
+            className="col-span-5 size-full sm:col-span-2"
           />
           <Image
             src="/assets/images/comm_card.svg"
             alt="Hero image"
             width={600}
             height={600}
-            className="col-span-5 size-full rounded-2xl sm:col-span-3"
+            className="col-span-5 size-full sm:col-span-3"
           />
           <Image
             src="/assets/images/leadstoclients.svg"
             alt="Hero image"
             width={600}
             height={600}
-            className="col-span-5 size-full rounded-2xl"
+            className="col-span-5 hidden size-full sm:block"
+          />
+          <Image
+            src="/assets/images/leadstoclients (3).svg"
+            alt="Hero image"
+            width={600}
+            height={600}
+            className="col-span-5 sm:hidden"
           />
         </div>
         <div className="absolute left-0 top-0 size-full">
