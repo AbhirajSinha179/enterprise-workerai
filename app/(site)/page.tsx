@@ -8,6 +8,7 @@ import InputSpotlightBorder from "@/components/site/input-spotlight-border"
 import { landingConfig } from "@/lib/constants"
 import { LP_GRID_ITEMS } from "lp-items"
 import { WaitlistForm } from "@/components/site/waitlist-form"
+import { WobbleCardDemo } from "@/components/site/wobble-grid"
 
 export const metadata: Metadata = {
   title: "Worker AI",
@@ -25,15 +26,15 @@ export const metadata: Metadata = {
     // ],
   },
 }
+
 // TODO: Add metadata, dashboard images
 // TODO: Add sticky scroll reveal
-// TODO: Make Join the Waitlist form functional, use
-// TODO: Footer info + border changes
+// TODO: Footer info
 // TODO: new section
 
 const GradientSeparator = () => (
   <>
-    <div className=" h-16 w-1 rounded-t-full bg-gradient-to-b from-[#b2a8fd] via-violet-200 to-transparent md:h-20 md:w-2"></div>
+    <div className=" h-12 w-1 rounded-t-full bg-gradient-to-b from-[#e6e3ff] via-violet-200 to-transparent md:h-20 md:w-2"></div>
   </>
 )
 
@@ -46,13 +47,13 @@ export default function Web() {
 
       <section className="relative min-h-screen">
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center md:my-20 lg:py-16">
-          <div className="mx-auto grid place-content-center min-h-[70vh] sm:min-h-[50vh]">
-            <h1 className="mb-4 max-w-9xl text-4xl font-thin tracking-tight dark:text-white md:text-5xl xl:text-7xl">
+          <div className="mx-auto grid min-h-[70vh] place-content-center sm:min-h-[50vh]">
+            <h1 className="max-w-9xl mb-4 text-4xl font-thin tracking-tight dark:text-white md:text-5xl xl:text-7xl">
               Adapt <MoveRight className="hidden sm:inline-block sm:size-12 " /> Automate{" "}
               <MoveRight className="hidden sm:inline-block sm:size-12" /> Accelerate
             </h1>
 
-            <h1 className="mb-12 max-w-9xl text-4xl font-thin leading-none tracking-tight dark:text-white md:text-5xl lg:mb-12 xl:text-6xl">
+            <h1 className="max-w-9xl mb-12 text-4xl font-thin leading-none tracking-tight dark:text-white md:text-5xl lg:mb-12 xl:text-6xl">
               Hyper-scale your outbounds with{" "}
               <span className="inline-flex animate-text-gradient bg-gradient-to-r from-[#b2a8fd] via-[#8678f9] to-[#c7d2fe] bg-[200%_auto] bg-clip-text font-normal text-transparent">
                 WorkerAI
@@ -95,7 +96,7 @@ export default function Web() {
         </div>
         <div className="mx-auto my-6 max-w-screen-xl rounded-xl border border-transparent bg-white shadow-xl shadow-input transition duration-200 dark:border-white/[0.2] dark:bg-black dark:shadow-none">
           <Image
-            src="/assets/images/dashboard_random_mockup.jpg"
+            src="/assets/images/dashboard_workerai.jpeg"
             alt="Hero image"
             width={1920}
             height={1080}
@@ -104,7 +105,7 @@ export default function Web() {
         </div>
       </section>
       <section id="image-cover">
-        <div className="mx-auto my-12 grid min-h-[50vh] max-w-6xl place-content-center gap-4 text-center sm:min-h-[80vh] lg:mb-8 ">
+        <div className="mx-auto my-12 grid min-h-[30vh] max-w-6xl place-content-center gap-4 text-center sm:min-h-[80vh] lg:mb-8 ">
           <h1 className="text-3xl leading-none tracking-tight md:text-5xl lg:text-6xl">
             Orthodox sales systems are slowing down your business growth.
           </h1>
@@ -112,7 +113,7 @@ export default function Web() {
         </div>
       </section>
 
-      <section id="features" className="relative min-h-screen">
+      <section id="features" className="container relative my-12 sm:my-0 ">
         <div className="mx-auto my-6 max-w-4xl rounded-xl border border-transparent bg-white shadow-xl shadow-input transition duration-200 dark:border-white/[0.2] dark:bg-black dark:shadow-none">
           <Image
             src={landingConfig.features.imageUri}
@@ -122,8 +123,8 @@ export default function Web() {
             className="w-full rounded-md bg-cover bg-center"
           />
         </div>
-        <div className="mx-auto my-16 grid max-w-7xl place-content-center gap-12 p-4 md:my-48 md:grid-cols-3">
-          <div className="absolute inset-0 z-[-1] overflow-hidden bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        <div className="mx-auto grid max-w-7xl place-content-center gap-12 p-4 md:my-48 md:grid-cols-3">
+          <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
           {landingConfig.features.features.map((feature) => (
             <div key={feature?.title} className="flex flex-1 items-center gap-x-4">
               <GradientSeparator />
@@ -136,10 +137,78 @@ export default function Web() {
       </section>
 
       <section className="relative" id="bento-layout">
-        <div className="mx-2 max-w-screen-2xl sm:mx-auto">
-          <BentoGridLanding />
+        {/* <BentoGridLanding /> */}
+        {/* <WobbleCardDemo /> */}
+        <div className="mx-auto grid w-full max-w-md grid-cols-5 sm:max-w-7xl">
+          {/* <Image
+            src="/assets/images/warmupcard.svg"
+            alt="Hero image"
+            width={600}
+            height={600}
+            className="col-span-5 size-full rounded-2xl"
+          /> */}
+          <Image
+            src="/assets/images/warmupcard.svg"
+            // layout="fill"
+            width={600}
+            height={600}
+            objectFit="cover"
+            alt="WorkerAI warmup"
+            className="col-span-5 hidden size-full sm:block"
+          />
+          <Image
+            src="/assets/images/warmupcard (2).svg"
+            // layout="fill"
+            width={600}
+            height={600}
+            objectFit="cover"
+            alt="WorkerAI warmup"
+            className="col-span-5 size-full sm:hidden"
+          />
+          <Image
+            src="/assets/images/leads_card.svg"
+            alt="Hero image"
+            width={600}
+            height={600}
+            className="col-span-5 size-full sm:col-span-3"
+          />
+          <Image
+            src="/assets/images/prospects.svg"
+            alt="Hero image"
+            width={600}
+            height={600}
+            className="col-span-5 size-full sm:col-span-2"
+          />
+          <Image
+            src="/assets/images/emails_card.svg"
+            alt="Hero image"
+            width={600}
+            height={600}
+            className="col-span-5 size-full sm:col-span-2"
+          />
+          <Image
+            src="/assets/images/comm_card.svg"
+            alt="Hero image"
+            width={600}
+            height={600}
+            className="col-span-5 size-full sm:col-span-3"
+          />
+          <Image
+            src="/assets/images/leadstoclients.svg"
+            alt="Hero image"
+            width={600}
+            height={600}
+            className="col-span-5 hidden size-full sm:block"
+          />
+          <Image
+            src="/assets/images/leadstoclients (3).svg"
+            alt="Hero image"
+            width={600}
+            height={600}
+            className="col-span-5 sm:hidden"
+          />
         </div>
-        <div className="absolute left-0 top-0 z-[-1] size-full">
+        <div className="absolute left-0 top-0 size-full">
           <div className="overflow-x-hidden">
             <div className="absolute left-0 h-32 w-[95%] -rotate-45 overflow-x-hidden bg-[#369DFD]/70 blur-[337.4px]"></div>
           </div>
@@ -159,22 +228,6 @@ export default function Web() {
           </div>
         </div>
       </section> */}
-      <section>
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
-          <div className="justify-center space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-3">
-            {LP_GRID_ITEMS.map((singleItem) => (
-              <div key={singleItem.title} className="flex flex-col items-center justify-center text-center">
-                <div className="bg-primary-100 dark:bg-primary-900 mb-4 flex size-10 items-center justify-center rounded-full p-1.5 text-blue-700 lg:size-12">
-                  {singleItem.icon}
-                </div>
-
-                <h3 className="mb-2 text-xl font-bold dark:text-white">{singleItem.title}</h3>
-                <p className="text-gray-500 dark:text-gray-400">{singleItem.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </main>
   )
 }

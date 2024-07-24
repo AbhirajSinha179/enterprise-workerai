@@ -518,7 +518,6 @@ export const CalendarDatePicker = React.forwardRef<
                         value={
                           monthFrom ? months[monthFrom.getMonth()] : undefined
                         }
-
                       >
                         <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-foreground">
                           <SelectValue placeholder="Month" />
