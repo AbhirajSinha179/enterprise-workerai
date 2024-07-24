@@ -1,21 +1,23 @@
 "use client";
 
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormMessage,
-} from "@/components/ui/form";
-import MultiSelectForm from '@/components/generate/MultiSelectForm';
 import { Textarea } from '@/components/ui/textarea';
-import React from 'react';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { PauseCircle, Play, PlayCircle } from "lucide-react";
 
 const FormSchema = z.object({
     prompt: z
@@ -29,11 +31,7 @@ const FormSchema = z.object({
     signal: z.array(z.string()).nonempty("Select at least one signal."),
 });
 
-const locations = [
-    { name: "India" },
-    { name: "USA" },
-    { name: "Germany" },
-];
+
 
 const preWrittenOutput = `
 Dear [Recipient],
@@ -68,54 +66,52 @@ const ParaInput = ({ index, onDelete }: ParaInputProps) => {
         <div className="my-4 border-2 p-4 rounded-md">
             <div className="col-span-full">
                 <div className="flex flex-row justify-between">
-                    <h1 className='font-bold text-2xl my-2'>
-                        Para {index}
-                    </h1>
+                    <div className="flex flex-row gap-x-3">
+                        <div className=" my-auto">
+                            <Button variant={"ghost"}>
+
+                                <PlayCircle size={30} />
+                            </Button>
+                        </div>
+                        <h1 className='font-bold text-2xl my-2'>
+                            Para {index}
+                        </h1>
+
+
+                    </div>
+
+
                     <Button variant={'destructive'} onClick={() => onDelete(index)}>Delete</Button>
                 </div>
-                <div className="my-2">
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-                            <FormField
-                                control={form.control}
-                                name="prompt"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormControl>
-                                            <Textarea
-                                                placeholder="Enter the Prompt"
-                                                className="resize-none min-h-[50px]"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <FormField
-                                    control={form.control}
-                                    name="signal"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <MultiSelectForm
-                                                title="Select Signal"
-                                                description="Choose one or more signals from the list below."
-                                                options={locations}
-                                                onChange={field.onChange}
-                                            />
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <Button type="submit" className="mt-2">Submit</Button>
-                            </div>
-                        </form>
-                    </Form>
+                <div className="my-4 flex flex-row">
+                    <div className="flex">
+                        <Select>
+                            <SelectTrigger className="w-[140px] min-h-[50px]">
+                                <SelectValue placeholder="Select " />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    {/* <SelectLabel>Fruits</SelectLabel> */}
+                                    <SelectItem value="apple">Prompt</SelectItem>
+                                    <SelectItem value="banana">String</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="flex mx-2  w-full">
+
+                        <Textarea
+                            placeholder="Enter the Prompt"
+                            className=" h-[50px] w-full"
+                        />
+
+
+
+                    </div>
+
+
                 </div>
-                <div className='mt-4'>
-                    <Textarea value={preWrittenOutput} disabled className='min-h-[300px] overflow-auto' />
-                </div>
+
             </div>
         </div>
     );
