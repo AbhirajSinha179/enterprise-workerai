@@ -96,7 +96,7 @@ export default function Web() {
         </div>
         <div className="mx-auto my-6 max-w-screen-xl rounded-xl border border-transparent bg-white shadow-xl shadow-input transition duration-200 dark:border-white/[0.2] dark:bg-black dark:shadow-none">
           <Image
-            src="/assets/images/dashboard_random_mockup.jpg"
+            src="/assets/images/dashboard_workerai.jpeg"
             alt="Hero image"
             width={1920}
             height={1080}
