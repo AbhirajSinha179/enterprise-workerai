@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ParaInput from '@/components/generate/paraInput';
 import ToneSelectForm from '@/components/generate/ToneSelectForm';
 import { Button } from '@/components/ui/button';
+import SubjectLineForm from '@/components/generate/SubjectLineForm';
 
 const locations = [
     { name: "India" },
@@ -70,68 +71,45 @@ export default function EmailGen() {
     return (
         <ContentLayout title="Email Generation">
             <div>
-                <Tabs defaultValue="prompt" className="mt-4 space-y-4">
-                    <TabsList>
-                        <TabsTrigger value="prompt">Prompt</TabsTrigger>
-                        <TabsTrigger value="template">Template</TabsTrigger>
-                        <TabsTrigger value="followup">Follow Up</TabsTrigger>
-                    </TabsList>
 
-                    <TabsContent value="prompt" className="space-y-4 mx-2">
-                        <div className='space-4 flex flex-row'>
-                            <div className='w-3/4'>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-4">
-                                    {cardData.map((card, index) => (
-                                        <a
-                                            key={index}
-                                            onClick={() => handleCardClick(index)}
-                                            className="block cursor-pointer"
-                                        >
-                                            <Card className={` ${selectedCard === index ? 'bg-primary' : ''} w-full`}>
-                                                <CardHeader>
-                                                    <CardTitle>{card.title}</CardTitle>
-                                                    <CardDescription>{card.description}</CardDescription>
-                                                </CardHeader>
-                                            </Card>
-                                        </a>
-                                    ))}
-                                </div>
-                                <div className='mt-5'>
-                                    <ToneSelectForm
-                                        options={locations}
-                                        onSubmit={handleToneSubmit}
-                                    />
-                                </div>
-                                {paraInputs.map((index) => (
-                                    <ParaInput key={index} index={index} onDelete={deleteParaInput} />
-                                ))}
-                                <Button className='mt-4' onClick={addParaInput}>
-                                    Add
-                                </Button>
-                            </div>
-                            <div className='bg-muted w-1/4 mx-4 h-fit'>
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle>Lead details</CardTitle>
-                                        <CardDescription>askjkdkhajsd</CardDescription>
-                                    </CardHeader>
-                                </Card>
-                            </div>
-                        </div>
-                    </TabsContent>
+                <div className='space-4 flex flex-row'>
+                    <div className='w-3/4 m-2'>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>
+                                    Subject Line
+                                </CardTitle>
+                            </CardHeader>
+                            <CardDescription className='px-4'>
+                                <SubjectLineForm />
+                            </CardDescription>
 
-                    <TabsContent value="template" className="space-y-4">
-                        <div>
-                            Template tab content
-                        </div>
-                    </TabsContent>
+                        </Card>
 
-                    <TabsContent value="followup" className="space-y-4">
-                        <div>
-                            Follow Up tab content
+                        <div className='mt-5'>
+                            <ToneSelectForm
+                                options={locations}
+                                onSubmit={handleToneSubmit}
+                            />
                         </div>
-                    </TabsContent>
-                </Tabs>
+                        {paraInputs.map((index) => (
+                            <ParaInput key={index} index={index} onDelete={deleteParaInput} />
+                        ))}
+                        <Button className='mt-4' onClick={addParaInput}>
+                            Add
+                        </Button>
+                    </div>
+                    <div className='bg-muted w-1/4 mx-4 h-fit'>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Lead details</CardTitle>
+                                <CardDescription>askjkdkhajsd</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </div>
+                </div>
+
+
             </div>
         </ContentLayout>
     );
