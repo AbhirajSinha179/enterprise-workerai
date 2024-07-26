@@ -17,8 +17,10 @@ const locations = [
 
 export default function EmailGen() {
     const [selectedCard, setSelectedCard] = useState<number | null>(null);
-    const [paraInputs, setParaInputs] = useState<number[]>([1, 2, 3]);
+    const [paraInputs, setParaInputs] = useState<number[]>([1]);
     const [textAreas, setTextAreas] = useState<number[]>([1, 2, 3]);
+    const [renderOutputs, setRenderOutputs] = useState<{ [key: number]: boolean }>({});
+    const [placeholderTexts, setPlaceholderTexts] = useState<{ [key: number]: string }>({});
 
     const handleCardClick = (index: number) => {
         setSelectedCard(index);
@@ -28,12 +30,27 @@ export default function EmailGen() {
         console.log("Selected Tone:", data.tone);
     };
 
+    const configParaInput = (index: number, placeholderText: string, showOutput: boolean) => {
+        setRenderOutputs((prev) => ({ ...prev, [index]: showOutput }));
+        setPlaceholderTexts((prev) => ({ ...prev, [index]: placeholderText }));
+    };
+
     const addParaInput = () => {
         setParaInputs((prev) => [...prev, prev.length + 1]);
     };
 
     const deleteParaInput = (index: number) => {
         setParaInputs((prev) => prev.filter(i => i !== index));
+        setRenderOutputs((prev) => {
+            const newRenderOutputs = { ...prev };
+            delete newRenderOutputs[index];
+            return newRenderOutputs;
+        });
+        setPlaceholderTexts((prev) => {
+            const newPlaceholderTexts = { ...prev };
+            delete newPlaceholderTexts[index];
+            return newPlaceholderTexts;
+        });
     };
 
     const addTextArea = () => {
@@ -57,27 +74,29 @@ export default function EmailGen() {
                             </CardHeader>
                             <CardDescription className='px-4'>
                                 <div className="flex flex-col">
-                                    <div className="gap-y-2 my-2">
+                                    <div className="">
                                         {textAreas.map((textArea, index) => (
                                             <div key={index} className="relative">
-                                                <Textarea className="my-6" placeholder="Subject Line" />
+                                                <Textarea className="my-4" placeholder="Subject Line" />
                                                 {index >= 3 && (
                                                     <button
                                                         type="button"
                                                         onClick={() => removeTextArea(index)}
                                                         className="absolute top-0 right-0 m-2"
                                                     >
-                                                        &#x2716; {/* Unicode for cross symbol */}
+                                                        &#x2716;
                                                     </button>
                                                 )}
                                             </div>
                                         ))}
                                     </div>
-                                    {/* <div className="flex justify-end mb-4">
-                                        <Button type="button" onClick={addTextArea}>
-                                            Add Subject Line
-                                        </Button>
-                                    </div> */}
+                                    <div className='relative group'>
+                                        <div className="flex justify-center mb-4 pb-4 -mt-8 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <Button type="button" onClick={addTextArea}>
+                                                Add Subject Line
+                                            </Button>
+                                        </div>
+                                    </div>
                                 </div>
                             </CardDescription>
                         </Card>
@@ -89,30 +108,37 @@ export default function EmailGen() {
                             />
                         </div>
                         {paraInputs.map((index) => (
-                            <div>
-
-                                <ParaInput key={index} index={index} onDelete={deleteParaInput} />
-                                <div className="relative group z-10">
-                                    <Separator />
-                                    <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div key={index}>
+                                <ParaInput
+                                    index={index}
+                                    onDelete={deleteParaInput}
+                                    placeholderText={placeholderTexts[index] || ""}
+                                    showOutput={renderOutputs[index] || false}
+                                />
+                                <div className="relative group z-10 ">
+                                    <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4 -mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                         <Button
                                             type="button"
-                                            onClick={addTextArea}
+                                            onClick={() => { configParaInput(index, "prompt", true) }}
                                         >
-                                            Subject Line
+                                            Prompt
+                                        </Button>
+                                        <Button
+                                            className=""
+                                            onClick={() => { configParaInput(index, "string", false) }}
+                                        >
+                                            String
                                         </Button>
                                         <Button
                                             className=""
                                             onClick={addParaInput}
                                         >
-                                            Para
+                                            Add
                                         </Button>
                                     </div>
                                 </div>
                             </div>
-
                         ))}
-
                     </div>
                     <div className='bg-muted w-1/4 mx-4 h-fit'>
                         <Card>
@@ -123,8 +149,10 @@ export default function EmailGen() {
                         </Card>
                     </div>
                 </div>
-                <div className='mt-4 w-3/4 px-4'>
-                    <Textarea value="sdfsdfsdf" disabled className='min-h-[300px] overflow-auto' />
+                <div className=' w-3/4 px-4  pt-8 mt-8'>
+                    <Button>
+                        Final Output
+                    </Button>
                 </div>
             </div>
         </ContentLayout>

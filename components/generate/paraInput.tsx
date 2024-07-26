@@ -8,16 +8,7 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from '@/components/ui/textarea';
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
-import { PauseCircle, Play, PlayCircle } from "lucide-react";
+import { PauseCircle, PlayCircle } from "lucide-react";
 
 const FormSchema = z.object({
     prompt: z
@@ -30,8 +21,6 @@ const FormSchema = z.object({
         }),
     signal: z.array(z.string()).nonempty("Select at least one signal."),
 });
-
-
 
 const preWrittenOutput = `
 Dear [Recipient],
@@ -47,14 +36,18 @@ Best regards,
 `;
 
 interface ParaInputProps {
+    showOutput: Boolean;
+    placeholderText: string;
     index: number;
     onDelete: (index: number) => void;
 }
 
-const ParaInput = ({ index, onDelete }: ParaInputProps) => {
+const ParaInput = ({ showOutput, placeholderText, index, onDelete }: ParaInputProps) => {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
     });
+
+    const [isPlaying, setIsPlaying] = useState(false);
 
     const onSubmit = (data: z.infer<typeof FormSchema>) => {
         console.log("Submitted Data:", data);
@@ -62,56 +55,40 @@ const ParaInput = ({ index, onDelete }: ParaInputProps) => {
         // Handle your submission logic here
     };
 
+    const handlePlayPause = () => {
+        setIsPlaying(!isPlaying);
+    };
+
     return (
-        <div className="my-4 border-2 p-4 rounded-md">
+        <div className="my-4 border-2 p-4 rounded-md relative group">
             <div className="col-span-full">
                 <div className="flex flex-row justify-between">
-                    <div className="flex flex-row gap-x-3">
-                        <div className=" my-auto">
-                            <Button variant={"ghost"}>
-
-                                <PlayCircle size={30} />
-                            </Button>
-                        </div>
+                    <div className="flex flex-row gap-x-3 items-center">
+                        <Button variant="ghost" onClick={handlePlayPause}>
+                            {isPlaying ? <PauseCircle size={30} /> : <PlayCircle size={30} />}
+                        </Button>
                         <h1 className='font-bold text-2xl my-2'>
                             Para {index}
                         </h1>
-
-
                     </div>
-
-
                     <Button variant={'destructive'} onClick={() => onDelete(index)}>Delete</Button>
                 </div>
-                <div className="my-4 flex flex-row">
-                    <div className="flex">
-                        <Select>
-                            <SelectTrigger className="w-[140px] min-h-[50px]">
-                                <SelectValue placeholder="Select " />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {/* <SelectLabel>Fruits</SelectLabel> */}
-                                    <SelectItem value="apple">Prompt</SelectItem>
-                                    <SelectItem value="banana">String</SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="flex mx-2  w-full">
-
-                        <Textarea
-                            placeholder="Enter the Prompt"
-                            className=" h-[50px] w-full"
-                        />
-
-
-
-                    </div>
-
-
+                <div className="flex mx-2 w-full">
+                    <Textarea
+                        placeholder={placeholderText}
+                        className="h-[50px] w-full"
+                    />
                 </div>
-
+                <div className="my-4 ">
+                    {isPlaying && showOutput && (
+                        <div className=" mx-2 w-full">
+                            <Textarea
+                                placeholder="Generated result Prompt "
+                                className="h-[50px] w-full"
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
