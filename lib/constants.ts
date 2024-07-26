@@ -125,7 +125,7 @@ export const landingConfig = {
   imageCover: {
     // title: "Orthodox sales systems are slowing down your business growth.",
     // description: "Understand how to get through this bs",
-    imageUri: "/assets/images/dashboard_random_mockup.jpg",
+    imageUri: "/assets/images/dashboard_workerai.jpeg",
   },
   features: {
     title: "Orthodox sales systems are slowing down your business growth.",
