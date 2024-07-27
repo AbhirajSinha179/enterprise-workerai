@@ -3,74 +3,96 @@ import { Overview } from "@/components/dashboard/overview";
 import { RecentSales } from "@/components/dashboard/recent-sales";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  dashboardDataSchema, DataGraph, SalesDataItem, StatDashboard,
-} from "@/types/interface"
+import { dashboardDataSchema, DataGraph, SalesDataItem, StatDashboard } from "@/types/interface";
 import CalendarForm from "@/components/dashboard/CalendarForm";
+import { currentUser } from '@clerk/nextjs/server';
 
-async function fetchDashboardData() {
-  const res = await fetch("http://localhost:3000/dashboarddata");
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  const data = await res.json();
-  const result = dashboardDataSchema.safeParse(data);
-  if (!result.success) {
-    console.error(result.error);
-    throw new Error("Invalid data format");
-  }
-  return result.data;
-}
+export async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
+  try {
+    // const url = `${process.env.API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`;
+    const url = "http://localhost:3000/dashboarddata";
+    const res = await fetch(url);
+    // console.log("Response is from analytics API  : ", res)
+    // console.log("ENDPOINT IS ", url);
+    console.log(`Response status for analytics by range: ${res.status}`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data. Status code: ${res.status}`);
+    }
 
-function mapIcon(icon: string) {
-  switch (icon) {
-    case "Star":
-      return Star;
-    case "Send":
-      return Send;
-    case "MailOpen":
-      return MailOpen;
-    case "Eye":
-      return Eye;
-    case "Target":
-      return Target;
-    default:
-      return Send;
+    const data = await res.json();
+    const result = dashboardDataSchema.safeParse(data);
+
+    if (!result.success) {
+      console.error(result.error);
+      throw new Error("Invalid data format");
+    }
+
+    return result.data;
+  } catch (error: any) {
+    console.error("Error fetching data:", error.message);
+    throw error;
   }
 }
 
-const defaultStatsDashboard: StatDashboard[] = [
-  { title: "Unique Leads", value: "0", icon: Star },
-  { title: "Total Sent", value: "0", icon: Send },
-  { title: "Open Rate", value: "0", icon: MailOpen },
-  { title: "Response Rate", value: "0", icon: Eye },
-  { title: "Monthly Target", value: "0", icon: Target },
-];
+const defaultDashboardData = {
+  total_clicks: 0,
+  total_opens: 0,
+  data: [
+    {
+      date: "2024-01-01T00:00:00Z",
+      opens: 0,
+      total_emails: 0,
+      total_unique_emails: 0
+    }
+  ]
+};
 
 export default async function DashboardHome() {
-  let statsDashboard: StatDashboard[] = defaultStatsDashboard;
+  let statsDashboard = defaultDashboardData;
   let dataGraph: DataGraph[] = [];
   let recentSalesData: SalesDataItem[] = [];
+  let responseStatus: number | null = null;
+  let openRate: number = 0;
+  let responseRate: number = 0;
+
+  const user = await currentUser();
+  console.log("USER ID IS : ", user?.id);
+  const primaryEmail = user?.emailAddresses?.[0]?.emailAddress || "Email not found";
+  const userId = user?.id || "Id not found";
+  console.log("Primary Email Address:", primaryEmail);
+  const defaultStartDate = "2023-01-01T00%3A00%3A00.000Z";
+  const defaultEndDate = "2023-01-31T23%3A59%3A59.000Z";
 
   try {
-    const dashboardData = await fetchDashboardData();
-    if (dashboardData.statsDashboard && dashboardData.statsDashboard.length > 0) {
-      statsDashboard = dashboardData.statsDashboard.map(stat => ({
-        ...stat,
-        icon: mapIcon(stat.icon)
-      }));
+    // const dashboardData = await fetchDashboardData("userId", userId);
+    const dashboardData = await fetchDashboardDataUsingRange("userId", userId, defaultStartDate, defaultEndDate);
+    openRate = dashboardData.total_opens;
+    responseRate = dashboardData.total_clicks;
+
+    responseStatus = 200;
+    // dataGraph = dashboardData.dataGraph;
+    // recentSalesData = dashboardData.recentSalesData;
+    dataGraph = dashboardData.data.map((item) => ({
+      name: item.date, //x 
+      uv: item.opens,
+      pv: item.total_emails, //y
+      amt: item.total_unique_emails,
+    }));
+  } catch (error: any) {
+    if (error.message.includes("Status code: 404")) {
+      statsDashboard = defaultDashboardData;
+      responseStatus = 404;
+    } else {
+      responseStatus = error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null;
+      console.error("Error fetching data:", error.message);
     }
-    dataGraph = dashboardData.dataGraph;
-    recentSalesData = dashboardData.recentSalesData;
-  } catch (error) {
-    console.error("Error fetching data:", error);
   }
 
   return (
     <ContentLayout title="Dashboard">
       <main className="w-full space-y-4">
         <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
-          <div className="flex  space-y-2 space-x-10">
+          <div className="flex space-y-2 space-x-10">
             <div>
               <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
               <p className="text-muted-foreground">
@@ -78,26 +100,77 @@ export default async function DashboardHome() {
               </p>
             </div>
             <div className="flex justify-center">
-              <CalendarForm />
+              <CalendarForm userId={userId} />
             </div>
           </div>
           <div>
+            {responseStatus && (
+              <div className={`alert ${responseStatus === 200 ? 'alert-success' : 'alert-error'}`}>
+                {responseStatus === 200 ? 'Data fetched successfully!' : `Failed to fetch data. Status code: ${responseStatus}`}
+              </div>
+            )}
             <div className="grid gap-x-4 md:grid-cols-3 lg:grid-cols-5 my-4">
-              {statsDashboard.map((stat, index) => (
-                <Card key={index} className="overflow-x-auto">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-muted-foreground ">{stat.title}</CardTitle>
-                    <stat.icon
-                      className="size-4 text-muted-foreground"
-                      width={24}
-                      height={24}
-                    />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-4xl font-bold text-foreground">{stat.value}</div>
-                  </CardContent>
-                </Card>
-              ))}
+              <Card className="overflow-x-auto">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground ">Unique Leads</CardTitle>
+                  <Star
+                    className="size-4 text-muted-foreground"
+                    width={24}
+                    height={24}
+                  />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-4xl font-bold text-foreground"> 0</div>
+                </CardContent>
+              </Card>
+
+              <Card className="overflow-x-auto">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground ">Total Sent</CardTitle>
+                  <Send
+                    className="size-4 text-muted-foreground"
+                    width={24}
+                    height={24}
+                  />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-4xl font-bold text-foreground"> 0</div>
+                </CardContent>
+              </Card>
+
+              <Card className="overflow-x-auto">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground ">Open Rate</CardTitle>
+                  <MailOpen className="size-4 text-muted-foreground" width={24} height={24} />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-4xl font-bold text-foreground">{openRate}</div>
+                </CardContent>
+              </Card>
+
+              <Card className="overflow-x-auto">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground ">Response Rate</CardTitle>
+                  <Eye className="size-4 text-muted-foreground" width={24} height={24} />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-4xl font-bold text-foreground">{responseRate}</div>
+                </CardContent>
+              </Card>
+
+              <Card className="overflow-x-auto">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground ">Monthly Target</CardTitle>
+                  <Target
+                    className="size-4 text-muted-foreground"
+                    width={24}
+                    height={24}
+                  />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-4xl font-bold text-foreground"> 0</div>
+                </CardContent>
+              </Card>
             </div>
             <div className="grid gap-5 md:grid-cols-1 lg:grid-cols-1">
               <Card>
@@ -108,7 +181,7 @@ export default async function DashboardHome() {
                   <Overview data={dataGraph} />
                 </CardContent>
               </Card>
-              <Card className="overflow-y-auto">
+              {/* <Card className="overflow-y-auto">
                 <CardHeader>
                   <CardTitle className="text-foreground">Recent Response</CardTitle>
                   <CardDescription>12 Unread</CardDescription>
@@ -116,7 +189,7 @@ export default async function DashboardHome() {
                 <CardContent>
                   <RecentSales data={recentSalesData} />
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
           </div>
         </div>

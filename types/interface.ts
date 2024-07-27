@@ -105,26 +105,40 @@ export interface SalesDataItem {
   email: string
 }
 
-export const statDashboardSchema = z.object({
-  title: z.string(),
-  value: z.string(),
-  icon: z.string(),
+// export const statDashboardSchema = z.object({
+//   title: z.string(),
+//   value: z.string(),
+//   icon: z.string(),
+// })
+
+// export const dataGraphSchema = z.object({
+//   name: z.string(),
+//   uv: z.number(),
+//   pv: z.number(),
+//   amt: z.number(),
+// })
+
+// export const salesDataItemSchema = z.object({
+//   name: z.string(),
+//   email: z.string(),
+// })
+
+// export const dashboardDataSchema = z.object({
+//   statsDashboard: z.array(statDashboardSchema),
+//   dataGraph: z.array(dataGraphSchema),
+//   recentSalesData: z.array(salesDataItemSchema),
+// })
+
+const dataItemSchema = z.object({
+  date: z.string(), // ISO string format for dates
+  opens: z.number(),
+  total_emails: z.number(),
+  total_unique_emails: z.number(),
 })
 
-export const dataGraphSchema = z.object({
-  name: z.string(),
-  uv: z.number(),
-  pv: z.number(),
-  amt: z.number(),
-})
-
-export const salesDataItemSchema = z.object({
-  name: z.string(),
-  email: z.string(),
-})
-
+// Define the schema for the overall dashboard data
 export const dashboardDataSchema = z.object({
-  statsDashboard: z.array(statDashboardSchema),
-  dataGraph: z.array(dataGraphSchema),
-  recentSalesData: z.array(salesDataItemSchema),
+  total_clicks: z.number(),
+  total_opens: z.number(),
+  data: z.array(dataItemSchema),
 })
