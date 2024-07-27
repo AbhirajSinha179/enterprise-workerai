@@ -14,6 +14,16 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { useMail } from "@/contexts/MailContext"
 import { cn } from "@/lib/utils"
 import { MailProps, ThreadList } from "@/types/interface"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Button } from "../ui/button"
+import { MixerHorizontalIcon } from "@radix-ui/react-icons"
 
 const MAX_INBOX_HEIGHT = 680
 
@@ -22,6 +32,7 @@ export function Inbox({
   defaultLayout = [265, 440, 655],
 }: MailProps) {
   const { config } = useMail()
+  const [selectedView, setSelectedView] = React.useState("last24Hours")
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -37,37 +48,66 @@ export function Inbox({
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Inbox</h1>
               <TabsList className="ml-auto">
-                <TabsTrigger
-                  value="all"
-                >
+                <TabsTrigger value="all">
                   All mail
                 </TabsTrigger>
-                {/* <TabsTrigger
-                  value="unread"
-                >
+                {/* <TabsTrigger value="unread">
                   Unread
                 </TabsTrigger> */}
-                <TabsTrigger
-                  value="reply"
-                >
+                <TabsTrigger value="reply">
                   Reply
                 </TabsTrigger>
-                <TabsTrigger
-                  value="followup"
-                >
+                <TabsTrigger value="followup">
                   Follow Ups
                 </TabsTrigger>
               </TabsList>
             </div>
             <Separator />
-            <div className="p-4 backdrop-blur supports-[backdrop-filter]:bg-background/0">
-              <form>
+            <div className="p-4 backdrop-blur supports-[backdrop-filter]:bg-background/0 flex justify-between flex-row">
+              <form className="flex-grow">
                 <div className="relative">
-                  <Search className="absolute left-2 top-4 size-4 text-foreground" />
-                  <Input placeholder="Search" className="pl-8" />
+                  <Search className="absolute left-2 top-3 size-4 text-foreground" />
+                  <Input placeholder="Search" className="pl-8 w-full" />
                 </div>
               </form>
+              <div className="flex">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="mx-2 hidden lg:flex"
+                    >
+                      <MixerHorizontalIcon className="mr-2 size-4" />
+                      Filter
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-[150px] bg-muted">
+                    {/* <DropdownMenuLabel>Toggle columns</DropdownMenuLabel> */}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuCheckboxItem
+                      checked={selectedView === "last24Hours"}
+                      onCheckedChange={() => setSelectedView("last24Hours")}
+                    >
+                      Last 24 Hours
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={selectedView === "week"}
+                      onCheckedChange={() => setSelectedView("week")}
+                    >
+                      Week
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={selectedView === "month"}
+                      onCheckedChange={() => setSelectedView("month")}
+                    >
+                      Month
+                    </DropdownMenuCheckboxItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
+
             <TabsContent value="all" className="m-0">
               {threads.length === 0 ? (
                 <EmptyState
