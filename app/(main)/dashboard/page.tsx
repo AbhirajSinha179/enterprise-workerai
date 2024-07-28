@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { Eye, MailOpen, Send, Target, Star } from "lucide-react";
 import { Overview } from "@/components/dashboard/overview";
 import { RecentSales } from "@/components/dashboard/recent-sales";
@@ -6,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { dashboardDataSchema, DataGraph, SalesDataItem, StatDashboard } from "@/types/interface";
 import CalendarForm from "@/components/dashboard/CalendarForm";
 import { currentUser } from '@clerk/nextjs/server';
+import moment from 'moment';
 
 export async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
   try {
@@ -54,6 +56,8 @@ export default async function DashboardHome() {
   let responseStatus: number | null = null;
   let openRate: number = 0;
   let responseRate: number = 0;
+  let totalUniqueEmails: number = 0;
+  let totalSentEmails: number = 0;
 
   const user = await currentUser();
   console.log("USER ID IS : ", user?.id);
@@ -64,16 +68,16 @@ export default async function DashboardHome() {
   const defaultEndDate = "2023-01-31T23%3A59%3A59.000Z";
 
   try {
-    // const dashboardData = await fetchDashboardData("userId", userId);
     const dashboardData = await fetchDashboardDataUsingRange("userId", userId, defaultStartDate, defaultEndDate);
     openRate = dashboardData.total_opens;
     responseRate = dashboardData.total_clicks;
 
+    totalUniqueEmails = dashboardData.data.reduce((sum, item) => sum + item.total_unique_emails, 0);
+    totalSentEmails = dashboardData.data.reduce((sum, item) => sum + item.total_emails, 0);
+
     responseStatus = 200;
-    // dataGraph = dashboardData.dataGraph;
-    // recentSalesData = dashboardData.recentSalesData;
     dataGraph = dashboardData.data.map((item) => ({
-      name: item.date, //x 
+      name: moment(item.date).format("YYYY-MM-DD"), //x 
       uv: item.opens,
       pv: item.total_emails, //y
       amt: item.total_unique_emails,
@@ -120,7 +124,7 @@ export default async function DashboardHome() {
                   />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-4xl font-bold text-foreground"> 0</div>
+                  <div className="text-4xl font-bold text-foreground">{totalUniqueEmails}</div>
                 </CardContent>
               </Card>
 
@@ -134,7 +138,7 @@ export default async function DashboardHome() {
                   />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-4xl font-bold text-foreground"> 0</div>
+                  <div className="text-4xl font-bold text-foreground">{totalSentEmails}</div>
                 </CardContent>
               </Card>
 

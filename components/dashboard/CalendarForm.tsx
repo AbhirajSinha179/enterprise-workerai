@@ -60,7 +60,6 @@ const CalendarFormComponent: React.FC<{ userId: string }> = ({ userId }) => {
     const formattedStartDate = encodeURIComponent(new Date(startDate).toISOString());
     const formattedEndDate = encodeURIComponent(new Date(endDate).toISOString());
     // console.log("ONSUBMIT FUNCTION DATE :  ", formattedStartDate, formattedEndDate)
-
     const dashboardData = await fetchDashboardDataUsingRange("targetId", userId, formattedStartDate, formattedEndDate);
     toast(`You have selected a date range: ${data.calendar.from.toDateString()} - ${data.calendar.to.toDateString()}`);
   }
