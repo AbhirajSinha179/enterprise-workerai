@@ -4,31 +4,11 @@ import { Overview } from "@/components/dashboard/overview";
 import { RecentSales } from "@/components/dashboard/recent-sales";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { dashboardDataSchema, DataGraph, SalesDataItem, StatDashboard } from "@/types/interface";
+import { dashboardDataSchema, DataGraph, SalesDataItem, StatDashboard, apiResponseSchema } from "@/types/interface";
 import CalendarForm from "@/components/dashboard/CalendarForm";
 import { currentUser } from '@clerk/nextjs/server';
 import moment from 'moment';
 
-export type EmailThread = {
-  id: string;
-  subject: string;
-  body: string;
-  sender: string;
-  recipients: string[];
-  createdAt: string;
-};
-
-export type Reply = {
-  id: string;
-  body: string;
-  sender: string;
-  createdAt: string;
-};
-
-export type ApiResponse = {
-  emails: EmailThread[];
-  replies: Reply[];
-};
 
 
 export async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
@@ -58,8 +38,9 @@ export async function fetchDashboardDataUsingRange(type: string, id: string, sta
   }
 }
 
-export async function fetchRecentReply() {
+export async function fetchRecentReply(id: string) {
   try {
+    // const url = `${process.env.API_BASE_URL}/emails/thread//${id}/`
     const url = "http://localhost:3000/getthreads";
     const res = await fetch(url);
     console.log(`Response status for getthreads: ${res.status}`);
@@ -67,19 +48,24 @@ export async function fetchRecentReply() {
       throw new Error(`Failed to fetch data. Status code: ${res.status}`);
     }
 
-    const data: ApiResponse = await res.json();
-    const processedResponse = data.replies
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-      .slice(0, 10);
-    console.log(processedResponse);
+    const data = await res.json();
+    const result = apiResponseSchema.safeParse(data);
+
+    if (!result.success) {
+      console.error(result.error);
+      throw new Error("Invalid data format");
+    }
 
     // Return the 10 most recent replies sorted by date
-    return processedResponse
+    return result.data.replies
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 10);
   } catch (error: any) {
     console.error("Error fetching data:", error.message);
     throw error;
   }
 }
+
 
 const defaultDashboardData = {
   total_clicks: 0,
@@ -111,7 +97,7 @@ export default async function DashboardHome() {
   console.log("Primary Email Address:", primaryEmail);
   const defaultStartDate = "2023-01-01T00%3A00%3A00.000Z";
   const defaultEndDate = "2023-01-31T23%3A59%3A59.000Z";
-  recentSalesData = await fetchRecentReply()
+  recentSalesData = await fetchRecentReply(userId)
 
   try {
     const dashboardData = await fetchDashboardDataUsingRange("userId", userId, defaultStartDate, defaultEndDate);
