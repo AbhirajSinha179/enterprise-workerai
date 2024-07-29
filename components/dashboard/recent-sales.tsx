@@ -1,12 +1,14 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-interface DataItem {
-  name: string;
-  email: string;
+interface Reply {
+  id: string;
+  body: string;
+  sender: string;
+  createdAt: string;
 }
 
 interface RecentSalesProp {
-  data: DataItem[];
+  data: Reply[];
 }
 
 export function RecentSales({ data }: RecentSalesProp) {
@@ -15,14 +17,15 @@ export function RecentSales({ data }: RecentSalesProp) {
   }
   return (
     <div className="space-y-8">
-      {data.map((sale) => (
-        <div key={sale.name} className="flex items-center">
+      {data.map((reply) => (
+        <div key={reply.id} className="flex items-center">
           <Avatar className="size-9">
-            <AvatarFallback>AI</AvatarFallback>
+            <AvatarFallback>{reply.sender[0]}</AvatarFallback>
           </Avatar>
           <div className="ml-4 space-y-1">
-            <p className="text-sm font-medium leading-none text-foreground">{sale.name}</p>
-            <p className="text-sm text-foreground">{sale.email}</p>
+            <p className="text-sm font-medium leading-none text-foreground">{reply.sender}</p>
+            {/* <p className="text-sm text-foreground">{reply.body}</p>
+            <p className="text-sm text-muted-foreground">{new Date(reply.createdAt).toLocaleString()}</p> */}
           </div>
         </div>
       ))}

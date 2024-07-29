@@ -142,3 +142,28 @@ export const dashboardDataSchema = z.object({
   total_opens: z.number(),
   data: z.array(dataItemSchema),
 })
+
+export const emailThreadSchema = z.object({
+  id: z.string(),
+  subject: z.string(),
+  body: z.string(),
+  sender: z.string(),
+  recipients: z.array(z.string()),
+  createdAt: z.string(),
+})
+
+export const replySchema = z.object({
+  id: z.string(),
+  body: z.string(),
+  sender: z.string(),
+  createdAt: z.string(),
+})
+
+export const apiResponseSchema = z.object({
+  emails: z.array(emailThreadSchema),
+  replies: z.array(replySchema),
+})
+
+export type EmailThread = z.infer<typeof emailThreadSchema>
+export type Reply = z.infer<typeof replySchema>
+export type ApiResponse = z.infer<typeof apiResponseSchema>

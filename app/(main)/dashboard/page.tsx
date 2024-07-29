@@ -9,6 +9,28 @@ import CalendarForm from "@/components/dashboard/CalendarForm";
 import { currentUser } from '@clerk/nextjs/server';
 import moment from 'moment';
 
+export type EmailThread = {
+  id: string;
+  subject: string;
+  body: string;
+  sender: string;
+  recipients: string[];
+  createdAt: string;
+};
+
+export type Reply = {
+  id: string;
+  body: string;
+  sender: string;
+  createdAt: string;
+};
+
+export type ApiResponse = {
+  emails: EmailThread[];
+  replies: Reply[];
+};
+
+
 export async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
   try {
     // const url = `${process.env.API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`;
@@ -36,6 +58,29 @@ export async function fetchDashboardDataUsingRange(type: string, id: string, sta
   }
 }
 
+export async function fetchRecentReply() {
+  try {
+    const url = "http://localhost:3000/getthreads";
+    const res = await fetch(url);
+    console.log(`Response status for getthreads: ${res.status}`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data. Status code: ${res.status}`);
+    }
+
+    const data: ApiResponse = await res.json();
+    const processedResponse = data.replies
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 10);
+    console.log(processedResponse);
+
+    // Return the 10 most recent replies sorted by date
+    return processedResponse
+  } catch (error: any) {
+    console.error("Error fetching data:", error.message);
+    throw error;
+  }
+}
+
 const defaultDashboardData = {
   total_clicks: 0,
   total_opens: 0,
@@ -52,7 +97,7 @@ const defaultDashboardData = {
 export default async function DashboardHome() {
   let statsDashboard = defaultDashboardData;
   let dataGraph: DataGraph[] = [];
-  let recentSalesData: SalesDataItem[] = [];
+  let recentSalesData: any = [];
   let responseStatus: number | null = null;
   let openRate: number = 0;
   let responseRate: number = 0;
@@ -66,6 +111,7 @@ export default async function DashboardHome() {
   console.log("Primary Email Address:", primaryEmail);
   const defaultStartDate = "2023-01-01T00%3A00%3A00.000Z";
   const defaultEndDate = "2023-01-31T23%3A59%3A59.000Z";
+  recentSalesData = await fetchRecentReply()
 
   try {
     const dashboardData = await fetchDashboardDataUsingRange("userId", userId, defaultStartDate, defaultEndDate);
@@ -185,15 +231,15 @@ export default async function DashboardHome() {
                   <Overview data={dataGraph} />
                 </CardContent>
               </Card>
-              {/* <Card className="overflow-y-auto">
+              <Card className="overflow-y-auto">
                 <CardHeader>
                   <CardTitle className="text-foreground">Recent Response</CardTitle>
-                  <CardDescription>12 Unread</CardDescription>
+                  <CardDescription>Unread</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <RecentSales data={recentSalesData} />
                 </CardContent>
-              </Card> */}
+              </Card>
             </div>
           </div>
         </div>
