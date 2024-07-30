@@ -4,32 +4,44 @@ import { ContentLayout } from "@/components/layout/content-layout";
 import { EmailList } from "@/components/scheduler/email-list";
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SchedularEmail, schedularEmailSchema } from "@/types/interface";
+import { UnscheduledEmailThread, unscheduledEmailResponseSchema } from "@/types/interface";
 
-async function getData(): Promise<SchedularEmail[]> {
-  const res = await fetch("http://localhost:3000/schedular");
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
+
+export async function fetchUnscheduledEmails(targetId: string) {
+  try {
+    // const url = `${process.env.API_BASE_URL}/emails/target/{targetId}`;
+    const url = "http://localhost:3000/unschedularemails";
+    const res = await fetch(url);
+    // console.log("Response is from get Unscheduled email API  : ", res)
+    // console.log("ENDPOINT IS ", url);
+    console.log(`Response status for get unscheduled email:  ${res.status}`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data. Status code: ${res.status}`);
+    }
+
+    const data = await res.json();
+    const result = unscheduledEmailResponseSchema.safeParse(data);
+
+    if (!result.success) {
+      console.error(result.error);
+      throw new Error("Invalid data format");
+    }
+
+    return result.data;
+  } catch (error: any) {
+    console.error("Error fetching data:", error.message);
+    throw error;
   }
-  const data = await res.json();
-  const result = schedularEmailSchema.safeParse(data);
-  if (!result.success) {
-    console.error(result.error);
-    throw new Error("Invalid data format");
-  }
-  return result.data;
 }
 
 export default async function Emails() {
-  let emails: SchedularEmail[] = [];
+  let unscheduledEmails: UnscheduledEmailThread[] = [];
   try {
-    emails = await getData();
+    unscheduledEmails = await fetchUnscheduledEmails("7feaa854-1f76-423d-a209-fce0d2781dfc");
+    console.log("Response is from get Unscheduled email API", unscheduledEmails)
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-
-  const pendingEmails = emails.filter(email => !email.scheduled);
-  const scheduledEmails = emails.filter(email => email.scheduled);
 
   return (
     <ContentLayout title="Scheduler">
@@ -40,8 +52,7 @@ export default async function Emails() {
         </TabsList>
 
         <TabsContent value="pending" className="space-y-4">
-          {pendingEmails.length === 0 ? (
-
+          {unscheduledEmails.length === 0 ? (
             <div>
               <div className="mt-6 flex w-full items-center justify-between">
                 <h1 className="text-2xl font-bold">Pending Emails</h1>
@@ -53,11 +64,11 @@ export default async function Emails() {
               />
             </div>
           ) : (
-            <EmailList emails={pendingEmails} />
+            <EmailList emails={unscheduledEmails} />
           )}
         </TabsContent>
 
-        <TabsContent value="scheduled" className="space-y-4">
+        {/* <TabsContent value="scheduled" className="space-y-4">
           {scheduledEmails.length === 0 ? (
             <div>
               <div className="mt-6 flex w-full items-center justify-between">
@@ -71,7 +82,7 @@ export default async function Emails() {
           ) : (
             <ScheduledEmailList emails={scheduledEmails} />
           )}
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
     </ContentLayout>
   );

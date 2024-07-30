@@ -18,25 +18,38 @@ export const threadSchema = z.object({
 
 export const threadsSchema = z.array(threadSchema)
 
-export interface SchedularEmail {
-  id: number
+export interface UnscheduledEmailThread {
+  id: string
+  threadId: string
   subject: string
   body: string
-  date: string
-  scheduled: boolean
-  recipient: string
+  sender: string
+  createdAt: string
+  updatedAt: string
+  status: string
 }
-
-export const emailSchemaSchedular = z.object({
-  id: z.number(),
+export const emailUnschedulerThreadSchema = z.object({
+  id: z.string(),
+  threadId: z.string(),
   subject: z.string(),
   body: z.string(),
-  date: z.string(),
-  scheduled: z.boolean(),
-  recipient: z.string(),
+  sender: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  status: z.string(),
 })
 
-export const schedularEmailSchema = z.array(emailSchemaSchedular)
+export const unscheduledEmailResponseSchema = z.array(emailUnschedulerThreadSchema)
+// export const emailSchemaSchedular = z.object({
+//   id: z.number(),
+//   subject: z.string(),
+//   body: z.string(),
+//   date: z.string(),
+//   scheduled: z.boolean(),
+//   recipient: z.string(),
+// })
+
+// export const schedularEmailSchema = z.array(emailSchemaSchedular)
 
 export interface Email {
   id: string
