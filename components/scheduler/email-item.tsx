@@ -27,19 +27,28 @@ import {
 import { Card } from "../ui/card"
 import { cn } from "@/lib/utils";
 import { Separator } from "../ui/separator";
+import { UnscheduledEmailThread } from "@/types/interface";
 
-export default function EmailItem({ item, handleApprove, handleEdit, handleDelete }: { item: any, handleApprove: any, handleEdit: any, handleDelete: any }) {
-  const [subject, setSubject] = useState(item?.subject)
-  const [body, setBody] = useState(item?.body)
+interface EmailItemProps {
+  item: UnscheduledEmailThread;
+  handleApprove: (args: { emailId: string }) => Promise<void>;
+  handleEdit: (args: { emailId: string; subject: string; body: string }) => Promise<void>;
+  handleDelete: (args: { emailId: string }) => Promise<void>;
+}
 
-  const renderStatusIcons = (status: number) => {
+export default function EmailItem({ item, handleApprove, handleEdit, handleDelete }: EmailItemProps) {
+  const [subject, setSubject] = useState(item.subject);
+  const [body, setBody] = useState(item.body);
+
+  const renderStatusIcons = (status: string) => {
+    const statusNumber = parseInt(status, 10); // Assuming status is a string representing a number
     return (
       <div className="flex items-center space-x-1  my-1">
-        {Array.from({ length: status }).map((_, index) => (
+        {Array.from({ length: statusNumber }).map((_, index) => (
           <CheckCircledIcon key={index} width={20} height={20} />
         ))}
       </div>
-    )
+    );
   }
 
   return (
@@ -48,12 +57,12 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
         <div className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all")}>
           <div className="flex w-full flex-col gap-1">
             <div className="flex justify-between">
-              <div className="text-2xl font-semibold flex">{item.recipient}</div>
-              <div className=" flex  ">
+              <div className="text-2xl font-semibold flex">{item.sender}</div>
+              <div className="flex">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className="">
+                      <div>
                         {item.status && renderStatusIcons(item.status)}
                       </div>
                     </TooltipTrigger>
@@ -66,15 +75,14 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                 <div className="flex items-center h-6 mx-2">
                   <Separator orientation="vertical" />
                 </div>
-                <div className={cn("ml-auto")}>{format(new Date(item.date), "PP")}</div>
+                <div className={cn("ml-auto")}>{format(new Date(item.createdAt), "PP")}</div>
               </div>
             </div>
             <div className="text-md font-medium">{item.subject}</div>
-
           </div>
           <div className="text-xs text-foreground">{item.body}</div>
           <div className="mt-2 flex w-full items-center justify-between py-0.5">
-            <Button onClick={() => handleDelete(item?.recipient)} variant="outline" size="icon" className="size-10">
+            <Button onClick={() => handleDelete({ emailId: item.id })} variant="outline" size="icon" className="size-10">
               <Trash size={6} className="size-5" />
             </Button>
             <div className="space-x-4">
@@ -84,7 +92,7 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[725px]">
                   <DialogHeader>
-                    <DialogTitle>Edit email to {item?.recipient ?? "random@example.com"}</DialogTitle>
+                    <DialogTitle>Edit email to {item.sender ?? "random@example.com"}</DialogTitle>
                     <DialogDescription>
                       Make changes to the email here. Click save when you&apos;re done.
                     </DialogDescription>
@@ -96,7 +104,6 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                       </Label>
                       <Input
                         id="subject"
-                        defaultValue={item.subject ?? ""}
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
                         className="col-span-3"
@@ -108,7 +115,6 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                       </Label>
                       <Textarea
                         id="body"
-                        defaultValue={item.body ?? ""}
                         value={body}
                         onChange={(e) => setBody(e.target.value)}
                         className="col-span-3 max-h-[300px]"
@@ -117,23 +123,20 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                   </div>
                   <DialogFooter>
                     <DialogClose asChild>
-                      <Button type="submit" onClick={() =>
-                        handleEdit(item.recipient, subject, body)}>
+                      <Button type="submit" onClick={() => handleEdit({ emailId: item.id, subject, body })}>
                         Save changes
                       </Button>
                     </DialogClose>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
-              <Button onClick={() => handleApprove(item?.recipient)} asChild className="h-10 min-w-fit cursor-pointer">
+              <Button onClick={() => handleApprove({ emailId: item.id })} className="h-10 min-w-fit cursor-pointer">
                 <span>Smart Schedule</span>
               </Button>
             </div>
           </div>
         </div>
-
       </Card>
-
     </>
   )
 }
