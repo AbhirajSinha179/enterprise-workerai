@@ -28,18 +28,128 @@ export interface UnscheduledEmailThread {
   updatedAt: string
   status: string
 }
-export const emailUnschedulerThreadSchema = z.object({
-  id: z.string(),
-  threadId: z.string(),
-  subject: z.string(),
-  body: z.string(),
-  sender: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  status: z.string(),
+
+export const unscheduledEmailResponseSchema = z.array(
+  z.object({
+    id: z.string(),
+    threadId: z.string(),
+    subject: z.string(),
+    body: z.string(),
+    sender: z.string(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    status: z.string(),
+  })
+)
+
+// export interface ScheduledEmailThread {
+//   id: string
+//   threadId: string
+//   subject: string
+//   body: string
+//   sender: string
+//   createdAt: string
+//   updatedAt: string
+//   status: string
+// }
+
+// export const emailSchedulerThreadSchema = z.object({
+//   id: z.string(),
+//   threadId: z.string(),
+//   subject: z.string(),
+//   body: z.string(),
+//   sender: z.string(),
+//   createdAt: z.string(),
+//   updatedAt: z.string(),
+//   status: z.string(),
+// })
+
+// export const scheduledEmailResponseSchema = z.array(
+//   z.object({
+//     scheduledEmails: z.array(emailSchedulerThreadSchema),
+//   })
+// )
+
+export interface ScheduledEmail {
+  email: {
+    id: string
+    subject: string
+    recipient: string
+    createdAt: string
+    sendAt: string
+    body: string
+    isFollowUp: boolean
+    approved: boolean
+    draftId: string | null
+    messageId: string | null
+    emailSent: boolean
+    threadId: string
+    opened: boolean
+    clicked: boolean
+    replied: boolean
+    bounced: boolean | null
+  }
+  lead: {
+    id: string
+    email: string
+    imgUrl: string | null
+    firstName: string
+    lastName: string
+    seniority: string
+    country: string | null
+    linkedin: string | null
+    city: string | null
+    state: string | null
+    EmailAddStatus: string
+    timezone: string | null
+    companyId: string | null
+    blackListed: boolean | null
+  }
+  senderId: string
+}
+
+export const scheduledEmailSchema = z.object({
+  email: z.object({
+    id: z.string(),
+    subject: z.string(),
+    recipient: z.string(),
+    createdAt: z.string(),
+    sendAt: z.string(),
+    body: z.string(),
+    isFollowUp: z.boolean(),
+    approved: z.boolean(),
+    draftId: z.string().nullable(),
+    messageId: z.string().nullable(),
+    emailSent: z.boolean(),
+    threadId: z.string(),
+    opened: z.boolean(),
+    clicked: z.boolean(),
+    replied: z.boolean(),
+    bounced: z.boolean().nullable(),
+  }),
+  lead: z.object({
+    id: z.string(),
+    email: z.string(),
+    imgUrl: z.string().nullable(),
+    firstName: z.string(),
+    lastName: z.string(),
+    seniority: z.string(),
+    country: z.string().nullable(),
+    linkedin: z.string().nullable(),
+    city: z.string().nullable(),
+    state: z.string().nullable(),
+    EmailAddStatus: z.string(),
+    timezone: z.string().nullable(),
+    companyId: z.string().nullable(),
+    blackListed: z.boolean().nullable(),
+  }),
+  senderId: z.string(),
 })
 
-export const unscheduledEmailResponseSchema = z.array(emailUnschedulerThreadSchema)
+export const scheduledEmailResponseSchema = z.object({
+  scheduledEmails: z.array(scheduledEmailSchema),
+})
+
 // export const emailSchemaSchedular = z.object({
 //   id: z.number(),
 //   subject: z.string(),

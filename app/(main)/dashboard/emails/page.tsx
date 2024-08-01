@@ -4,23 +4,23 @@ import { ContentLayout } from "@/components/layout/content-layout";
 import { EmailList } from "@/components/scheduler/email-list";
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UnscheduledEmailThread, unscheduledEmailResponseSchema } from "@/types/interface";
+import { UnscheduledEmailThread, unscheduledEmailResponseSchema, scheduledEmailResponseSchema, ScheduledEmail } from "@/types/interface";
 
 
-export async function fetchUnscheduledEmails(targetId: string) {
+export async function fetchUnscheduledEmails(targetId: string): Promise<UnscheduledEmailThread[]> {
+  const url = `${process.env.API_BASE_URL}/emails/target/${targetId}`;
+
   try {
-    // const url = `${process.env.API_BASE_URL}/emails/target/{targetId}`;
-    const url = "http://localhost:3000/unschedularemails";
     const res = await fetch(url);
-    // console.log("Response is from get Unscheduled email API  : ", res)
-    // console.log("ENDPOINT IS ", url);
-    console.log(`Response status for get unscheduled email:  ${res.status}`);
+    console.log(`Response status for get unscheduled email: ${res.status}`);
+
     if (!res.ok) {
       throw new Error(`Failed to fetch data. Status code: ${res.status}`);
     }
 
     const data = await res.json();
-    const result = unscheduledEmailResponseSchema.safeParse(data);
+    const emails = transformData(data);
+    const result = unscheduledEmailResponseSchema.safeParse(emails);
 
     if (!result.success) {
       console.error(result.error);
@@ -28,6 +28,51 @@ export async function fetchUnscheduledEmails(targetId: string) {
     }
 
     return result.data;
+  } catch (error: unknown) {
+    handleFetchError(error);
+    throw error;
+  }
+}
+
+function transformData(data: any): UnscheduledEmailThread[] {
+  return data.map((item: any) => ({
+    id: item.Emails.id,
+    threadId: item.Threads.id,
+    subject: item.Emails.subject,
+    body: item.Emails.body,
+    sender: item.Emails.recipient,
+    createdAt: item.Emails.createdAt,
+    updatedAt: item.Threads.createdAt,
+    status: item.Threads.status,
+  }));
+}
+
+function handleFetchError(error: unknown) {
+  if (error instanceof Error) {
+    console.error("Error fetching data:", error.message);
+  } else {
+    console.error("Unknown error fetching data:", error);
+  }
+}
+
+export async function fetchScheduledEmails(targetId: string): Promise<ScheduledEmail[]> {
+  try {
+    const url = `${process.env.API_BASE_URL}/emails/scheduled/${targetId}`;
+    const res = await fetch(url);
+    console.log(`Response status for get scheduled email: ${res.status}`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data. Status code: ${res.status}`);
+    }
+
+    const data = await res.json();
+    const result = scheduledEmailResponseSchema.safeParse(data);
+    console.log("RESULT FROM SCHEDULED : ", result);
+    if (!result.success) {
+      console.error(result.error);
+      throw new Error("Invalid data format");
+    }
+
+    return result.data.scheduledEmails;
   } catch (error: any) {
     console.error("Error fetching data:", error.message);
     throw error;
@@ -35,10 +80,13 @@ export async function fetchUnscheduledEmails(targetId: string) {
 }
 
 export default async function Emails() {
+  let scheduledEmails: ScheduledEmail[] = [];
   let unscheduledEmails: UnscheduledEmailThread[] = [];
+
   try {
-    unscheduledEmails = await fetchUnscheduledEmails("7feaa854-1f76-423d-a209-fce0d2781dfc");
-    console.log("Response is from get Unscheduled email API", unscheduledEmails)
+    unscheduledEmails = await fetchUnscheduledEmails("1c1108a8-9108-42e2-8177-4e655bbc87ed");
+    scheduledEmails = await fetchScheduledEmails("1c1108a8-9108-42e2-8177-4e655bbc87ed");
+    console.log("Response is from get scheduled email API", scheduledEmails);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -68,7 +116,7 @@ export default async function Emails() {
           )}
         </TabsContent>
 
-        {/* <TabsContent value="scheduled" className="space-y-4">
+        <TabsContent value="scheduled" className="space-y-4">
           {scheduledEmails.length === 0 ? (
             <div>
               <div className="mt-6 flex w-full items-center justify-between">
@@ -82,7 +130,7 @@ export default async function Emails() {
           ) : (
             <ScheduledEmailList emails={scheduledEmails} />
           )}
-        </TabsContent> */}
+        </TabsContent>
       </Tabs>
     </ContentLayout>
   );
