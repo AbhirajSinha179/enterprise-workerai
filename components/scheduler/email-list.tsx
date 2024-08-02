@@ -15,12 +15,13 @@ interface EmailListProps {
 export function EmailList({ emails }: EmailListProps) {
   const handleApprove = async ({ emailId }: { emailId: string }) => {
     try {
-      console.log("Approved");
-      toast("Scheduled the email", {
-        description: format(new Date(), "PPpp") + " " + emailId,
-      });
+      // console.log("Approved");
+      // toast("Scheduled the email", {
+      //   description: format(new Date(), "PPpp") + " " + emailId,
+      // });
 
       const url = `${process.env.API_BASE_URL}/schedule`;
+      console.log("URL: ", url);
       const payload = { emailId: emailId };
       const response = await fetch(url, {
         method: "POST",
@@ -66,12 +67,34 @@ export function EmailList({ emails }: EmailListProps) {
   };
 
   const handleDelete = async ({ emailId }: { emailId: string }) => {
-    console.log("Approved");
-    toast("Deleted the email", {
-      description: format(new Date(), "PPpp"),
-    });
-    console.log(emailId);
-    // DELETE request
+    try {
+      console.log("Deleting email");
+      const url = `${process.env.API_BASE_URL}/emails/${emailId}`;
+      console.log("URL: ", url);  // Check if the URL is correct
+
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete email. Status code: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Delete response:", data);
+
+      toast("Deleted the email successfully!", {
+        description: format(new Date(), "PPpp"),
+      });
+    } catch (error: any) {
+      console.error("Error deleting email:", error.message);
+      toast("Failed to delete email", {
+        description: `Error: ${error.message}`,
+      });
+    }
   };
 
   const handleApproveAll = async () => {
