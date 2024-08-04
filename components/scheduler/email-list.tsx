@@ -20,7 +20,7 @@ export function EmailList({ emails }: EmailListProps) {
       //   description: format(new Date(), "PPpp") + " " + emailId,
       // });
 
-      const url = `${process.env.API_BASE_URL}/schedule`;
+      const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/schedule`;
       console.log("URL: ", url);
       const payload = { emailId: emailId };
       const response = await fetch(url, {
@@ -69,7 +69,7 @@ export function EmailList({ emails }: EmailListProps) {
   const handleDelete = async ({ emailId }: { emailId: string }) => {
     try {
       console.log("Deleting email");
-      const url = `${process.env.API_BASE_URL}/emails/${emailId}`;
+      const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/${emailId}`;
       console.log("URL: ", url);  // Check if the URL is correct
 
       const response = await fetch(url, {
@@ -104,7 +104,8 @@ export function EmailList({ emails }: EmailListProps) {
         description: format(new Date(), "PPpp"),
       });
 
-      const url = `${process.env.API_BASE_URL}/schedule/mass`;
+      const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/schedule/mass`;
+      console.log(url)
       const payload = { userId: "user-123" };
       const response = await fetch(url, {
         method: "POST",
