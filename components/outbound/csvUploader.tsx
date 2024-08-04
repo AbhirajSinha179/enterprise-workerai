@@ -33,7 +33,7 @@ const sampleTargetId = "1c1108a8-9108-42e2-8177-4e655bbc87ed"
 interface CSVUploader {
   title: string
   description: string
-  requiredColumns?: { name: string; required: boolean }[]
+  requiredColumns: { name: string; required: boolean }[]
   dialog?: boolean
   dialogTriggerText?: string
   endpoint: string
@@ -59,26 +59,13 @@ export default function CSVUpload({
   const [isUploading, setIsUploading] = useState(false)
   const [force, setForce] = useState(false)
   const [allColumnsMapped, setAllColumnsMapped] = useState(false)
-  requiredColumns = requiredColumns || [
-    { name: "email", required: true },
-    { name: "imgUrl", required: false },
-    { name: "firstName", required: true },
-    { name: "lastName", required: true },
-    { name: "seniority", required: true },
-    { name: "country", required: true },
-    { name: "linkedin", required: true },
-    { name: "city", required: true },
-    { name: "state", required: true },
-    { name: "timezone", required: false },
-    { name: "Company Name", required: true },
-  ]
 
   const handleFileChange = (files: File[] | null) => {
     if (files && files.length > 0) {
-      const selectedFile = files[0] 
+      const selectedFile = files[0]
       setFile(selectedFile || null)
 
-      if(!selectedFile) {
+      if (!selectedFile) {
         return
       }
 
@@ -109,28 +96,33 @@ export default function CSVUpload({
 
   useEffect(() => {
     const autoMappings: Record<string, string> = {}
-    headers.forEach((header) => {
-      const matchingFixedColumn = requiredColumns.find(
-        ({ name }) =>
-          name.toLowerCase() === header.toLowerCase() || name.toLowerCase() === header.toLowerCase().replace(/\s/g, "")
-      )
-      if (matchingFixedColumn) {
-        autoMappings[matchingFixedColumn.name] = header
-      }
-    })
-    setMappings(autoMappings)
-    setAvailableHeaders(headers.filter((header) => !Object.values(autoMappings).includes(header)))
+    if (requiredColumns && requiredColumns.length > 0) {
+      headers.forEach((header) => {
+        const matchingFixedColumn = requiredColumns.find(
+          ({ name }) =>
+            name.toLowerCase() === header.toLowerCase() ||
+            name.toLowerCase() === header.toLowerCase().replace(/\s/g, "")
+        )
+        if (matchingFixedColumn) {
+          autoMappings[matchingFixedColumn.name] = header
+        }
+      })
+      setMappings(autoMappings)
+      setAvailableHeaders(headers.filter((header) => !Object.values(autoMappings).includes(header)))
+    }
   }, [headers])
 
   useEffect(() => {
-    const mappedColumns = Object.keys(mappings)
-    for (const column of requiredColumns) {
-      if (column.required && !mappedColumns.includes(column.name)) {
-        setAllColumnsMapped(false)
-        return
+    if (requiredColumns && requiredColumns.length > 0) {
+      const mappedColumns = Object.keys(mappings)
+      for (const column of requiredColumns) {
+        if (column.required && !mappedColumns.includes(column.name)) {
+          setAllColumnsMapped(false)
+          return
+        }
       }
+      setAllColumnsMapped(true)
     }
-    setAllColumnsMapped(true)
   }, [mappings, requiredColumns])
 
   const handleMappingChange = (fixedColumn: string, selectedHeader: string) => {
@@ -287,7 +279,7 @@ export default function CSVUpload({
         return (
           <div>
             <h3 className="mb-4 text-lg font-semibold">Preview (First 4 rows)</h3>
-            <div className="mx-auto max-w-screen-md overflow-x-auto hide-scroll">
+            <div className="hide-scroll mx-auto max-w-screen-md overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-secondary/80">
                   <tr>
@@ -342,7 +334,7 @@ export default function CSVUpload({
                         </SelectItem>
                       ))}
                       {mappings[fixedColumn] && (
-                        <SelectItem key={mappings[fixedColumn]} value={mappings[fixedColumn]}>
+                        <SelectItem key={mappings[fixedColumn]} value={mappings[fixedColumn] || ""}>
                           {mappings[fixedColumn]}
                         </SelectItem>
                       )}
@@ -374,7 +366,7 @@ export default function CSVUpload({
             </div>
 
             <h3 className="mb-4 text-lg font-semibold">Preview (First 4 rows with new headers)</h3>
-            <div className="mx-auto mb-6 max-w-screen-md overflow-x-auto hide-scroll">
+            <div className="hide-scroll mx-auto mb-6 max-w-screen-md overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-secondary/80">
                   <tr>
