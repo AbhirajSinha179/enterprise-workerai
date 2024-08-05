@@ -8,6 +8,7 @@ import ToneSelectForm from '@/components/generate/ToneSelectForm';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const locations = [
     { name: "India" },
@@ -65,96 +66,122 @@ export default function EmailGen() {
 
     return (
         <ContentLayout title="Email Generation">
-            <div className='space-y-4'>
-                <div className='space-4 flex flex-row'>
-                    <div className='w-3/4 m-2'>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Subject Line</CardTitle>
-                            </CardHeader>
-                            <CardDescription className='px-4'>
-                                <div className="flex flex-col">
-                                    <div className="">
-                                        {textAreas.map((textArea, index) => (
-                                            <div key={index} className="relative">
-                                                <Textarea className="my-4" placeholder="Subject Line" />
-                                                {index >= 3 && (
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => removeTextArea(index)}
-                                                        className="absolute top-0 right-0 m-2"
-                                                    >
-                                                        &#x2716;
-                                                    </button>
-                                                )}
+            <Tabs defaultValue="emails">
+                <div className="flex items-center px-4 py-2">
+                    <h1 className="text-xl font-bold">Email</h1>
+                    <TabsList className="ml-auto">
+                        <TabsTrigger
+                            value="emails"
+                        >
+                            Emails
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="followups"
+                        >
+                            Follow Up
+                        </TabsTrigger>
+                    </TabsList>
+                </div>
+                <TabsContent value="emails" className="m-0">
+                    <div className='space-y-4'>
+                        <div className='space-4 flex flex-row'>
+                            <div className='w-3/4 m-2'>
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Subject Line</CardTitle>
+                                    </CardHeader>
+                                    <CardDescription className='px-4'>
+                                        <div className="flex flex-col">
+                                            <div className="">
+                                                {textAreas.map((textArea, index) => (
+                                                    <div key={index} className="relative">
+                                                        <Textarea className="my-4" placeholder="Subject Line" />
+                                                        {index >= 3 && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => removeTextArea(index)}
+                                                                className="absolute top-0 right-0 m-2"
+                                                            >
+                                                                &#x2716;
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                ))}
                                             </div>
-                                        ))}
-                                    </div>
-                                    <div className='relative group'>
-                                        <div className="flex justify-center mb-4 pb-4 -mt-8 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <Button type="button" onClick={addTextArea}>
-                                                Add Subject Line
-                                            </Button>
+                                            <div className='relative group'>
+                                                <div className="flex justify-center mb-4 pb-4 -mt-8 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                    <Button type="button" onClick={addTextArea}>
+                                                        Add Subject Line
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </CardDescription>
+                                </Card>
+
+                                <div className='mt-5'>
+                                    <ToneSelectForm
+                                        options={locations}
+                                        onSubmit={handleToneSubmit}
+                                    />
+                                </div>
+                                {paraInputs.map((index) => (
+                                    <div key={index}>
+                                        <ParaInput
+                                            index={index}
+                                            onDelete={deleteParaInput}
+                                            placeholderText={placeholderTexts[index] || ""}
+                                            showOutput={renderOutputs[index] || false}
+                                        />
+                                        <div className="relative group z-10 ">
+                                            <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4 -mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                <Button
+                                                    type="button"
+                                                    onClick={() => { configParaInput(index, "prompt", true) }}
+                                                >
+                                                    Prompt
+                                                </Button>
+                                                <Button
+                                                    className=""
+                                                    onClick={() => { configParaInput(index, "string", false) }}
+                                                >
+                                                    String
+                                                </Button>
+                                                <Button
+                                                    className=""
+                                                    onClick={addParaInput}
+                                                >
+                                                    Add
+                                                </Button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </CardDescription>
-                        </Card>
-
-                        <div className='mt-5'>
-                            <ToneSelectForm
-                                options={locations}
-                                onSubmit={handleToneSubmit}
-                            />
-                        </div>
-                        {paraInputs.map((index) => (
-                            <div key={index}>
-                                <ParaInput
-                                    index={index}
-                                    onDelete={deleteParaInput}
-                                    placeholderText={placeholderTexts[index] || ""}
-                                    showOutput={renderOutputs[index] || false}
-                                />
-                                <div className="relative group z-10 ">
-                                    <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4 -mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <Button
-                                            type="button"
-                                            onClick={() => { configParaInput(index, "prompt", true) }}
-                                        >
-                                            Prompt
-                                        </Button>
-                                        <Button
-                                            className=""
-                                            onClick={() => { configParaInput(index, "string", false) }}
-                                        >
-                                            String
-                                        </Button>
-                                        <Button
-                                            className=""
-                                            onClick={addParaInput}
-                                        >
-                                            Add
-                                        </Button>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
-                        ))}
+                            <div className='bg-muted w-1/4 mx-4 h-fit'>
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Lead details</CardTitle>
+                                        <CardDescription>askjkdkhajsd</CardDescription>
+                                    </CardHeader>
+                                </Card>
+                            </div>
+                        </div>
+                        <div className=' w-3/4 px-4  pt-8 mt-8'>
+                            <Button>
+                                Final Output
+                            </Button>
+                        </div>
                     </div>
-                    <div className='bg-muted w-1/4 mx-4 h-fit'>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Lead details</CardTitle>
-                                <CardDescription>askjkdkhajsd</CardDescription>
-                            </CardHeader>
-                        </Card>
+                </TabsContent>
+                <TabsContent value="followups" className="m-0">
+                    <div>
+                        hshsa
                     </div>
-                </div>
-                <div className=' w-3/4 px-4  pt-8 mt-8'>
-                    <Button>
-                        Final Output
-                    </Button>
-                </div>
-            </div>
+                </TabsContent>
+            </Tabs>
+
+
         </ContentLayout>
     );
 }
