@@ -8,7 +8,7 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from '@/components/ui/textarea';
-import { PauseCircle, PlayCircle } from "lucide-react";
+import { DeleteIcon, PauseCircle, PlayCircle, Trash } from "lucide-react";
 
 const preWrittenOutput = `
 Enter the Magic prompt 
@@ -45,7 +45,9 @@ const MagicPrompt = ({ index, onDelete }: ParaInputProps) => {
                             Magic Prompt {index}
                         </h3>
                     </div>
-                    <Button variant={'destructive'} onClick={() => onDelete(index)}>Delete</Button>
+                    <Button variant={'ghost'} onClick={() => onDelete(index)}>
+                        <Trash size={20} />
+                    </Button>
                 </div>
                 <div className="flex mx-2 w-full">
                     <Textarea

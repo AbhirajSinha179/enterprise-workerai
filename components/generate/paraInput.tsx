@@ -8,7 +8,7 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from '@/components/ui/textarea';
-import { PauseCircle, PlayCircle } from "lucide-react";
+import { PauseCircle, PlayCircle, Trash } from "lucide-react";
 
 const FormSchema = z.object({
     prompt: z
@@ -74,7 +74,9 @@ const ParaInput = ({ showOutput, placeholderText, index, onDelete }: ParaInputPr
                             Para {index}
                         </h3>
                     </div>
-                    <Button variant={'destructive'} onClick={() => onDelete(index)}>Delete</Button>
+                    <Button variant={'ghost'} onClick={() => onDelete(index)}>
+                        <Trash size={20} />
+                    </Button>
                 </div>
                 <div className="flex mx-2 w-full">
                     <Textarea

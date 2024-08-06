@@ -17,6 +17,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import MagicPrompt from '@/components/generate/MagicPropmt';
+import { Trash } from 'lucide-react';
 
 const EMAIL_TONE = [
     { name: "Warm" },
@@ -127,7 +128,8 @@ export default function EmailGen() {
                                                                 onClick={() => removeTextArea(index)}
                                                                 className="absolute top-0 right-0 m-2"
                                                             >
-                                                                &#x2716;
+                                                                {/* &#x2716; */}
+                                                                <Trash size={15} />
                                                             </button>
                                                         )}
                                                     </div>
