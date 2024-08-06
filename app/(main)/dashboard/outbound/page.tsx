@@ -22,13 +22,15 @@ export default function OutboundSetting() {
             { name: "imgUrl", required: false },
             { name: "firstName", required: true },
             { name: "lastName", required: true },
-            { name: "seniority", required: true },
+            { name: "seniority", required: false },
             { name: "country", required: true },
-            { name: "linkedin", required: true },
-            { name: "city", required: true },
-            { name: "state", required: true },
+            { name: "linkedin", required: false },
+            { name: "city", required: false},
+            { name: "state", required: false },
             { name: "timezone", required: false },
             { name: "Company Name", required: true },
+            { name: "Company Website", required: false },
+
           ]}
         />
 

@@ -314,6 +314,37 @@ export default function CSVUpload({
         return (
           <div>
             <h3 className="mb-4 text-lg font-semibold">Map Columns</h3>
+            <div className="my-2">
+            <div className="hide-scroll mx-auto  overflow-x-auto max-w-screen-md">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-secondary/80">
+                  <tr>
+                    {previewData &&
+                      previewData[0] &&
+                      previewData[0].map((header, index) => (
+                        <th
+                          key={index}
+                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                        >
+                          {header}
+                        </th>
+                      ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 bg-inherit">
+                  {previewData.slice(1, 2).map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                      {row.map((cell, cellIndex) => (
+                        <td key={cellIndex} className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            </div>
             <div className="grid gap-4 md:grid-cols-2">
               {requiredColumns.map(({ name: fixedColumn, required }) => (
                 <div key={fixedColumn} className="flex items-center space-x-2">
@@ -340,11 +371,13 @@ export default function CSVUpload({
                       )}
                     </SelectContent>
                   </Select>
+                
                 </div>
               ))}
             </div>
+
             {!allColumnsMapped && (
-              <p className="mt-4 text-sm text-red-500">Please map all * marked columns before proceeding.</p>
+              <p className="mt-4 text-sm text-red-500">Please map all * marked columns before proceeding. | Unmarked columns will be enriched later </p>
             )}
           </div>
         )
