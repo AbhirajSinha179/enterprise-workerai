@@ -62,14 +62,17 @@ const ParaInput = ({ showOutput, placeholderText, index, onDelete }: ParaInputPr
     return (
         <div className="my-4 border-2 p-4 rounded-md relative group">
             <div className="col-span-full">
-                <div className="flex flex-row justify-between">
+                <div className="flex flex-row justify-between mb-4">
                     <div className="flex flex-row gap-x-3 items-center">
                         <Button variant="ghost" onClick={handlePlayPause}>
                             {isPlaying ? <PauseCircle size={30} /> : <PlayCircle size={30} />}
                         </Button>
-                        <h1 className='font-bold text-2xl my-2'>
+                        {/* <h1 className='font-bold text-2xl my-2'>
+                        
+                        </h1> */}
+                        <h3 className="text-2xl font-semibold leading-none tracking-tight my-2">
                             Para {index}
-                        </h1>
+                        </h3>
                     </div>
                     <Button variant={'destructive'} onClick={() => onDelete(index)}>Delete</Button>
                 </div>

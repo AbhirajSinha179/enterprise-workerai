@@ -10,11 +10,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-const locations = [
-    { name: "India" },
-    { name: "USA" },
-    { name: "Germany" },
+const EMAIL_TONE = [
+    { name: "Warm " },
+    { name: "Mild Warm" },
+    { name: "Direct" },
 ];
+const SAMPLE_SUBJECT = "sample subject line ";
 
 export default function EmailGen() {
     const [selectedCard, setSelectedCard] = useState<number | null>(null);
@@ -22,6 +23,7 @@ export default function EmailGen() {
     const [textAreas, setTextAreas] = useState<number[]>([1, 2, 3]);
     const [renderOutputs, setRenderOutputs] = useState<{ [key: number]: boolean }>({});
     const [placeholderTexts, setPlaceholderTexts] = useState<{ [key: number]: string }>({});
+    const [renderResult, setRenderResult] = useState(false);
 
     const handleCardClick = (index: number) => {
         setSelectedCard(index);
@@ -36,8 +38,10 @@ export default function EmailGen() {
         setPlaceholderTexts((prev) => ({ ...prev, [index]: placeholderText }));
     };
 
-    const addParaInput = () => {
-        setParaInputs((prev) => [...prev, prev.length + 1]);
+    const addParaInput = (isPrompt: boolean) => {
+        const newIndex = paraInputs.length + 1;
+        setParaInputs((prev) => [...prev, newIndex]);
+        configParaInput(newIndex, isPrompt ? "prompt" : "string", isPrompt);
     };
 
     const deleteParaInput = (index: number) => {
@@ -90,12 +94,12 @@ export default function EmailGen() {
                                     <CardHeader>
                                         <CardTitle>Subject Line</CardTitle>
                                     </CardHeader>
-                                    <CardDescription className='px-4'>
-                                        <div className="flex flex-col">
+                                    <CardDescription >
+                                        <div className="flex flex-col px-4">
                                             <div className="">
                                                 {textAreas.map((textArea, index) => (
                                                     <div key={index} className="relative">
-                                                        <Textarea className="my-4" placeholder="Subject Line" />
+                                                        <Textarea className="my-4" placeholder={SAMPLE_SUBJECT} />
                                                         {index >= 3 && (
                                                             <button
                                                                 type="button"
@@ -108,8 +112,8 @@ export default function EmailGen() {
                                                     </div>
                                                 ))}
                                             </div>
-                                            <div className='relative group'>
-                                                <div className="flex justify-center mb-4 pb-4 -mt-8 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <div className='relative group mb-8'>
+                                                <div className="flex justify-center  -mt-8 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                                     <Button type="button" onClick={addTextArea}>
                                                         Add Subject Line
                                                     </Button>
@@ -118,10 +122,14 @@ export default function EmailGen() {
                                         </div>
                                     </CardDescription>
                                 </Card>
+                                <div className='mt-8'>
+                                    <h1 className="text-xl font-bold my-2">Content Generation</h1>
+                                    <Separator></Separator>
+                                </div>
 
                                 <div className='mt-5'>
                                     <ToneSelectForm
-                                        options={locations}
+                                        options={EMAIL_TONE}
                                         onSubmit={handleToneSubmit}
                                     />
                                 </div>
@@ -133,30 +141,44 @@ export default function EmailGen() {
                                             placeholderText={placeholderTexts[index] || ""}
                                             showOutput={renderOutputs[index] || false}
                                         />
-                                        <div className="relative group z-10 ">
-                                            <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4 -mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <div className="relative group z-10  ">
+                                            <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4 -mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300  w-full justify-center">
                                                 <Button
                                                     type="button"
-                                                    onClick={() => { configParaInput(index, "prompt", true) }}
+                                                    onClick={() => addParaInput(true)}
                                                 >
                                                     Prompt
                                                 </Button>
                                                 <Button
                                                     className=""
-                                                    onClick={() => { configParaInput(index, "string", false) }}
+                                                    onClick={() => addParaInput(false)}
                                                 >
                                                     String
-                                                </Button>
-                                                <Button
-                                                    className=""
-                                                    onClick={addParaInput}
-                                                >
-                                                    Add
                                                 </Button>
                                             </div>
                                         </div>
                                     </div>
                                 ))}
+                                <div className='  mt-8 flex justify-end'>
+                                    <Button
+                                        onClick={() => {
+                                            setRenderResult(true);
+                                        }}
+                                    >
+                                        Final Output
+                                    </Button>
+                                </div>
+                                <div className='   pt-8 mt-8 '>
+                                    {renderResult && (
+                                        <Textarea className='min-h-32' disabled>
+                                            jashfhsjfjfh
+
+                                        </Textarea>
+
+                                    )
+                                    }
+
+                                </div>
                             </div>
                             <div className='bg-muted w-1/4 mx-4 h-fit'>
                                 <Card>
@@ -167,11 +189,7 @@ export default function EmailGen() {
                                 </Card>
                             </div>
                         </div>
-                        <div className=' w-3/4 px-4  pt-8 mt-8'>
-                            <Button>
-                                Final Output
-                            </Button>
-                        </div>
+
                     </div>
                 </TabsContent>
                 <TabsContent value="followups" className="m-0">
@@ -180,8 +198,6 @@ export default function EmailGen() {
                     </div>
                 </TabsContent>
             </Tabs>
-
-
         </ContentLayout>
     );
 }
