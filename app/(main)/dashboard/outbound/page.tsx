@@ -21,16 +21,15 @@ export default function OutboundSetting() {
             { name: "email", required: true },
             { name: "imgUrl", required: false },
             { name: "firstName", required: true },
-            { name: "lastName", required: true },
+            { name: "lastName", required: false },
             { name: "seniority", required: false },
-            { name: "country", required: true },
+            { name: "country", required: false },
             { name: "linkedin", required: false },
             { name: "city", required: false},
             { name: "state", required: false },
             { name: "timezone", required: false },
-            { name: "Company Name", required: true },
-            { name: "Company Website", required: false },
-
+            { name: "companyName", required: true },
+            { name: "companyWebsite", required: false },
           ]}
         />
 
