@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from "react";
 import { Eye, MailOpen, Send, Target, Star } from "lucide-react";
 import { Overview } from "@/components/dashboard/overview";
@@ -6,13 +7,26 @@ import { ContentLayout } from "@/components/layout/content-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { dashboardDataSchema, DataGraph, SalesDataItem, StatDashboard, getThreadApiResponseSchema } from "@/types/interface";
 import CalendarForm from "@/components/dashboard/CalendarForm";
+// import { currentUser } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
 import moment from 'moment';
 
+const defaultDashboardData = {
+  total_clicks: 0,
+  total_opens: 0,
+  data: [
+    {
+      date: "2024-01-01T00:00:00Z",
+      opens: 0,
+      total_emails: 0,
+      total_unique_emails: 0
+    }
+  ]
+};
+
 export async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
   try {
-    const url = `${process.env.API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`;
-    // const url = "http://localhost:3000/dashboarddata";
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`;
     const res = await fetch(url);
     console.log(`Response status for analytics by range: ${res.status}`);
     if (!res.ok && res.status !== 404) {
@@ -20,6 +34,7 @@ export async function fetchDashboardDataUsingRange(type: string, id: string, sta
     }
 
     if (res.status === 404) {
+      console.log("FETCH FUNCTION ANALYTICS BY RANGE ")
       return defaultDashboardData;
     }
 
@@ -31,6 +46,7 @@ export async function fetchDashboardDataUsingRange(type: string, id: string, sta
       throw new Error("Invalid data format");
     }
 
+    console.log("RESULT FROM API CALL ", result)
     return result.data;
   } catch (error: any) {
     console.error("Error fetching data:", error.message);
@@ -40,8 +56,7 @@ export async function fetchDashboardDataUsingRange(type: string, id: string, sta
 
 export async function fetchRecentReply(id: string) {
   try {
-    const url = `${process.env.API_BASE_URL}/emails/thread/${id}/`;
-    // const url = "http://localhost:3000/getthreads";
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/thread/${id}/`;
     console.log(url);
     const res = await fetch(url);
     console.log(`Response status for get thread API call response: ${res.status}`);
@@ -57,7 +72,6 @@ export async function fetchRecentReply(id: string) {
       throw new Error("Invalid data format");
     }
 
-    // Return the 10 most recent replies sorted by date
     return result.data.replies
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       .slice(0, 10);
@@ -67,65 +81,50 @@ export async function fetchRecentReply(id: string) {
   }
 }
 
+const DashboardHome: React.FC = () => {
+  const [startDate, setStartDate] = useState<string>("2023-01-01T00%3A00%3A00.000Z");
+  const [endDate, setEndDate] = useState<string>("2023-01-31T23%3A59%3A59.000Z");
+  const [statsDashboard, setStatsDashboard] = useState(defaultDashboardData);
+  const [dataGraph, setDataGraph] = useState<DataGraph[]>([]);
+  const [recentSalesData, setRecentSalesData] = useState<any[]>([]);
+  const [responseStatus, setResponseStatus] = useState<number | null>(null);
+  const [openRate, setOpenRate] = useState<number>(0);
+  const [responseRate, setResponseRate] = useState<number>(0);
+  const [totalUniqueEmails, setTotalUniqueEmails] = useState<number>(0);
+  const [totalSentEmails, setTotalSentEmails] = useState<number>(0);
 
-const defaultDashboardData = {
-  total_clicks: 0,
-  total_opens: 0,
-  data: [
-    {
-      date: "2024-01-01T00:00:00Z",
-      opens: 0,
-      total_emails: 0,
-      total_unique_emails: 0
+  useEffect(() => {
+    async function fetchData() {
+      try {
+
+        const dashboardData = await fetchDashboardDataUsingRange("userId", "user-123", startDate, endDate);
+        const recentReplies = await fetchRecentReply("00a0e5f2-ec40-4731-8b76-ebf447bf7f3d");
+
+        setRecentSalesData(recentReplies);
+        setOpenRate(dashboardData.total_opens);
+        setResponseRate(dashboardData.total_clicks);
+        setTotalUniqueEmails(dashboardData.data.reduce((sum, item) => sum + item.total_unique_emails, 0));
+        setTotalSentEmails(dashboardData.data.reduce((sum, item) => sum + item.total_emails, 0));
+        setResponseStatus(200);
+        setDataGraph(dashboardData.data.map((item) => ({
+          name: moment(item.date).format("YYYY-MM-DD"),
+          uv: item.opens,
+          pv: item.total_emails,
+          amt: item.total_unique_emails,
+        })));
+      } catch (error: any) {
+        if (error.message.includes("Status code: 404")) {
+          setStatsDashboard(defaultDashboardData);
+          setResponseStatus(404);
+        } else {
+          setResponseStatus(error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null);
+          console.error("Error fetching data:", error.message);
+        }
+      }
     }
-  ]
-};
 
-export default async function DashboardHome() {
-  let statsDashboard = defaultDashboardData;
-  let dataGraph: DataGraph[] = [];
-  let recentSalesData: any = [];
-  let responseStatus: number | null = null;
-  let openRate: number = 0;
-  let responseRate: number = 0;
-  let totalUniqueEmails: number = 0;
-  let totalSentEmails: number = 0;
-
-  const user = await currentUser();
-  console.log("USER ID IS : ", user?.id);
-  const primaryEmail = user?.emailAddresses?.[0]?.emailAddress || "Email not found";
-  const userId = user?.id || "Id not found";
-  console.log("my user ID is ", userId)
-  console.log("Primary Email Address:", primaryEmail);
-  const defaultStartDate = "2023-01-01T00%3A00%3A00.000Z";
-  const defaultEndDate = "2023-01-31T23%3A59%3A59.000Z";
-  const targetId = "00a0e5f2-ec40-4731-8b76-ebf447bf7f3d"
-  recentSalesData = await fetchRecentReply(targetId)
-
-  try {
-    const dashboardData = await fetchDashboardDataUsingRange("userId", "user-123", defaultStartDate, defaultEndDate);
-    openRate = dashboardData.total_opens;
-    responseRate = dashboardData.total_clicks;
-
-    totalUniqueEmails = dashboardData.data.reduce((sum, item) => sum + item.total_unique_emails, 0);
-    totalSentEmails = dashboardData.data.reduce((sum, item) => sum + item.total_emails, 0);
-
-    responseStatus = 200;
-    dataGraph = dashboardData.data.map((item) => ({
-      name: moment(item.date).format("YYYY-MM-DD"), //x 
-      uv: item.opens,
-      pv: item.total_emails, //y
-      amt: item.total_unique_emails,
-    }));
-  } catch (error: any) {
-    if (error.message.includes("Status code: 404")) {
-      statsDashboard = defaultDashboardData;
-      responseStatus = 404;
-    } else {
-      responseStatus = error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null;
-      console.error("Error fetching data:", error.message);
-    }
-  }
+    fetchData();
+  }, [startDate, endDate]);
 
   return (
     <ContentLayout title="Dashboard">
@@ -139,11 +138,11 @@ export default async function DashboardHome() {
               </p>
             </div>
             <div className="flex justify-center">
-              <CalendarForm userId={userId} />
+              <CalendarForm setStartDate={setStartDate} setEndDate={setEndDate} />
             </div>
           </div>
           <div>
-            {responseStatus && (
+            {responseStatus !== null && (
               <div className={`alert ${responseStatus === 200 ? 'alert-success' : 'alert-error'}`}>
                 {responseStatus === 200 ? 'Data fetched successfully!' : `Failed to fetch data. Status code: ${responseStatus}`}
               </div>
@@ -151,12 +150,8 @@ export default async function DashboardHome() {
             <div className="grid gap-x-4 md:grid-cols-3 lg:grid-cols-5 my-4">
               <Card className="overflow-x-auto">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground ">Unique Leads</CardTitle>
-                  <Star
-                    className="size-4 text-muted-foreground"
-                    width={24}
-                    height={24}
-                  />
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Unique Leads</CardTitle>
+                  <Star className="size-4 text-muted-foreground" width={24} height={24} />
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold text-foreground">{totalUniqueEmails}</div>
@@ -165,12 +160,8 @@ export default async function DashboardHome() {
 
               <Card className="overflow-x-auto">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground ">Total Sent</CardTitle>
-                  <Send
-                    className="size-4 text-muted-foreground"
-                    width={24}
-                    height={24}
-                  />
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Total Sent</CardTitle>
+                  <Send className="size-4 text-muted-foreground" width={24} height={24} />
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold text-foreground">{totalSentEmails}</div>
@@ -179,7 +170,7 @@ export default async function DashboardHome() {
 
               <Card className="overflow-x-auto">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground ">Open Rate</CardTitle>
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Open Rate</CardTitle>
                   <MailOpen className="size-4 text-muted-foreground" width={24} height={24} />
                 </CardHeader>
                 <CardContent>
@@ -189,7 +180,7 @@ export default async function DashboardHome() {
 
               <Card className="overflow-x-auto">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground ">Response Rate</CardTitle>
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Response Rate</CardTitle>
                   <Eye className="size-4 text-muted-foreground" width={24} height={24} />
                 </CardHeader>
                 <CardContent>
@@ -199,15 +190,11 @@ export default async function DashboardHome() {
 
               <Card className="overflow-x-auto">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground ">Monthly Target</CardTitle>
-                  <Target
-                    className="size-4 text-muted-foreground"
-                    width={24}
-                    height={24}
-                  />
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Monthly Target</CardTitle>
+                  <Target className="size-4 text-muted-foreground" width={24} height={24} />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-4xl font-bold text-foreground"> 0</div>
+                  <div className="text-4xl font-bold text-foreground">0</div>
                 </CardContent>
               </Card>
             </div>
@@ -236,3 +223,5 @@ export default async function DashboardHome() {
     </ContentLayout>
   );
 }
+
+export default DashboardHome;
