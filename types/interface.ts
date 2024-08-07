@@ -269,10 +269,20 @@ export const dashboardDataSchema = z.object({
 export const emailThreadSchema = z.object({
   id: z.string(),
   subject: z.string(),
-  body: z.string(),
-  sender: z.string(),
-  recipients: z.array(z.string()),
+  recipient: z.string(), // Changed from 'recipients' array to 'recipient' string
   createdAt: z.string(),
+  sendAt: z.string().nullable(), // Added nullable field
+  body: z.string(),
+  isFollowUp: z.boolean(),
+  approved: z.boolean(),
+  draftId: z.string().nullable(), // Added nullable field
+  messageId: z.string().nullable(), // Added nullable field
+  emailSent: z.boolean(),
+  threadId: z.string(),
+  opened: z.boolean(),
+  clicked: z.boolean(),
+  replied: z.boolean(),
+  bounced: z.boolean().nullable(), // Added nullable field
 })
 
 export const replySchema = z.object({
@@ -282,11 +292,11 @@ export const replySchema = z.object({
   createdAt: z.string(),
 })
 
-export const apiResponseSchema = z.object({
+export const getThreadApiResponseSchema = z.object({
   emails: z.array(emailThreadSchema),
   replies: z.array(replySchema),
 })
 
 export type EmailThread = z.infer<typeof emailThreadSchema>
 export type Reply = z.infer<typeof replySchema>
-export type ApiResponse = z.infer<typeof apiResponseSchema>
+export type ApiResponse = z.infer<typeof getThreadApiResponseSchema>

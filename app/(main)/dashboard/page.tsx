@@ -4,23 +4,23 @@ import { Overview } from "@/components/dashboard/overview";
 import { RecentSales } from "@/components/dashboard/recent-sales";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { dashboardDataSchema, DataGraph, SalesDataItem, StatDashboard, apiResponseSchema } from "@/types/interface";
+import { dashboardDataSchema, DataGraph, SalesDataItem, StatDashboard, getThreadApiResponseSchema } from "@/types/interface";
 import CalendarForm from "@/components/dashboard/CalendarForm";
 import { currentUser } from '@clerk/nextjs/server';
 import moment from 'moment';
 
-
-
 export async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
   try {
-    // const url = `${process.env.API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`;
-    const url = "http://localhost:3000/dashboarddata";
+    const url = `${process.env.API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`;
+    // const url = "http://localhost:3000/dashboarddata";
     const res = await fetch(url);
-    // console.log("Response is from analytics API  : ", res)
-    // console.log("ENDPOINT IS ", url);
     console.log(`Response status for analytics by range: ${res.status}`);
-    if (!res.ok) {
+    if (!res.ok && res.status !== 404) {
       throw new Error(`Failed to fetch data. Status code: ${res.status}`);
+    }
+
+    if (res.status === 404) {
+      return defaultDashboardData;
     }
 
     const data = await res.json();
@@ -40,16 +40,17 @@ export async function fetchDashboardDataUsingRange(type: string, id: string, sta
 
 export async function fetchRecentReply(id: string) {
   try {
-    // const url = `${process.env.API_BASE_URL}/emails/thread//${id}/`
-    const url = "http://localhost:3000/getthreads";
+    const url = `${process.env.API_BASE_URL}/emails/thread/${id}/`;
+    // const url = "http://localhost:3000/getthreads";
+    console.log(url);
     const res = await fetch(url);
-    console.log(`Response status for getthreads: ${res.status}`);
+    console.log(`Response status for get thread API call response: ${res.status}`);
     if (!res.ok) {
       throw new Error(`Failed to fetch data. Status code: ${res.status}`);
     }
 
     const data = await res.json();
-    const result = apiResponseSchema.safeParse(data);
+    const result = getThreadApiResponseSchema.safeParse(data);
 
     if (!result.success) {
       console.error(result.error);
@@ -94,13 +95,15 @@ export default async function DashboardHome() {
   console.log("USER ID IS : ", user?.id);
   const primaryEmail = user?.emailAddresses?.[0]?.emailAddress || "Email not found";
   const userId = user?.id || "Id not found";
+  console.log("my user ID is ", userId)
   console.log("Primary Email Address:", primaryEmail);
   const defaultStartDate = "2023-01-01T00%3A00%3A00.000Z";
   const defaultEndDate = "2023-01-31T23%3A59%3A59.000Z";
-  recentSalesData = await fetchRecentReply(userId)
+  const targetId = "00a0e5f2-ec40-4731-8b76-ebf447bf7f3d"
+  recentSalesData = await fetchRecentReply(targetId)
 
   try {
-    const dashboardData = await fetchDashboardDataUsingRange("userId", userId, defaultStartDate, defaultEndDate);
+    const dashboardData = await fetchDashboardDataUsingRange("userId", "user-123", defaultStartDate, defaultEndDate);
     openRate = dashboardData.total_opens;
     responseRate = dashboardData.total_clicks;
 
