@@ -116,7 +116,7 @@ export default function Web() {
       <section id="features" className="container relative my-12 sm:my-0 ">
         <div className="mx-auto my-6 max-w-4xl rounded-xl border border-transparent bg-white shadow-xl shadow-input transition duration-200 dark:border-white/[0.2] dark:bg-black dark:shadow-none">
           <Image
-            src={landingConfig.features.imageUri}
+            src={landingConfig.featureSection.imageUri}
             alt="Hero image"
             width={1200}
             height={900}
@@ -125,7 +125,7 @@ export default function Web() {
         </div>
         <div className="mx-auto grid max-w-7xl place-content-center gap-12 p-4 md:my-48 md:grid-cols-3">
           <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-          {landingConfig.features.features.map((feature) => (
+          {landingConfig.featureSection.features.map((feature) => (
             <div key={feature?.title} className="flex flex-1 items-center gap-x-4">
               <GradientSeparator />
               <div>
