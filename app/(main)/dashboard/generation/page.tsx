@@ -60,15 +60,19 @@ export default function EmailGen() {
         setPlaceholderTexts((prev) => ({ ...prev, [index]: placeholderText }));
     };
 
-    const addParaInput = (isPrompt: boolean) => {
+    const addParaInput = (isPrompt: boolean, position: number) => {
         const newIndex = paraInputs.length + 1;
-        setParaInputs((prev) => [...prev, newIndex]);
+        const newParaInputs = [...paraInputs];
+        newParaInputs.splice(position + 1, 0, newIndex);
+        setParaInputs(newParaInputs);
         configParaInput(newIndex, isPrompt ? "prompt" : "string", isPrompt);
     };
 
-    const addMagicPrompt = () => {
+    const addMagicPrompt = (position: number) => {
         const newIndex = magicPrompt.length + 1;
-        setMagicPrompt((prev) => [...prev, newIndex]);
+        const newMagicPrompts = [...magicPrompt];
+        newMagicPrompts.splice(position + 1, 0, newIndex);
+        setMagicPrompt(newMagicPrompts);
     };
 
     const deleteMagicPrompt = (index: number) => {
@@ -128,7 +132,6 @@ export default function EmailGen() {
                                                                 onClick={() => removeTextArea(index)}
                                                                 className="absolute top-0 right-0 m-2"
                                                             >
-                                                                {/* &#x2716; */}
                                                                 <Trash size={15} />
                                                             </button>
                                                         )}
@@ -165,7 +168,7 @@ export default function EmailGen() {
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                {paraInputs.map((index) => (
+                                {paraInputs.map((index, position) => (
                                     <div key={index}>
                                         <ParaInput
                                             index={index}
@@ -177,13 +180,13 @@ export default function EmailGen() {
                                             <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4 -mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full justify-center">
                                                 <Button
                                                     type="button"
-                                                    onClick={() => addParaInput(true)}
+                                                    onClick={() => addParaInput(true, position)}
                                                 >
                                                     Prompt
                                                 </Button>
                                                 <Button
                                                     type="button"
-                                                    onClick={() => addParaInput(false)}
+                                                    onClick={() => addParaInput(false, position)}
                                                 >
                                                     String
                                                 </Button>
@@ -193,7 +196,7 @@ export default function EmailGen() {
                                 ))}
 
                                 <div className='pt-8 mt-8'>
-                                    {magicPrompt.map((index) => (
+                                    {magicPrompt.map((index, position) => (
                                         <div key={index}>
                                             <MagicPrompt
                                                 index={index}
@@ -203,7 +206,7 @@ export default function EmailGen() {
                                                 <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4 -mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full justify-center">
                                                     <Button
                                                         type="button"
-                                                        onClick={() => addMagicPrompt()}
+                                                        onClick={() => addMagicPrompt(position)}
                                                     >
                                                         Add
                                                     </Button>
@@ -221,14 +224,20 @@ export default function EmailGen() {
                                         Final Output
                                     </Button>
                                 </div>
-                                <div className='mt-8'>
-                                    <h1 className="text-xl font-bold my-2">Generated Output</h1>
-                                    <Separator />
-                                </div>
+
                                 {renderResult && (
-                                    <Textarea className='min-h-[300px] my-4'>
-                                        {SAMPLE_GENERATED_OUTPUT}
-                                    </Textarea>
+                                    <div>
+                                        <div className='mt-8'>
+                                            <h1 className="text-xl font-bold my-2">Generated Output</h1>
+                                            <Separator />
+                                        </div>
+
+                                        <Textarea className='min-h-[300px] my-4'>
+                                            {SAMPLE_GENERATED_OUTPUT}
+                                        </Textarea>
+
+                                    </div>
+
                                 )}
                             </div>
                             <div className='bg-muted w-1/4 mx-4 h-fit'>

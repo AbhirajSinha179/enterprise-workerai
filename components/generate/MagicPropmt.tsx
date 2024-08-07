@@ -42,7 +42,8 @@ const MagicPrompt = ({ index, onDelete }: ParaInputProps) => {
                         
                         </h1> */}
                         <h3 className="text-2xl font-semibold leading-none tracking-tight my-2">
-                            Magic Prompt {index}
+                            {/* Magic Prompt {index} */}
+                            Magic Prompt
                         </h3>
                     </div>
                     <Button variant={'ghost'} onClick={() => onDelete(index)}>
