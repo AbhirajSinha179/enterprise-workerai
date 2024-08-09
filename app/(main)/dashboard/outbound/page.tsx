@@ -1,21 +1,39 @@
-"use client";
-import { ContentLayout } from "@/components/layout/content-layout";
-import CSVUpload from "@/components/outbound/csvUploader";
-import InputWithCommas from "@/components/outbound/input-with-commas";
-import MultiSelectCard from "@/components/outbound/multiSelectChip";
+"use client"
+import { ContentLayout } from "@/components/layout/content-layout"
+import CSVUpload from "@/components/outbound/csvUploader"
+import InputWithCommas from "@/components/outbound/input-with-commas"
+import OmitLeads from "@/components/outbound/multioptionomitlead"
+import MultiSelectCard from "@/components/outbound/multiSelectChip"
 
-
-const locations = [
-  { name: "India" },
-  { name: "USA" },
-  { name: "Germany" },
-];
+const locations = [{ name: "India" }, { name: "USA" }, { name: "Germany" }]
 
 export default function OutboundSetting() {
   return (
     <ContentLayout title="Outbound Settings">
       <div className="grid gap-6">
-        <CSVUpload cardTitle="Upload CSV" cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing" />
+        <CSVUpload
+          key="upload-custom-leads"
+          title="Upload Custom Leads (CSV)"
+          description="Lorem, ipsum dolor sit amet consectetur adipisicing"
+          endpoint="http://localhost:3000/leads"
+          verification
+          requiredColumns={[
+            { name: "email", required: true },
+            { name: "imgUrl", required: false },
+            { name: "firstName", required: true },
+            { name: "lastName", required: false },
+            { name: "seniority", required: false },
+            { name: "country", required: false },
+            { name: "linkedin", required: false },
+            { name: "city", required: false},
+            { name: "state", required: false },
+            { name: "timezone", required: false },
+            { name: "companyName", required: true },
+            { name: "companyWebsite", required: false },
+          ]}
+        />
+
+        <OmitLeads title={"Omit Leads"} description="Lorem, ipsum dolor sit amet consectetur adipisicing"></OmitLeads>
 
         <MultiSelectCard
           cardTitle="Location"
@@ -23,10 +41,7 @@ export default function OutboundSetting() {
           options={locations}
         />
 
-        <InputWithCommas
-          cardTitle="Job Titles"
-          cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing"
-        />
+        <InputWithCommas cardTitle="Job Titles" cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing" />
         <InputWithCommas
           cardTitle="Outbound Keywords"
           cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing"
@@ -37,5 +52,5 @@ export default function OutboundSetting() {
         />
       </div>
     </ContentLayout>
-  );
+  )
 }
