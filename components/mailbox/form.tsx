@@ -383,7 +383,7 @@ const ThirdFormGoogle = ({ handleLoginClick }: { handleLoginClick: () => void })
                                                 hover:-translate-y-1 hover:scale-110"
           onClick={handleLoginClick}
         >
-          <Link href={'/dashboard/mailbox/form/test'}>
+          <Link href={'https://api.workerai.co/auth'}>
             Login
           </Link>
         </button>
