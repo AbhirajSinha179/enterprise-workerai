@@ -71,7 +71,7 @@ const OmitLeads = ({ title, description }: OmitLeadsProps) => {
 
     switch (omitOption) {
       case "email":
-        endpoint = "http://localhost:3000/leads/exclude"
+        endpoint = "https://api.workerai.co/leads/exclude"
         payload = {
           targetId: sampleTargetId,
           data: [
@@ -84,7 +84,7 @@ const OmitLeads = ({ title, description }: OmitLeadsProps) => {
         }
         break
       case "companies":
-        endpoint = "http://localhost:3000/leads/exclude/companies"
+        endpoint = "https://api.workerai.co/leads/exclude/companies"
         payload = {
           targetId: sampleTargetId,
           data: [
@@ -134,7 +134,7 @@ const OmitLeads = ({ title, description }: OmitLeadsProps) => {
               { name: "email", required: true },
               { name: "name", required: false },
             ]}
-            endpoint="http://localhost:3000/leads/exclude"
+            endpoint="https://api.workerai.co/leads/exclude"
             dialog={true}
             dialogTriggerText={"Upload Leads CSV"}
             key="omit-leads-csv"
@@ -146,7 +146,7 @@ const OmitLeads = ({ title, description }: OmitLeadsProps) => {
             title="Omit Companies (CSV)"
             description="Upload a CSV file with company names or domains to omit"
             requiredColumns={[{ name: "name_or_domain", required: true }]}
-            endpoint="http://localhost:3000/leads/exclude/companies"
+            endpoint="https://api.workerai.co/leads/exclude/companies"
             dialog={true}
             dialogTriggerText={"Upload Companies CSV"}
             key="omit-companies-csv"
