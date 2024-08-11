@@ -17,17 +17,9 @@ import {
 import { UserXIcon } from "lucide-react"
 import * as React from "react"
 
-
 import { DataTablePagination } from "@/components/leads/data-table-pagination"
 import { DataTableToolbar } from "@/components/leads/data-table-toolbar"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import EmptyState from "../global/empty-state"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -35,17 +27,10 @@ interface DataTableProps<TData, TValue> {
   isActionButton: boolean
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-  isActionButton,
-}: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, isActionButton }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({})
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const table = useReactTable({
@@ -70,15 +55,18 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
 
-  const selectedRows = rowSelection;
-  const hasSelectedRows = Object.keys(rowSelection).length > 0;
-  console.log("Selected rows are :", hasSelectedRows)
-  console.log("Top action buttons : ", isActionButton)
+  const selectedRows = rowSelection
+  const hasSelectedRows = Object.keys(rowSelection).length > 0
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} hasSelectedRows={hasSelectedRows} selectedRows={selectedRows} actionButtons={isActionButton} />
-      <div className="rounded-md border  bg-card">
+      <DataTableToolbar
+        table={table}
+        hasSelectedRows={hasSelectedRows}
+        selectedRows={selectedRows}
+        actionButtons={isActionButton}
+      />
+      <div className="rounded-md border bg-card">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -86,12 +74,7 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id} colSpan={header.colSpan}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     </TableHead>
                   )
                 })}
@@ -101,30 +84,20 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
+                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
+                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="min-h-2xl text-center">
                   <EmptyState
-                    headerMessage="No Leads Present"
+                    headerMessage="No Data Found !"
                     icon={<UserXIcon size={80} />}
-                    containerMessage="There are currently no leads available. Please check back later or Upload CSV." />
+                    containerMessage="Please add to see your data"
+                  />
                 </TableCell>
               </TableRow>
             )}

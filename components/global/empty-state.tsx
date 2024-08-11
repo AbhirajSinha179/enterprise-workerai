@@ -12,9 +12,9 @@ const EmptyState: React.FC<EmptyStateProps> = ({ headerMessage, containerMessage
             <div className="mb-4">
                 {icon}
             </div>
-            <h2 className="text-foreground my-4 font-semibold">{headerMessage}</h2>
+            <h2 className="text-foreground font-bold text-2xl">{headerMessage}</h2>
             {/* <p style={{ fontSize: '16px' }}></p> */}
-            <p style={{ fontSize: '16px' }}>{containerMessage}</p>
+            <p className='text-lg'>{containerMessage}</p>
         </div>
     );
 };
