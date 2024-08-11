@@ -10,6 +10,9 @@ import CalendarForm from "@/components/dashboard/CalendarForm";
 // import { currentUser } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
 import moment from 'moment';
+import { getOpenRate, getResponseRate } from "@/lib/utils";
+import { toast } from "sonner";
+import Loading from "./loading";
 
 const defaultDashboardData = {
   total_clicks: 0,
@@ -23,6 +26,12 @@ const defaultDashboardData = {
     }
   ]
 };
+// add error + 404 handling / toast display
+// destructure dashboardData for readability
+//loading state 
+
+// const { total_opens, total_clicks, data } = dashboardData;
+// open rate conversion
 
 export async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
   try {
@@ -35,6 +44,7 @@ export async function fetchDashboardDataUsingRange(type: string, id: string, sta
 
     if (res.status === 404) {
       console.log("FETCH FUNCTION ANALYTICS BY RANGE ")
+      toast("Page not found 404");
       return defaultDashboardData;
     }
 
@@ -54,9 +64,9 @@ export async function fetchDashboardDataUsingRange(type: string, id: string, sta
   }
 }
 
-export async function fetchRecentReply(id: string) {
+export async function fetchRecentReply(targetId: string) {
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/thread/${id}/`;
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/thread/target/${targetId}/`;
     console.log(url);
     const res = await fetch(url);
     console.log(`Response status for get thread API call response: ${res.status}`);
@@ -82,8 +92,8 @@ export async function fetchRecentReply(id: string) {
 }
 
 const DashboardHome: React.FC = () => {
-  const [startDate, setStartDate] = useState<string>("2023-01-01T00%3A00%3A00.000Z");
-  const [endDate, setEndDate] = useState<string>("2023-01-31T23%3A59%3A59.000Z");
+  const [startDate, setStartDate] = useState<string>("2024-01-08T00%3A00%3A00.000Z");
+  const [endDate, setEndDate] = useState<string>("2024-07-26T23%3A59%3A59.000Z");
   const [statsDashboard, setStatsDashboard] = useState(defaultDashboardData);
   const [dataGraph, setDataGraph] = useState<DataGraph[]>([]);
   const [recentSalesData, setRecentSalesData] = useState<any[]>([]);
@@ -92,133 +102,157 @@ const DashboardHome: React.FC = () => {
   const [responseRate, setResponseRate] = useState<number>(0);
   const [totalUniqueEmails, setTotalUniqueEmails] = useState<number>(0);
   const [totalSentEmails, setTotalSentEmails] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       try {
+        const dashboardData = await fetchDashboardDataUsingRange("userId", "user_2jQ7lufOqU1WFrEsi2wG3B7zF70", startDate, endDate);
+        console.log("TAGGG", dashboardData);
+        const recentReplies = await fetchRecentReply("1c1108a8-9108-42e2-8177-4e655bbc87ed");
 
-        const dashboardData = await fetchDashboardDataUsingRange("userId", "user-123", startDate, endDate);
-        const recentReplies = await fetchRecentReply("00a0e5f2-ec40-4731-8b76-ebf447bf7f3d");
+        // Destructuring dashboardData
+        const { total_opens, total_clicks, data } = dashboardData;
 
+        // Calculating open rate and response rate
+        const totalUniqueEmails = data.reduce((sum, item) => sum + item.total_unique_emails, 0);
+        const openRate: any = getOpenRate({ total_opens, totalUniqueEmails });
+        const responseRate: any = getResponseRate({ total_responses: total_clicks, totalUniqueEmails });
+
+        // Updating state
+        setTotalUniqueEmails(totalUniqueEmails);
+        setTotalSentEmails(data.reduce((sum, item) => sum + item.total_emails, 0));
         setRecentSalesData(recentReplies);
-        setOpenRate(dashboardData.total_opens);
-        setResponseRate(dashboardData.total_clicks);
-        setTotalUniqueEmails(dashboardData.data.reduce((sum, item) => sum + item.total_unique_emails, 0));
-        setTotalSentEmails(dashboardData.data.reduce((sum, item) => sum + item.total_emails, 0));
+        setOpenRate(openRate);
+        setResponseRate(responseRate);
         setResponseStatus(200);
-        setDataGraph(dashboardData.data.map((item) => ({
+        setDataGraph(data.map((item) => ({
           name: moment(item.date).format("YYYY-MM-DD"),
           uv: item.opens,
           pv: item.total_emails,
           amt: item.total_unique_emails,
         })));
+        setIsLoading(false);
       } catch (error: any) {
         if (error.message.includes("Status code: 404")) {
           setStatsDashboard(defaultDashboardData);
           setResponseStatus(404);
+          toast.error("Data not found (404)");
         } else {
           setResponseStatus(error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null);
+          toast.error("Error fetching data");
           console.error("Error fetching data:", error.message);
         }
+        setIsLoading(false);
       }
     }
 
     fetchData();
   }, [startDate, endDate]);
 
+
+
   return (
     <ContentLayout title="Dashboard">
       <main className="w-full space-y-4">
-        <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
-          <div className="flex space-y-2 space-x-10">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
-              <p className="text-muted-foreground">
-                Here&apos;s all the analytics available.
-              </p>
-            </div>
-            <div className="flex justify-center">
-              <CalendarForm setStartDate={setStartDate} setEndDate={setEndDate} />
-            </div>
-          </div>
+        {isLoading ? (
+          <Loading />
+        ) : (
           <div>
-            {responseStatus !== null && (
-              <div className={`alert ${responseStatus === 200 ? 'alert-success' : 'alert-error'}`}>
-                {responseStatus === 200 ? 'Data fetched successfully!' : `Failed to fetch data. Status code: ${responseStatus}`}
+            <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
+              <div className="flex space-y-2 space-x-10">
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+                  <p className="text-muted-foreground">
+                    Here&apos;s all the analytics available.
+                  </p>
+                </div>
+                <div className="flex justify-center">
+                  <CalendarForm setStartDate={setStartDate} setEndDate={setEndDate} />
+                </div>
               </div>
-            )}
-            <div className="grid gap-x-4 md:grid-cols-3 lg:grid-cols-5 my-4">
-              <Card className="overflow-x-auto">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Unique Leads</CardTitle>
-                  <Star className="size-4 text-muted-foreground" width={24} height={24} />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-4xl font-bold text-foreground">{totalUniqueEmails}</div>
-                </CardContent>
-              </Card>
+              <div>
+                {responseStatus !== null && (
+                  <div className={`alert ${responseStatus === 200 ? 'alert-success' : 'alert-error'}`}>
+                    {responseStatus === 200 ? 'Data fetched successfully!' : `Failed to fetch data. Status code: ${responseStatus}`}
+                  </div>
+                )}
+                <div className="grid gap-x-4 md:grid-cols-3 lg:grid-cols-5 my-4">
+                  <Card className="overflow-x-auto">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium text-muted-foreground">Unique Leads</CardTitle>
+                      <Star className="size-4 text-muted-foreground" width={24} height={24} />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold text-foreground">{totalUniqueEmails}</div>
+                    </CardContent>
+                  </Card>
 
-              <Card className="overflow-x-auto">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Total Sent</CardTitle>
-                  <Send className="size-4 text-muted-foreground" width={24} height={24} />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-4xl font-bold text-foreground">{totalSentEmails}</div>
-                </CardContent>
-              </Card>
+                  <Card className="overflow-x-auto">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium text-muted-foreground">Total Sent</CardTitle>
+                      <Send className="size-4 text-muted-foreground" width={24} height={24} />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold text-foreground">{totalSentEmails}</div>
+                    </CardContent>
+                  </Card>
 
-              <Card className="overflow-x-auto">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Open Rate</CardTitle>
-                  <MailOpen className="size-4 text-muted-foreground" width={24} height={24} />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-4xl font-bold text-foreground">{openRate}</div>
-                </CardContent>
-              </Card>
+                  <Card className="overflow-x-auto">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium text-muted-foreground">Open Rate</CardTitle>
+                      <MailOpen className="size-4 text-muted-foreground" width={24} height={24} />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold text-foreground">{openRate}</div>
+                    </CardContent>
+                  </Card>
 
-              <Card className="overflow-x-auto">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Response Rate</CardTitle>
-                  <Eye className="size-4 text-muted-foreground" width={24} height={24} />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-4xl font-bold text-foreground">{responseRate}</div>
-                </CardContent>
-              </Card>
+                  <Card className="overflow-x-auto">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium text-muted-foreground">Response Rate</CardTitle>
+                      <Eye className="size-4 text-muted-foreground" width={24} height={24} />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold text-foreground">{responseRate}</div>
+                    </CardContent>
+                  </Card>
 
-              <Card className="overflow-x-auto">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Monthly Target</CardTitle>
-                  <Target className="size-4 text-muted-foreground" width={24} height={24} />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-4xl font-bold text-foreground">0</div>
-                </CardContent>
-              </Card>
-            </div>
-            <div className="grid gap-5 md:grid-cols-1 lg:grid-cols-1">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-foreground">Overview</CardTitle>
-                </CardHeader>
-                <CardContent className="pl-2">
-                  <Overview data={dataGraph} />
-                </CardContent>
-              </Card>
-              <Card className="overflow-y-auto">
-                <CardHeader>
-                  <CardTitle className="text-foreground">Recent Response</CardTitle>
-                  <CardDescription>Unread</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <RecentSales data={recentSalesData} />
-                </CardContent>
-              </Card>
+                  <Card className="overflow-x-auto">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium text-muted-foreground">Monthly Target</CardTitle>
+                      <Target className="size-4 text-muted-foreground" width={24} height={24} />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold text-foreground">0</div>
+                    </CardContent>
+                  </Card>
+                </div>
+                <div className="grid gap-5 md:grid-cols-1 lg:grid-cols-1">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-foreground">Overview</CardTitle>
+                    </CardHeader>
+                    <CardContent className="pl-2">
+                      <Overview data={dataGraph} />
+                    </CardContent>
+                  </Card>
+                  <Card className="overflow-y-auto">
+                    <CardHeader>
+                      <CardTitle className="text-foreground">Recent Response</CardTitle>
+                      <CardDescription>Unread</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <RecentSales data={recentSalesData} />
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
       </main>
     </ContentLayout>
   );
