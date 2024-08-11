@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 type Props = {}
 
-const page = (props: Props) => {
+const EmailVerificationErrorPage = (props: Props) => {
   const searchParams = useSearchParams()
   const error = searchParams.get("e")
 
@@ -39,4 +39,4 @@ const page = (props: Props) => {
   )
 }
 
-export default page
+export default EmailVerificationErrorPage
