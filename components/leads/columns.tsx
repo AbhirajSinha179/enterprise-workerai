@@ -198,14 +198,13 @@ export const columns: ColumnDef<Leads>[] = [
                     </DialogHeader>
                     <DialogFooter className="flex justify-between space-x-2">
                         <DialogClose asChild>
-
-                            <Button onClick={() => handleDelete(row)} variant="destructive" className="flex-1">
-                                Delete
+                            <Button variant="secondary" className="flex-1">
+                                Cancel
                             </Button>
                         </DialogClose>
                         <DialogClose asChild>
-                            <Button className="flex-1">
-                                Cancel
+                            <Button onClick={() => handleDelete(row)} variant="destructive" className="flex-1">
+                                Delete
                             </Button>
                         </DialogClose>
 

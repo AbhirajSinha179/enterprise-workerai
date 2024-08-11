@@ -13,7 +13,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { useMail } from "@/contexts/MailContext"
 import { cn } from "@/lib/utils"
-import { MailProps, ThreadList } from "@/types/interface"
+import { MailProps, Thread, ThreadList } from "@/types/interface"
+import { notFound } from "next/navigation"
 
 const MAX_INBOX_HEIGHT = 680
 
@@ -22,6 +23,7 @@ export function Inbox({
   defaultLayout = [265, 440, 655],
 }: MailProps) {
   const { config } = useMail()
+  if(!threads) return notFound()
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -63,7 +65,7 @@ export function Inbox({
             <div className="p-4 backdrop-blur supports-[backdrop-filter]:bg-background/0">
               <form>
                 <div className="relative">
-                  <Search className="absolute left-2 top-4 size-4 text-foreground" />
+                  <Search className="absolute left-2 top-3 size-4 text-foreground" />
                   <Input placeholder="Search" className="pl-8" />
                 </div>
               </form>
@@ -84,7 +86,7 @@ export function Inbox({
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
           <MailDisplay
-            threadData={threads.find((item: ThreadList) => item.threadid === config.selected) || null}
+            threadData={threads.find((item: Thread) => item.threadId === config.selected) || null}
           />
         </ResizablePanel>
       </ResizablePanelGroup>

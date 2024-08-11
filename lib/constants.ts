@@ -30,6 +30,8 @@ type Group = {
 
 const DASHBOARD_PATH = "/dashboard"
 
+export const CLIENT_ID = "205356801177-sgo5c1okrp6j5vlpjp291ilk66idpnml.apps.googleusercontent.com"
+
 export function getMenuList(pathname: string): Group[] {
   return [
     {
