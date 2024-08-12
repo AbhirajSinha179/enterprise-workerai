@@ -8,7 +8,8 @@ import { UnscheduledEmailThread, unscheduledEmailResponseSchema, scheduledEmailR
 
 
 export async function fetchUnscheduledEmails(targetId: string): Promise<UnscheduledEmailThread[]> {
-  const url = `${process.env.API_BASE_URL}/emails/target/${targetId}`;
+  const url = `${process.env.API_BASE_URL}/emails/unscheduled/${targetId}`;
+  // console.log("URL IS : ", url);
 
   try {
     const res = await fetch(url);
@@ -19,14 +20,18 @@ export async function fetchUnscheduledEmails(targetId: string): Promise<Unschedu
     }
 
     const data = await res.json();
+    // console.log("DATA : ", data);
     const emails = transformData(data);
+    // console.log("TRANSFORMED DATA : ", emails);
     const result = unscheduledEmailResponseSchema.safeParse(emails);
+    // console.log("PARSE RESULT : ", result);
 
     if (!result.success) {
       console.error(result.error);
       throw new Error("Invalid data format");
     }
 
+    // console.log("THIS IS THE RESPONSE FROM SCHEDULER : ", result.data);
     return result.data;
   } catch (error: unknown) {
     handleFetchError(error);
@@ -34,18 +39,32 @@ export async function fetchUnscheduledEmails(targetId: string): Promise<Unschedu
   }
 }
 
+
 function transformData(data: any): UnscheduledEmailThread[] {
   return data.map((item: any) => ({
-    id: item.Emails.id,
-    threadId: item.Threads.id,
-    subject: item.Emails.subject,
-    body: item.Emails.body,
-    sender: item.Emails.recipient,
-    createdAt: item.Emails.createdAt,
-    updatedAt: item.Threads.createdAt,
-    status: item.Threads.status,
+    id: item.email.id,
+    threadId: item.email.threadId,
+    subject: item.email.subject,
+    body: item.email.body,
+    sender: item.email.recipient,
+    createdAt: item.email.createdAt,
+    updatedAt: item.email.updatedAt ?? null, // or other appropriate field if there's no `updatedAt`
+    status: item.lead.EmailAddStatus, // Assuming this is a status field
+    opened: item.email.opened,
+    clicked: item.email.clicked,
+    replied: item.email.replied,
+    bounced: item.email.bounced,
+    leadInfo: {
+      id: item.lead.id,
+      email: item.lead.email,
+      firstName: item.lead.firstName,
+      lastName: item.lead.lastName,
+      seniority: item.lead.seniority,
+    },
+    senderId: item.senderId
   }));
 }
+
 
 function handleFetchError(error: unknown) {
   if (error instanceof Error) {
@@ -80,15 +99,12 @@ export async function fetchScheduledEmails(targetId: string): Promise<ScheduledE
 }
 
 export default async function Emails() {
-  let scheduledEmails: ScheduledEmail[] = [];
-  let unscheduledEmails: UnscheduledEmailThread[] = [];
+  const unscheduledEmails = await fetchUnscheduledEmails("1c1108a8-9108-42e2-8177-4e655bbc87ed");
+  const scheduledEmails = await fetchScheduledEmails("1c1108a8-9108-42e2-8177-4e655bbc87ed");
+  console.log("Response is from get scheduled email API", scheduledEmails);
 
-  try {
-    unscheduledEmails = await fetchUnscheduledEmails("1c1108a8-9108-42e2-8177-4e655bbc87ed");
-    scheduledEmails = await fetchScheduledEmails("1c1108a8-9108-42e2-8177-4e655bbc87ed");
-    console.log("Response is from get scheduled email API", scheduledEmails);
-  } catch (error) {
-    console.error("Error fetching data:", error);
+  if (!unscheduledEmails || !scheduledEmails) {
+    return null;
   }
 
   return (
@@ -100,8 +116,8 @@ export default async function Emails() {
         </TabsList>
 
         <TabsContent value="pending" className="space-y-4">
-          {unscheduledEmails.length === 0 ? (
-            <div>
+          {(!unscheduledEmails || unscheduledEmails.length === 0) ? (
+            <>
               <div className="mt-6 flex w-full items-center justify-between">
                 <h1 className="text-2xl font-bold">Pending Emails</h1>
               </div>
@@ -110,7 +126,7 @@ export default async function Emails() {
                 containerMessage="Go to Scheduled to check currently scheduled emails"
                 icon={<ClockIcon size={80} />}
               />
-            </div>
+            </>
           ) : (
             <EmailList emails={unscheduledEmails} />
           )}
@@ -118,7 +134,7 @@ export default async function Emails() {
 
         <TabsContent value="scheduled" className="space-y-4">
           {scheduledEmails.length === 0 ? (
-            <div>
+            <>
               <div className="mt-6 flex w-full items-center justify-between">
                 <h1 className="text-2xl font-bold">Scheduled Emails</h1>
               </div>
@@ -126,7 +142,7 @@ export default async function Emails() {
                 headerMessage="No emails scheduled at the moment!"
                 icon={<CalendarIcon size={80} />}
               />
-            </div>
+            </>
           ) : (
             <ScheduledEmailList emails={scheduledEmails} />
           )}

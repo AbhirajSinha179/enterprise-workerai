@@ -18,6 +18,17 @@ export const threadSchema = z.object({
 
 export const threadsSchema = z.array(threadSchema)
 
+// export interface UnscheduledEmailThread {
+//   id: string
+//   threadId: string
+//   subject: string
+//   body: string
+//   sender: string
+//   createdAt: string
+//   updatedAt: string
+//   status: string
+// }
+
 export interface UnscheduledEmailThread {
   id: string
   threadId: string
@@ -25,22 +36,61 @@ export interface UnscheduledEmailThread {
   body: string
   sender: string
   createdAt: string
-  updatedAt: string
+  updatedAt: string | null
   status: string
+  opened: boolean
+  clicked: boolean
+  replied: boolean
+  bounced: boolean | null
+  leadInfo: {
+    id: string
+    email: string
+    firstName: string | null
+    lastName: string | null
+    seniority: string | null
+  }
+  senderId: string
 }
 
-export const unscheduledEmailResponseSchema = z.array(
-  z.object({
-    id: z.string(),
-    threadId: z.string(),
-    subject: z.string(),
-    body: z.string(),
-    sender: z.string(),
-    createdAt: z.string(),
-    updatedAt: z.string(),
-    status: z.string(),
-  })
-)
+export const leadInfoSchema = z.object({
+  id: z.string().uuid(),
+  email: z.string().email(),
+  firstName: z.string().nullable(),
+  lastName: z.string().nullable(),
+  seniority: z.string().nullable(),
+})
+
+export const unscheduledEmailThreadSchema = z.object({
+  id: z.string().uuid(),
+  threadId: z.string().uuid(),
+  subject: z.string(),
+  body: z.string(),
+  sender: z.string().email(),
+  createdAt: z.string(),
+  updatedAt: z.string().nullable(),
+  status: z.string(),
+  opened: z.boolean(),
+  clicked: z.boolean(),
+  replied: z.boolean(),
+  bounced: z.boolean().nullable(),
+  leadInfo: leadInfoSchema,
+  senderId: z.string().uuid(),
+})
+
+export const unscheduledEmailResponseSchema = z.array(unscheduledEmailThreadSchema)
+
+// export const unscheduledEmailResponseSchema = z.array(
+//   z.object({
+//     id: z.string(),
+//     threadId: z.string(),
+//     subject: z.string(),
+//     body: z.string(),
+//     sender: z.string(),
+//     createdAt: z.string(),
+//     updatedAt: z.string(),
+//     status: z.string(),
+//   })
+// )
 
 // export interface ScheduledEmailThread {
 //   id: string
