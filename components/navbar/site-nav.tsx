@@ -5,7 +5,6 @@ import Link from "next/link"
 // import { SheetMenu } from "@/components/sidebar/sheet-menu"
 // import { Button } from "../ui/button"
 import { WorkerAILogo } from "../global/logo"
-// import { ArrowBigRight } from "lucide-react"
 
 // TODO need to check nav background for transparency issue
 
@@ -20,7 +19,7 @@ export function SiteNav() {
           {/* <SheetMenu /> */}
           <Link href={"/"} className="flex items-center space-x-2">
             <WorkerAILogo />
-            <h1 className="text-lg font-bold dark:text-white  sm:block md:text-2xl">WorkerAI</h1>
+            <h1 className="text-lg font-bold sm:block md:text-2xl">WorkerAI</h1>
           </Link>
         </div>
         <div className="hidden w-full items-center justify-between md:flex md:w-auto md:gap-8">
