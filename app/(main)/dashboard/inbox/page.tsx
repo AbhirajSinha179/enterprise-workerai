@@ -4,8 +4,7 @@ import { Inbox } from "@/components/inbox/mail"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { Thread, threadsSchema } from "@/types/interface"
 
-const getData = async () => {
-  const targetId = "1c1108a8-9108-42e2-8177-4e655bbc87ed"
+const getData = async (targetId: string) => {
   try {
     const res = await fetch(`https://api.workerai.co/emails/thread/target/${targetId}`, {
       method: "GET",
@@ -22,7 +21,14 @@ const getData = async () => {
 
 export default async function InboxPage() {
   try {
-    const threadData = await getData()
+    const targetId = process.env.TARGET_ID
+    if (!targetId) {
+      toast("Error", {
+        description: "Failed to fetch data",
+      })
+      return
+    }
+    const threadData = await getData(targetId)
 
     if (!threadData) {
       return (
