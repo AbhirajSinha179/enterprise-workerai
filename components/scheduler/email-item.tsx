@@ -40,16 +40,27 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
   const [subject, setSubject] = useState(item.subject);
   const [body, setBody] = useState(item.body);
 
+  // Separate state for the form inputs
+  const [formSubject, setFormSubject] = useState(item.subject);
+  const [formBody, setFormBody] = useState(item.body);
+
   const renderStatusIcons = (status: string) => {
-    const statusNumber = parseInt(status, 10); // Assuming status is a string representing a number
+    const statusNumber = parseInt(status, 10);
     return (
-      <div className="flex items-center space-x-1  my-1">
+      <div className="flex items-center space-x-1 my-1">
         {Array.from({ length: statusNumber }).map((_, index) => (
           <CheckCircledIcon key={index} width={20} height={20} />
         ))}
       </div>
     );
-  }
+  };
+
+  const handleFormSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    setSubject(formSubject);  // Update the main state only on save
+    setBody(formBody);
+    handleEdit({ emailId: item.id, subject: formSubject, body: formBody });
+  };
 
   return (
     <>
@@ -57,7 +68,7 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
         <div className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all")}>
           <div className="flex w-full flex-col gap-1">
             <div className="flex justify-between">
-              <div className="text-2xl font-semibold flex">{item.sender}</div>
+              <div className="text-2xl font-semibold flex">{item.leadInfo.firstName}</div>
               <div className="flex">
                 <TooltipProvider>
                   <Tooltip>
@@ -78,9 +89,9 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                 <div className={cn("ml-auto")}>{format(new Date(item.createdAt), "PP")}</div>
               </div>
             </div>
-            <div className="text-md font-medium">{item.subject}</div>
+            <div className="text-md font-medium">{subject}</div>
           </div>
-          <div className="text-xs text-foreground">{item.body}</div>
+          <div className="text-xs text-foreground">{body}</div>
           <div className="mt-2 flex w-full items-center justify-between py-0.5">
             <Button onClick={() => handleDelete({ emailId: item.id })} variant="outline" size="icon" className="size-10">
               <Trash size={6} className="size-5" />
@@ -97,15 +108,15 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                       Make changes to the email here. Click save when you&apos;re done.
                     </DialogDescription>
                   </DialogHeader>
-                  <div className="grid gap-4 py-4">
+                  <form onSubmit={handleFormSubmit} className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="subject" className="text-right">
                         Subject
                       </Label>
                       <Input
                         id="subject"
-                        value={subject}
-                        onChange={(e) => setSubject(e.target.value)}
+                        value={formSubject}  // Use the form state here
+                        onChange={(e) => setFormSubject(e.target.value)}
                         className="col-span-3"
                       />
                     </div>
@@ -115,19 +126,19 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                       </Label>
                       <Textarea
                         id="body"
-                        value={body}
-                        onChange={(e) => setBody(e.target.value)}
+                        value={formBody}  // Use the form state here
+                        onChange={(e) => setFormBody(e.target.value)}
                         className="col-span-3 max-h-[300px]"
                       />
                     </div>
-                  </div>
-                  <DialogFooter>
-                    <DialogClose asChild>
-                      <Button type="submit" onClick={() => handleEdit({ emailId: item.id, subject, body })}>
-                        Save changes
-                      </Button>
-                    </DialogClose>
-                  </DialogFooter>
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <Button type="submit">
+                          Save changes
+                        </Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </form>
                 </DialogContent>
               </Dialog>
               <Button onClick={() => handleApprove({ emailId: item.id })} className="h-10 min-w-fit cursor-pointer">
@@ -138,5 +149,5 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
         </div>
       </Card>
     </>
-  )
+  );
 }
