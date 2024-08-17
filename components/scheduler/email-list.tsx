@@ -58,14 +58,17 @@ export function EmailList({ targetId }: EmailListProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchUnscheduledEmails = async (targetId: string, limit: number, skip: number): Promise<UnscheduledEmailThread[]> => {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/unscheduled/${targetId}?limit=${limit}&skip=${skip}`;
-    console.log(url)
+    // console.log(url);
 
     try {
       const res = await fetch(url);
+      if (res.status === 429) {
+        throw new Error("You have reached the API rate limit. Please try again later.");
+      }
       if (!res.ok) {
         throw new Error(`Failed to fetch data. Status code: ${res.status}`);
       }
@@ -79,8 +82,8 @@ export function EmailList({ targetId }: EmailListProps) {
       }
 
       return result.data;
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    } catch (error: any) {
+      console.error("Error fetching data:", error.message);
       throw error;
     }
   };
@@ -92,8 +95,9 @@ export function EmailList({ targetId }: EmailListProps) {
     try {
       const emails = await fetchUnscheduledEmails(targetId, pageSize, skip);
       setFetchedEmails(emails);
-    } catch (error) {
-      setError(error);
+    } catch (error: any) {
+      setError(error.message);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -174,10 +178,41 @@ export function EmailList({ targetId }: EmailListProps) {
     }
   };
 
+  // const handleApproveAll = async (userId: string) => {
+  //   try {
+  //     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/schedule/mass`;
+  //     const payload = { userId: userId };
+  //     const response = await fetch(url, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(payload),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error(`Failed to approve all drafts. Status code: ${response.status}`);
+  //     }
+
+  //     const data = await response.json();
+  //     console.log("Approval response for all:", data);
+  //     setFetchedEmails([]);
+  //     toast("All emails approved successfully!", {
+  //       description: `Approved emails count: ${data}`,
+  //     });
+  //   } catch (error: any) {
+  //     console.error("Error approving all email drafts:", error.message);
+  //     toast("Failed to approve all emails", {
+  //       description: `Error: ${error.message}`,
+  //     });
+  //   }
+  // };
+
   const handleApproveAll = async (userId: string) => {
     try {
       const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/schedule/mass`;
-      const payload = { userId: userId };
+      const payload = { userId };
+
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -187,14 +222,21 @@ export function EmailList({ targetId }: EmailListProps) {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to approve all drafts. Status code: ${response.status}`);
+        if (response.status === 404) {
+          const { message }: any = await response.json();
+          throw new Error(message);
+        } else {
+          throw new Error(`Failed to approve all drafts. Status code: ${response.status}`);
+        }
       }
 
-      const data = await response.json();
-      console.log("Approval response for all:", data);
+      const { message, count }: any = await response.json();
+      console.log("Approval response for all:", { message, count });
+
       setFetchedEmails([]);
+
       toast("All emails approved successfully!", {
-        description: `Approved emails count: ${data}`,
+        description: `Approved emails count: ${count}`,
       });
     } catch (error: any) {
       console.error("Error approving all email drafts:", error.message);
@@ -204,14 +246,22 @@ export function EmailList({ targetId }: EmailListProps) {
     }
   };
 
+
   if (loading) {
-    return <div>
-      <Loading></Loading>
-    </div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <p className="text-red-500">Error: {error}</p>
+        <p>Please try again later or contact support if the problem persists.</p>
+      </div>
+    );
   }
 
   if (!fetchedEmails.length) {
