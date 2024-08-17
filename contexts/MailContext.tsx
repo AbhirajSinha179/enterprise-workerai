@@ -4,16 +4,16 @@ import React from "react";
 
 import { createContext, useState } from 'react';
 // import { Mail, mails } from '@/components/inbox/data';
-import { Thread, threads } from "@/components/inbox/data"
+import { Thread } from "@/types/interface";
 
 type Config = {
-  selected: Thread['threadid'] | null;
+  selected: Thread['threadId'] | null;
 };
 
 // Mail["id"]
 
 const initialConfig: Config = {
-  selected: threads[0]?.threadid ?? null,
+  selected: null,
 };
 
 export const MailContext = createContext<{

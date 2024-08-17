@@ -30,6 +30,8 @@ type Group = {
 
 const DASHBOARD_PATH = "/dashboard"
 
+export const CLIENT_ID = "205356801177-sgo5c1okrp6j5vlpjp291ilk66idpnml.apps.googleusercontent.com"
+
 export function getMenuList(pathname: string): Group[] {
   return [
     {
@@ -118,7 +120,7 @@ export const landingConfig = {
     // description: "Understand how to get through this bs",
     imageUri: "/assets/images/dashboard_workerai.jpeg",
   },
-  features: {
+  featureSection: {
     title: "Orthodox sales systems are slowing down your business growth.",
     description: "Understand how to get through this bs",
     features: [

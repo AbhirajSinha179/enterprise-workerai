@@ -64,20 +64,22 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          {footerLinks.map((footerLink) => (
-            <div key={footerLink.title} className="sm:col-span-3 lg:col-span-1">
-              <h3 className="mb-2 text-2xl font-bold">{footerLink.title}</h3>
-              <ul className="text-md space-y-3 ">
-                {footerLink.links.map((link) => (
-                  <li key={link.name}>
-                    <div className="hover:text-muted-foreground  ">
-                      <Link href={link.href}>{link.name}</Link>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {footerLinks.map(({ title, links }) => {
+            return (
+              <div key={title} className="sm:col-span-3 lg:col-span-1">
+                <h3 className="mb-2 text-2xl font-bold">{title}</h3>
+                <ul className="text-md space-y-3 ">
+                  {links.map((link) => (
+                    <li key={link.name}>
+                      <div className="hover:text-muted-foreground  ">
+                        <Link href={link.href}>{link.name}</Link>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          })}
         </div>
 
         <div className="mx-auto max-w-screen-xl py-2">

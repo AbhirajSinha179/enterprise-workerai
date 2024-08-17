@@ -1,21 +1,20 @@
 import { MoreVertical, Reply } from "lucide-react";
-import { Mail } from "@/components/inbox/data";
+import { useState } from "react";
+import { toast } from "sonner";
 import MailTimelineItem from "@/components/inbox/thread-item";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { ScrollArea } from "../ui/scroll-area";
-import { Timeline } from "../ui/timeline";
-import { MailDisplayProps } from "@/types/interface";
-import { useState } from "react";
-import { Textarea } from "../ui/textarea";
 import { submitReplyContent } from "@/lib/actions";
-import { toast } from "sonner";
+import { Email, MailDisplayProps } from "@/types/interface";
+import { ScrollArea } from "../ui/scroll-area";
+import { Textarea } from "../ui/textarea";
+import { Timeline } from "../ui/timeline";
 
 export function MailDisplay({ threadData }: MailDisplayProps) {
   const [replyContent, setReplyContent] = useState<string>("");
-  const thread = threadData?.thread;
+  const thread = threadData?.emails;
 
   const handleReplyChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReplyContent(event.target.value);
@@ -67,10 +66,10 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
       <Separator className="bg-card" />
       {thread ? (
         <div className="flex flex-1 flex-col justify-between">
-          <div className="flex mx-4 h-[60vh]">
+          <div className="mx-4 h-[60vh]">
             <ScrollArea>
               <Timeline>
-                {thread.map((message: Mail, index: number) => (
+                {thread.map((message: Email, index: number) => (
                   <MailTimelineItem
                     key={message.id}
                     mail={message}

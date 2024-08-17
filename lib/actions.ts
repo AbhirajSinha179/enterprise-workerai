@@ -29,6 +29,23 @@
 //   }
 // }
 
+export async function deleteMailbox(id: string) {
+  try {
+    const response = await fetch(`${process.env.BASE_API_URL}/email-address/${id}`, {
+      method: "DELETE",
+    })
+
+    if (!response.ok) {
+      return { error: `Error: ${response.statusText}`, success: false }
+    }
+
+    const result = await response.json()
+    return { success: true, result }
+  } catch (error) {
+    return { error: error, success: false }
+  }
+}
+
 export async function submitBlocklisted(data: string[]) {
   try {
     const response = await fetch("http://localhost:3000/uploadblacklisted/", {

@@ -102,8 +102,8 @@ export function Menu({ isOpen }: MenuProps) {
 
           {isOpen === true && (
             <div className="flex w-full grow items-end">
-              <div className="mx-auto flex">
-                <MailIcon className="mr-2 my-auto"></MailIcon>
+              <div className="flex px-4 gap-2 items-center">
+                <MailIcon />
                 <Link href="mailto:hello@workerai.co" target="_blank">
                   <Button variant="link" size={"useLink"}>
                     <h1 className="text-base font-semibold text-white">help@workerai.co</h1>

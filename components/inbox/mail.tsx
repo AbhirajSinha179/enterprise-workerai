@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { useMail } from "@/contexts/MailContext"
 import { cn } from "@/lib/utils"
-import { MailProps, ThreadList } from "@/types/interface"
+// import { MailProps, ThreadList } from "@/types/interface"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "../ui/button"
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
+import { MailProps, Thread, ThreadList } from "@/types/interface"
+import { notFound } from "next/navigation"
 
 const MAX_INBOX_HEIGHT = 680
 
@@ -33,6 +35,7 @@ export function Inbox({
 }: MailProps) {
   const { config } = useMail()
   const [selectedView, setSelectedView] = React.useState("last24Hours")
+  if (!threads) return notFound()
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -124,7 +127,7 @@ export function Inbox({
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
           <MailDisplay
-            threadData={threads.find((item: ThreadList) => item.threadid === config.selected) || null}
+            threadData={threads.find((item: Thread) => item.threadId === config.selected) || null}
           />
         </ResizablePanel>
       </ResizablePanelGroup>
