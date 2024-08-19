@@ -65,7 +65,7 @@ export function EmailList({ targetId }: EmailListProps) {
   const [error, setError] = useState<string | null>(null);
 
   const fetchUnscheduledEmails = async (targetId: string, limit: number, skip: number): Promise<UnscheduledEmailThread[]> => {
-    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/unscheduled/${targetId}?limit=${limit}&skip=${skip}`;
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/unscheduled/${targetId}?limit=${limit}&offset=${skip}`;
     // console.log(url);
 
     try {
@@ -93,7 +93,7 @@ export function EmailList({ targetId }: EmailListProps) {
   };
 
   const handleFetchEmails = async (page: number) => {
-    const skip = (page - 1) * pageSize;
+    const skip = (page) * pageSize;
     setLoading(true);
     setError(null);
     try {
@@ -326,7 +326,6 @@ export function EmailList({ targetId }: EmailListProps) {
       <PaginationWithLinks
         page={currentPage}
         pageSize={pageSize}
-        totalCount={fetchedEmails.length}
         onPageChange={handlePageChange}
       />
     </main>

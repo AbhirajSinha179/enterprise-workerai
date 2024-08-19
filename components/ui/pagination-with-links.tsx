@@ -19,7 +19,7 @@ export interface PaginationWithLinksProps {
         pageSizeSearchParam?: string;
         pageSizeOptions: number[];
     };
-    totalCount: number;
+    totalCount?: number;
     pageSize: number;
     page: number;
     pageSearchParam?: string;
