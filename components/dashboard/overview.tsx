@@ -15,7 +15,7 @@ interface OverviewProps {
 
 export function Overview({ data }: OverviewProps) {
   if (!data || data.length === 0) {
-    return <div className="mx-10 font-medium text-center">Sorry no data found</div>;
+    return <div className="mx-10 font-medium text-center min-h-[150px]">Sorry no data found</div>;
   }
   return (
     <ResponsiveContainer width="100%" height={350}>
@@ -27,8 +27,8 @@ export function Overview({ data }: OverviewProps) {
       >
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#808080" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#808080" stopOpacity={0} />
+            <stop offset="5%" stopColor="#00000" stopOpacity={0.8} />
+            <stop offset="95%" stopColor="#00000" stopOpacity={0} />
           </linearGradient>
           <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#808080" stopOpacity={1.0} />
@@ -41,6 +41,13 @@ export function Overview({ data }: OverviewProps) {
         <Area
           type="monotone"
           dataKey="pv"
+          stroke="#808080"
+          fillOpacity={1}
+          fill="url(#colorUv)"
+        />
+        <Area
+          type="monotone"
+          dataKey="uv"
           stroke="#808080"
           fillOpacity={1}
           fill="url(#colorPv)"
