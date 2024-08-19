@@ -17,12 +17,12 @@ import { Button } from "@/components/ui/button"
 // }
 
 const getMails = async (userId: string) => {
-  const res = await fetch(`${process.env.BASE_API_URL}/email-address/${userId}`, { cache: "no-cache" })
+  const res = await fetch(`${process.env.BASE_API_URL}/user/email-address/${userId}`, { cache: "no-cache" })
   if (!res.ok) {
     return null;
   }
   const data = await res.json()
-  return data
+  return data 
 }
 
 export default async function MailboxPage() {
@@ -58,7 +58,7 @@ export default async function MailboxPage() {
           </Button>
         </Link>
       </div>
-
+      {/* @ts-ignore */}
       <DataTable data={mails} columns={columns} isActionButton={false} />
     </ContentLayout>
   )
