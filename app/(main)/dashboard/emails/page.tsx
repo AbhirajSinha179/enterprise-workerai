@@ -1,16 +1,19 @@
+"use client";
 import { CalendarIcon, ClockIcon } from "lucide-react";
 import EmptyState from "@/components/global/empty-state";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { EmailList } from "@/components/scheduler/email-list";
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UnscheduledEmailThread, unscheduledEmailResponseSchema, scheduledEmailResponseSchema, ScheduledEmail } from "@/types/interface";
-// import { currentUser } from '@clerk/nextjs/server';
-// import { useUser } from '@clerk/clerk-react';
-// import { useAuth } from '@clerk/nextjs';
+import { scheduledEmailResponseSchema, ScheduledEmail } from "@/types/interface";
+import { useAuth } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { getTargetIdByUser } from "@/components/dashboard/recent-sales";
+
 export async function fetchScheduledEmails(targetId: string): Promise<ScheduledEmail[]> {
   try {
-    const url = `${process.env.API_BASE_URL}/emails/scheduled/${targetId}`;
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/scheduled/${targetId}`;
     const res = await fetch(url);
     console.log(`Response status for get scheduled email: ${res.status}`);
     if (!res.ok) {
@@ -19,7 +22,6 @@ export async function fetchScheduledEmails(targetId: string): Promise<ScheduledE
 
     const data = await res.json();
     const result = scheduledEmailResponseSchema.safeParse(data);
-    // console.log("RESULT FROM SCHEDULED : ", result);
     if (!result.success) {
       console.error(result.error);
       throw new Error("Invalid data format");
@@ -32,11 +34,44 @@ export async function fetchScheduledEmails(targetId: string): Promise<ScheduledE
   }
 }
 
-export default async function Emails() {
-  const scheduledEmails = await fetchScheduledEmails("1c1108a8-9108-42e2-8177-4e655bbc87ed");
-  // const { userId, isLoaded, isSignedIn } = useAuth()
-  // console.log("USER ID FOUND OF THE USER : ", userId)
-  // console.log("Response is from get scheduled email API", scheduledEmails);
+export default function Emails() {
+  const [isLoading, setIsLoading] = useState(true);
+  const { userId } = useAuth();
+  const [scheduledEmails, setScheduledEmails] = useState<ScheduledEmail[]>([]);
+  const [targetId, setTargetId] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!userId) {
+        console.log("USER ID NOT FOUND")
+        toast.error("Error finding user ID");
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const targetId = await getTargetIdByUser(userId);
+        // const targetId = "1c1108a8-9108-42e2-8177-4e655bbc87ed";
+        console.log("TARGET ID : ", targetId)
+        setTargetId(targetId);
+        if (!targetId) {
+          setIsLoading(false);
+          return;
+        }
+
+        const scheduledEmails = await fetchScheduledEmails(targetId);
+        setScheduledEmails(scheduledEmails);
+      } catch (error) {
+        toast.error("Error fetching scheduled emails.");
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [userId]);
+
   return (
     <ContentLayout title="Scheduler">
       <Tabs defaultValue="pending" className="mt-4 space-y-4">
@@ -46,7 +81,8 @@ export default async function Emails() {
         </TabsList>
 
         <TabsContent value="pending" className="space-y-4">
-          <EmailList targetId="1c1108a8-9108-42e2-8177-4e655bbc87ed" />
+          {/* <EmailList targetId={targetId || "1c1108a8-9108-42e2-8177-4e655bbc87ed"} /> */}
+          <EmailList targetId={targetId || ""} />
         </TabsContent>
 
         <TabsContent value="scheduled" className="space-y-4">
