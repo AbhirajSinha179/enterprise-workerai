@@ -2,17 +2,17 @@
 import React, { useState, useEffect } from "react";
 import { Eye, MailOpen, Send, Target, Star } from "lucide-react";
 import { Overview } from "@/components/dashboard/overview";
-import { RecentSales } from "@/components/dashboard/recent-sales";
+// import { RecentSales } from "@/components/dashboard/recent-sales"; string
 import { ContentLayout } from "@/components/layout/content-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { dashboardDataSchema, DataGraph, SalesDataItem, StatDashboard, getThreadApiResponseSchema } from "@/types/interface";
 import CalendarForm from "@/components/dashboard/CalendarForm";
-// import { currentUser } from '@clerk/nextjs';
-import { currentUser } from '@clerk/nextjs/server';
 import moment from 'moment';
 import { getOpenRate, getResponseRate } from "@/lib/utils";
 import { toast } from "sonner";
 import Loading from "./loading";
+import { useAuth } from "@clerk/nextjs"
+import RecentSales from "@/components/dashboard/recent-sales";
 
 const defaultDashboardData = {
   total_clicks: 0,
@@ -26,12 +26,6 @@ const defaultDashboardData = {
     }
   ]
 };
-// add error + 404 handling / toast display
-// destructure dashboardData for readability
-//loading state 
-
-// const { total_opens, total_clicks, data } = dashboardData;
-// open rate conversion
 
 export async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
   try {
@@ -91,12 +85,48 @@ export async function fetchRecentReply(targetId: string) {
   }
 }
 
+
+// export async function getTargetIdByUser(userId: string): Promise<string | null> {
+//   try {
+//     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/target/${userId}`;
+//     const res = await fetch(url);
+
+//     if (!res.ok) {
+//       if (res.status === 404) {
+//         toast.error("No targets found for this user.");
+//         return null;
+//       } else {
+//         throw new Error(`Failed to fetch targets. Status code: ${res.status}`);
+//       }
+//     }
+
+//     const data: any = await res.json();
+//     if (!data.targets || data.targets.length === 0) {
+//       toast.error("No targets found for this user.");
+//       return null;
+//     }
+
+//     const targetId = data.targets[0].id; // Assuming you want the first target ID
+//     return targetId;
+//   } catch (error: any) {
+//     console.error("Error fetching target ID:", error.message);
+//     toast.error("Error fetching target ID.");
+//     return null;
+//   }
+// }
+
 const DashboardHome: React.FC = () => {
-  const [startDate, setStartDate] = useState<string>("2024-01-08T00%3A00%3A00.000Z");
-  const [endDate, setEndDate] = useState<string>("2024-07-26T23%3A59%3A59.000Z");
+  const { userId } = useAuth();
+  // const TARGET_ID: string = "1c1108a8-9108-42e2-8177-4e655bbc87ed"
+
+  // const [startDate, setStartDate] = useState<string>("2024-01-08T00%3A00%3A00.000Z");
+  // const [endDate, setEndDate] = useState<string>("2024-07-26T23%3A59%3A59.000Z");
+  const [startDate, setStartDate] = useState<string>(moment().toISOString());
+  const [endDate, setEndDate] = useState<string>(moment().subtract(1, 'months').toISOString());
+
   const [statsDashboard, setStatsDashboard] = useState(defaultDashboardData);
   const [dataGraph, setDataGraph] = useState<DataGraph[]>([]);
-  const [recentSalesData, setRecentSalesData] = useState<any[]>([]);
+  // const [recentSalesData, setRecentSalesData] = useState<any[]>([]);
   const [responseStatus, setResponseStatus] = useState<number | null>(null);
   const [openRate, setOpenRate] = useState<number>(0);
   const [responseRate, setResponseRate] = useState<number>(0);
@@ -106,11 +136,22 @@ const DashboardHome: React.FC = () => {
 
   useEffect(() => {
     async function fetchData() {
+      if (!userId) {
+        console.log("USER ID NOT FOUND ");
+        toast.error("Error finding user ID");
+        return;
+      }
       setIsLoading(true);
       try {
-        const dashboardData = await fetchDashboardDataUsingRange("userId", "user_2jQ7lufOqU1WFrEsi2wG3B7zF70", startDate, endDate);
-        console.log("TAGGG", dashboardData);
-        const recentReplies = await fetchRecentReply("1c1108a8-9108-42e2-8177-4e655bbc87ed");
+        console.log("START DATE : ", startDate)
+        console.log("END DATE : ", endDate)
+        const dashboardData = await fetchDashboardDataUsingRange("userId", userId, startDate, endDate);
+        // dummy userId 
+        // const dashboardData = await fetchDashboardDataUsingRange("userId", "user_2jQ7lufOqU1WFrEsi2wG3B7zF70", startDate, endDate);
+        // console.log("TAGGG", dashboardData);
+        // const targetId: any = await getTargetIdByUser(userId);
+        // const targetId: any = "1c1108a8-9108-42e2-8177-4e655bbc87ed"
+        // const recentReplies = await fetchRecentReply(targetId);
 
         // Destructuring dashboardData
         const { total_opens, total_clicks, data } = dashboardData;
@@ -123,7 +164,7 @@ const DashboardHome: React.FC = () => {
         // Updating state
         setTotalUniqueEmails(totalUniqueEmails);
         setTotalSentEmails(data.reduce((sum, item) => sum + item.total_emails, 0));
-        setRecentSalesData(recentReplies);
+        // setRecentSalesData(recentReplies);
         setOpenRate(openRate);
         setResponseRate(responseRate);
         setResponseStatus(200);
@@ -244,7 +285,9 @@ const DashboardHome: React.FC = () => {
                       <CardDescription>Unread</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <RecentSales data={recentSalesData} />
+                      {/* <RecentSales />
+                      <RecentSales/> */}
+                      <RecentSales />
                     </CardContent>
                   </Card>
                 </div>
