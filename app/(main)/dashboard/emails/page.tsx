@@ -5,8 +5,9 @@ import { EmailList } from "@/components/scheduler/email-list";
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UnscheduledEmailThread, unscheduledEmailResponseSchema, scheduledEmailResponseSchema, ScheduledEmail } from "@/types/interface";
-
-
+// import { currentUser } from '@clerk/nextjs/server';
+// import { useUser } from '@clerk/clerk-react';
+// import { useAuth } from '@clerk/nextjs';
 export async function fetchScheduledEmails(targetId: string): Promise<ScheduledEmail[]> {
   try {
     const url = `${process.env.API_BASE_URL}/emails/scheduled/${targetId}`;
@@ -33,6 +34,8 @@ export async function fetchScheduledEmails(targetId: string): Promise<ScheduledE
 
 export default async function Emails() {
   const scheduledEmails = await fetchScheduledEmails("1c1108a8-9108-42e2-8177-4e655bbc87ed");
+  // const { userId, isLoaded, isSignedIn } = useAuth()
+  // console.log("USER ID FOUND OF THE USER : ", userId)
   // console.log("Response is from get scheduled email API", scheduledEmails);
   return (
     <ContentLayout title="Scheduler">

@@ -19,13 +19,10 @@ import EmptyState from "@/components/global/empty-state";
 import { ClockIcon } from "lucide-react";
 import { unscheduledEmailResponseSchema } from "@/types/interface";
 import Loading from "@/app/(site)/loading";
+import { useAuth } from "@clerk/nextjs"
 
 interface EmailListProps {
   targetId: string;
-}
-
-function getUserId() {
-  return "user_2jQ7lufOqU1WFrEsi2wG3B7zF70";
 }
 
 function transformData(data: any): UnscheduledEmailThread[] {
@@ -54,6 +51,13 @@ function transformData(data: any): UnscheduledEmailThread[] {
 }
 
 export function EmailList({ targetId }: EmailListProps) {
+  const { userId } = useAuth();
+  if (!userId) {
+    console.log("USER ID NOT FOUND ");
+    toast.error("Error finding user ID");
+    return null;
+  }
+  // console.log("THE USER ID IS : ", userId)
   const [fetchedEmails, setFetchedEmails] = useState<UnscheduledEmailThread[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -302,7 +306,8 @@ export function EmailList({ targetId }: EmailListProps) {
               </Tooltip>
             </TooltipProvider>
           </div>
-          <Button onClick={() => handleApproveAll(getUserId())}>
+          {/* <Button onClick={() => handleApproveAll("user_2jQ7lufOqU1WFrEsi2wG3B7zF70")}> */}
+          <Button onClick={() => handleApproveAll(userId)}>
             Approve and Smart Schedule All
           </Button>
         </div>
