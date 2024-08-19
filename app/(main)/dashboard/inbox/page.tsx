@@ -6,15 +6,15 @@ import { Thread, threadsSchema } from "@/types/interface"
 
 const getData = async (targetId: string) => {
   try {
-    const res = await fetch(`https://api.workerai.co/emails/thread/target/${targetId}`, {
+    const res = await fetch(`http://localhost:3000/emails/thread/target/${targetId}`, {
       method: "GET",
+      cache:"no-cache"
     })
     const data = await res.json()
-    // const result = threadsSchema.safeParse(data);
-    // console.log(data);
-    return data
+    const result = threadsSchema.parse(data)
+    return result
   } catch (error) {
-    console.log(error)
+    console.log(JSON.stringify(error))
     return []
   }
 }
@@ -29,8 +29,7 @@ export default async function InboxPage() {
       return
     }
     const threadData = await getData(targetId)
-
-    if (!threadData) {
+    if (!threadData ) {
       return (
         <ContentLayout title="Inbox">
           <div className="flex min-h-[70vh] items-center justify-center">

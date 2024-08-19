@@ -1,39 +1,54 @@
-import { MoreVertical, Reply } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
-import MailTimelineItem from "@/components/inbox/thread-item";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { submitReplyContent } from "@/lib/actions";
-import { Email, MailDisplayProps } from "@/types/interface";
-import { ScrollArea } from "../ui/scroll-area";
-import { Textarea } from "../ui/textarea";
-import { Timeline } from "../ui/timeline";
+import { MoreVertical, Reply as ReplyIcon } from "lucide-react"
+import { useState } from "react"
+import { toast } from "sonner"
+import MailTimelineItem from "@/components/inbox/thread-item"
+import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Separator } from "@/components/ui/separator"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { submitReplyContent } from "@/lib/actions"
+import { Email, MailDisplayProps, Thread, Reply, CombinedMail } from "@/types/interface"
+import { ScrollArea } from "../ui/scroll-area"
+import { Textarea } from "../ui/textarea"
+import { Timeline } from "../ui/timeline"
+
+
 
 export function MailDisplay({ threadData }: MailDisplayProps) {
-  const [replyContent, setReplyContent] = useState<string>("");
-  const thread = threadData?.emails;
+  const [replyContent, setReplyContent] = useState<string>("")
+
+  const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || []
+  if (threadData?.replies) {
+    threadData.replies.forEach((r: Reply) => {
+      thread.push({ type: "REPLY", data: r })
+    })
+  }
+
+  thread.sort((a, b) => {
+    const dateA = (a.type == "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
+    const dateB = (b.type == "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
+    return new Date(dateA).getTime() - new Date(dateB).getTime()
+  })
+
 
   const handleReplyChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setReplyContent(event.target.value);
-  };
+    setReplyContent(event.target.value)
+  }
 
   const handleReplySubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!replyContent.trim()) return;
+    event.preventDefault()
+    if (!replyContent.trim()) return
 
     try {
-      const result = await submitReplyContent(replyContent);
-      console.log("Reply submitted:", result);
-      toast.success("Message sent successfully!");
-      setReplyContent("");
+      const result = await submitReplyContent(replyContent)
+      console.log("Reply submitted:", result)
+      toast.success("Message sent successfully!")
+      setReplyContent("")
     } catch (error) {
-      console.error("Error submitting the reply:", error);
-      toast.error("Failed to send the message.");
+      console.error("Error submitting the reply:", error)
+      toast.error("Failed to send the message.")
     }
-  };
+  }
 
   return (
     <div className="flex h-full flex-col">
@@ -42,7 +57,7 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="ghost" size="icon" disabled={!threadData}>
-                <Reply className="size-4" />
+                <ReplyIcon className="size-4" />
                 <span className="sr-only">Reply</span>
               </Button>
             </TooltipTrigger>
@@ -64,17 +79,18 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
         </DropdownMenu>
       </div>
       <Separator className="bg-card" />
-      {thread ? (
+      {thread && thread.length >0 ? (
         <div className="flex flex-1 flex-col justify-between">
-          <div className="mx-4 h-[60vh]">
-            <ScrollArea>
+          <div className="mx-4">
+            <ScrollArea className="h-[60vh]">
               <Timeline>
-                {thread.map((message: Email, index: number) => (
+                {thread.map((message: CombinedMail, index: number) => (
                   <MailTimelineItem
-                    key={message.id}
-                    mail={message}
+                    key={message.data.id}
+                    mail={message.data}
                     showLine={true}
                     isLast={index === thread.length - 1}
+                    showSubject={index === 0}
                   />
                 ))}
               </Timeline>
@@ -83,9 +99,9 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
           <Separator className="bg-card" />
           <div className="p-4">
             <form onSubmit={handleReplySubmit}>
-              <div className="grid gap-4 mx-2">
+              <div className="mx-2 grid gap-4">
                 <Textarea
-                  className="p-4 bg-card"
+                  className="bg-card p-4"
                   placeholder="Reply..."
                   value={replyContent}
                   onChange={handleReplyChange}
@@ -103,5 +119,5 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
         <div className="p-8 text-center text-foreground">No message selected</div>
       )}
     </div>
-  );
+  )
 }

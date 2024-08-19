@@ -18,12 +18,9 @@ import { notFound } from "next/navigation"
 
 const MAX_INBOX_HEIGHT = 680
 
-export function Inbox({
-  threads,
-  defaultLayout = [265, 440, 655],
-}: MailProps) {
+export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
   const { config } = useMail()
-  if(!threads) return notFound()
+  if (!threads) return notFound()
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -39,26 +36,9 @@ export function Inbox({
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Inbox</h1>
               <TabsList className="ml-auto">
-                <TabsTrigger
-                  value="all"
-                >
-                  All mail
-                </TabsTrigger>
-                {/* <TabsTrigger
-                  value="unread"
-                >
-                  Unread
-                </TabsTrigger> */}
-                <TabsTrigger
-                  value="reply"
-                >
-                  Reply
-                </TabsTrigger>
-                <TabsTrigger
-                  value="followup"
-                >
-                  Follow Ups
-                </TabsTrigger>
+                <TabsTrigger value="all">All mail</TabsTrigger>
+                <TabsTrigger value="reply">Reply</TabsTrigger>
+                <TabsTrigger value="followup">Follow Ups</TabsTrigger>
               </TabsList>
             </div>
             <Separator />
@@ -72,22 +52,34 @@ export function Inbox({
             </div>
             <TabsContent value="all" className="m-0">
               {threads.length === 0 ? (
-                <EmptyState
-                  headerMessage="No Emails Yet"
-                  containerMessage=""
-                  icon={<InboxIcon size={60} />}
-                />
+                <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
                 <MailList items={threads} />
+              )}
+            </TabsContent>
+            <TabsContent value="reply" className="m-0">
+              {threads.length === 0 ? (
+                <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
+              ) : (
+                <MailList
+                  items={threads.filter((t) => t.replies && t.replies instanceof Array && t.replies?.length > 0)}
+                />
+              )}
+            </TabsContent>
+            <TabsContent value="followup" className="m-0">
+              {threads.length === 0 ? (
+                <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
+              ) : (
+                <MailList
+                  items={threads.filter((t) => t.emails && t.emails instanceof Array && t.emails?.length > 1)}
+                />
               )}
             </TabsContent>
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
-          <MailDisplay
-            threadData={threads.find((item: Thread) => item.threadId === config.selected) || null}
-          />
+          <MailDisplay threadData={threads.find((item: Thread) => item.threadId === config.selected) || null} />
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>

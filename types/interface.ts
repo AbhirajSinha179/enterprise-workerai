@@ -1,3 +1,4 @@
+
 import { z } from "zod"
 
 export const emailSchema = z.object({
@@ -6,7 +7,7 @@ export const emailSchema = z.object({
   body: z.string(),
   subject: z.string(),
   recipient: z.string(),
-  sendAt: z.string(),
+  sendAt: z.string().nullable(),
   createdAt: z.string(),
   isFollowUp: z.boolean(),
   approved: z.boolean(),
@@ -19,10 +20,36 @@ export const emailSchema = z.object({
   emailSent: z.boolean(),
 })
 
+export const leadSchema = z.object({
+  id: z.string(),
+  email: z.string(),
+  imgUrl: z.string().nullable(),
+  firstName: z.string(),
+  lastName: z.string(),
+  seniority: z.string().nullable(),
+  country: z.string().nullable(),
+  linkedin: z.string().nullable(),
+  city: z.string().nullable(),
+  state: z.string().nullable(),
+  EmailAddStatus: z.string(),
+  timezone: z.string().nullable(),
+  companyId: z.string().nullable(),
+  blackListed: z.boolean().nullable(),
+})
+
+export const replySchema = z.object({
+  id: z.string().optional(),
+  date: z.string().nullable(),
+  subject: z.string().nullable(),
+  body: z.string(),
+  from: z.string(),
+})
+
 export const threadSchema = z.object({
   threadId: z.string(),
-  thread: z.array(emailSchema),
-  replies: z.array(emailSchema).nullable(),
+  emails: z.array(emailSchema),
+  replies: z.array(replySchema).nullable(),
+  lead: leadSchema,
 })
 
 export const threadsSchema = z.array(threadSchema)
@@ -54,7 +81,7 @@ export interface Email {
   body: string
   subject: string
   recipient: string
-  sendAt: string
+  sendAt: string | null
   createdAt: string
   isFollowUp: boolean
   approved: boolean
@@ -73,7 +100,7 @@ export interface Lead {
   imgUrl: string | null
   firstName: string
   lastName: string
-  seniority: string
+  seniority: string | null
   country: string | null
   linkedin: string | null
   city: string | null
@@ -87,8 +114,22 @@ export interface Lead {
 export interface Thread {
   threadId: string
   emails: Email[]
-  replies: [] | Email[] | any
+  replies: [] | Reply[] | Email[] | any
   lead: Lead
+}
+
+export interface Reply {
+  id: string
+  date: string
+  subject: string
+  body: string
+  from: string
+}
+
+
+export interface CombinedMail {
+  type: "EMAIL" | "REPLY"
+  data: Email | Reply
 }
 
 export interface MailProps {
