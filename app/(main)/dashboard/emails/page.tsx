@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { getTargetIdByUser } from "@/components/dashboard/recent-sales";
 
-export async function fetchScheduledEmails(targetId: string): Promise<ScheduledEmail[]> {
+async function fetchScheduledEmails(targetId: string): Promise<ScheduledEmail[]> {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/scheduled/${targetId}`;
     const res = await fetch(url);

@@ -51,19 +51,15 @@ function transformData(data: any): UnscheduledEmailThread[] {
 }
 
 export function EmailList({ targetId }: EmailListProps) {
-  const { userId } = useAuth();
-  if (!userId) {
-    console.log("USER ID NOT FOUND ");
-    toast.error("Error finding user ID");
-    return null;
-  }
   // console.log("THE USER ID IS : ", userId)
   const [fetchedEmails, setFetchedEmails] = useState<UnscheduledEmailThread[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { userId } = useAuth();
 
+  
   const fetchUnscheduledEmails = async (targetId: string, limit: number, skip: number): Promise<UnscheduledEmailThread[]> => {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/unscheduled/${targetId}?limit=${limit}&offset=${skip}`;
     // console.log(url);
@@ -107,9 +103,7 @@ export function EmailList({ targetId }: EmailListProps) {
     }
   };
 
-  useEffect(() => {
-    handleFetchEmails(currentPage);
-  }, [currentPage]);
+
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -250,7 +244,15 @@ export function EmailList({ targetId }: EmailListProps) {
     }
   };
 
-
+  useEffect(() => {
+    handleFetchEmails(currentPage);
+  }, [currentPage]);
+  
+  if (!userId) {
+    console.log("USER ID NOT FOUND ");
+    toast.error("Error finding user ID");
+    return null;
+  }
   if (loading) {
     return (
       <div>
