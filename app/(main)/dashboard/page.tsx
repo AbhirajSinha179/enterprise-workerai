@@ -27,7 +27,7 @@ const defaultDashboardData = {
   ]
 };
 
-export async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
+async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`;
     const res = await fetch(url);
@@ -58,7 +58,7 @@ export async function fetchDashboardDataUsingRange(type: string, id: string, sta
   }
 }
 
-export async function fetchRecentReply(targetId: string) {
+async function fetchRecentReply(targetId: string) {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/thread/target/${targetId}/`;
     console.log(url);
@@ -77,7 +77,7 @@ export async function fetchRecentReply(targetId: string) {
     }
 
     return result.data.replies
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime())
       .slice(0, 10);
   } catch (error: any) {
     console.error("Error fetching data:", error.message);
