@@ -1,57 +1,56 @@
-"use client";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import LoadingSign from "@/components/global/loading";
-import { Inbox } from "@/components/inbox/mail";
-import { ContentLayout } from "@/components/layout/content-layout";
-import { Thread, threadsSchema } from "@/types/interface";
+import { toast } from "sonner"
+import LoadingSign from "@/components/global/loading"
+import { Inbox } from "@/components/inbox/mail"
+import { ContentLayout } from "@/components/layout/content-layout"
+import { Thread, threadsSchema } from "@/types/interface"
 
-const getData = async (): Promise<Thread[]> => {
+const getData = async (targetId: string) => {
   try {
-    const res = await fetch("http://localhost:3000/threads");
-    const data = await res.json();
-    const result = threadsSchema.safeParse(data);
-    return result.success ? result.data : [];
+    const res = await fetch(`http://localhost:3000/emails/thread/target/${targetId}`, {
+      method: "GET",
+      cache:"no-cache"
+    })
+    const data = await res.json()
+    const result = threadsSchema.parse(data)
+    return result
   } catch (error) {
-    toast.error("Unable to fetch data. Please try again later.");
-    return [];
+    console.log(JSON.stringify(error))
+    return []
   }
-};
+}
 
-export default function InboxPage() {
-  const [threadData, setThreadData] = useState<Thread[] | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    getData().then(data => {
-      setThreadData(data);
-      setLoading(false);
-    });
-  }, []);
-
-  if (loading) {
-    return (
-      <ContentLayout title="Inbox">
-        <LoadingSign></LoadingSign>
-      </ContentLayout>
-    );
-  }
-
-  if (!threadData) {
-    return (
-      <ContentLayout title="Inbox">
-        <div className="flex justify-center items-center flex-1 h-full">
-          <div className="font-bold justify-center items-center flex">
-            Unable to fetch data. Please try again later.
+export default async function InboxPage() {
+  try {
+    const targetId = process.env.TARGET_ID
+    if (!targetId) {
+      toast("Error", {
+        description: "Failed to fetch data",
+      })
+      return
+    }
+    const threadData = await getData(targetId)
+    if (!threadData ) {
+      return (
+        <ContentLayout title="Inbox">
+          <div className="flex min-h-[70vh] items-center justify-center">
+            <div className="flex items-center justify-center font-bold">
+              Unable to fetch data. Please try again later.
+            </div>
           </div>
-        </div>
-      </ContentLayout>
-    );
-  }
+        </ContentLayout>
+      )
+    }
 
-  return (
-    <ContentLayout title="Inbox">
-      <Inbox threads={threadData} />
-    </ContentLayout>
-  );
+    return (
+      <ContentLayout title="Inbox">
+        {/* <Inbox threads={threadData} /> */}
+        {threadData ? <Inbox threads={threadData} /> : <LoadingSign />}
+      </ContentLayout>
+    )
+  } catch (error) {
+    toast("Error", {
+      description: "Failed to fetch data",
+    })
+    return null
+  }
 }

@@ -2,15 +2,15 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { motion } from "framer-motion"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft, CopyIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
-
-
+import { CLIENT_ID } from "@/lib/constants"
+import { toast } from "sonner"
 
 export const FormDataSchema = z.object({})
 type Inputs = z.infer<typeof FormDataSchema>
@@ -34,7 +34,6 @@ export default function Form() {
   const [selectedProvider, setSelectedProvider] = useState<string | null>(null)
   const [imap, setImap] = useState<string | null>(null)
   const delta = currentStep - previousStep
-
 
   const { handleSubmit, reset, trigger } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
@@ -111,7 +110,7 @@ export default function Form() {
             <li key={step.name} className="md:flex-1">
               {currentStep > index ? (
                 <div className="group flex w-full flex-col border-l-4 border-primary py-2 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4">
-                  <span className="text-sm font-medium text-primary transition-colors ">{step.id}</span>
+                  <span className="text-sm font-medium  transition-colors ">{step.id}</span>
                   <span className="text-sm font-medium ">{step.name}</span>
                 </div>
               ) : currentStep === index ? (
@@ -119,12 +118,12 @@ export default function Form() {
                   className="flex w-full flex-col border-l-4 border-primary py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4"
                   aria-current="step"
                 >
-                  <span className="text-sm font-medium text-primary">{step.id}</span>
+                  <span className="text-sm font-medium ">{step.id}</span>
                   <span className="text-sm font-medium">{step.name}</span>
                 </div>
               ) : (
                 <div className="group flex w-full flex-col border-l-4 border-secondary py-2 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4">
-                  <span className="text-sm font-medium text-primary transition-colors">{step.id}</span>
+                  <span className="text-sm font-medium  transition-colors">{step.id}</span>
                   <span className="text-sm font-medium">{step.name}</span>
                 </div>
               )}
@@ -179,7 +178,7 @@ const PrevButton = ({ prev, currentStep }: { prev: () => void; currentStep: numb
     type="button"
     onClick={prev}
     disabled={currentStep === 0}
-    className="rounded px-2 py-1 text-sm font-semibold text-primary transition duration-75 hover:scale-110 disabled:cursor-not-allowed disabled:opacity-50"
+    className="rounded px-2 py-1 text-sm font-semibold  transition duration-75 hover:scale-110 disabled:cursor-not-allowed disabled:opacity-50"
   >
     <ChevronLeft size={28} />
   </button>
@@ -200,32 +199,32 @@ const FirstForm = ({
     transition={{ duration: 0.3, ease: "easeInOut" }}
   >
     <div className="mt-8 flex justify-center">
-      <h1 className="text-4xl font-semibold leading-7 text-primary">Connect a new email account</h1>
+      <h1 className="text-4xl font-semibold leading-7 ">Connect a new email account</h1>
     </div>
     <div className="my-10 flex items-center justify-center py-5">
       <div className="px-50 flex h-auto w-full flex-col items-center justify-center space-y-4 py-5">
         <div
           className="flex w-1/3 cursor-pointer items-center justify-center rounded-lg 
-                                border p-4 shadow-md transition delay-150 duration-300 
-                                ease-in-out hover:-translate-y-1 hover:scale-110  bg-card"
+                                border bg-card p-4 shadow-md transition delay-150 
+                                duration-300 ease-in-out hover:-translate-y-1  hover:scale-110"
           onClick={handleGoogleClick}
         >
           <Image src="/assets/mailbox/search.png" alt="Google logo" className="mr-4" width={40} height={40} />
           <div>
-            <div className="text-lg font-semibold text-primary">Google</div>
-            <div className="text-primary">Gmail / G-Suite</div>
+            <div className="text-lg font-semibold ">Google</div>
+            <div className="">Gmail / G-Suite</div>
           </div>
         </div>
         <div
           className="flex w-1/3 cursor-pointer items-center justify-center rounded-lg
-                                 border p-4 shadow-md transition delay-150 duration-300
-                                  ease-in-out hover:-translate-y-1 hover:scale-110 bg-card "
+                                 border bg-card p-4 shadow-md transition delay-150
+                                  duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 "
           onClick={handleMicrosoftClick}
         >
           <Image src="/assets/mailbox/microsoftLogo.png" alt="Microsoft logo" className="mr-4" width={40} height={40} />
           <div>
-            <div className="text-lg font-semibold text-primary">Microsoft</div>
-            <div className="text-primary">Office 365 / Outlook</div>
+            <div className="text-lg font-semibold ">Microsoft</div>
+            <div className="">Office 365 / Outlook</div>
           </div>
         </div>
       </div>
@@ -265,8 +264,7 @@ const SecondFormGoogle = ({ handleImapEnabledClick }: { handleImapEnabledClick: 
     <div className="flex justify-center">
       <button
         type="button"
-        className="rounded bg-primary px-4 py-2 font-bold text-primary-foreground duration-300 
-                                            hover:-translate-y-1 hover:scale-110"
+        className="-foreground rounded bg-primary px-4 py-2 font-bold duration-300 hover:scale-110"
         onClick={handleImapEnabledClick}
       >
         Yes, IMAP has been enabled
@@ -312,7 +310,7 @@ const SecondFormMicrosoft = ({ handleSmtpEnabledClick }: { handleSmtpEnabledClic
           </li>
           <li>Check the Authenticated SMTP box .</li>
           <li>Click Save Changes.</li>
-          <li>Wait for one hour and connect your account to Instantly.</li>
+          <li>Wait for one hour and connect your account to WorkerAI.</li>
         </ol>
       </div>
       <div className="w-full rounded-lg bg-muted p-4 shadow">
@@ -330,16 +328,15 @@ const SecondFormMicrosoft = ({ handleSmtpEnabledClick }: { handleSmtpEnabledClic
           <li>Find the user you want to enable SMTP for and click Manage.</li>
           <li>Scroll down, click on Advanced Settings.</li>
           <li>Click on SMTP Authentication - the button will turn from gray to green.</li>
-          <li>Wait for one hour and proceed to connect the account to Instantly.</li>
+          <li>Wait for one hour and proceed to connect the account to WorkerAI.</li>
         </ol>
       </div>
     </div>
     <div className="flex justify-center pt-10 ">
-      <Link href={'/dashboard/mailbox/form/test'}>
-
+      <Link href={"/dashboard/mailbox/form/test"}>
         <Button
           type="button"
-          className="rounded bg-primary px-4 py-2 font-bold text-primary-foreground transition duration-300 hover:-translate-y-1 hover:scale-110"
+          className="-foreground rounded bg-primary px-4 py-2 font-bold transition duration-300 hover:-translate-y-1 hover:scale-110"
           onClick={handleSmtpEnabledClick}
         >
           Yes, SMTP has been enabled
@@ -353,7 +350,7 @@ const ThirdFormGoogle = ({ handleLoginClick }: { handleLoginClick: () => void })
   <div className="flex justify-center ">
     <div className="w-1/2 rounded-lg bg-card  p-6 shadow-md">
       <h1 className="mb-4 text-2xl font-bold">Connect Your Google Account</h1>
-      <p className="mb-6">Allow Instantly to access your Google workspace. You only need to do this once per domain.</p>
+      <p className="mb-6">Allow WorkerAI to access your Google workspace. You only need to do this once per domain.</p>
       <ol className="mb-6 list-inside list-decimal space-y-4">
         <li>
           Go to your
@@ -367,23 +364,33 @@ const ThirdFormGoogle = ({ handleLoginClick }: { handleLoginClick: () => void })
           <span className="font-semibold">OAuth App Name or Client ID</span>.
         </li>
         <li>
-          Use the following Client-ID to search for Instantly:
-          <div className="flex overflow-auto text-wrap bg-muted-foreground rounded-md my-2 px-2 py-4">
-            <code className="whitespace-normal text-background">
-              536726988839-pt93ora4685dtb1emb0pp2vjgjoI5mls.apps.googleusercontent.com
+          Use the following Client-ID to search for WorkerAI:
+          <div className="my-2 flex overflow-auto text-wrap rounded-md bg-muted px-4 py-8">
+            <code className="relative whitespace-normal">
+              <Button
+                onClick={() => {
+                  navigator.clipboard.writeText(CLIENT_ID)
+                  toast("Copied Client ID to your clipboard")
+                }}
+                className="absolute right-0 top-0 -mt-6 hover:bg-background"
+                variant="secondary"
+              >
+                <CopyIcon className="size-4" />
+              </Button>
+              {CLIENT_ID}
             </code>
           </div>
         </li>
-        <li>Select and approve Instantly to access your Google Workspace.</li>
+        <li>Select and approve WorkerAI to access your Google Workspace.</li>
       </ol>
       <div className="flex justify-center">
         <button
           type="button"
-          className="rounded bg-primary px-4 py-2 font-bold text-primary-foreground duration-300 
+          className="-foreground rounded bg-primary px-4 py-2 font-bold duration-300 
                                                 hover:-translate-y-1 hover:scale-110"
           onClick={handleLoginClick}
         >
-          <Link href={'/dashboard/mailbox/form/test'}>
+          <Link href={'https://api.workerai.co/auth'}>
             Login
           </Link>
         </button>

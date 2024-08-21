@@ -1,57 +1,64 @@
-"use client"
+import { auth } from "@clerk/nextjs/server"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { DataTable } from "@/components/leads/data-table"
 import { columns } from "@/components/mailbox/columns"
 import { Button } from "@/components/ui/button"
-import mailsData from "../data/mailsData"
 
-function getMails() {
-  return mailsData
+// {
+//   id: 'b2305391-8bae-408c-8d7f-57f115a50c91',
+//   email: 'rajxryn@gmail.com',
+//   firstName: '',
+//   lastName: null,
+//   position: null,
+//   userId: 'user-123',
+//   warmupCapacity: 13,
+//   dailyCapacity: 25
+// }
+
+const getMails = async (userId: string) => {
+  const res = await fetch(`${process.env.BASE_API_URL}/user/email-address/${userId}`, { cache: "no-cache" })
+  if (!res.ok) {
+    return null;
+  }
+  const data = await res.json()
+  return data 
 }
 
-export default function MailboxPage() {
-  const [mails, setMails] = useState(getMails())
-  const searchParams = useSearchParams()
-
-  const id = searchParams.get('id')
-  const name = searchParams.get('name')
-  const email = searchParams.get('email')
-  const domain = searchParams.get('domain')
-  const warmupCapacity = searchParams.get('warmupCapacity')
-
-  useEffect(() => {
-    if (id && name && email && domain && warmupCapacity) {
-      const newMail = {
-        id,
-        name,
-        email,
-        domain,
-        warmupCapacity,
-      }
-      console.log("New Mail Data: ", newMail)
-
-      setMails(prevMails => [...prevMails, newMail])
+export default async function MailboxPage() {
+  const { userId } = auth()
+  if (!userId) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
     }
-  }, [id, name, email, domain, warmupCapacity])
+  }
+  const mails = await getMails(userId)
 
+  if (!mails) {
+    return (
+      <ContentLayout title="Mailbox">
+        <div className="flex min-h-[70vh] items-center justify-center">
+          <div className="flex items-center justify-center font-bold">
+            Unable to fetch data. Please try again later.
+          </div>
+        </div>
+      </ContentLayout>
+    )
+  }
   return (
     <ContentLayout title="Mailbox">
-      <div className="">
+      <div className="my-8 flex justify-between">
+        <h1 className="text-2xl font-bold">Mailbox</h1>
         <Link href="/dashboard/mailbox/form">
-          <div className="flex justify-between">
-            <h1 className="text-2xl font-bold">Mailbox</h1>
-            <Button size="sm">
-              <div className="font-semibold text-sm">
-                Connect a Mail Box
-              </div>
-            </Button>
-          </div>
+          <Button size="sm">
+            <div className="text-sm font-semibold">Connect a Mail Box</div>
+          </Button>
         </Link>
       </div>
-
+      {/* @ts-ignore */}
       <DataTable data={mails} columns={columns} isActionButton={false} />
     </ContentLayout>
   )
