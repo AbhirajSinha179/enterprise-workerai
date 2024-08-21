@@ -18,6 +18,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { useAuth } from "@clerk/nextjs"
+import { getTargetIdByUser } from "../dashboard/recent-sales"
 
 const dropZoneConfig = {
   maxFiles: 2,
@@ -27,8 +29,6 @@ const dropZoneConfig = {
     "text/csv": [".csv"],
   },
 }
-
-const sampleTargetId = "1c1108a8-9108-42e2-8177-4e655bbc87ed"
 
 interface CSVUploader {
   title: string
@@ -59,6 +59,7 @@ export default function CSVUpload({
   const [isUploading, setIsUploading] = useState(false)
   const [force, setForce] = useState(false)
   const [allColumnsMapped, setAllColumnsMapped] = useState(false)
+  const { userId } = useAuth()
 
   const handleFileChange = (files: File[] | null) => {
     if (files && files.length > 0) {
@@ -176,9 +177,9 @@ export default function CSVUpload({
     })
 
     const payload = {
-      data: mappedData,
+      data: mappedData.map((r) => ({ ...r, email: r.email?.replaceAll("@", "_at_").concat("@workerai-growth.com") })),
       force: force,
-      targetId: sampleTargetId, //fetch from environment
+      targetId: await getTargetIdByUser(userId!), //fetch from environment
     }
 
     console.log(payload)
@@ -315,35 +316,35 @@ export default function CSVUpload({
           <div>
             <h3 className="mb-4 text-lg font-semibold">Map Columns</h3>
             <div className="my-2">
-            <div className="hide-scroll mx-auto  overflow-x-auto max-w-screen-md">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-secondary/80">
-                  <tr>
-                    {previewData &&
-                      previewData[0] &&
-                      previewData[0].map((header, index) => (
-                        <th
-                          key={index}
-                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                        >
-                          {header}
-                        </th>
-                      ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-inherit">
-                  {previewData.slice(1, 2).map((row, rowIndex) => (
-                    <tr key={rowIndex}>
-                      {row.map((cell, cellIndex) => (
-                        <td key={cellIndex} className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                          {cell}
-                        </td>
-                      ))}
+              <div className="hide-scroll mx-auto  max-w-screen-md overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-secondary/80">
+                    <tr>
+                      {previewData &&
+                        previewData[0] &&
+                        previewData[0].map((header, index) => (
+                          <th
+                            key={index}
+                            className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                          >
+                            {header}
+                          </th>
+                        ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 bg-inherit">
+                    {previewData.slice(1, 2).map((row, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {row.map((cell, cellIndex) => (
+                          <td key={cellIndex} className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               {requiredColumns.map(({ name: fixedColumn, required }) => (
@@ -371,13 +372,14 @@ export default function CSVUpload({
                       )}
                     </SelectContent>
                   </Select>
-                
                 </div>
               ))}
             </div>
 
             {!allColumnsMapped && (
-              <p className="mt-4 text-sm text-red-500">Please map all * marked columns before proceeding. | Unmarked columns will be enriched later </p>
+              <p className="mt-4 text-sm text-red-500">
+                Please map all * marked columns before proceeding. | Unmarked columns will be enriched later{" "}
+              </p>
             )}
           </div>
         )

@@ -71,7 +71,7 @@ const OmitLeads = ({ title, description }: OmitLeadsProps) => {
 
     switch (omitOption) {
       case "email":
-        endpoint = "https://api.workerai.co/leads/exclude"
+        endpoint = `${process.env.NEXT_PUBLIC_API_BASE_URL}/leads/exclude`
         payload = {
           targetId: sampleTargetId,
           data: [
@@ -84,7 +84,7 @@ const OmitLeads = ({ title, description }: OmitLeadsProps) => {
         }
         break
       case "companies":
-        endpoint = "https://api.workerai.co/leads/exclude/companies"
+        endpoint = `${process.env.NEXT_PUBLIC_API_BASE_URL}/leads/exclude/companies`
         payload = {
           targetId: sampleTargetId,
           data: [
