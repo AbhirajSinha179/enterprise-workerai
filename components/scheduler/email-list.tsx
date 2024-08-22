@@ -303,7 +303,7 @@ export function EmailList({ targetId }: EmailListProps) {
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>To enable this, please contact us on Slack or Email</p>
+                  <p>To disable this, please contact us on Slack or Email</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
