@@ -97,7 +97,7 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
               <Trash size={6} className="size-5" />
             </Button>
             <div className="space-x-4">
-              <Dialog>
+              {/* <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline">Edit</Button>
                 </DialogTrigger>
@@ -140,10 +140,10 @@ export default function EmailItem({ item, handleApprove, handleEdit, handleDelet
                     </DialogFooter>
                   </form>
                 </DialogContent>
-              </Dialog>
-              <Button onClick={() => handleApprove({ emailId: item.id })} className="h-10 min-w-fit cursor-pointer">
+              </Dialog> */}
+              {/* <Button onClick={() => handleApprove({ emailId: item.id })} className="h-10 min-w-fit cursor-pointer">
                 <span>Smart Schedule</span>
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>

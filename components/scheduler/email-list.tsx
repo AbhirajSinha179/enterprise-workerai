@@ -59,7 +59,7 @@ export function EmailList({ targetId }: EmailListProps) {
   const [error, setError] = useState<string | null>(null);
   const { userId } = useAuth();
 
-  
+
   const fetchUnscheduledEmails = async (targetId: string, limit: number, skip: number): Promise<UnscheduledEmailThread[]> => {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/unscheduled/${targetId}?limit=${limit}&offset=${skip}`;
     // console.log(url);
@@ -247,7 +247,7 @@ export function EmailList({ targetId }: EmailListProps) {
   useEffect(() => {
     handleFetchEmails(currentPage);
   }, [currentPage]);
-  
+
   if (!userId) {
     console.log("USER ID NOT FOUND ");
     toast.error("Error finding user ID");
@@ -309,9 +309,9 @@ export function EmailList({ targetId }: EmailListProps) {
             </TooltipProvider>
           </div>
           {/* <Button onClick={() => handleApproveAll("user_2jQ7lufOqU1WFrEsi2wG3B7zF70")}> */}
-          <Button onClick={() => handleApproveAll(userId)}>
+          {/* <Button onClick={() => handleApproveAll(userId)}>
             Approve and Smart Schedule All
-          </Button>
+          </Button> */}
         </div>
       </div>
       <ul className="my-4 w-full space-y-4">
