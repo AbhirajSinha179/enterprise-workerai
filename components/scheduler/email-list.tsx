@@ -97,7 +97,7 @@ export function EmailList({ targetId }: EmailListProps) {
       setFetchedEmails(emails);
     } catch (error: any) {
       setError(error.message);
-      toast.error(error.message);
+      toast.error("Error fetching emails");
     } finally {
       setLoading(false);
     }
@@ -171,7 +171,7 @@ export function EmailList({ targetId }: EmailListProps) {
     } catch (error: any) {
       console.error("Error deleting email:", error.message);
       toast("Failed to delete email", {
-        description: `Error: ${error.message}`,
+        description: "Please try again",
       });
     }
   };
@@ -239,7 +239,7 @@ export function EmailList({ targetId }: EmailListProps) {
     } catch (error: any) {
       console.error("Error approving all email drafts:", error.message);
       toast("Failed to approve all emails", {
-        description: `Error: ${error.message}`,
+        description: "Please try again",
       });
     }
   };
@@ -261,14 +261,19 @@ export function EmailList({ targetId }: EmailListProps) {
     );
   }
 
-  if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center">
-        <p className="text-red-500">Error: {error}</p>
-        <p>Please try again later or contact support if the problem persists.</p>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     // <div className="flex flex-col items-center justify-center">
+  //     //   <p className="text-red-500">Error: {error}</p>
+  //     //   <p>Please try again later or contact support if the problem persists.</p>
+  //     // </div>
+  //     <EmptyState
+  //       headerMessage="No pending Emails"
+  //       containerMessage="Go to Scheduled to check currently scheduled emails"
+  //       icon={<ClockIcon size={80} />}
+  //     />
+  //   );
+  // }
 
   if (!fetchedEmails.length) {
     return (
