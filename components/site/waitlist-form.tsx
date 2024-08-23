@@ -25,7 +25,7 @@ export const WaitlistForm = () => {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="mt-12 inline-flex max-w-3xl relative left-1/2 -translate-x-1/2 items-center justify-center gap-2"
+      className="mt-12 flex max-w-3xl relative left-1/2 -translate-x-1/2 items-center justify-center gap-2"
     >
       <InputSpotlightBorder
         type="email"
@@ -36,7 +36,7 @@ export const WaitlistForm = () => {
       <Button
         variant="secondary"
         type="submit"
-        className="inline-flex h-12 min-w-fit flex-[0.5] animate-shimmer items-center justify-center
+        className="inline-flex h-12 min-w-fit flex-1 sm:flex-[0.5] animate-shimmer items-center justify-center
                   rounded-md border bg-[length:200%_100%] px-6 font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-offset-1
                 dark:border-slate-800 dark:bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] dark:text-slate-300 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-50"
       >

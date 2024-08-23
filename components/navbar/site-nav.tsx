@@ -6,15 +6,13 @@ import Link from "next/link"
 // import { Button } from "../ui/button"
 import { WorkerAILogo } from "../global/logo"
 
-// TODO need to check nav background for transparency issue
-
 export function SiteNav() {
   return (
     <header
       className={`dark:supports-backdrop-blur:bg-background/60 supports-backdrop-blur:bg-background/70 sticky top-0 z-20 mx-auto w-full border-none backdrop-blur-sm dark:backdrop-filter-none`}
     >
       <div className="absolute -z-10 block size-full bg-gradient-to-t from-transparent to-black/90 bg-blend-overlay md:to-black/60 "></div>
-      <div className="mx-2 flex h-20 max-w-6xl items-center justify-between sm:mx-auto sm:p-2">
+      <div className="mx-4 flex h-20 max-w-6xl items-center justify-between sm:mx-auto sm:p-2">
         <div className="flex items-center space-x-4 lg:space-x-0 rtl:space-x-reverse">
           {/* <SheetMenu /> */}
           <Link href={"/"} className="flex items-center space-x-2">
@@ -22,12 +20,12 @@ export function SiteNav() {
             <h1 className="text-lg font-bold sm:block md:text-2xl">WorkerAI</h1>
           </Link>
         </div>
-        <div className="hidden w-full items-center justify-between md:flex md:w-auto md:gap-8">
+        <div className="items-center justify-between md:w-auto md:gap-8">
           <ul className="hidden md:mt-0 md:flex md:space-x-8 md:border-0 rtl:space-x-reverse">
             <li className="ml-4 inline-block">
               <Link
                 href="/about"
-                className="relative block w-fit font-semibold text-foreground after:absolute after:block after:h-[3px] after:w-full after:origin-right after:scale-x-0 after:bg-white after:transition after:duration-300 after:content-[''] after:hover:origin-left after:hover:scale-x-100"
+                className="underline-animated"
               >
                 About
               </Link>
@@ -35,7 +33,7 @@ export function SiteNav() {
             <li className="inline-block">
               <Link
                 href="/blog"
-                className="relative block w-fit font-semibold text-foreground after:absolute after:block after:h-[3px] after:w-full after:origin-right after:scale-x-0 after:bg-white after:transition after:duration-300 after:content-[''] after:hover:origin-left after:hover:scale-x-100"
+                className="underline-animated"
               >
                 Blog
               </Link>
@@ -43,7 +41,7 @@ export function SiteNav() {
             <li className="ml-4 inline-block">
               <Link
                 href="/pricing"
-                className="relative block w-fit font-semibold text-foreground after:absolute after:block after:h-[3px] after:w-full after:origin-right after:scale-x-0 after:bg-white after:transition after:duration-300 after:content-[''] after:hover:origin-left after:hover:scale-x-100"
+                className="underline-animated"
               >
                 Pricing
               </Link>
