@@ -151,9 +151,7 @@ const DashboardHome: React.FC = () => {
         const dashboardData = await fetchDashboardDataUsingRange("userId", userId, startDate, endDate)
         // dummy userId
         // const dashboardData = await fetchDashboardDataUsingRange("userId", "user_2jQ7lufOqU1WFrEsi2wG3B7zF70", startDate, endDate);
-        // console.log("TAGGG", dashboardData);
         // const targetId: any = await getTargetIdByUser(userId);
-        // const targetId: any = "1c1108a8-9108-42e2-8177-4e655bbc87ed"
         // const recentReplies = await fetchRecentReply(targetId);
 
         // Destructuring dashboardData
@@ -170,14 +168,7 @@ const DashboardHome: React.FC = () => {
         setOpenRate(openRate)
         setResponseRate(responseRate)
         setResponseStatus(200)
-        setDataGraph(
-          data.map((item) => ({
-            name: moment(item.date).format("YYYY-MM-DD"),
-            uv: item.opens,
-            pv: item.total_emails,
-            amt: item.total_unique_emails,
-          }))
-        )
+        setDataGraph(data)
         setIsLoading(false)
       } catch (error: any) {
         if (error.message.includes("Status code: 404")) {
@@ -248,7 +239,7 @@ const DashboardHome: React.FC = () => {
             <div>
               <div className="my-4 flex gap-x-4">
                 {cardConfigs.map((config) => (
-                  <Card className="overflow-x-auto w-full" key={config.title}>
+                  <Card className="w-full overflow-x-auto" key={config.title}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <CardTitle className="text-sm font-medium text-muted-foreground">{config.title}</CardTitle>
                       <config.icon className={`size-4 text-${config.className}`} width={24} height={24} />
