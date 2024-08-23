@@ -41,14 +41,17 @@ const Footer = () => {
               dolore magna aliqua.
             </p>
 
-            <div className="mt-10 flex-row hover:cursor-pointer ">
-              <Link href="mailto:hello@workerai.co" target="_blank">
-                <Button variant="link" size={"useLink"}>
-                  hello@workerai.co
-                </Button>
+            <div className="mt-10 flex gap-4 flex-col">
+
+              <Link
+                href="mailto:hello@workerai.co"
+                className="underline-animated mx-auto text-center md:mx-0 md:text-left"
+                target="_blank"
+              >
+                hello@workerai.co
               </Link>
 
-              <div className="mt-2 flex flex-row justify-center sm:justify-start">
+              <div className="flex flex-row justify-center sm:justify-start">
                 <Link href="https://www.linkedin.com/company/workerai/" target="_blank" rel="noopener noreferrer">
                   <LinkedInLogoIcon className="mr-4 size-6 transition-transform hover:scale-125" />
                 </Link>
@@ -64,14 +67,13 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          {footerLinks.map(({ title, links }) => {
-            return (
+          {footerLinks.map(({ title, links }) => (
               <div key={title} className="sm:col-span-3 lg:col-span-1">
-                <h3 className="mb-2 text-2xl font-bold">{title}</h3>
-                <ul className="text-md space-y-3 ">
+                <h3 className="mb-4 text-2xl font-bold">{title}</h3>
+                <ul className="text-md space-y-3">
                   {links.map((link) => (
                     <li key={link.name}>
-                      <div className="hover:text-muted-foreground  ">
+                      <div className="underline-animated mx-auto text-center md:mx-0 md:text-left">
                         <Link href={link.href}>{link.name}</Link>
                       </div>
                     </li>
@@ -79,7 +81,7 @@ const Footer = () => {
                 </ul>
               </div>
             )
-          })}
+          )}
         </div>
 
         <div className="mx-auto max-w-screen-xl py-2">

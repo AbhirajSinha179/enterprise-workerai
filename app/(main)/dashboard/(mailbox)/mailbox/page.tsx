@@ -22,7 +22,8 @@ const getMails = async (userId: string) => {
     return null;
   }
   const data = await res.json()
-  return data 
+  // const result = mailboxSchema.safeParse(data);
+  return data
 }
 
 export default async function MailboxPage() {

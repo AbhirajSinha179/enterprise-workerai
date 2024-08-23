@@ -6,7 +6,7 @@ import { Thread, threadsSchema } from "@/types/interface"
 
 const getData = async (targetId: string) => {
   try {
-    const res = await fetch(`http://localhost:3000/emails/thread/target/${targetId}`, {
+    const res = await fetch(`https://api.workerai.co/emails/thread/target/${targetId}`, {
       method: "GET",
       cache:"no-cache"
     })

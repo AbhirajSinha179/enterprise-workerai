@@ -5,7 +5,7 @@ import { DarkModeWrapper } from "@/providers/force-dark-provider"
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <DarkModeWrapper>
-      <div className="bg-black">
+      <div>
         <SiteNav />
         {children}
         <Footer />
