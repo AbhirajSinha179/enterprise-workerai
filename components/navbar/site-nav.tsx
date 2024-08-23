@@ -20,7 +20,7 @@ export function SiteNav() {
             <h1 className="text-lg font-bold sm:block md:text-2xl">WorkerAI</h1>
           </Link>
         </div>
-        <div className="items-center justify-between md:w-auto md:gap-8">
+        <div className="flex items-center justify-between md:w-auto md:gap-8">
           <ul className="hidden md:mt-0 md:flex md:space-x-8 md:border-0 rtl:space-x-reverse">
             <li className="ml-4 inline-block">
               <Link

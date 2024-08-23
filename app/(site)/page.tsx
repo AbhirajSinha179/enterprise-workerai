@@ -150,9 +150,9 @@ export default function Web() {
       <section className="relative min-h-screen">
         <div className="mx-auto grid px-6 py-8 md:text-center md:my-20 lg:py-16">
           <div className="mx-auto grid min-h-[60vh] place-content-center sm:min-h-[50vh]">
-            <h1 className="mb-12 max-w-6xl text-5xl leading-none tracking-tight dark:text-white md:text-5xl lg:mb-12 xl:text-7xl">
+            <h1 className="mb-12 max-w-4xl text-5xl leading-none tracking-tight md:text-5xl lg:mb-12 xl:text-7xl">
               Hyper-scale your Outbounds with{" "}
-              <span className="inline-flex animate-text-gradient bg-gradient-to-l from-[#b2a8fd] via-[#8678f9] to-[#c7d2fe] bg-[200%_auto] bg-clip-text text-transparent">
+              <span className="inline-flex animate-text-gradient bg-gradient-to-b from-[#b2a8fd] via-[#8678f9] to-[#c7d2fe] bg-[200%_auto] bg-clip-text text-transparent">
                 WorkerAI
               </span>
             </h1>
