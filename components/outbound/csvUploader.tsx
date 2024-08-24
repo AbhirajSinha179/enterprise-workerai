@@ -177,9 +177,9 @@ export default function CSVUpload({
     })
 
     const payload = {
-      data: mappedData.map((r) => ({ ...r, email: r.email?.replaceAll("@", "_at_").concat("@workerai-growth.com") })),
+      data: mappedData,
       force: force,
-      targetId: await getTargetIdByUser(userId!), //fetch from environment
+      targetId: await getTargetIdByUser(userId!), 
     }
 
     console.log(payload)
