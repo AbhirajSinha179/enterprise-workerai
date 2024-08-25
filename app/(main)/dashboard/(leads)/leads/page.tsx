@@ -1,7 +1,7 @@
 import { ContentLayout } from "@/components/layout/content-layout"
 import { columns } from "@/components/leads/columns"
 import { DataTable } from "@/components/leads/data-table"
-import leadsData from "../data/leads"
+
 import { auth } from "@clerk/nextjs/server"
 // import {
 //   Breadcrumb,

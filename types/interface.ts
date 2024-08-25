@@ -433,3 +433,5 @@ export const mailboxSchema = z.object({
 })
 
 export const mailboxSchemaArray = z.array(mailboxSchema)
+
+export const instantReplyResponseSchema = z.object({ message: z.string(), emailId: z.string().uuid(), email: z.array(emailSchema) })
