@@ -346,10 +346,10 @@ export interface StatDashboard {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
 }
 export interface DataGraph {
-  name: string
-  uv: number
-  pv: number
-  amt: number
+  date: string
+  opens: number
+  total_emails: number
+  total_unique_emails: number
 }
 export interface SalesDataItem {
   name: string

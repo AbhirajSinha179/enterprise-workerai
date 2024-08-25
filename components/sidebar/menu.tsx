@@ -106,7 +106,7 @@ export function Menu({ isOpen }: MenuProps) {
                 <MailIcon />
                 <Link href="mailto:hello@workerai.co" target="_blank">
                   <Button variant="link" size={"useLink"}>
-                    <h1 className="text-base text-foreground font-semibold">help@workerai.co</h1>
+                    <h1 className="text-base font-semibold">help@workerai.co</h1>
                   </Button>
                 </Link>
               </div>
