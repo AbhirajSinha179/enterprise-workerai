@@ -3,6 +3,8 @@ import { columns } from "@/components/leads/columns"
 import { DataTable } from "@/components/leads/data-table"
 
 import { auth } from "@clerk/nextjs/server"
+import { z } from "zod"
+import { leadsSchema } from "../data/schema"
 // import {
 //   Breadcrumb,
 //   BreadcrumbItem,
@@ -32,8 +34,8 @@ async function getLeads() {
   }
   const leads = await fetch(`${process.env.BASE_API_URL}/leads?targetId=${targetId}`)
   const leadsData = await leads.json()
-  console.log(leadsData)
-  return leadsData
+  const ld = z.array(leadsSchema).parse(leadsData)
+  return ld
 }
 
 export default async function Leads() {
