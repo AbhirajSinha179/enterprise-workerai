@@ -1,5 +1,5 @@
 import { MoreVertical, Reply as ReplyIcon } from "lucide-react"
-import { useState } from "react"
+import { use, useEffect, useState } from "react"
 import { toast } from "sonner"
 import MailTimelineItem from "@/components/inbox/thread-item"
 import { Button } from "@/components/ui/button"
@@ -12,24 +12,21 @@ import { ScrollArea } from "../ui/scroll-area"
 import { Textarea } from "../ui/textarea"
 import { Timeline } from "../ui/timeline"
 
-
-
 export function MailDisplay({ threadData }: MailDisplayProps) {
   const [replyContent, setReplyContent] = useState<string>("")
+  const [threadContent, setThreadContent] = useState<CombinedMail[]>([])
+  // const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || []
+  // if (threadData?.replies) {
+  //   threadData.replies.forEach((r: Reply) => {
+  //     thread.push({ type: "REPLY", data: r })
+  //   })
+  // }
 
-  const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || []
-  if (threadData?.replies) {
-    threadData.replies.forEach((r: Reply) => {
-      thread.push({ type: "REPLY", data: r })
-    })
-  }
-
-  thread.sort((a, b) => {
-    const dateA = (a.type == "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
-    const dateB = (b.type == "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
-    return new Date(dateA).getTime() - new Date(dateB).getTime()
-  })
-
+  // thread.sort((a, b) => {
+  //   const dateA = (a.type == "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
+  //   const dateB = (b.type == "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
+  //   return new Date(dateA).getTime() - new Date(dateB).getTime()
+  // })
 
   const handleReplyChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReplyContent(event.target.value)
@@ -40,8 +37,10 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
     if (!replyContent.trim()) return
 
     try {
-      const result = await submitReplyContent(replyContent)
-      console.log("Reply submitted:", result)
+      const result = await submitReplyContent(replyContent, threadData?.threadId!)
+      setThreadContent((t) => {
+        return [...t, { type: "REPLY", data: result.email[0]! }]
+      })
       toast.success("Message sent successfully!")
       setReplyContent("")
     } catch (error) {
@@ -49,6 +48,23 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
       toast.error("Failed to send the message.")
     }
   }
+
+  useEffect(() => {
+    const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || []
+    if (threadData?.replies) {
+      threadData.replies.forEach((r: Reply) => {
+        thread.push({ type: "REPLY", data: r })
+      })
+    }
+
+    thread.sort((a, b) => {
+      const dateA = (a.type == "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
+      const dateB = (b.type == "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
+      return new Date(dateA).getTime() - new Date(dateB).getTime()
+    })
+
+    setThreadContent(thread)
+  }, [threadData])
 
   return (
     <div className="flex h-full flex-col">
@@ -79,17 +95,17 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
         </DropdownMenu>
       </div>
       <Separator className="bg-card" />
-      {thread && thread.length >0 ? (
+      {threadContent && threadContent.length > 0 ? (
         <div className="flex flex-1 flex-col justify-between">
           <div className="mx-4">
             <ScrollArea className="h-[60vh]">
               <Timeline>
-                {thread.map((message: CombinedMail, index: number) => (
+                {threadContent.map((message: CombinedMail, index: number) => (
                   <MailTimelineItem
                     key={message.data.id}
                     mail={message.data}
                     showLine={true}
-                    isLast={index === thread.length - 1}
+                    isLast={index === threadContent.length - 1}
                     showSubject={index === 0}
                   />
                 ))}

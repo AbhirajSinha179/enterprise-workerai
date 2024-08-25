@@ -1,4 +1,8 @@
 "use server"
+
+import { instantReplyResponseSchema} from "@/types/interface"
+
+
 // import { auth, clerkClient } from "@clerk/nextjs/server"
 
 // // ! NOT USING THIS ACTION AS OF NOW, CLERK ONBOARDING ROUTING IS NOT WORKING WITH MIDDLEWARE CURRENTLY
@@ -137,23 +141,21 @@ export async function submitLocations(data: string[]) {
   }
 }
 
-export async function submitReplyContent(text: string) {
+export async function submitReplyContent(text: string, threadId: string) {
   try {
-    const response = await fetch("http://localhost:3000/threads/upload-message/", {
+    const response = await fetch(`${process.env.BASE_API_URL}/emails/reply/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ Text: [text] }),
+      body: JSON.stringify({ reply: text, threadId: threadId }),
     })
-
     if (!response.ok) {
       throw new Error(`Error: ${response.statusText}`)
     }
 
     const result = await response.json()
-    console.log("Success:", result)
-    return result
+    return instantReplyResponseSchema.parse(result)
   } catch (error) {
     console.error("Error:", error)
     throw error
