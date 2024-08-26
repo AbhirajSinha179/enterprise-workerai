@@ -184,15 +184,35 @@ export default function EmailGen() {
                                         </SelectContent>
                                     </Select>
                                 </div>
+                                <div className="relative group z-10 my-4">
+                                    <Separator />
+                                    <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4 -mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full justify-center">
+                                        <Button
+                                            type="button"
+                                            onClick={() => addParaInput(true, -1)}
+                                        >
+                                            Prompt
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            onClick={() => addParaInput(false, -1)}
+                                        >
+                                            String
+                                        </Button>
+                                    </div>
+                                </div>
                                 {paraInputs.map((index, position) => (
+
+
                                     <div key={index}>
+
                                         <ParaInput
                                             index={index}
                                             onDelete={deleteParaInput}
                                             placeholderText={placeholderTexts[index] || ""}
                                             showOutput={renderOutputs[index] || false}
                                         />
-                                        <div className="relative group z-10 my-8">
+                                        <div className="relative group z-10 my-4">
                                             <Separator />
                                             <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4 -mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full justify-center">
                                                 <Button

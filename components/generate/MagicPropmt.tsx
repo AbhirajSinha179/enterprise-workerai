@@ -31,7 +31,7 @@ const MagicPrompt = ({ index, onDelete }: ParaInputProps) => {
     };
 
     return (
-        <div className="my-4 border-2 p-4 rounded-md relative group border-primary/25">
+        <div className="my-4 border-2 p-4 rounded-md relative group border-primary/40">
             <div className="col-span-full">
                 <div className="flex flex-row justify-between mb-4">
                     <div className="flex flex-row gap-x-3 items-center">

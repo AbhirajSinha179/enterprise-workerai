@@ -48,6 +48,7 @@ const ParaInput = ({ showOutput, placeholderText, index, onDelete }: ParaInputPr
     });
 
     const [isPlaying, setIsPlaying] = useState(false);
+    console.log("THE TEXT TO BE PLACED IS :", placeholderText)
 
     const onSubmit = (data: z.infer<typeof FormSchema>) => {
         console.log("Submitted Data:", data);
@@ -60,7 +61,9 @@ const ParaInput = ({ showOutput, placeholderText, index, onDelete }: ParaInputPr
     };
 
     return (
-        <div className="my-4 border-2 p-4 rounded-md relative group">
+        <div className={`my-4 p-4 rounded-md relative group border-2 ${!placeholderText || placeholderText === "prompt" ? "border-primary/25" : "border-primary/10"}`}>
+
+
             <div className="col-span-full">
                 <div className="flex flex-row justify-between mb-4">
                     <div className="flex flex-row gap-x-3 items-center">
@@ -72,7 +75,7 @@ const ParaInput = ({ showOutput, placeholderText, index, onDelete }: ParaInputPr
                         </h1> */}
                         <h3 className="text-2xl font-semibold leading-none tracking-tight my-2">
                             {/* Para {index} */}
-                            Para {index}
+                            Para
                         </h3>
                     </div>
                     <Button variant={'ghost'} onClick={() => onDelete(index)}>
@@ -81,7 +84,7 @@ const ParaInput = ({ showOutput, placeholderText, index, onDelete }: ParaInputPr
                 </div>
                 <div className="flex mx-2 w-full">
                     <Textarea
-                        placeholder={placeholderText}
+                        placeholder={placeholderText || "prompt"}
                         className="h-[50px] w-full"
                     />
                 </div>
