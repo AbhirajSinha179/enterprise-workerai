@@ -2,7 +2,8 @@
 "use client"
 
 import { InboxIcon, MailOpenIcon, Search } from "lucide-react"
-import * as React from "react"
+// import * as React from "react"
+import React, { useEffect } from "react";
 import EmptyState from "@/components/global/empty-state" // Ensure this import is correct
 import { MailDisplay } from "@/components/inbox/mail-display"
 import { MailList } from "@/components/inbox/mail-list"
@@ -30,8 +31,15 @@ import { notFound } from "next/navigation"
 const MAX_INBOX_HEIGHT = 680
 
 export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
-  const { config } = useMail()
+  const { config, setConfig } = useMail()
   const [selectedView, setSelectedView] = React.useState("last24Hours")
+  useEffect(() => {
+    setConfig((prevConfig) => ({
+      ...prevConfig,
+      selected: null,
+    }));
+  }, [selectedView, setConfig]);
+
   if (!threads) return notFound()
 
   return (
@@ -44,7 +52,10 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
         className={cn("h-full items-stretch", `max-h-[${MAX_INBOX_HEIGHT}px]`)}
       >
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-          <Tabs defaultValue="all">
+          <Tabs defaultValue="all"
+            onValueChange={(value) => setSelectedView(value)}
+          >
+
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Inbox</h1>
               <TabsList className="ml-auto">
