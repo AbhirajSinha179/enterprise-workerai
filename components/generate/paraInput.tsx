@@ -72,7 +72,7 @@ const ParaInput = ({ showOutput, placeholderText, index, onDelete }: ParaInputPr
                         </h1> */}
                         <h3 className="text-2xl font-semibold leading-none tracking-tight my-2">
                             {/* Para {index} */}
-                            Para
+                            Para {index}
                         </h3>
                     </div>
                     <Button variant={'ghost'} onClick={() => onDelete(index)}>
