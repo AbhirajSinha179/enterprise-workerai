@@ -52,7 +52,7 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
               </div>
               <div className="text-md font-medium">{item.email.subject}</div>
             </div>
-            <div className="text-xs text-foreground">{item.email.body}</div>
+            <div className="text-xs text-foreground whitespace-pre-wrap">{item.email.body}</div>
           </div>
         ))}
       </ul>

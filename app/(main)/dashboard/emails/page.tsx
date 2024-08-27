@@ -81,8 +81,7 @@ export default function Emails() {
         </TabsList>
 
         <TabsContent value="pending" className="space-y-4">
-          {/* <EmailList targetId={targetId || "1c1108a8-9108-42e2-8177-4e655bbc87ed"} /> */}
-          <EmailList targetId={targetId || ""} />
+          <EmailList targetId={targetId!} />
         </TabsContent>
 
         <TabsContent value="scheduled" className="space-y-4">

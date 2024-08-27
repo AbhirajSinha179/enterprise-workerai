@@ -15,7 +15,7 @@ export default function OutboundSetting() {
           key="upload-custom-leads"
           title="Upload Custom Leads (CSV)"
           description="Lorem, ipsum dolor sit amet consectetur adipisicing"
-          endpoint="https://api.workerai.co/leads"
+          endpoint={`${process.env.NEXT_PUBLIC_API_BASE_URL}/leads`}
           verification
           requiredColumns={[
             { name: "email", required: true },
