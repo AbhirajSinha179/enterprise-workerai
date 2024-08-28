@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server"
+import { auth, currentUser } from "@clerk/nextjs/server"
 import Link from "next/link"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { DataTable } from "@/components/leads/data-table"
@@ -17,9 +17,12 @@ import { Button } from "@/components/ui/button"
 // }
 
 const getMails = async (userId: string) => {
-  const res = await fetch(`${process.env.BASE_API_URL}/user/email-address/${userId}`, { cache: "no-cache" })
+  const res = await fetch(`${process.env.BASE_API_URL}/user/email-address/${userId}`, {
+    cache: "no-cache",
+    headers: { Authorization: `Bearer ${await auth().getToken()}` },
+  })
   if (!res.ok) {
-    return null;
+    return null
   }
   const data = await res.json()
   // const result = mailboxSchema.safeParse(data);

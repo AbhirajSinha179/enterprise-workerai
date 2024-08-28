@@ -10,8 +10,10 @@ const getData = async (targetId: string) => {
     const res = await fetch(`${process.env.BASE_API_URL}/emails/thread/target/${targetId}`, {
       method: "GET",
       cache: "no-cache",
+      headers: { Authorization: `Bearer ${await auth().getToken()}` },
     })
     const data = await res.json()
+    console.log(data)
     const result = threadsSchema.parse(data)
     return result
   } catch (error) {
@@ -22,7 +24,9 @@ const getData = async (targetId: string) => {
 
 const getTargetId = async (userId: string) => {
   const url = `${process.env.BASE_API_URL}/user/target/${userId}`
-  const res = await fetch(url)
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${await auth().getToken()}` },
+  })
   const data: any = await res.json()
   if (!data.targets || data.targets.length === 0) {
     return null
@@ -35,7 +39,7 @@ const getTargetId = async (userId: string) => {
 export default async function InboxPage() {
   const { userId } = auth()
   try {
-    const targetId = await getTargetId(userId!) 
+    const targetId = await getTargetId(userId!)
     const threadData = await getData(targetId)
     if (!threadData) {
       return (

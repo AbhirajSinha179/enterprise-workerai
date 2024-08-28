@@ -16,7 +16,9 @@ import { leadsSchema } from "../data/schema"
 
 const getTargetId = async (userId: string) => {
   const url = `${process.env.BASE_API_URL}/user/target/${userId}`
-  const res = await fetch(url)
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${await auth().getToken()}` },
+  })
   const data: any = await res.json()
   if (!data.targets || data.targets.length === 0) {
     return null
@@ -32,7 +34,9 @@ async function getLeads() {
   if (!targetId) {
     return []
   }
-  const leads = await fetch(`${process.env.BASE_API_URL}/leads?targetId=${targetId}`)
+  const leads = await fetch(`${process.env.BASE_API_URL}/leads?targetId=${targetId}`, {
+    headers: { Authorization: `Bearer ${await auth().getToken()}` },
+  })
   const leadsData = await leads.json()
   const ld = z.array(leadsSchema).parse(leadsData)
   return ld
