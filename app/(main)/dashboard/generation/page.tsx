@@ -20,6 +20,7 @@ import MagicPrompt from '@/components/generate/MagicPropmt';
 import { Trash } from 'lucide-react';
 import EmailItem from '@/components/scheduler/email-item';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { FancyArea } from '@/components/generate/fancyArea/fancy-area';
 
 const EMAIL_TONE = [
     { name: "Warm" },
@@ -319,6 +320,8 @@ export default function EmailGen() {
                                                     </div>
                                                     <div className="text-xs text-foreground">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas itaque ab impedit! Odio obcaecati voluptatem repellendus quaerat consequuntur iste odit commodi, sequi laudantium totam non sed minus adipisci quisquam aliquid.</div>
 
+
+
                                                 </div>
                                             </Card>
                                         </div>
@@ -328,6 +331,9 @@ export default function EmailGen() {
                                     </div>
 
                                 )}
+                                <div className='my-4'>
+                                    <FancyArea />
+                                </div>
                             </div>
                             <div className='bg-muted w-1/4 mx-4 h-fit'>
                                 <Card>
