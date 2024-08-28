@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/select"
 import MagicPrompt from '@/components/generate/MagicPropmt';
 import { Trash } from 'lucide-react';
+import EmailItem from '@/components/scheduler/email-item';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const EMAIL_TONE = [
     { name: "Warm" },
@@ -111,7 +113,7 @@ export default function EmailGen() {
     return (
         <ContentLayout title="Email Generation">
             <Tabs defaultValue="emails">
-                <div className="px-2 py-2 flex justify-between items-center">
+                <div className="px-2 py-2 flex justify-between items-center w-3/4">
                     <div className='flex justify-start'>
                         <TabsList className="ml-auto">
                             <TabsTrigger value="emails">Emails</TabsTrigger>
@@ -121,8 +123,16 @@ export default function EmailGen() {
                                 </TabsTrigger>
                             ))}
                         </TabsList>
+
+                    </div>
+                    <div className='flex justify-end mx-4'>
                         <Button onClick={addNewTab} className="ml-4" variant={"secondary"}>
                             Add Follow Up
+                        </Button>
+                        <Button onClick={() => {
+                            console.log("Reset button clicked")
+                        }} className="ml-4" variant={"secondary"}>
+                            Reset
                         </Button>
 
                     </div>
@@ -269,9 +279,51 @@ export default function EmailGen() {
                                             <Separator />
                                         </div>
 
-                                        <Textarea className='min-h-[300px] my-4'>
+                                        {/* <Textarea className='min-h-[300px] my-4'>
                                             {SAMPLE_GENERATED_OUTPUT}
-                                        </Textarea>
+                                        </Textarea> */}
+                                        <div>
+                                            <Card>
+                                                <div className="flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all">
+                                                    <div className="flex w-full flex-col gap-1">
+                                                        <div className="flex justify-between">
+                                                            <div className="text-2xl font-semibold flex">
+                                                                {/* {item.leadInfo.firstName}
+                                                                 */}
+                                                                Ayan
+                                                            </div>
+                                                            <div className="flex">
+                                                                <TooltipProvider>
+                                                                    <Tooltip>
+                                                                        <TooltipTrigger asChild>
+                                                                            <div>
+                                                                                {/* {item.status && renderStatusIcons(item.status)} */}
+                                                                            </div>
+                                                                        </TooltipTrigger>
+                                                                        <TooltipContent>
+                                                                            {/* <p>{item.status} Email sent</p> */}
+                                                                            <p>Email sent</p>
+                                                                        </TooltipContent>
+                                                                    </Tooltip>
+                                                                </TooltipProvider>
+
+                                                                <div className="flex items-center h-6 mx-2">
+                                                                    <Separator orientation="vertical" />
+                                                                </div>
+                                                                {/* <div className={cn("ml-auto")}>{format(new Date(item.createdAt), "PP")}</div> */}
+                                                                <div className="ml-auto">Aug 23, 2024</div>
+                                                            </div>
+                                                        </div>
+                                                        {/* <div className="text-md font-medium">{subject}</div> */}
+                                                        <div className="text-md font-medium">subject subject subject </div>
+                                                    </div>
+                                                    <div className="text-xs text-foreground">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas itaque ab impedit! Odio obcaecati voluptatem repellendus quaerat consequuntur iste odit commodi, sequi laudantium totam non sed minus adipisci quisquam aliquid.</div>
+
+                                                </div>
+                                            </Card>
+                                        </div>
+
+
 
                                     </div>
 
