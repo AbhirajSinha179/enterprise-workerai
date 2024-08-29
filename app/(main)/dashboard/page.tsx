@@ -124,8 +124,8 @@ const DashboardHome: React.FC = () => {
 
   // const [startDate, setStartDate] = useState<string>("2024-01-08T00%3A00%3A00.000Z");
   // const [endDate, setEndDate] = useState<string>("2024-07-26T23%3A59%3A59.000Z");
-  const [startDate, setStartDate] = useState<string>(moment().toISOString())
-  const [endDate, setEndDate] = useState<string>(moment().subtract(1, "months").toISOString())
+  const [startDate, setStartDate] = useState<string>(moment().subtract(1, "months").toISOString())
+  const [endDate, setEndDate] = useState<string>(moment().toISOString())
 
   const [statsDashboard, setStatsDashboard] = useState(defaultDashboardData)
   const [dataGraph, setDataGraph] = useState<DataGraph[]>([])
