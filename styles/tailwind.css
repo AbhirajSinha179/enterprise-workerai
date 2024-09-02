@@ -96,5 +96,5 @@ html {
 }
 
 .underline-animated {
-  @apply relative block w-fit font-semibold text-foreground after:absolute after:block after:h-[3px] after:w-full after:origin-right after:scale-x-0 after:bg-white after:transition after:duration-300 after:content-[''] after:hover:origin-left after:hover:scale-x-100
+  @apply relative block w-fit text-foreground after:absolute after:block after:h-[3px] after:w-full after:origin-right after:scale-x-0 after:bg-white after:transition after:duration-300 after:content-[''] after:hover:origin-left after:hover:scale-x-100
 }

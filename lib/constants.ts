@@ -153,6 +153,11 @@ export const MULTIDIRECTION_SLIDE_VARIANTS = {
   right: { opacity: 0, x: "25vw" },
 }
 
+export const FADE_DOWN_ANIMATION_VARIANTS = {
+  hidden: { opacity: 0, y: -10 },
+  show: { opacity: 1, y: 0, transition: { type: "spring" } },
+}
+
 export const wordVariants = {
   hidden: { opacity: 0 },
   visible: (i: any) => ({ y: 0, opacity: 1, transition: { delay: i * 0.1 } }),
