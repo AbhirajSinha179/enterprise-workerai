@@ -1,7 +1,5 @@
 import { Metadata } from "next"
 import Image from "next/image"
-import StaggeredFade from "@/components/site/staggered-fade"
-import { WaitlistForm } from "@/components/site/waitlist-form"
 import { landingConfig } from "@/lib/constants"
 import Landing from "@/components/site/landing"
 import { Features } from "@/components/site/features"
