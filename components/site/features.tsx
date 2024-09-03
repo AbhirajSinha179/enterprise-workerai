@@ -3,7 +3,7 @@
 export const Features = () => {
   return (
     <section>
-      <div className="font-geist relative mx-auto my-32 max-w-[1300px] rounded-none md:w-full md:border-[1.2px] xl:w-4/5 2xl:w-3/5">
+      <div className="font-geist relative mx-auto my-32 rounded-none md:w-full md:border-[1.2px] xl:w-4/5 ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -44,7 +44,7 @@ export const Features = () => {
             <div className="mt-10">
               <h2 className="text-center text-lg font-bold">Goodbye bad performance</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                We are constantly tweak firefox&nbps;s engine and settings to make it faster than ever.
+                We are constantly tweak firefox&apos;s engine and settings to make it faster than ever.
                 <a className="text-gray-50" href="https://docs.arc-browser.app/benchmarks" target="_blank">
                   Learn more
                 </a>
@@ -87,7 +87,7 @@ export const Features = () => {
             <div className="mt-10">
               <h2 className="text-center text-lg font-bold">Privacy first</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                We don&nbps;t track you. We don&nbps;t sell your data. We don&nbps;t even know who you are.
+                We don&apos;t track you. We don&apos;t sell your data. We don&apos;t even know who you are.
                 <a className="text-gray-50" href="/privacy-policy">
                   Learn more
                 </a>
@@ -161,7 +161,7 @@ export const Features = () => {
             <div className="mt-10">
               <h2 className="text-center text-lg font-bold">Goodbye bad performance</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                We are constantly tweak firefox&nbps;s engine and settings to make it faster than ever.
+                We are constantly tweak firefox&apos;s engine and settings to make it faster than ever.
                 <a className="text-gray-50" href="https://docs.arc-browser.app/benchmarks" target="_blank">
                   Learn more
                 </a>
@@ -192,7 +192,7 @@ export const Features = () => {
             <div className="mt-10">
               <h2 className="text-center text-lg font-bold">Goodbye bad performance</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                We are constantly tweak firefox&nbps;s engine and settings to make it faster than ever.
+                We are constantly tweak firefox&apos;s engine and settings to make it faster than ever.
                 <a className="text-gray-50" href="https://docs.arc-browser.app/benchmarks" target="_blank">
                   Learn more
                 </a>
@@ -238,7 +238,7 @@ export const Features = () => {
             <div className="mt-10">
               <h2 className="text-center text-lg font-bold">Goodbye bad performance</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                We are constantly tweak firefox&nbps;s engine and settings to make it faster than ever.
+                We are constantly tweak firefox&apos;s engine and settings to make it faster than ever.
                 <a className="text-gray-50" href="https://docs.arc-browser.app/benchmarks" target="_blank">
                   Learn more
                 </a>
@@ -281,9 +281,9 @@ export const Features = () => {
             <div className="left-0 top-0 flex h-full flex-col p-16 dark:[border:0.02px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] md:absolute md:px-32">
               <div className="flex flex-col md:flex-row">
                 <div className="relative">
-                  <h2 className="text-3xl font-bold">Compact mode is here!</h2>
+                  <h2 className="text-3xl font-bold">Email Gen coming soon!</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    With a new compact mode, you can save space and focus on what matters.
+                    Create your own personalised emails with our Email Gen feature.
                   </p>
                   <div className="absolute right-0 top-[-10px] rotate-[10deg] transform rounded-md bg-blue-600 p-1 px-2 text-xs text-white">
                     Killer feature
@@ -291,7 +291,7 @@ export const Features = () => {
                 </div>
                 <a href="/download">
                   <button className="ml-4 mt-4 inline-flex h-9 items-center justify-center whitespace-nowrap rounded-full bg-primary p-5 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-                    Download arc now!
+                    Take a tour!
                   </button>
                 </a>
               </div>

@@ -1,17 +1,20 @@
+"use client";
 import { SignedIn, SignedOut, SignInButton, ClerkLoaded, ClerkLoading } from "@clerk/nextjs"
 import Link from "next/link"
-// import { ModeToggle } from "@/components/global/mode-toggle"
-// import { UserNav } from "@/components/admin-panel/user-nav"
-// import { SheetMenu } from "@/components/sidebar/sheet-menu"
-// import { Button } from "../ui/button"
 import { WorkerAILogo } from "../global/logo"
 import { LoadingSpinner } from "../ui/spinner"
-import { Button } from "../ui/button"
+import { motion } from "framer-motion"
 
 export function SiteNav() {
   return (
     <>
-      <nav className="animate-header-slide-down-fade sticky top-0 z-30 w-full border-b border-white/10 py-3 transition duration-200 ease-in-out md:bg-transparent md:backdrop-blur-sm">
+      <motion.nav
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ opacity: 1 }}
+        transition={{ ease: [0.17, 0.67, 0.83, 0.67], duration: 0.8 }}
+        className="animate-header-slide-down-fade sticky top-0 z-30 w-full border-b border-white/10 py-3 transition duration-200 ease-in-out bg-transparent backdrop-blur-sm"
+      >
         <div className="lg:max-w-7xl mx-auto hidden h-[58px] w-full flex-row items-center justify-between px-6 md:flex md:max-w-full">
           <a className="flex w-[100px] items-center gap-2 pt-10 md:pt-0 lg:w-[180px]" href="/">
             <WorkerAILogo />
@@ -58,7 +61,7 @@ export function SiteNav() {
           </a>
           <div className="flex gap-4">{/* add clerk sign in button */}</div>
         </div>
-      </nav>
+    </motion.nav>
     </>
   )
 }
