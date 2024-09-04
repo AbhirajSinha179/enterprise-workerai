@@ -1,8 +1,10 @@
 "use client"
 
-import { FADE_UP_ANIMATION_VARIANTS, landingConfig } from "@/lib/constants"
+import { FADE_UP_ANIMATION_VARIANTS, landingConfig, MESSAGE_BUBBLE_QUESTIONS } from "@/lib/constants"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { Button, ButtonProps } from "../ui/button"
+import { cn } from "@/lib/utils"
 
 const GradientSeparator = () => (
   <>
@@ -13,7 +15,7 @@ const GradientSeparator = () => (
 export const Problems = () => {
   return (
     <section id="features" className="container relative my-12 sm:mt-32">
-      <div className="mx-auto grid max-w-6xl place-content-center gap-4 text-center lg:mb-8">
+      <div className="mx-auto grid place-content-center gap-4 text-center lg:mb-8">
         <div className=" relative mx-auto my-6 max-w-screen-2xl after:absolute after:inset-0 ">
           <motion.div
             initial="hidden"
@@ -59,15 +61,12 @@ export const Problems = () => {
           >
             Sales is challenging.
           </motion.h1>
-          <motion.p variants={FADE_UP_ANIMATION_VARIANTS} className="text-sm md:text-lg">
+          <motion.p variants={FADE_UP_ANIMATION_VARIANTS} className="mb-8 text-sm md:text-lg mx-auto max-w-4xl">
             Managing leads, tracking interactions, and nurturing prospects can be overwhelming, time-consuming, and
-            expensive. When you&apos;re dealing with thousands of potential customers across multiple channels, it
-            becomes incredibly complex.
+            expensive. 
           </motion.p>
+          <AnimatedMessageBubbles />
         </motion.div>
-        <div className="">
-          
-        </div>
       </div>
       <motion.div
         initial="hidden"
@@ -81,7 +80,7 @@ export const Problems = () => {
             },
           },
         }}
-        className="mx-auto my-6 max-w-4xl rounded-2xl border-transparent bg-white shadow-xl shadow-input transition duration-200 dark:border-white/[0.2] dark:bg-black dark:shadow-none"
+        className="mx-auto my-12 max-w-4xl rounded-2xl border-transparent bg-white px-4 shadow-xl shadow-input transition duration-200 dark:border-white/[0.2] dark:bg-black dark:shadow-none"
       >
         <Image
           src={landingConfig.featureSection.imageUri}
@@ -106,7 +105,11 @@ export const Problems = () => {
         className="mx-auto grid max-w-7xl place-content-center gap-12 p-4 md:my-48 md:grid-cols-3"
       >
         {landingConfig.featureSection.features.map((feature) => (
-          <motion.div variants={FADE_UP_ANIMATION_VARIANTS} key={feature?.title} className="flex flex-1 items-center gap-x-4">
+          <motion.div
+            variants={FADE_UP_ANIMATION_VARIANTS}
+            key={feature?.title}
+            className="flex flex-1 items-center gap-x-4"
+          >
             <GradientSeparator />
             <div>
               <p className="flex-1 grow md:text-lg">{feature?.description}</p>
@@ -115,5 +118,49 @@ export const Problems = () => {
         ))}
       </motion.div>
     </section>
+  )
+}
+
+const AnimatedMessageBubbles = () => {
+
+
+  const getRandomDelay = () => Math.random() * 0.8 + 0.2 // Random delay between 0.2 and 1
+  const getRandomDuration = () => Math.random() * 0.3 + 0.3 // Random duration between 0.3 and 0.6
+
+  return (
+    <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 px-8">
+      {MESSAGE_BUBBLE_QUESTIONS.map((item, index) => (
+        <motion.div
+          key={index}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0, y: 30 },
+            show: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                delay: getRandomDelay(),
+                duration: getRandomDuration(),
+              },
+            },
+          }}
+          className=" "
+        >
+          <EyeCatchingButton className="min-w-32">{item}</EyeCatchingButton>
+        </motion.div>
+      ))}
+    </div>
+  )
+}
+
+export const EyeCatchingButton = ({ ...props }: ButtonProps) => {
+  return (
+    <Button
+      {...props}
+      variant="outline"
+      className={cn("font-base font-geist rounded-xl bg-[length:300%] text-lg tracking-wide", props.className)}
+    />
   )
 }
