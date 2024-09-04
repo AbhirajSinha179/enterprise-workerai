@@ -124,7 +124,7 @@ export const Problems = () => {
 const AnimatedMessageBubbles = () => {
 
 
-  const getRandomDelay = () => Math.random() * 0.8 + 0.2 // Random delay between 0.2 and 1
+  const getRandomDelay = () => Math.random() * 0.8 +0.1 // Random delay between 0.2 and 1
   const getRandomDuration = () => Math.random() * 0.3 + 0.3 // Random duration between 0.3 and 0.6
 
   return (
