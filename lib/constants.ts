@@ -125,7 +125,25 @@ export const MESSAGE_BUBBLE_QUESTIONS = [
     "What is the best platform for researching prospects?",
 
     "How can I automate and scale outbound emails?",
-  ]
+]
+  
+export const ABOUT_US_SECTIONS = [
+  {
+    title: "Our Mission",
+    description:
+      "At Worker AI, our mission is to revolutionize the outbound sales process by automating the entire workflow using cutting-edge AI technology. We empower businesses to scale personalized outreach efforts, targeting the right prospects with hyper-personalized emails, optimized follow-ups, and seamless deliverability.",
+  },
+  {
+    title: "Our Vision",
+    description:
+      "We envision a future where businesses of any size can harness the power of AI to streamline their sales process, build stronger relationships with clients, and grow faster without compromising personalization. Our goal is to become the go-to platform for AI-driven sales automation, replacing traditional, time-consuming methods.",
+  },
+  {
+    title: "Our Story",
+    description:
+      "Worker AI started with a simple yet powerful idea: What if AI could not just assist in sending emails, but automate the entire outbound sales process? Born out of a need to solve real-world challenges faced by businesses trying to scale their outreach, Worker AI was founded by a team of passionate individuals who combine expertise in AI, technology, and sales to create a transformative product. We're driven by the belief that businesses should focus more on relationships, not the technicalities of sales outreach",
+  },
+]
 
 export const landingConfig = {
   hero: {

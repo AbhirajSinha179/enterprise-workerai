@@ -21,7 +21,7 @@ export function SiteNav() {
             <h1 className=" text-3xl font-bold tracking-tighter">WorkerAI</h1>
           </a>
           <div className="mx-auto flex items-center font-bold md:gap-4 lg:gap-6">
-            <Link href="/about" className="underline-animated">
+            <Link href="/about-us" className="underline-animated">
               About
             </Link>
             <Link href="/blog" className="underline-animated">

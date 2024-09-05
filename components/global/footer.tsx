@@ -6,9 +6,9 @@ const footerLinks = [
   {
     title: "About",
     links: [
-      { name: "About Us", href: "#" },
+      { name: "About Us", href: "/about-us" },
       { name: "Blog", href: "/blog" },
-      { name: "Pricing", href: "#" },
+      { name: "Pricing", href: "/pricing" },
     ],
   },
   {
@@ -85,12 +85,12 @@ const Footer = () => {
           <hr className="mb-2 border-t border-gray-200" />
           <div className="flex flex-col justify-between sm:flex-row">
             <div className="space-x-4">
-              <Link href="">
+              <Link href="terms-of-use">
                 <Button variant="link" size={"useLink"}>
                   Terms of Use
                 </Button>
               </Link>
-              <Link href="">
+              <Link href="privacy-policy">
                 <Button variant="link" size={"useLink"}>
                   Privacy Policy
                 </Button>
