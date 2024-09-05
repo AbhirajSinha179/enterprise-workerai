@@ -42,12 +42,17 @@ export const Features = () => {
               </svg>
             </div>
             <div className="mt-10">
-              <h2 className="text-center text-lg font-bold">Goodbye bad performance</h2>
+              <h2 className="text-center text-lg font-bold">Enterprise Lead Generation</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                We are constantly tweak firefox&apos;s engine and settings to make it faster than ever.
-                <a className="text-gray-50" href="https://docs.arc-browser.app/benchmarks" target="_blank" rel="noreferrer">
+                Find the best leads with AI-driven precision.
+                {/* <a
+                  className="text-gray-50"
+                  href="/lead-enrichment"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Learn more
-                </a>
+                </a> */}
               </p>
             </div>
           </div>
@@ -85,12 +90,12 @@ export const Features = () => {
               </svg>
             </div>
             <div className="mt-10">
-              <h2 className="text-center text-lg font-bold">Privacy first</h2>
+              <h2 className="text-center text-lg font-bold">Hyper-Personalized Emails</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                We don&apos;t track you. We don&apos;t sell your data. We don&apos;t even know who you are.
-                <a className="text-gray-50" href="/privacy-policy">
+                Send emails tailored to each recipient&apos;s profile and preferences
+                {/* <a className="text-gray-50" href="/privacy-policy">
                   Learn more
-                </a>
+                </a> */}
               </p>
             </div>
           </div>
@@ -128,10 +133,10 @@ export const Features = () => {
               </svg>
             </div>
             <div className="mt-10">
-              <h2 className="text-center text-lg font-bold">Secure by default</h2>
+              <h2 className="text-center text-lg font-bold">Email Warmup & Deliverability </h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                We are always using the latest security features from Firefox to keep you safe.
-                <a className="text-gray-50" href="https://docs.arc-browser.app/faq#how-do-i-know-arc-is-safe">
+                Ensure your emails reach the inbox, not spam. {""}
+                <a className="text-gray-50" href="/blog">
                   Learn more
                 </a>
               </p>
@@ -159,12 +164,9 @@ export const Features = () => {
               </svg>
             </div>
             <div className="mt-10">
-              <h2 className="text-center text-lg font-bold">Goodbye bad performance</h2>
+              <h2 className="text-center text-lg font-bold">Automated Follow-Ups</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                We are constantly tweak firefox&apos;s engine and settings to make it faster than ever.
-                <a className="text-gray-50" href="https://docs.arc-browser.app/benchmarks" target="_blank" rel="noreferrer">
-                  Learn more
-                </a>
+                Streamline outreach with automated follow-up sequences.
               </p>
             </div>
           </div>
@@ -190,10 +192,10 @@ export const Features = () => {
               </svg>
             </div>
             <div className="mt-10">
-              <h2 className="text-center text-lg font-bold">Goodbye bad performance</h2>
+              <h2 className="text-center text-lg font-bold">Scalable Campaigns</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                We are constantly tweak firefox&apos;s engine and settings to make it faster than ever.
-                <a className="text-gray-50" href="https://docs.arc-browser.app/benchmarks" target="_blank" rel="noreferrer">
+                Reach thousands of prospects with ease. {""}
+                <a className="text-gray-50" href="/blog" target="_blank" rel="noreferrer">
                   Learn more
                 </a>
               </p>
@@ -236,12 +238,9 @@ export const Features = () => {
               </svg>
             </div>
             <div className="mt-10">
-              <h2 className="text-center text-lg font-bold">Goodbye bad performance</h2>
+              <h2 className="text-center text-lg font-bold">Detailed Analytics Dashboard</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                We are constantly tweak firefox&apos;s engine and settings to make it faster than ever.
-                <a className="text-gray-50" href="https://docs.arc-browser.app/benchmarks" target="_blank" rel="noreferrer">
-                  Learn more
-                </a>
+                Monitor campaign performance in real time.{" "}
               </p>
             </div>
           </div>
@@ -262,18 +261,17 @@ export const Features = () => {
                 <div className="flex flex-col gap-4">
                   <h2 className="text-3xl font-bold tracking-tight">Grow with us.</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    We are always looking for ways to make your experience better. With stackable emes that can be mixed
-                    and matched, you can create a browser that is truly yours.
+                    We are always looking for ways to make your experience better. Optimise your campaigns with our AI and grow your business.
                     <a className="text-gray-50" href="https://docs.arc-browser.app/themes-store/themes-marketplace">
                       Learn more
                     </a>
                   </p>
                 </div>
-                <a href="/download">
+                {/* <a href="/dashboard">
                   <button className="ml-auto mt-4 inline-flex h-9 items-center justify-center whitespace-nowrap rounded-full bg-primary p-5 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-                    Download Worker AI now!
+                    Try out Worker AI now!
                   </button>
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
@@ -314,14 +312,10 @@ export const Features = () => {
                 <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
                 <path d="M9 18c-4.51 2-5-2-7-2"></path>
               </svg>
-              <h2 className="ml-4 text-lg font-bold">Open</h2>
+              <h2 className="ml-4 text-lg font-bold">Integrations</h2>
             </div>
             <p className="mt-8 text-center text-sm text-muted-foreground">
-              Worker AI is open source and always will be. You can check out the source code on our
-              <a className="text-gray-50" href="https://github.com/Worker AI-browser">
-                Github
-              </a>
-              !
+                  Worker AI is ready to be integrated with your existing tools. We are always looking for ways to make your experience better.
             </p>
           </div>
           <div className="flex flex-col items-center  justify-center p-16 md:border-l-[1.2px] md:border-t-2">
@@ -345,7 +339,7 @@ export const Features = () => {
             </div>
             <p className="mt-8 text-center text-sm text-muted-foreground">
               We are always working on new features and improvements. You can expect regular updates to keep your
-              browser up to date.
+              campaigns up to date.
             </p>
           </div>
           <div className="flex flex-col p-16  md:border-l-[1.2px]  md:border-t-2">
@@ -365,14 +359,10 @@ export const Features = () => {
                   clip-rule="evenodd"
                 ></path>
               </svg>
-              <h2 className="ml-4 text-lg font-bold">Community</h2>
+              <h2 className="ml-4 text-lg font-bold">Customer Care</h2>
             </div>
             <p className="mt-8 text-center text-sm text-muted-foreground">
-              Worker AI is built by a community of passionate developers and designers. You can join us on our
-              <a className="text-gray-50" href="https://discord.gg/nnShMQzR4b">
-                Discord
-              </a>
-              !
+              Worker AI is built keeping you in mind. We are always here to help you with any queries or issues you may have.
             </p>
           </div>
         </div>
