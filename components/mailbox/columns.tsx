@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "../ui/input"
 import { toast } from "sonner"
-import { deleteMailbox } from "@/lib/actions"
+import { deleteMailbox, editLead } from "@/lib/actions"
 import { revalidatePath } from "next/cache"
 import {
   Dialog,
@@ -207,26 +207,8 @@ export const columns: ColumnDef<Mails>[] = [
 
       const handleSave = async () => {
         console.log("Updated Data:", editData);
+        await editLead(row.getValue("id"), editData)
 
-        try {
-          const response = await fetch(`https://api.workerai.co/user/email-address/${row.getValue("id")}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(editData),
-          });
-
-          if (response.ok) {
-            toast.success("Data saved successfully!");
-          } else {
-            const errorData: any = await response.json();
-            toast.error(`Failed to save data: ${errorData.message || response.statusText}`);
-          }
-        } catch (error) {
-          console.error("Error saving data:", error);
-          toast.error("An error occurred while saving data.");
-        }
       };
 
 
