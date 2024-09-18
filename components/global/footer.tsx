@@ -6,25 +6,25 @@ const footerLinks = [
   {
     title: "About",
     links: [
-      { name: "About Us", href: "#" },
-      { name: "Our Team", href: "#" },
-      { name: "Careers", href: "#" },
+      { name: "About Us", href: "/about-us" },
+      { name: "Blog", href: "/blog" },
+      { name: "Pricing", href: "/pricing" },
     ],
   },
   {
     title: "Services",
     links: [
-      { name: "Web Development", href: "#" },
-      { name: "Mobile Development", href: "#" },
-      { name: "Design", href: "#" },
+      { name: "Lead Enrichment", href: "#" },
+      { name: "Email Crafting", href: "#" },
+      { name: "Outbound Scheduling", href: "#" },
     ],
   },
   {
     title: "Contact",
     links: [
       { name: "Contact Us", href: "#" },
-      { name: "Support", href: "#" },
-      { name: "Sales", href: "#" },
+      { name: "Book a Call", href: "#" },
+      { name: "Talk to Sales", href: "#" },
     ],
   },
 ]
@@ -37,12 +37,10 @@ const Footer = () => {
           <div className="mx-auto sm:col-span-3 lg:col-span-2">
             <h3 className="mb-4 text-4xl font-bold">Worker AI </h3>
             <p className="max-w-sm text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.
+              We are a sales automation platform that help you close more deals, faster.
             </p>
 
-            <div className="mt-10 flex gap-4 flex-col">
-
+            <div className="mt-10 flex flex-col gap-4">
               <Link
                 href="mailto:hello@workerai.co"
                 className="underline-animated mx-auto text-center md:mx-0 md:text-left"
@@ -68,32 +66,31 @@ const Footer = () => {
             </div>
           </div>
           {footerLinks.map(({ title, links }) => (
-              <div key={title} className="sm:col-span-3 lg:col-span-1">
-                <h3 className="mb-4 text-2xl font-bold">{title}</h3>
-                <ul className="text-md space-y-3">
-                  {links.map((link) => (
-                    <li key={link.name}>
-                      <div className="underline-animated mx-auto text-center md:mx-0 md:text-left">
-                        <Link href={link.href}>{link.name}</Link>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )
-          )}
+            <div key={title} className="sm:col-span-3 lg:col-span-1">
+              <h3 className="mb-4 text-2xl font-bold">{title}</h3>
+              <ul className="text-md space-y-3">
+                {links.map((link) => (
+                  <li key={link.name}>
+                    <div className="underline-animated mx-auto text-center md:mx-0 md:text-left">
+                      <Link href={link.href}>{link.name}</Link>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         <div className="mx-auto max-w-screen-xl py-2">
           <hr className="mb-2 border-t border-gray-200" />
           <div className="flex flex-col justify-between sm:flex-row">
             <div className="space-x-4">
-              <Link href="">
+              <Link href="terms-of-use">
                 <Button variant="link" size={"useLink"}>
                   Terms of Use
                 </Button>
               </Link>
-              <Link href="">
+              <Link href="privacy-policy">
                 <Button variant="link" size={"useLink"}>
                   Privacy Policy
                 </Button>

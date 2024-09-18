@@ -27,7 +27,7 @@ export const CardChronark = ({ children, isFooter = false }: { children: React.R
       <div className="pointer-events-none">
         <div className="absolute inset-0 z-0 blur transition duration-500 [mask-image:linear-gradient(black,transparent)]" />
         <motion.div
-          className="absolute inset-0 z-10  bg-zinc-700 bg-gradient-to-br  via-zinc-100/10  opacity-10 transition duration-500 group-hover:opacity-30 "
+          className="absolute inset-0 z-10  bg-zinc-400 bg-gradient-to-br via-zinc-100/10  opacity-10 transition duration-500 group-hover:opacity-30 "
           style={style}
         />
         <motion.div
