@@ -25,7 +25,7 @@ export default function OutboundSetting() {
             { name: "seniority", required: false },
             { name: "country", required: false },
             { name: "linkedin", required: false },
-            { name: "city", required: false},
+            { name: "city", required: false },
             { name: "state", required: false },
             { name: "timezone", required: false },
             { name: "companyName", required: true },
@@ -33,7 +33,7 @@ export default function OutboundSetting() {
           ]}
         />
 
-        <OmitLeads title={"Omit Leads"} description="Lorem, ipsum dolor sit amet consectetur adipisicing"></OmitLeads>
+        {/* <OmitLeads title={"Omit Leads"} description="Lorem, ipsum dolor sit amet consectetur adipisicing"></OmitLeads>
 
         <MultiSelectCard
           cardTitle="Location"
@@ -49,7 +49,7 @@ export default function OutboundSetting() {
         <InputWithCommas
           cardTitle="Blacklisted email domains"
           cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing"
-        />
+        /> */}
       </div>
     </ContentLayout>
   )

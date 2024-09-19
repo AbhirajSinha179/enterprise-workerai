@@ -1,7 +1,7 @@
 "use server"
 
-import { instantReplyResponseSchema} from "@/types/interface"
-
+import { instantReplyResponseSchema } from "@/types/interface"
+import { revalidatePath } from "next/cache"
 
 // import { auth, clerkClient } from "@clerk/nextjs/server"
 
@@ -47,6 +47,32 @@ export async function deleteMailbox(id: string) {
     return { success: true, result }
   } catch (error) {
     return { error: error, success: false }
+  }
+}
+
+export async function editLead(id: any, editData: any) {
+  try {
+    const url = `${process.env.BASE_API_URL}/user/email-address/${id}`
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editData),
+    })
+
+    if (response.ok) {
+      // toast.success("Data saved successfully!")
+      revalidatePath("/dashboard/leads")
+      return { message: "success" }
+    } else {
+      const err: any = await response.json()
+      return err
+      // toast.error(`Failed to save data: ${errorData.message || response.statusText}`)
+    }
+  } catch (error) {
+    return error
+    // toast.error("An error occurred while saving data.")
   }
 }
 

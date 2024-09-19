@@ -37,6 +37,7 @@ export default async function MailboxPage() {
     }
   }
   const mails = await getMails(userId)
+  console.log("MAILS INFO :", mails)
 
   if (!mails) {
     return (

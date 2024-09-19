@@ -74,32 +74,21 @@ export default function Emails() {
 
   return (
     <ContentLayout title="Scheduler">
-      <Tabs defaultValue="pending" className="mt-4 space-y-4">
-        <TabsList>
-          <TabsTrigger value="pending">Pending</TabsTrigger>
-          <TabsTrigger value="scheduled">Scheduled</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="pending" className="space-y-4">
-          <EmailList targetId={targetId!} />
-        </TabsContent>
-
-        <TabsContent value="scheduled" className="space-y-4">
-          {scheduledEmails.length === 0 ? (
-            <>
-              <div className="mt-6 flex w-full items-center justify-between">
-                <h1 className="text-2xl font-bold">Scheduled Emails</h1>
-              </div>
-              <EmptyState
-                headerMessage="No emails scheduled at the moment!"
-                icon={<CalendarIcon size={80} />}
-              />
-            </>
-          ) : (
-            <ScheduledEmailList emails={scheduledEmails} />
-          )}
-        </TabsContent>
-      </Tabs>
+      <div className="space-y-4">
+        {scheduledEmails.length === 0 ? (
+          <>
+            <div className="mt-6 flex w-full items-center justify-between">
+              <h1 className="text-2xl font-bold">Scheduled Emails</h1>
+            </div>
+            <EmptyState
+              headerMessage="No emails scheduled at the moment!"
+              icon={<CalendarIcon size={80} />}
+            />
+          </>
+        ) : (
+          <ScheduledEmailList emails={scheduledEmails} />
+        )}
+      </div>
     </ContentLayout>
   );
 }
