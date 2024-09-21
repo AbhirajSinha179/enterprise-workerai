@@ -14,7 +14,12 @@ export function MailList({ items }: MailListProps) {
       <div className="flex flex-col gap-2 p-4 pt-0">
         {items.map((thread: Thread) => {
           const { threadId, emails, lead, replies } = thread
-          const latestDate = emails[emails.length - 1]?.sendAt || replies[replies.length - 1]?.date
+
+          // Safely handle null or undefined values
+          const latestEmail = emails?.[emails.length - 1] ?? null;
+          const latestReply = replies?.[replies.length - 1] ?? null;
+          const latestDate = latestEmail?.sendAt || latestReply?.date;
+
           return (
             <button
               key={threadId}
@@ -35,7 +40,7 @@ export function MailList({ items }: MailListProps) {
                     <div className="text-md font-semibold">
                       {lead?.firstName} {lead?.lastName}
                     </div>
-                    {!emails[0]?.opened && <span className="flex size-2 rounded-full bg-blue-600" />}
+                    {!emails?.[0]?.opened && <span className="flex size-2 rounded-full bg-blue-600" />}
                   </div>
                   <div
                     className={cn(
@@ -43,15 +48,19 @@ export function MailList({ items }: MailListProps) {
                       config.selected === threadId ? "text-foreground" : "text-muted-foreground"
                     )}
                   >
-                    {emails[0] && latestDate &&
-                      formatDistanceToNow(new Date(latestDate|| ""), {
+                    {latestEmail && latestDate &&
+                      formatDistanceToNow(new Date(latestDate), {
                         addSuffix: true,
                       })}
                   </div>
                 </div>
-                <div className="text-xs font-medium">{emails[0]?.subject}</div>
+                <div className="text-xs font-medium">
+                  {emails?.[0]?.subject ?? "No Subject"}
+                </div>
               </div>
-              <div className="line-clamp-2 text-xs text-muted-foreground">{emails[0]?.body.substring(0, 300)}</div>
+              <div className="line-clamp-2 text-xs text-muted-foreground">
+                {emails?.[0]?.body ? emails[0].body.substring(0, 300) : "No Body"}
+              </div>
               {/* {thread.thread[0]?.labels.length ? (
               <div className="flex items-center gap-2">
                 {thread.thread[0].labels.map((label: string) => (
