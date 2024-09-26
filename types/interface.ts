@@ -3,7 +3,7 @@ import { z } from "zod"
 export const emailSchema = z.object({
   id: z.string(),
   threadId: z.string(),
-  body: z.string(),
+  body: z.string().nullable(),
   subject: z.string(),
   recipient: z.string(),
   sendAt: z.string().nullable(),
@@ -254,7 +254,7 @@ export interface Email {
   id: string
   threadId: string
   // name: string
-  body: string
+  body: string | null
   subject: string
   recipient: string
   sendAt: string | null
