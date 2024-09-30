@@ -44,12 +44,12 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({ id, firstName, pos
             ...prevData,
             [name]: value,
         }));
-        // console.log("EDITING DATA : ", editData)
+        console.log("EDITING DATA : ", editData)
     };
 
     const handleSave = async () => {
-        // console.log("HANDLE SAVE FUNCTION WORKING")
-        // console.log("UPDATED DATA :", editData);
+        console.log("HANDLE SAVE FUNCTION WORKING")
+        console.log("UPDATED DATA :", editData);
         await editLead(id, editData)
         toast.success("Data saved successfully!");
     };
