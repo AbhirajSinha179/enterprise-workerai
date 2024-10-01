@@ -81,7 +81,7 @@ export const columns: ColumnDef<Leads>[] = [
                 sortDescending={""}
             />
         ),
-        cell: ({ row }) => <div className="flex w-[100px] justify-center text-foreground ">{row.getValue("company")}</div>,
+        cell: ({ row }) => <div className="flex w-[100px] justify-center text-foreground ">{row.getValue("company") ? row.getValue("company") : "null"}</div>,
         enableSorting: false,
         enableHiding: false,
     },
@@ -91,15 +91,22 @@ export const columns: ColumnDef<Leads>[] = [
             <DataTableColumnHeader
                 column={column}
                 title="Email"
-                className=" flex  justify-center   w-[200px]  "
+                className="flex justify-center w-[250px]" // Adjusted width to be consistent
                 sortAscending={""}
                 sortDescending={""}
             />
         ),
-        cell: ({ row }) => <div className="flex  w-[200px]  justify-center text-foreground ">{row.getValue("email")}</div>,
+        cell: ({ row }) => (
+            <div className="flex justify-center text-foreground overflow-auto">
+                <div className="w-full max-w-[220px] p-2  rounded-md"> {/* Added consistent padding and border-radius */}
+                    {row.getValue("email")}
+                </div>
+            </div>
+        ),
         enableSorting: false,
         enableHiding: false,
     },
+
 
     {
         accessorKey: "status",
