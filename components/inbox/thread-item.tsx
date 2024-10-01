@@ -1,8 +1,10 @@
+'use client'
 import { format } from "date-fns"
 import { Mail } from "@/components/inbox/data"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { TimelineContent, TimelineDot, TimelineHeading, TimelineItem, TimelineLine } from "@/components/ui/timeline"
 import { Email, Reply } from "@/types/interface"
+import { useUser } from '@clerk/nextjs'
 
 interface MailTimelineItemProps {
   mail: Email | Reply
@@ -13,6 +15,10 @@ interface MailTimelineItemProps {
 
 const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isLast, showSubject }) => {
   const { subject, body } = mail
+  const { user } = useUser()
+  // console.log("USER IS : ", user?.fullName)
+  // console.log("USER EMAIL IS: ", user?.emailAddresses[0]?.emailAddress);
+
   let recipient = ""
   let date: string | null = ""
   if ("recipient" in mail && "sendAt" in mail) {
@@ -29,12 +35,18 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
         <div className="flex items-start justify-between p-4 ">
           <div className="flex items-start gap-4 text-sm">
             <div className="grid gap-1">
-              <div className="font-semibold text-foreground">{recipient}</div>
+              <div className="font-semibold text-foreground">
+                <span className="font-medium">From:</span> {user?.emailAddresses[0]?.emailAddress}
+              </div>
               {showSubject && <div className="line-clamp-1 text-xs text-foreground">{subject}</div>}
               <div className="line-clamp-1 text-xs text-foreground">
-                <span className="font-medium">Reply-To:</span> {recipient}
+                <span className="font-medium">To:</span> {recipient}
+                {/* <div className="line-clamp-1 text-xs text-foreground">
+                  <span className="font-medium">From:</span> {user?.emailAddresses[0]?.emailAddress}
+                </div> */}
               </div>
             </div>
+
           </div>
           <div className="flex">
             {date && <div className="ml-auto text-xs text-foreground">{format(new Date(date), "PPpp")}</div>}
