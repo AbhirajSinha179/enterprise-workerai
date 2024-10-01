@@ -14,7 +14,7 @@ export default function OutboundSetting() {
         <CSVUpload
           key="upload-custom-leads"
           title="Upload Custom Leads (CSV)"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing"
+          description="Upload your CSV file to seamlessly import and process your data"
           endpoint={`${process.env.NEXT_PUBLIC_API_BASE_URL}/leads`}
           verification
           requiredColumns={[
