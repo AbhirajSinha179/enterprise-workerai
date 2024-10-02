@@ -110,23 +110,23 @@ export const getLandingNavList = () => [
 ]
 
 export const MESSAGE_BUBBLE_QUESTIONS = [
-    "How do I find the best leads?",
+  "How do I find the best leads?",
 
-    "How can I improve email deliverability?",
+  "How can I improve email deliverability?",
 
-    "What is the best copy for emails?",
+  "What is the best copy for emails?",
 
-    "What is the best subject line for outbound emails?",
+  "How can I decrease my email bounce rate?",
 
-    "How can I decrease my email bounce rate?",
+  "What is the best platform for finding leads?",
 
-    "What is the best platform for finding leads?",
+  "What is the best subject line for outbound emails?",
 
-    "What is the best platform for researching prospects?",
-
-    "How can I automate and scale outbound emails?",
-]
+  "How can I automate and scale outbound emails?",
   
+  "What is the best platform for researching prospects?",
+]
+
 export const ABOUT_US_SECTIONS = [
   {
     title: "Our Mission",

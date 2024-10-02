@@ -14,9 +14,9 @@ const GradientSeparator = () => (
 
 export const Problems = () => {
   return (
-    <section id="features" className="container relative my-12 sm:mt-32">
+    <section id="features" className="px-4 relative sm:mt-32">
       <div className="mx-auto grid place-content-center gap-4 text-center lg:mb-8">
-        <div className=" relative mx-auto my-6 max-w-screen-2xl after:absolute after:inset-0 ">
+        <div className="relative mx-auto my-6 px-1 max-w-screen-2xl after:absolute after:inset-0 ">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -53,15 +53,15 @@ export const Problems = () => {
               },
             },
           }}
-          className="my-32"
+          className="my-16 lg:my-32"
         >
           <motion.h1
             variants={FADE_UP_ANIMATION_VARIANTS}
-            className="mb-8 text-3xl leading-none tracking-tight md:text-5xl lg:text-6xl"
+            className="mb-8 text-4xl leading-none tracking-tight md:text-5xl lg:text-7xl"
           >
             Sales is challenging.
           </motion.h1>
-          <motion.p variants={FADE_UP_ANIMATION_VARIANTS} className="mb-8 text-sm md:text-lg mx-auto max-w-4xl">
+          <motion.p variants={FADE_UP_ANIMATION_VARIANTS} className="mb-8 text-sm md:text-lg mx-auto max-w-5xl">
             Managing leads, tracking interactions, and nurturing prospects can be overwhelming, time-consuming, and
             expensive. 
           </motion.p>
@@ -80,13 +80,13 @@ export const Problems = () => {
             },
           },
         }}
-        className="mx-auto my-12 max-w-4xl rounded-2xl border-transparent bg-white px-4 shadow-xl shadow-input transition duration-200 dark:border-white/[0.2] dark:bg-black dark:shadow-none"
+        className="mx-auto my-12 max-w-5xl rounded-2xl border-transparent bg-white px-4 shadow-xl shadow-input transition duration-200 dark:border-white/[0.2] dark:bg-black dark:shadow-none"
       >
         <Image
           src={landingConfig.featureSection.imageUri}
           alt="Hero image"
-          width={1200}
-          height={900}
+          width={1000}
+          height={700}
           className="w-full rounded-md bg-cover bg-center invert"
         />
       </motion.div>
@@ -124,8 +124,8 @@ export const Problems = () => {
 const AnimatedMessageBubbles = () => {
 
 
-  const getRandomDelay = () => Math.random() * 0.8 +0.1 // Random delay between 0.2 and 1
-  const getRandomDuration = () => Math.random() * 0.3 + 0.3 // Random duration between 0.3 and 0.6
+  const getRandomDelay = () => Math.random() * 0.8 +0.1 
+  const getRandomDuration = () => Math.random() * 0.3 + 0.3
 
   return (
     <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 px-8">
@@ -146,9 +146,9 @@ const AnimatedMessageBubbles = () => {
               },
             },
           }}
-          className=" "
+          className=""
         >
-          <EyeCatchingButton className="min-w-32">{item}</EyeCatchingButton>
+          <EyeCatchingButton className="md:min-w-32">{item}</EyeCatchingButton>
         </motion.div>
       ))}
     </div>
@@ -160,7 +160,7 @@ export const EyeCatchingButton = ({ ...props }: ButtonProps) => {
     <Button
       {...props}
       variant="outline"
-      className={cn("font-base font-geist rounded-xl bg-[length:300%] text-lg tracking-wide", props.className)}
+      className={cn("font-base overflow-clip cursor-default font-geist rounded-xl bg-[length:300%] md:text-lg", props.className)}
     />
   )
 }

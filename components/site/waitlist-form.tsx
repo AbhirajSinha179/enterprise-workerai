@@ -25,7 +25,7 @@ export const WaitlistForm = () => {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="mt-12 flex max-w-3xl relative left-1/2 -translate-x-1/2 items-center justify-center gap-2"
+      className="mt-12 flex flex-wrap max-w-3xl relative left-1/2 -translate-x-1/2 items-center justify-center gap-2"
     >
       <InputSpotlightBorder
         type="email"
