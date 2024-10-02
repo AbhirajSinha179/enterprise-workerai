@@ -38,7 +38,8 @@ export function MailList({ items }: MailListProps) {
                 <div className="flex items-center">
                   <div className="flex items-center gap-2">
                     <div className="text-md font-semibold">
-                      {lead?.firstName} {lead?.lastName}
+                      {/* {lead?.firstName} {lead?.lastName} */}
+                      {emails?.[0]?.recipient ?? "No Recipient"}
                     </div>
                     {!emails?.[0]?.opened && <span className="flex size-2 rounded-full bg-blue-600" />}
                   </div>

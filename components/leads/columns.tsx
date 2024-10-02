@@ -76,12 +76,26 @@ export const columns: ColumnDef<Leads>[] = [
             <DataTableColumnHeader
                 column={column}
                 title="Company"
-                className=" flex justify-center w-[100px] "
+                className=" flex justify-center w-[220px] "
                 sortAscending={""}
                 sortDescending={""}
             />
         ),
-        cell: ({ row }) => <div className="flex w-[100px] justify-center text-foreground ">{row.getValue("company")}</div>,
+        // cell: ({ row }) => <div className="flex w-[100px] justify-center text-foreground ">{row.getValue("company") ? row.getValue("company") : "null"}</div>,
+        cell: ({ row }) => (
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <div className="flex justify-center text-foreground w-[220px] p-2 rounded-md truncate  ">
+                            {row.getValue("company") ? row.getValue("company") : "null"}
+                        </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>{row.getValue("company") ? row.getValue("company") : "null"}</p>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
+        ),
         enableSorting: false,
         enableHiding: false,
     },
@@ -91,15 +105,30 @@ export const columns: ColumnDef<Leads>[] = [
             <DataTableColumnHeader
                 column={column}
                 title="Email"
-                className=" flex  justify-center   w-[200px]  "
+                className="flex justify-center w-[250px]" // Adjust width as needed
                 sortAscending={""}
                 sortDescending={""}
             />
         ),
-        cell: ({ row }) => <div className="flex  w-[200px]  justify-center text-foreground ">{row.getValue("email")}</div>,
+        cell: ({ row }) => (
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <div className="flex justify-start text-foreground w-[220px] p-2 rounded-md truncate ">
+                            {row.getValue("email")}
+                        </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>{row.getValue("email")}</p>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
+        ),
         enableSorting: false,
         enableHiding: false,
     },
+
+
 
     {
         accessorKey: "status",
