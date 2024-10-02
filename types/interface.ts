@@ -190,7 +190,7 @@ export interface ScheduledEmail {
     companyId: string | null
     blackListed: boolean | null
     enriched: string
-    enrichedAt: string
+    enrichedAt: string | null
   }
   senderId: string
 }
@@ -230,7 +230,7 @@ export const scheduledEmailSchema = z.object({
     companyId: z.string().nullable(),
     blackListed: z.boolean().nullable(),
     enriched: z.string(),
-    enrichedAt: z.string(),
+    enrichedAt: z.string().nullable(),
   }),
   senderId: z.string(),
 })
