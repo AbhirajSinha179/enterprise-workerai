@@ -19,7 +19,7 @@ export const Features = () => {
           <path d="M5 12h14"></path>
           <path d="M12 5v14"></path>
         </svg>
-        <div className="grid w-full grid-cols-1 md:grid-cols-3 md:grid-rows-5">
+        <div className="grid w-full grid-cols-1 md:grid-cols-3 md:grid-rows-4">
           <div className="flex flex-col items-center justify-center p-10  ">
             <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow dark:[border:0.5px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset]">
               <svg
@@ -244,7 +244,7 @@ export const Features = () => {
               </p>
             </div>
           </div>
-          <div className="scrollarea relative row-span-4 hidden flex-col p-16 md:block md:border-t-2">
+          <div className="scrollarea relative row-span-1 hidden flex-col p-16 md:block md:border-t-2">
             <div className="min-h-[216px]">
               <div className=" ">
                 <h2 className="text-3xl font-bold">User experience comes first</h2>
@@ -255,13 +255,13 @@ export const Features = () => {
               </div>
             </div>
           </div>
-          <div className="relative row-span-2 border-t-2 dark:[border:0.5px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] md:col-span-2  md:grid md:grid-cols-2 md:border-l-[1.2px]">
+          <div className="relative row-span-1 border-t-2 dark:[border:0.5px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] md:col-span-1  md:grid md:grid-cols-2 md:border-l-[1.2px]">
             <div className="left-0 top-0 flex h-full flex-col p-16 md:absolute md:px-10">
               <div className="">
                 <div className="flex flex-col gap-4">
                   <h2 className="text-3xl font-bold tracking-tight">Grow with us.</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    We are always looking for ways to make your experience better. Optimise your campaigns with our AI and grow your business.
+                    We are always looking for ways to make your experience better. Optimise your campaigns with our AI and grow your business.<br></br>
                     <a className="text-gray-50" href="https://docs.arc-browser.app/themes-store/themes-marketplace">
                       Learn more
                     </a>
@@ -275,7 +275,7 @@ export const Features = () => {
               </div>
             </div>
           </div>
-          <div className="relative row-span-2 grid-cols-2 md:col-span-2 md:grid">
+          <div className="relative row-span-1 grid-cols-2 md:col-span-1 md:grid">
             <div className="left-0 top-0 flex size-full flex-col p-16 dark:[border:0.02px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] md:absolute md:px-32">
               <div className="flex flex-col md:flex-row">
                 <div className="relative">
@@ -287,11 +287,11 @@ export const Features = () => {
                     Killer feature
                   </div>
                 </div>
-                <a href="/download">
+                {/* <a href="/download">
                   <button className="ml-4 mt-4 inline-flex h-9 items-center justify-center whitespace-nowrap rounded-full bg-primary p-5 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
                     Take a tour!
                   </button>
-                </a>
+                </a> */}
               </div>
             </div>
           </div>

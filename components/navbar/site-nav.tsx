@@ -4,6 +4,7 @@ import Link from "next/link"
 import { WorkerAILogo } from "../global/logo"
 import { LoadingSpinner } from "../ui/spinner"
 import { motion } from "framer-motion"
+import { SheetMenu } from "../sidebar/sheet-menu";
 
 export function SiteNav() {
   return (
@@ -13,9 +14,9 @@ export function SiteNav() {
         animate={{ y: 0, opacity: 1 }}
         exit={{ opacity: 1 }}
         transition={{ ease: [0.17, 0.67, 0.83, 0.67], duration: 0.8 }}
-        className="animate-header-slide-down-fade sticky top-0 z-30 w-full border-b border-white/10 py-3 transition duration-200 ease-in-out bg-transparent backdrop-blur-sm"
+        className="animate-header-slide-down-fade sticky top-0 z-30 w-full border-b border-white/10 bg-transparent py-3 backdrop-blur-sm transition duration-200 ease-in-out"
       >
-        <div className="lg:max-w-7xl mx-auto hidden h-[58px] w-full flex-row items-center justify-between px-6 md:flex md:max-w-full">
+        <div className="mx-auto hidden h-[58px] w-full flex-row items-center justify-between px-6 md:flex md:max-w-full lg:max-w-7xl">
           <a className="flex w-[100px] items-center gap-2 pt-10 md:pt-0 lg:w-[180px]" href="/">
             <WorkerAILogo />
             <h1 className=" text-3xl font-bold tracking-tighter">WorkerAI</h1>
@@ -27,15 +28,18 @@ export function SiteNav() {
             <Link href="/blog" className="underline-animated">
               Blog
             </Link>
-            <Link href="/pricing" className="underline-animated">
+            <Link href={"https://www.calendly.com/rohit_workerai"} className="underline-animated">
+              Talk to Sales
+            </Link>
+            {/* <Link href="/pricing" className="underline-animated">
               Pricing
-            </Link>
-            <Link href="/changelog" className="underline-animated">
+            </Link> */}
+            {/* <Link href="/changelog" className="underline-animated">
               Changelog
-            </Link>
+            </Link> */}
           </div>
           <div className="flex items-center gap-6">
-            <Link href={"/book"} className="underline-animated font-bold">
+            <Link href={"https://www.calendly.com/rohit_workerai"} className="underline-animated font-bold">
               Book a call
             </Link>
 
@@ -61,7 +65,7 @@ export function SiteNav() {
           </a>
           <div className="flex gap-4">{/* add clerk sign in button */}</div>
         </div>
-    </motion.nav>
+      </motion.nav>
     </>
   )
 }

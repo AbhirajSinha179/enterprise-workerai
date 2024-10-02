@@ -36,7 +36,7 @@ const InputSpotlightBorder = ({ value, onChange, name, type, placeholder }: any)
 
   return (
     <>
-      <div className="relative w-full flex-1">
+      <div className="relative w-full flex-1 min-w-64">
         <input
           value={value}
           onChange={onChange}
