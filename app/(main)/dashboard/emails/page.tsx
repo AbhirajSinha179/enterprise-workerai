@@ -29,7 +29,7 @@ async function fetchScheduledEmails(targetId: string): Promise<ScheduledEmail[]>
       throw new Error("Invalid data format");
     }
 
-    return result.data.scheduledEmails;
+    return result.data.scheduledEmails.reverse();
   } catch (error: any) {
     throw new Error(`Error fetching scheduled emails: ${error.message}`);
   }
@@ -51,8 +51,7 @@ export default function Emails() {
       }
 
       try {
-        // const targetId = await getTargetIdByUser(userId);
-        const targetId = "a09130b9-5453-403b-a02f-8e936bce145b";
+        const targetId = await getTargetIdByUser(userId);
 
         if (!targetId) {
           setLoading(false);
