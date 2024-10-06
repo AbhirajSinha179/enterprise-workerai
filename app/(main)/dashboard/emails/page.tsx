@@ -29,7 +29,7 @@ async function fetchScheduledEmails(targetId: string): Promise<ScheduledEmail[]>
       throw new Error("Invalid data format");
     }
 
-    return result.data.scheduledEmails.reverse();
+    return result.data.scheduledEmails;
   } catch (error: any) {
     throw new Error(`Error fetching scheduled emails: ${error.message}`);
   }
