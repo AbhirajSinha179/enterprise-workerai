@@ -3,12 +3,12 @@ import { CalendarIcon } from "lucide-react";
 import EmptyState from "@/components/global/empty-state";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
-import { scheduledEmailResponseSchema } from "@/types/interface";
+// import { scheduledEmailResponseSchema } from "@/types/interface";
 import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { getTargetIdByUser } from "@/components/dashboard/recent-sales";
-import { ScheduledEmail } from "@/types/interface";
+import { ScheduledEmail, scheduledEmailResponseSchema } from "@/types/interface";
 import Loading from "./loading";
 
 
@@ -29,7 +29,7 @@ async function fetchScheduledEmails(targetId: string): Promise<ScheduledEmail[]>
       throw new Error("Invalid data format");
     }
 
-    return result.data.scheduledEmails.reverse();
+    return result.data.scheduledEmails;
   } catch (error: any) {
     throw new Error(`Error fetching scheduled emails: ${error.message}`);
   }
