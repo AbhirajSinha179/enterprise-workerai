@@ -4,41 +4,12 @@ import { ContentLayout } from "@/components/layout/content-layout"
 import { DataTable } from "@/components/leads/data-table"
 import { columns } from "@/components/mailbox/columns"
 import { Button } from "@/components/ui/button"
+import { dummyMailbox } from "@/lib/dummy"
 
-// {
-//   id: 'b2305391-8bae-408c-8d7f-57f115a50c91',
-//   email: 'rajxryn@gmail.com',
-//   firstName: '',
-//   lastName: null,
-//   position: null,
-//   userId: 'user-123',
-//   warmupCapacity: 13,
-//   dailyCapacity: 25
-// }
-
-const getMails = async (userId: string) => {
-  const res = await fetch(`${process.env.BASE_API_URL}/user/email-address/${userId}`, { cache: "no-cache" })
-  if (!res.ok) {
-    return null;
-  }
-  const data = await res.json()
-  // const result = mailboxSchema.safeParse(data);
-  return data
-}
 
 export default async function MailboxPage() {
-  const { userId } = auth()
-  if (!userId) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    }
-  }
-  const mails = await getMails(userId)
+  const mails = dummyMailbox
   // console.log("MAILS INFO :", mails)
-
   if (!mails) {
     return (
       <ContentLayout title="Mailbox">
