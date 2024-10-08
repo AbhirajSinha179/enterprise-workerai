@@ -1,45 +1,13 @@
-import { ContentLayout } from "@/components/layout/content-layout"
-import { columns } from "@/components/leads/columns"
-import { DataTable } from "@/components/leads/data-table"
+import { ContentLayout } from "@/components/layout/content-layout";
+import { columns } from "@/components/leads/columns";
+import { DataTable } from "@/components/leads/data-table";
+import { dummyLeads } from "@/lib/dummy"; // Assuming dummyLeads is imported from this path
 
-import { auth } from "@clerk/nextjs/server"
-import { z } from "zod"
-import { leadsSchema } from "../data/schema"
-// import {
-//   Breadcrumb,
-//   BreadcrumbItem,
-//   BreadcrumbLink,
-//   BreadcrumbList,
-//   BreadcrumbPage,
-//   BreadcrumbSeparator,
-// } from "@/components/ui/breadcrumb"
+export default function Leads() {
+  // Use the dummyLeads data instead of fetching from an API
+  const leads = dummyLeads;
+  console.log("LEADS : ", leads);
 
-const getTargetId = async (userId: string) => {
-  const url = `${process.env.BASE_API_URL}/user/target/${userId}`
-  const res = await fetch(url)
-  const data: any = await res.json()
-  if (!data.targets || data.targets.length === 0) {
-    return null
-  }
-
-  const targetId = data.targets[0].id
-  return targetId
-}
-
-async function getLeads() {
-  const { userId } = auth()
-  const targetId = await getTargetId(userId!)
-  if (!targetId) {
-    return []
-  }
-  const leads = await fetch(`${process.env.BASE_API_URL}/leads?targetId=${targetId}`)
-  const leadsData = await leads.json()
-  const ld = z.array(leadsSchema).parse(leadsData)
-  return ld
-}
-
-export default async function Leads() {
-  const leads = await getLeads()
   return (
     <ContentLayout title="Leads">
       <div className="hidden h-full flex-1 flex-col space-y-8 p-4 md:flex">
@@ -48,11 +16,10 @@ export default async function Leads() {
             <h2 className="text-2xl font-bold tracking-tight">Leads</h2>
             <p className="text-foreground">Here&apos;s all the leads available.</p>
           </div>
-          {/* <div className="flex items-center space-x-2">
-          </div> */}
         </div>
+        {/* Render the DataTable with leads */}
         <DataTable data={leads} columns={columns} isActionButton={true} />
       </div>
     </ContentLayout>
-  )
+  );
 }
