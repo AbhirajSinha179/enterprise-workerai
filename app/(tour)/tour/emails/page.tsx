@@ -3,78 +3,69 @@ import { CalendarIcon } from "lucide-react";
 import EmptyState from "@/components/global/empty-state";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
-import { scheduledEmailResponseSchema } from "@/types/interface";
-import { useAuth } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { getTargetIdByUser } from "@/components/dashboard/recent-sales";
 import { ScheduledEmail } from "@/types/interface";
+import { useEffect, useState } from "react";
 import Loading from "./loading";
+import { dummyScheduledEmails } from "@/lib/dummy";
 
-
-async function fetchScheduledEmails(targetId: string): Promise<ScheduledEmail[]> {
-  const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/scheduled/${targetId}`;
-
-  try {
-    const res = await fetch(url);
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch data. Status code: ${res.status}`);
-    }
-
-    const data = await res.json();
-    const result = scheduledEmailResponseSchema.safeParse(data);
-
-    if (!result.success) {
-      throw new Error("Invalid data format");
-    }
-
-    return result.data.scheduledEmails;
-  } catch (error: any) {
-    throw new Error(`Error fetching scheduled emails: ${error.message}`);
-  }
-}
-
-
+// Define the dummyScheduledEmails constant
+// const dummyScheduledEmails: ScheduledEmail[] = [
+//   {
+//     email: {
+//       id: "0f307337-e130-4c11-8dfe-d562cc159aee",
+//       subject: "Subject: Elevate CSAT by 20%, worth a chat?",
+//       recipient: "shubam.gupta@pocketfm.com",
+//       createdAt: "2024-10-08 08:02:11.397",
+//       sendAt: "2024-10-15 06:07:01+00",
+//       body: null,
+//       isFollowUp: true,
+//       approved: true,
+//       draftId: null,
+//       messageId: null,
+//       emailSent: false,
+//       threadId: "2c0c55cf-02c1-49ae-86d7-713634d8ec07",
+//       opened: false,
+//       clicked: false,
+//       replied: false,
+//       bounced: null,
+//     },
+//     lead: {
+//       id: "b9e5ad74-27b4-42aa-a5da-867eb738d990",
+//       email: "shubam.gupta@pocketfm.com",
+//       imgUrl: "https://media.licdn.com/dms/image/v2/D5603AQFE5RX-SjROfg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1705325526381?e=2147483647&v=beta&t=kTYl6tJVP748H3BsnX2i3MRv2yt98uY2LHqdG9I8XG8",
+//       firstName: "Shubam",
+//       lastName: "Gupta",
+//       seniority: null,
+//       country: "India",
+//       linkedin: "http://www.linkedin.com/in/shubamgupta24",
+//       city: "Bengaluru",
+//       state: "Karnataka",
+//       EmailAddStatus: "UNVERIFIED",
+//       timezone: "Asia/Kolkata",
+//       companyId: "dc28f7c2-ae15-4ecc-9a59-b28ad5b3375e",
+//       blackListed: null,
+//       enriched: "COMPLETE",
+//       enrichedAt: "2024-09-30 13:19:31.904",
+//     },
+//     senderId: "27ce005f-0c13-4d46-9bfd-50e93888c133",
+//   },
+//   // ... Add the other dummy emails here
+// ];
 
 export default function Emails() {
-  const { userId } = useAuth();
   const [scheduledEmails, setScheduledEmails] = useState<ScheduledEmail[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!userId) {
-        toast.error("Error finding user ID");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const targetId = await getTargetIdByUser(userId);
-
-        if (!targetId) {
-          setLoading(false);
-          return;
-        }
-
-        const fetchedEmails = await fetchScheduledEmails(targetId);
-        setScheduledEmails(fetchedEmails);
-      } catch (error) {
-        toast.error("Error fetching scheduled emails.");
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [userId]);
+    // Simulating the loading and setting the dummy emails
+    setTimeout(() => {
+      setScheduledEmails(dummyScheduledEmails);
+      setLoading(false);
+    }, 1000); // Simulate API loading with a delay
+  }, []);
 
   if (loading) {
-    return (
-      <Loading></Loading>
-    );
+    return <Loading />;
   }
 
   return (
