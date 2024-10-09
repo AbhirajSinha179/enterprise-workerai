@@ -28,11 +28,12 @@ type Group = {
   menus: Menu[]
 }
 
-const DASHBOARD_PATH = "/dashboard"
+// const DASHBOARD_PATH = "/dashboard"
 
 export const CLIENT_ID = "205356801177-sgo5c1okrp6j5vlpjp291ilk66idpnml.apps.googleusercontent.com"
 
 export function getMenuList(pathname: string): Group[] {
+  const DASHBOARD_PATH = pathname.includes("/tour") ? "/tour" : "/dashboard"
   return [
     {
       groupLabel: "",
@@ -123,7 +124,7 @@ export const MESSAGE_BUBBLE_QUESTIONS = [
   "What is the best subject line for outbound emails?",
 
   "How can I automate and scale outbound emails?",
-  
+
   "What is the best platform for researching prospects?",
 ]
 
