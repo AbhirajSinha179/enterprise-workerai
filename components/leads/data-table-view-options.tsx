@@ -12,17 +12,21 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
+import { useRouter } from 'next/navigation';
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
-}
-function handleCSV() {
-  console.log("CSV export Button clicked");
 }
 
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
+  const router = useRouter();
+  function handleCSV() {
+    console.log("CSV export Button clicked");
+    router.push('/dashboard/outbound')
+  }
+
   return (
     <DropdownMenu>
       <Button
