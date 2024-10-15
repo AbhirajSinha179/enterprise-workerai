@@ -47,7 +47,7 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
                   <div className="flex items-center h-6 mx-2">
                     <Separator orientation="vertical" />
                   </div>
-                  <div className={cn("ml-auto")}>{format(new Date(item.email.sendAt), "PP")}</div>
+                  <div className={cn("ml-auto")}>{format(new Date(item.email.sendAt ? item.email.sendAt : "null"), "PP")}</div>
                 </div>
               </div>
               <div className="text-md font-medium">{item.email.subject}</div>
