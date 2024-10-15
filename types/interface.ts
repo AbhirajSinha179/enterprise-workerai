@@ -161,7 +161,7 @@ export interface ScheduledEmail {
     subject: string
     recipient: string
     createdAt: string
-    sendAt: string | null
+    sendAt: string
     body: string | null
     isFollowUp: boolean
     approved: boolean
@@ -179,8 +179,8 @@ export interface ScheduledEmail {
     email: string
     imgUrl: string | null
     firstName: string
-    lastName: string | null
-    seniority: string | null
+    lastName: string
+    seniority: string | null // updated to allow null
     country: string | null
     linkedin: string | null
     city: string | null
@@ -201,7 +201,7 @@ export const scheduledEmailSchema = z.object({
     subject: z.string(),
     recipient: z.string(),
     createdAt: z.string(),
-    sendAt: z.string().nullable(),
+    sendAt: z.string(),
     body: z.string().nullable(),
     isFollowUp: z.boolean(),
     approved: z.boolean(),
@@ -219,12 +219,12 @@ export const scheduledEmailSchema = z.object({
     email: z.string(),
     imgUrl: z.string().nullable(),
     firstName: z.string(),
-    lastName: z.string().nullable(),
-    seniority: z.string().nullable(),
+    lastName: z.string(),
+    seniority: z.string().nullable(), // updated to allow null
     country: z.string().nullable(),
-    linkedin: z.union([z.string(), z.literal("")]).nullable(),
-    city: z.union([z.string(), z.literal("")]).nullable(),
-    state: z.union([z.string(), z.literal("")]).nullable(),
+    linkedin: z.string().nullable(),
+    city: z.string().nullable(),
+    state: z.string().nullable(),
     EmailAddStatus: z.string(),
     timezone: z.string().nullable(),
     companyId: z.string().nullable(),
