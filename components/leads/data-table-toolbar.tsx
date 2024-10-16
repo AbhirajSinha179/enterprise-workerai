@@ -63,14 +63,14 @@ export function DataTableToolbar<TData>({
       >
         {actionButtons && (
           <>
-            <Button
+            {/* <Button
               onClick={() => handleExport(selectedRows)}
               variant="secondary"
               size="lg"
               className="mx-2"
             >
               Export
-            </Button>
+            </Button> */}
             <Button
               onClick={() => handleMultipleDelete(selectedRows)}
               variant="secondary"
