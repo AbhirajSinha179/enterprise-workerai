@@ -1,7 +1,7 @@
-import { ScheduledEmail, Thread } from "@/types/interface"
+import { Reply, ScheduledEmail, Thread } from "@/types/interface"
 
 export const dummyDashboardData = {
-  total_clicks: 0,
+  total_clicks: 25,
   total_opens: 123,
   total_replies: 0,
   total_emails: 215,
@@ -27,6 +27,78 @@ export const dummyDashboardData = {
     },
   ],
 }
+export const dummyReplies: Reply[] = [
+  {
+    id: "1",
+    date: "2023-09-15T10:45:00Z",
+    subject: "Re: Project Proposal",
+    body: "Thanks for sharing the proposal. I'll review it and get back to you by the end of the week.",
+    from: "John Doe",
+  },
+  {
+    id: "2",
+    date: "2023-09-16T08:30:00Z",
+    subject: "Re: Meeting Schedule",
+    body: "Could we reschedule the meeting to next Tuesday? I have a conflict on the original date.",
+    from: "Jane Smith",
+  },
+  {
+    id: "3",
+    date: "2023-09-17T14:20:00Z",
+    subject: "Re: Invoice #34567",
+    body: "The invoice looks good. Payment has been processed.",
+    from: "Billing Department",
+  },
+  {
+    id: "4",
+    date: "2023-09-18T11:00:00Z",
+    subject: "Re: Job Application",
+    body: "Your application has been received. We'll contact you if you're shortlisted for an interview.",
+    from: "HR Team",
+  },
+  {
+    id: "5",
+    date: "2023-09-19T09:15:00Z",
+    subject: "Re: Product Feedback",
+    body: "Thank you for your feedback on our product. We'll incorporate it in our next update.",
+    from: "Support Team",
+  },
+  {
+    id: "6",
+    date: "2023-09-20T13:45:00Z",
+    subject: "Re: Service Issue",
+    body: "We apologize for the inconvenience caused. Our team is looking into the issue.",
+    from: "Customer Care",
+  },
+  {
+    id: "7",
+    date: "2023-09-21T07:50:00Z",
+    subject: "Re: Subscription Renewal",
+    body: "Your subscription is about to expire. Please renew it to continue enjoying our services.",
+    from: "Subscription Team",
+  },
+  {
+    id: "8",
+    date: "2023-09-22T10:10:00Z",
+    subject: "Re: Website Update",
+    body: "The latest updates have been deployed to the website. Please check and let us know if everything looks good.",
+    from: "Web Team",
+  },
+  {
+    id: "9",
+    date: "2023-09-23T12:30:00Z",
+    subject: "Re: Feature Request",
+    body: "Thank you for suggesting a new feature. Our product team will review it for future releases.",
+    from: "Development Team",
+  },
+  {
+    id: "10",
+    date: "2023-09-24T15:40:00Z",
+    subject: "Re: Event Registration",
+    body: "Your registration for the event has been confirmed. We look forward to seeing you there.",
+    from: "Events Team",
+  },
+]
 
 // Define the dummyScheduledEmails as an array of ScheduledEmail objects
 export const dummyScheduledEmails: ScheduledEmail[] = [
@@ -3724,8 +3796,7 @@ export const dummyLeads = [
   },
 ]
 
-
-export const  dummyMailbox = [
+export const dummyMailbox = [
   {
     id: "caf0b099-9cc5-472a-b862-077f2c12268b",
     email: "sirish@wizr.dev",
