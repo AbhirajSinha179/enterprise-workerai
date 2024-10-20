@@ -158,17 +158,22 @@ const DashboardHome: React.FC = () => {
         const { total_opens, total_clicks, data } = dashboardData
 
         // Calculating open rate and response rate
-        const totalUniqueEmails = data.reduce((sum, item) => sum + item.total_unique_emails, 0)
+        const totalUniqueEmails = data.reduce((sum, item) => sum + (item.total_unique_emails ?? 0), 0);
         const openRate: any = getOpenRate({ total_opens, totalUniqueEmails })
         const responseRate: any = getResponseRate({ total_responses: total_clicks, totalUniqueEmails })
 
         // Updating state
         setTotalUniqueEmails(totalUniqueEmails)
-        setTotalSentEmails(data.reduce((sum, item) => sum + item.total_emails, 0))
+        setTotalSentEmails(data.reduce((sum, item) => sum + (item.total_emails ?? 0), 0));
         setOpenRate(openRate)
         setResponseRate(responseRate)
         setResponseStatus(200)
-        setDataGraph(data)
+        setDataGraph(
+          data.map((item) => ({
+            ...item,
+            total_unique_emails: item.total_unique_emails ?? 0,
+          }))
+        );
         setIsLoading(false)
       } catch (error: any) {
         if (error.message.includes("Status code: 404")) {

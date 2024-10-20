@@ -386,7 +386,7 @@ const dataItemSchema = z.object({
   date: z.string(), // ISO string format for dates
   opens: z.number(),
   total_emails: z.number(),
-  total_unique_emails: z.number(),
+  total_unique_emails: z.number().optional(),
 })
 
 // Define the schema for the overall dashboard data
