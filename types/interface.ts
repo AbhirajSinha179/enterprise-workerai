@@ -37,11 +37,11 @@ export const leadSchema = z.object({
 })
 
 export const replySchema = z.object({
-  id: z.string().optional(),
+  replyId: z.string().optional(),
   date: z.string().nullable(),
   subject: z.string().nullable(),
-  body: z.string(),
-  from: z.string(),
+  body: z.string().nullable(),
+  from: z.string().nullable(),
 })
 
 export const threadSchema = z.object({
@@ -386,7 +386,7 @@ const dataItemSchema = z.object({
   date: z.string(), // ISO string format for dates
   opens: z.number(),
   total_emails: z.number(),
-  total_unique_emails: z.number(),
+  total_unique_emails: z.number().optional(),
 })
 
 // Define the schema for the overall dashboard data
