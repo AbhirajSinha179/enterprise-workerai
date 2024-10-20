@@ -28,9 +28,12 @@ export function SiteNav() {
             <Link href="/blog" className="underline-animated">
               Blog
             </Link>
-            <Link href={"https://www.calendly.com/rohit_workerai"} className="underline-animated">
-              Talk to Sales
+            <Link href={"https://www.calendly.com/rohit_workerai"} className="underline-animated font-bold">
+              Book a call
             </Link>
+            {/* <Link href={"https://www.calendly.com/rohit_workerai"} className="underline-animated">
+              Talk to Sales
+            </Link> */}
             {/* <Link href="/pricing" className="underline-animated">
               Pricing
             </Link> */}
@@ -39,9 +42,7 @@ export function SiteNav() {
             </Link> */}
           </div>
           <div className="flex items-center gap-6">
-            <Link href={"https://www.calendly.com/rohit_workerai"} className="underline-animated font-bold">
-              Book a call
-            </Link>
+
             {/* <Link href={"/tour"} className="underline-animated font-bold">
               Take A Tour
             </Link> */}
