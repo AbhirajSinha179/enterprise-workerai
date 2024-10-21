@@ -28,9 +28,12 @@ export function SiteNav() {
             <Link href="/blog" className="underline-animated">
               Blog
             </Link>
-            <Link href={"https://www.calendly.com/rohit_workerai"} className="underline-animated">
-              Talk to Sales
+            <Link href={"https://www.calendly.com/rohit_workerai"} className="underline-animated font-bold">
+              Book a call
             </Link>
+            {/* <Link href={"https://www.calendly.com/rohit_workerai"} className="underline-animated">
+              Talk to Sales
+            </Link> */}
             {/* <Link href="/pricing" className="underline-animated">
               Pricing
             </Link> */}
@@ -39,8 +42,25 @@ export function SiteNav() {
             </Link> */}
           </div>
           <div className="flex items-center gap-6">
-            <Link href={"https://www.calendly.com/rohit_workerai"} className="underline-animated font-bold">
-              Book a call
+
+            {/* <Link href={"/tour"} className="underline-animated font-bold">
+              Take A Tour
+            </Link> */}
+
+            <Link href={"/tour"}>
+              <button className="relative inline-flex h-12 w-full items-center justify-center rounded-md bg-primary px-6 font-medium  transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50">
+                <div className="absolute -inset-0.5 -z-10 rounded-lg bg-gradient-to-b from-[#c7d2fe] to-[#8678f9] opacity-50 blur" />
+                <ClerkLoading>
+                  <LoadingSpinner />
+                </ClerkLoading>
+                <ClerkLoaded>
+                  <SignedOut>
+                    {/* <SignInButton /> */}
+                    <SignInButton> Take a Tour</SignInButton>
+                  </SignedOut>
+                  <SignedIn>Take a Tour</SignedIn>
+                </ClerkLoaded>
+              </button>
             </Link>
 
             <Link href={"/dashboard"}>

@@ -4,7 +4,7 @@ import { toast } from "sonner"
 import { useAuth } from "@clerk/nextjs"
 
 import { Reply } from "@/types/interface"
-
+import { dummyReplies } from "@/lib/dummy"
 
 export async function getTargetIdByUser(userId: string): Promise<string | null> {
   try {
@@ -56,13 +56,23 @@ async function fetchRecentReply(targetId: string): Promise<Reply[]> {
   }
 }
 
-const RecentSales: React.FC = () => {
+interface RecentSalesProps {
+  isDemo?: boolean
+}
+
+const RecentSales: React.FC<RecentSalesProps> = ({ isDemo = false }) => {
   const { userId } = useAuth()
   const [recentReplies, setRecentReplies] = useState<Reply[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
+      if (isDemo) {
+        setRecentReplies(dummyReplies)
+        setIsLoading(false)
+        return
+      }
+
       if (!userId) {
         toast.error("Error finding user ID")
         setIsLoading(false)
@@ -87,7 +97,7 @@ const RecentSales: React.FC = () => {
     }
 
     fetchData()
-  }, [userId])
+  }, [userId, isDemo])
 
   if (isLoading) {
     return <div className="mx-10 min-h-[150px] text-center font-medium">Loading...</div>
