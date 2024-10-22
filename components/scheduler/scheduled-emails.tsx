@@ -27,7 +27,7 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
             key={item.email.id}
             className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all bg-card")}
           >
-            <div className="flex w-full flex-col gap-1">
+            <div className="flex w-full flex-col gap-1 ml-4">
               <div className="text-2xl font-semibold flex">To : {item.email.recipient}</div>
               <div className="flex justify-between">
                 <div className="text-2xl font-semibold flex">From : {item.senderEmail}</div>
@@ -48,7 +48,7 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
                   <div className="flex items-center h-6 mx-2">
                     <Separator orientation="vertical" />
                   </div>
-                  <div className={cn("ml-auto")}>
+                  <div className={cn("ml-auto mx-4 ")}>
                     {item.email.sendAt ? format(new Date(item.email.sendAt), "PP") : "Not Scheduled"}
                   </div>
                 </div>
