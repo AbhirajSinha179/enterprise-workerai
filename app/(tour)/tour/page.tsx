@@ -17,11 +17,13 @@ const DashboardHome: React.FC = () => {
   const [endDate, setEndDate] = useState<string>(moment().toISOString())
 
   // Using dummy data directly
-  const { total_opens, total_clicks, data } = dummyDashboardData
+  // const { total_opens, total_clicks, data } = dummyDashboardData
+  const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dummyDashboardData
 
   // Calculating open rate and response rate
   const totalUniqueEmails = data.reduce((sum, item) => sum + item.total_unique_emails, 0)
-  const openRate = getOpenRate({ total_opens, totalUniqueEmails })
+  // const openRate = getOpenRate({ total_opens, totalUniqueEmails })
+  const openRate: any = getOpenRate({ total_opens, total_emails })
   const responseRate = getResponseRate({ total_responses: total_clicks, totalUniqueEmails })
 
   const cardConfigs = [
