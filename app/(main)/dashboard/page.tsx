@@ -165,7 +165,7 @@ const DashboardHome: React.FC = () => {
         const totalUniqueEmails = (total_unique_emails ? total_unique_emails : 0);
         console.log("TOTAL REPLIES : ", total_replies)
         console.log("TOTAL EMAILS : ", total_emails)
-        const openRate: any = getOpenRate({ total_replies, total_emails })
+        const openRate: any = getOpenRate({ total_opens, total_emails })
         const responseRate: any = getResponseRate({ total_responses: total_clicks, totalUniqueEmails })
 
         // Updating state

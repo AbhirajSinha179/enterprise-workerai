@@ -12,9 +12,9 @@ export function cn(...inputs: ClassValue[]) {
 
 // // similar with response rate
 
-export const getOpenRate = ({ total_replies, total_emails }: { total_replies: number; total_emails: number }) => {
+export const getOpenRate = ({ total_opens, total_emails }: { total_opens: number; total_emails: number }) => {
   if (total_emails === 0) return 0 // Avoid division by zero
-  return ((total_replies / total_emails) * 100).toFixed(2) // Convert to percentage and format with 2 decimal places
+  return ((total_opens / total_emails) * 100).toFixed(2) // Convert to percentage and format with 2 decimal places
 }
 
 export const getResponseRate = ({
