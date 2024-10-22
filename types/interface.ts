@@ -393,6 +393,7 @@ const dataItemSchema = z.object({
 export const dashboardDataSchema = z.object({
   total_clicks: z.number(),
   total_opens: z.number(),
+  total_unique_emails: z.number().nullable(),
   data: z.array(dataItemSchema),
 })
 
