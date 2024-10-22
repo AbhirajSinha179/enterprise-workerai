@@ -391,8 +391,11 @@ const dataItemSchema = z.object({
 
 // Define the schema for the overall dashboard data
 export const dashboardDataSchema = z.object({
+  total_emails: z.number(),
+  total_replies: z.number(),
   total_clicks: z.number(),
   total_opens: z.number(),
+  total_unique_emails: z.number().nullable(),
   data: z.array(dataItemSchema),
 })
 

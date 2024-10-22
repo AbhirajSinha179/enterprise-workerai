@@ -21,8 +21,11 @@ import { useAuth } from "@clerk/nextjs"
 import RecentSales from "@/components/dashboard/recent-sales"
 
 const defaultDashboardData = {
+  total_replies: 0,
+  total_emails: 0,
   total_clicks: 0,
   total_opens: 0,
+  total_unique_emails: 0,
   data: [
     {
       date: "2024-01-01T00:00:00Z",
@@ -155,11 +158,14 @@ const DashboardHome: React.FC = () => {
         // const recentReplies = await fetchRecentReply(targetId);
 
         // Destructuring dashboardData
-        const { total_opens, total_clicks, data } = dashboardData
+        const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dashboardData
 
         // Calculating open rate and response rate
-        const totalUniqueEmails = data.reduce((sum, item) => sum + (item.total_unique_emails ?? 0), 0);
-        const openRate: any = getOpenRate({ total_opens, totalUniqueEmails })
+        // const totalUniqueEmails = data.reduce((sum, item) => sum + (item.total_emails ?? 0), 0);
+        const totalUniqueEmails = (total_unique_emails ? total_unique_emails : 0);
+        console.log("TOTAL REPLIES : ", total_replies)
+        console.log("TOTAL EMAILS : ", total_emails)
+        const openRate: any = getOpenRate({ total_opens, total_emails })
         const responseRate: any = getResponseRate({ total_responses: total_clicks, totalUniqueEmails })
 
         // Updating state

@@ -2,7 +2,7 @@ import { Reply, ScheduledEmail, Thread } from "@/types/interface"
 
 export const dummyDashboardData = {
   total_clicks: 25,
-  total_opens: 123,
+  total_opens: 153,
   total_replies: 0,
   total_emails: 215,
   total_unique_emails: 212,
