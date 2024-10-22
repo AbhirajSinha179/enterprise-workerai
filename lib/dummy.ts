@@ -109,7 +109,23 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
       recipient: "shubam.gupta@pocketfm.com",
       createdAt: "2024-10-08 08:02:11.397",
       sendAt: "2024-10-15 06:07:01+00",
-      body: null,
+      body: `
+      Hi Shubam,
+
+      Congratulations on PocketFM’s success in transforming storytelling in India! Your team is truly innovative.
+
+      I came across your post on LinkedIn and noticed you’re hiring for several roles.
+
+      At TopHire, we connect top engineering talent with growing companies like yours. Our candidates are pre-screened and ready to make an impact quickly.
+
+      Revolut found their perfect candidates with us in just two weeks, compared to a previous four-month search.
+
+      Can I introduce you to some qualified candidates who are ready to work and interview this week, so you can check if they meet your requirements?
+
+      Thanks,
+      Siddharth
+      Co-founder, TopHire
+      `,
       isFollowUp: true,
       approved: true,
       draftId: null,
@@ -144,209 +160,28 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
   },
   {
     email: {
-      id: "6ea58aaa-dc2f-43a5-ac84-059654c8bb35",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "nitin.tanwar@curefit.com",
-      createdAt: "2024-10-08 08:02:11.318",
-      sendAt: "2024-10-15 06:09:45+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "216dfd99-b953-4ad1-af57-20b8f770da49",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "c4d8df4f-90be-492d-8ced-e8e6791ff3fb",
-      email: "nitin.tanwar@curefit.com",
-      imgUrl: null,
-      firstName: "Nitin",
-      lastName: "Tanwar",
-      seniority: "Manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/nitin-tanwar-8b504a54",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "ed24376e-c75a-41b6-8e4b-039d0695d99a",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "27ce005f-0c13-4d46-9bfd-50e93888c133",
-  },
-  {
-    email: {
-      id: "d8f7b657-82c0-4cb6-bd0d-f1a60a55f5b9",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "tushar.agrawal@oyorooms.com",
-      createdAt: "2024-10-06 22:17:23.626",
-      sendAt: "2024-10-15 06:10:52+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "1530d1b3-8a41-4845-b974-9ffaf07ea289",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "7887dfb0-027d-4c80-a67c-a7291d783816",
-      email: "tushar.agrawal@oyorooms.com",
-      imgUrl: null,
-      firstName: "Tushar",
-      lastName: "Agrawal",
-      seniority: "Senior",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/tushar-agrawal-248462143",
-      city: "Dhanbad",
-      state: "Jharkhand",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "71a36f49-e198-4494-921e-d5f09b1824ce",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "b5f48413-83ef-4a53-8cd2-897303f00502",
-  },
-  {
-    email: {
-      id: "a4dec64e-fe02-45fc-a687-60d14f16185f",
-      subject: "Subject: Improve First Response Time by 35% – Let’s Chat!",
-      recipient: "shatank.gupta@ofbusiness.in",
-      createdAt: "2024-10-08 08:14:45.709",
-      sendAt: "2024-10-15 06:25:29+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "ed3cdbc9-4084-4296-8ba6-92031d3c822e",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "4271a8a0-57d4-4ab4-b841-51316f3d9acb",
-      email: "shatank.gupta@ofbusiness.in",
-      imgUrl:
-        "https://media.licdn.com/dms/image/C5103AQH69UUa1zSxuQ/profile-displayphoto-shrink_200_200/0/1576606350184?e=2147483647&v=beta&t=Tbu3jVYCFjNg0_4xg2PVdIUgKImWlb4ZpPdWQanKRiE",
-      firstName: "Shatank",
-      lastName: "Gupta",
-      seniority: "manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/shatank-gupta-a08878137",
-      city: null,
-      state: "Delhi",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "e9adf1db-2cc4-4652-81e9-e969e4b02f75",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:17:28.407",
-    },
-    senderId: "caf0b099-9cc5-472a-b862-077f2c12268b",
-  },
-  {
-    email: {
-      id: "536394de-5c55-43a8-92f7-d676e53b291a",
-      subject: "Subject: Improve first response time (FRT) by 35% — worth having a chat?",
-      recipient: "somnath@pw.live",
-      createdAt: "2024-10-08 08:02:11.794",
-      sendAt: "2024-10-15 06:27:12+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "693a77a8-239d-4e5d-a0d6-dfce3cfe72eb",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "d901541c-ce93-41c5-a0d3-6266620a902b",
-      email: "somnath@pw.live",
-      imgUrl:
-        "https://media.licdn.com/dms/image/v2/C5603AQF6XfSyuazWhQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1597637456100?e=2147483647&v=beta&t=O0ljdwlu39u6DjrAHZlmnhbT06V-4WD_XubEhmoCE7o",
-      firstName: "Somnath",
-      lastName: "Dutta",
-      seniority: "entry",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/somnath-dutta-9b5a861b4",
-      city: "New Delhi",
-      state: "Delhi",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "c4fc8e88-8e37-4cfd-86ba-e72a2a374a04",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:17:40.845",
-    },
-    senderId: "686549fc-8270-4769-a8d6-f36f95ba94a9",
-  },
-  {
-    email: {
-      id: "e1cc0c82-8405-4f2f-b3e7-3e16e45f6fa5",
-      subject: "Subject: Let's Boost Your Team’s Productivity!",
-      recipient: "atul.raina@rebelfoods.com",
-      createdAt: "2024-10-08 08:02:11.868",
-      sendAt: "2024-10-15 06:29:25+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "d37b85ff-03d7-4247-80f0-6049db4f4800",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "5ef34b92-1b69-41ce-8727-3bc13abc89e3",
-      email: "atul.raina@rebelfoods.com",
-      imgUrl: "https://static.licdn.com/aero-v1/sc/h/9c8pery4andzj6ohjkjp54ma2",
-      firstName: "Atul",
-      lastName: "Raina",
-      seniority: "manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/atul-raina",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "db4341aa-24be-40b3-aef4-8cd030a7e641",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:18:13.345",
-    },
-    senderId: "686549fc-8270-4769-a8d6-f36f95ba94a9",
-  },
-  {
-    email: {
       id: "a74fe0c9-2ff8-4c0f-b477-7c8bd17dbbca",
       subject: "Subject: Elevate CSAT by 20% - Let’s Chat?",
       recipient: "kavyashree@urbancompany.com",
       createdAt: "2024-10-08 08:02:12.556",
       sendAt: "2024-10-15 06:29:40+00",
-      body: null,
+      body: `
+      Hi Kavya,
+
+      Congratulations on Urban Company’s continued growth! Your role in managing customer satisfaction is impressive.
+
+      I noticed your company’s hiring plans and wanted to reach out.
+
+      At TopHire, we connect growing companies with top engineering talent quickly. Our pre-screened candidates are ready to hit the ground running and minimize your hiring risks.
+
+      We’ve helped companies like Swiggy find their ideal candidates within weeks. 
+
+      Could I connect you with some qualified candidates who can interview this week and potentially fit your needs?
+
+      Thanks,  
+      Siddharth  
+      Co-founder, TopHire
+      `,
       isFollowUp: true,
       approved: true,
       draftId: null,
@@ -385,7 +220,23 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
       recipient: "mitesh.mundra@phonepe.com",
       createdAt: "2024-10-08 08:02:11.38",
       sendAt: "2024-10-15 06:34:14+00",
-      body: null,
+      body: `
+      Hi Mitesh,
+
+      I came across your work at PhonePe, and it’s inspiring how your team is driving digital payments forward.
+
+      I noticed that you’re building out your engineering team, and I wanted to introduce myself.
+
+      At TopHire, we help companies like PhonePe hire top-notch engineering talent quickly and efficiently.
+
+      We streamline the hiring process with pre-screened candidates, so you can focus on growing your team with minimal risk. We’ve helped companies like Paytm find key candidates in a matter of weeks.
+
+      Could I connect you with a few pre-qualified candidates?
+
+      Best regards,  
+      Siddharth  
+      Co-founder, TopHire
+      `,
       isFollowUp: true,
       approved: true,
       draftId: null,
@@ -425,7 +276,23 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
       recipient: "anubhav.nag@zeptonow.com",
       createdAt: "2024-10-08 08:02:11.887",
       sendAt: "2024-10-15 06:39:38+00",
-      body: null,
+      body: `
+      Hi Anubhav,
+
+      Congratulations on ZeptoNow’s incredible growth! Your team’s ability to deliver groceries in minutes is remarkable.
+
+      I came across your hiring plans on LinkedIn and thought I should introduce myself.
+
+      At TopHire, we help high-growth companies like ZeptoNow find top engineering talent quickly. Our pre-screened candidates are ready to make an impact immediately.
+
+      We’ve helped companies like Swiggy and Flipkart build their engineering teams in record time.
+
+      Could I connect you with a few candidates who are ready to interview this week?
+
+      Best regards,  
+      Siddharth  
+      Co-founder, TopHire
+      `,
       isFollowUp: true,
       approved: true,
       draftId: null,
@@ -464,7 +331,23 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
       recipient: "navneet.rao@phonepe.com",
       createdAt: "2024-10-08 08:02:11.911",
       sendAt: "2024-10-15 06:41:59+00",
-      body: null,
+      body: `
+      Hi Navneet,
+
+      I’ve been following your team’s work at PhonePe, and I wanted to congratulate you on your impressive leadership.
+
+      I noticed you’re expanding your engineering team, and I thought I’d reach out.
+
+      At TopHire, we help companies like PhonePe find engineering talent that can hit the ground running, minimizing hiring risks.
+
+      We provide pre-screened candidates, ready to make an impact from day one. Companies like Paytm have successfully hired with us in just a matter of weeks.
+
+      Can I connect you with a few candidates who might be a great fit?
+
+      Thanks,  
+      Siddharth  
+      Co-founder, TopHire
+      `,
       isFollowUp: true,
       approved: true,
       draftId: null,
@@ -504,7 +387,23 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
       recipient: "anshil.namdev@upgrad.com",
       createdAt: "2024-10-08 08:02:11.984",
       sendAt: "2024-10-15 06:43:06+00",
-      body: null,
+      body: `
+      Hi Anshil,
+
+      Congratulations on UpGrad’s growth in the education space! Your team’s work is impressive.
+
+      I noticed you’re looking to expand your team, and I wanted to introduce TopHire.
+
+      We help companies like UpGrad hire top engineering talent quickly. Our pre-screened candidates are ready to make an impact right away, reducing your hiring time significantly.
+
+      We’ve helped other companies like Byju’s find key hires in record time. 
+
+      Could I introduce you to some candidates who are ready to work and interview this week?
+
+      Thanks,  
+      Siddharth  
+      Co-founder, TopHire
+      `,
       isFollowUp: true,
       approved: true,
       draftId: null,
@@ -536,914 +435,6 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
     },
     senderId: "686549fc-8270-4769-a8d6-f36f95ba94a9",
   },
-  {
-    email: {
-      id: "bb701567-b552-4ab7-9bc2-5f103906f2d5",
-      subject: "Subject: Improve first response time (FRT) by 35%, worth having a chat?",
-      recipient: "sourabhvaid@sharechat.com",
-      createdAt: "2024-10-08 08:02:12.117",
-      sendAt: "2024-10-15 06:46:57+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "68634797-0e37-4051-88fc-87d82e510847",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "e38248ae-5fbd-4fb6-8fac-b6bd50d4da55",
-      email: "sourabhvaid@sharechat.com",
-      imgUrl:
-        "https://media.licdn.com/dms/image/v2/C5103AQF43C_ufL8VXQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1535898329568?e=2147483647&v=beta&t=pf3sANItM5E55cliwQt99er93KuemXfXtn8HqaW3m7E",
-      firstName: "Sourabh",
-      lastName: "Vaid",
-      seniority: "manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/sourabh-vaid",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "d1975a50-c98f-440e-b327-4737fd34e9ea",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:19:47.728",
-    },
-    senderId: "686549fc-8270-4769-a8d6-f36f95ba94a9",
-  },
-  {
-    email: {
-      id: "a55ab9ca-f00b-4988-8f92-df4ad8ecdc7e",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "ankit.mittal@kreditbee.in",
-      createdAt: "2024-10-08 08:02:12.234",
-      sendAt: "2024-10-15 06:49:19+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "79ece715-bb4d-4d82-a70b-d14f25d41031",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "1b560bfb-f350-4dc7-a798-2be02d4b191c",
-      email: "ankit.mittal@kreditbee.in",
-      imgUrl: "https://static.licdn.com/aero-v1/sc/h/9c8pery4andzj6ohjkjp54ma2",
-      firstName: "Ankit",
-      lastName: "Mittal",
-      seniority: "manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/ankitmittaliitv",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "1dafad0c-380a-442b-81fe-d36c704c83f7",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:17:53.31",
-    },
-    senderId: "686549fc-8270-4769-a8d6-f36f95ba94a9",
-  },
-  {
-    email: {
-      id: "53c51121-f706-4fec-897a-9acc2f844b81",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "deep.kalra@makemytrip.com",
-      createdAt: "2024-10-06 22:24:28.194",
-      sendAt: "2024-10-15 06:54:42+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "9aaf7e28-c5a3-496a-961c-92733cd80cd5",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "bb45428d-7a9e-4ccf-a635-6c00fd3b938b",
-      email: "deep.kalra@makemytrip.com",
-      imgUrl: null,
-      firstName: "Deep",
-      lastName: "Kalra",
-      seniority: "Founder",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/deep-kalra-2954862",
-      city: "Gurgaon",
-      state: "Haryana",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "06c0382b-2eae-47b8-941a-980eec1fc7b7",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "b5f48413-83ef-4a53-8cd2-897303f00502",
-  },
-  {
-    email: {
-      id: "a99de636-9b31-46a2-81a1-3f5cf4597155",
-      subject: "Subject: Reduce 90% of your customer support load with AI, worth a chat?",
-      recipient: "rama.sharma@upgrad.com",
-      createdAt: "2024-10-08 08:14:44.851",
-      sendAt: "2024-10-15 06:55:02+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "b27bf881-fc97-4fab-9e9e-7cd89d2cc939",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "7dc08f1f-7095-471b-b51d-78545626a8ed",
-      email: "rama.sharma@upgrad.com",
-      imgUrl: null,
-      firstName: "Rama",
-      lastName: "Sharma",
-      seniority: "Manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/rama-sharma-709898135",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "c3ba3c35-f960-4301-9b12-82e4f5e53766",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "66167f9a-b56e-4c66-9e42-3cbe26d56ff4",
-  },
-  {
-    email: {
-      id: "37848cfe-d13e-41c9-85f8-351ccec43fbe",
-      subject: "Subject: Reduce 90% of your customer support load with AI, worth a chat?",
-      recipient: "prachi.chaudhary@healthians.com",
-      createdAt: "2024-10-08 08:14:44.594",
-      sendAt: "2024-10-15 06:57:49+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "7a4aaeb2-1e92-4ed2-9274-4c79d3b25460",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "1a279714-8199-4d04-8a71-7b72a6a86a53",
-      email: "prachi.chaudhary@healthians.com",
-      imgUrl: null,
-      firstName: "Prachi",
-      lastName: "Chaudhary",
-      seniority: "Entry",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/dr-prachi-chaudhary",
-      city: "Gurgaon",
-      state: "Haryana",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "384874e6-7163-4605-b39a-dc0ba1c30146",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "27ce005f-0c13-4d46-9bfd-50e93888c133",
-  },
-  {
-    email: {
-      id: "a1e3ee0a-a5f9-49a6-b035-a56f35c4cc7f",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "tushar.agrawal@oyorooms.com",
-      createdAt: "2024-10-06 22:24:28.204",
-      sendAt: "2024-10-15 06:59:28+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "1530d1b3-8a41-4845-b974-9ffaf07ea289",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "7887dfb0-027d-4c80-a67c-a7291d783816",
-      email: "tushar.agrawal@oyorooms.com",
-      imgUrl: null,
-      firstName: "Tushar",
-      lastName: "Agrawal",
-      seniority: "Senior",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/tushar-agrawal-248462143",
-      city: "Dhanbad",
-      state: "Jharkhand",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "71a36f49-e198-4494-921e-d5f09b1824ce",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "b5f48413-83ef-4a53-8cd2-897303f00502",
-  },
-  {
-    email: {
-      id: "94f37d01-91e9-4f76-b78c-6f939055e014",
-      subject: "Subject: Improve First Response Time by 35% – Let’s Chat?",
-      recipient: "akash.singh@zeptonow.com",
-      createdAt: "2024-10-06 22:24:28.31",
-      sendAt: "2024-10-15 07:02:36+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "36ee721f-b0b6-45a4-9f2b-7acbab042f42",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "325d1630-dda9-4e4c-8f96-c170a50ad857",
-      email: "akash.singh@zeptonow.com",
-      imgUrl: null,
-      firstName: "Akash",
-      lastName: "Singh",
-      seniority: "Entry",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/akashsingh27",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "bbc5e36c-c1a5-4a7b-b5e5-7b0d3108b40e",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "b5f48413-83ef-4a53-8cd2-897303f00502",
-  },
-  {
-    email: {
-      id: "a074c3bf-20dc-4926-a748-e2a0887f5342",
-      subject: "Subject: Reduce 90% of your customer support load with AI, worth a chat?",
-      recipient: "bhagyashree.surve@phonepe.com",
-      createdAt: "2024-10-08 08:14:44.615",
-      sendAt: "2024-10-15 07:02:44+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "6620eca6-8593-4e02-b118-9ea2dd922725",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "42f57153-d2a2-47d4-a850-1ac7a4648f27",
-      email: "bhagyashree.surve@phonepe.com",
-      imgUrl:
-        "https://media.licdn.com/dms/image/v2/D5603AQG7DofPs1o8qA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1707058552270?e=2147483647&v=beta&t=xEHDxShx_9ye4lpeahdAgZoPpG9K0KVrNvsjkfpHWxs",
-      firstName: "Bhagyashree",
-      lastName: "Surve",
-      seniority: "manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/bhagyashree-surve-790826118",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "82a31094-b6b8-40f0-a7fd-5133fab4fe1b",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:18:18.443",
-    },
-    senderId: "27ce005f-0c13-4d46-9bfd-50e93888c133",
-  },
-  {
-    email: {
-      id: "ccecd0fc-6491-4b4e-a019-efd90ad55ecb",
-      subject: "Subject: Boost Your Team's Productivity with Our Help!",
-      recipient: "rahul.rana@ofbusiness.in",
-      createdAt: "2024-10-08 08:14:45.288",
-      sendAt: "2024-10-15 07:03:24+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "68bd8913-5082-45f0-82a5-1dfdb3e5d3f1",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "b3684f96-ee7e-4071-ae7c-09f1d24cca05",
-      email: "rahul.rana@ofbusiness.in",
-      imgUrl: null,
-      firstName: "Rahul",
-      lastName: "Rana",
-      seniority: "Entry",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/rahul-rana-103182199",
-      city: "",
-      state: "Delhi",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "e9adf1db-2cc4-4652-81e9-e969e4b02f75",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "66167f9a-b56e-4c66-9e42-3cbe26d56ff4",
-  },
-  {
-    email: {
-      id: "3ddb48e4-1a0b-4014-ac0a-21a7da03450b",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "shubam.gupta@pocketfm.com",
-      createdAt: "2024-10-08 08:14:45.283",
-      sendAt: "2024-10-15 07:06:40+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "2c0c55cf-02c1-49ae-86d7-713634d8ec07",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "b9e5ad74-27b4-42aa-a5da-867eb738d990",
-      email: "shubam.gupta@pocketfm.com",
-      imgUrl:
-        "https://media.licdn.com/dms/image/v2/D5603AQFE5RX-SjROfg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1705325526381?e=2147483647&v=beta&t=kTYl6tJVP748H3BsnX2i3MRv2yt98uY2LHqdG9I8XG8",
-      firstName: "Shubam",
-      lastName: "Gupta",
-      seniority: null,
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/shubamgupta24",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "dc28f7c2-ae15-4ecc-9a59-b28ad5b3375e",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:19:31.904",
-    },
-    senderId: "27ce005f-0c13-4d46-9bfd-50e93888c133",
-  },
-  {
-    email: {
-      id: "b2b3e660-2689-4f13-b0b3-adac66e99a2b",
-      subject: "Subject: Let’s chat about boosting your team’s productivity!",
-      recipient: "siva.adhikarla@bigbasket.com",
-      createdAt: "2024-10-08 08:14:44.787",
-      sendAt: "2024-10-15 07:15:25+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "4641413f-7710-400b-ad76-38d702a1bb85",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "04cfa3f4-7b48-4028-8e1f-515e351bb62f",
-      email: "siva.adhikarla@bigbasket.com",
-      imgUrl:
-        "https://media.licdn.com/dms/image/D5603AQGFQGZADqSeYA/profile-displayphoto-shrink_200_200/0/1687105340291?e=2147483647&v=beta&t=z507bLd9HSQpqNclzjK6SZ3pvYOGubh4TaL0WCHh3AQ",
-      firstName: "Siva",
-      lastName: "Adhikarla",
-      seniority: "director",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/avkdsivakumar",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "2ecb5289-3855-43a6-9694-4181cac3fcb8",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:17:47.707",
-    },
-    senderId: "27ce005f-0c13-4d46-9bfd-50e93888c133",
-  },
-  {
-    email: {
-      id: "3a24e946-2d3c-4fe1-b4b8-b0d7e198add4",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "nitin.tanwar@curefit.com",
-      createdAt: "2024-10-08 08:14:45.602",
-      sendAt: "2024-10-15 07:16:27+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "216dfd99-b953-4ad1-af57-20b8f770da49",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "c4d8df4f-90be-492d-8ced-e8e6791ff3fb",
-      email: "nitin.tanwar@curefit.com",
-      imgUrl: null,
-      firstName: "Nitin",
-      lastName: "Tanwar",
-      seniority: "Manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/nitin-tanwar-8b504a54",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "ed24376e-c75a-41b6-8e4b-039d0695d99a",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "27ce005f-0c13-4d46-9bfd-50e93888c133",
-  },
-  {
-    email: {
-      id: "b3ad8c31-fcde-4767-8e45-cd4c1b10e7ab",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "anshil.namdev@upgrad.com",
-      createdAt: "2024-10-08 08:14:45.691",
-      sendAt: "2024-10-15 07:27:28+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "3d4510eb-6edc-4031-8e20-2068875a6328",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "33020a3f-ac3b-494d-b68b-26b8ef3332b2",
-      email: "anshil.namdev@upgrad.com",
-      imgUrl: "https://static.licdn.com/aero-v1/sc/h/9c8pery4andzj6ohjkjp54ma2",
-      firstName: "Anshil",
-      lastName: "Namdev",
-      seniority: "manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/anshilnamdev",
-      city: "Gurugram",
-      state: "Haryana",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "c3ba3c35-f960-4301-9b12-82e4f5e53766",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:18:36.223",
-    },
-    senderId: "686549fc-8270-4769-a8d6-f36f95ba94a9",
-  },
-  {
-    email: {
-      id: "bb37ab30-3094-4e7a-8af6-81e9f6d32b52",
-      subject: "Subject: Boost Your Team's Productivity and Customer Support!",
-      recipient: "asif.akhtar@spinny.com",
-      createdAt: "2024-10-08 08:14:45.715",
-      sendAt: "2024-10-15 07:32:34+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "97b04140-0cb2-47e4-b5a5-931e0349166c",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "c5521248-0ed4-4621-be70-539f639930bf",
-      email: "asif.akhtar@spinny.com",
-      imgUrl:
-        "https://media.licdn.com/dms/image/v2/D4D03AQH9HcbenkybqA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1676576019923?e=2147483647&v=beta&t=npmWt-s4oWLgPEjzhAf6LvUl2VPGs3AqD-2_m7iJG_M",
-      firstName: "Asif",
-      lastName: "Akhtar",
-      seniority: "entry",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/asif-akhtar-01a459149",
-      city: "New Delhi",
-      state: "Delhi",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "debb490b-9e74-4ed9-88c3-80c4cb552181",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:17:17.955",
-    },
-    senderId: "686549fc-8270-4769-a8d6-f36f95ba94a9",
-  },
-  {
-    email: {
-      id: "28415a53-bdf1-4e57-ac10-2ebe1619f229",
-      subject: "Subject: Improve your response time by 35% – Let's chat?",
-      recipient: "robin.ratre@pharmeasy.in",
-      createdAt: "2024-10-08 08:02:11.358",
-      sendAt: "2024-10-15 07:37:09+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "a5287188-5cf0-4fab-a789-4521f4bd6293",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "521ba69f-93e9-4b38-8273-4a338482e683",
-      email: "robin.ratre@pharmeasy.in",
-      imgUrl: null,
-      firstName: "Robin",
-      lastName: "Ratre",
-      seniority: "Manager",
-      country: "United Kingdom",
-      linkedin: "http://www.linkedin.com/in/robinratre",
-      city: "London",
-      state: "England",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "55023cbe-538c-4d97-a4ff-946ac667134b",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "b5f48413-83ef-4a53-8cd2-897303f00502",
-  },
-  {
-    email: {
-      id: "25e1ec59-7ddd-46de-9979-73942fdd3407",
-      subject: "Subject: Improve first response time (FRT) by 35%, worth having a chat?",
-      recipient: "sourabhvaid@sharechat.com",
-      createdAt: "2024-10-08 08:14:45.679",
-      sendAt: "2024-10-15 07:37:32+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "68634797-0e37-4051-88fc-87d82e510847",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "e38248ae-5fbd-4fb6-8fac-b6bd50d4da55",
-      email: "sourabhvaid@sharechat.com",
-      imgUrl:
-        "https://media.licdn.com/dms/image/v2/C5103AQF43C_ufL8VXQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1535898329568?e=2147483647&v=beta&t=pf3sANItM5E55cliwQt99er93KuemXfXtn8HqaW3m7E",
-      firstName: "Sourabh",
-      lastName: "Vaid",
-      seniority: "manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/sourabh-vaid",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "d1975a50-c98f-440e-b327-4737fd34e9ea",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:19:47.728",
-    },
-    senderId: "686549fc-8270-4769-a8d6-f36f95ba94a9",
-  },
-  {
-    email: {
-      id: "7324c111-97fa-4cb0-80fa-08f3593e888a",
-      subject: "Subject: Boost Your Team's Productivity with Our Help!",
-      recipient: "rahul.rana@ofbusiness.in",
-      createdAt: "2024-10-08 10:45:05.871",
-      sendAt: "2024-10-15 07:37:54+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "68bd8913-5082-45f0-82a5-1dfdb3e5d3f1",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "b3684f96-ee7e-4071-ae7c-09f1d24cca05",
-      email: "rahul.rana@ofbusiness.in",
-      imgUrl: null,
-      firstName: "Rahul",
-      lastName: "Rana",
-      seniority: "Entry",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/rahul-rana-103182199",
-      city: "",
-      state: "Delhi",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "e9adf1db-2cc4-4652-81e9-e969e4b02f75",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "66167f9a-b56e-4c66-9e42-3cbe26d56ff4",
-  },
-  {
-    email: {
-      id: "088e9c45-3887-4da9-bf96-599b379a631c",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "aartibhatia@paisabazaar.com",
-      createdAt: "2024-10-08 08:02:11.397",
-      sendAt: "2024-10-15 07:40:54+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "9259f3b3-54c5-4a73-a998-8965fa19a4bb",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "fe92f276-9bb8-49c8-a79c-6e9bc9617f2f",
-      email: "aartibhatia@paisabazaar.com",
-      imgUrl:
-        "https://media.licdn.com/dms/image/v2/D5603AQEyM2Lmz2k9Xg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1713850247183?e=2147483647&v=beta&t=XMpUhGFhqYCzy26BW9CnbpYOUWm3CrlH9hw53eK6RUY",
-      firstName: "Aarti",
-      lastName: "Bhatia",
-      seniority: "manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/aartibhatia-1510",
-      city: "Gurugram",
-      state: "Haryana",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "3864003d-df7d-4735-b337-6cb7961f09b7",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:18:58.172",
-    },
-    senderId: "b5f48413-83ef-4a53-8cd2-897303f00502",
-  },
-  {
-    email: {
-      id: "3a028a31-b556-424e-997e-0590e3d00f3e",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "deep.kalra@makemytrip.com",
-      createdAt: "2024-10-08 08:02:12.046",
-      sendAt: "2024-10-15 07:41:36+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "9aaf7e28-c5a3-496a-961c-92733cd80cd5",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "bb45428d-7a9e-4ccf-a635-6c00fd3b938b",
-      email: "deep.kalra@makemytrip.com",
-      imgUrl: null,
-      firstName: "Deep",
-      lastName: "Kalra",
-      seniority: "Founder",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/deep-kalra-2954862",
-      city: "Gurgaon",
-      state: "Haryana",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "06c0382b-2eae-47b8-941a-980eec1fc7b7",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "b5f48413-83ef-4a53-8cd2-897303f00502",
-  },
-  {
-    email: {
-      id: "54f1efac-255b-4660-9c7d-d6f081413240",
-      subject: "Subject: Improve first response time (FRT) by 35% — worth having a chat?",
-      recipient: "somnath@pw.live",
-      createdAt: "2024-10-08 08:14:45.703",
-      sendAt: "2024-10-15 07:41:38+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "693a77a8-239d-4e5d-a0d6-dfce3cfe72eb",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "d901541c-ce93-41c5-a0d3-6266620a902b",
-      email: "somnath@pw.live",
-      imgUrl:
-        "https://media.licdn.com/dms/image/v2/C5603AQF6XfSyuazWhQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1597637456100?e=2147483647&v=beta&t=O0ljdwlu39u6DjrAHZlmnhbT06V-4WD_XubEhmoCE7o",
-      firstName: "Somnath",
-      lastName: "Dutta",
-      seniority: "entry",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/somnath-dutta-9b5a861b4",
-      city: "New Delhi",
-      state: "Delhi",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "c4fc8e88-8e37-4cfd-86ba-e72a2a374a04",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:17:40.845",
-    },
-    senderId: "686549fc-8270-4769-a8d6-f36f95ba94a9",
-  },
-  {
-    email: {
-      id: "aa312a56-e381-44db-a0ea-bb100b1b1e81",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "tushar.agrawal@oyorooms.com",
-      createdAt: "2024-10-08 08:02:12.156",
-      sendAt: "2024-10-15 07:46:55+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "1530d1b3-8a41-4845-b974-9ffaf07ea289",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "7887dfb0-027d-4c80-a67c-a7291d783816",
-      email: "tushar.agrawal@oyorooms.com",
-      imgUrl: null,
-      firstName: "Tushar",
-      lastName: "Agrawal",
-      seniority: "Senior",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/tushar-agrawal-248462143",
-      city: "Dhanbad",
-      state: "Jharkhand",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "71a36f49-e198-4494-921e-d5f09b1824ce",
-      blackListed: null,
-      enriched: "PENDINGENR",
-      enrichedAt: null,
-    },
-    senderId: "b5f48413-83ef-4a53-8cd2-897303f00502",
-  },
-  {
-    email: {
-      id: "5cadc16a-c1be-4c54-979b-9218fe06678e",
-      subject: "Subject: Elevate CSAT by 20%, worth a chat?",
-      recipient: "shubam.gupta@pocketfm.com",
-      createdAt: "2024-10-08 10:45:06.227",
-      sendAt: "2024-10-15 07:47:15+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "2c0c55cf-02c1-49ae-86d7-713634d8ec07",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "b9e5ad74-27b4-42aa-a5da-867eb738d990",
-      email: "shubam.gupta@pocketfm.com",
-      imgUrl:
-        "https://media.licdn.com/dms/image/v2/D5603AQFE5RX-SjROfg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1705325526381?e=2147483647&v=beta&t=kTYl6tJVP748H3BsnX2i3MRv2yt98uY2LHqdG9I8XG8",
-      firstName: "Shubam",
-      lastName: "Gupta",
-      seniority: null,
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/shubamgupta24",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "dc28f7c2-ae15-4ecc-9a59-b28ad5b3375e",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:19:31.904",
-    },
-    senderId: "27ce005f-0c13-4d46-9bfd-50e93888c133",
-  },
-  {
-    email: {
-      id: "4dff480b-6f53-4340-97f0-7be6b84e2eb0",
-      subject: "Subject: Reduce 90% of your customer support load with AI, worth a chat?",
-      recipient: "bhagyashree.surve@phonepe.com",
-      createdAt: "2024-10-08 10:45:06.27",
-      sendAt: "2024-10-15 07:51:48+00",
-      body: null,
-      isFollowUp: true,
-      approved: true,
-      draftId: null,
-      messageId: null,
-      emailSent: false,
-      threadId: "6620eca6-8593-4e02-b118-9ea2dd922725",
-      opened: false,
-      clicked: false,
-      replied: false,
-      bounced: null,
-    },
-    lead: {
-      id: "42f57153-d2a2-47d4-a850-1ac7a4648f27",
-      email: "bhagyashree.surve@phonepe.com",
-      imgUrl:
-        "https://media.licdn.com/dms/image/v2/D5603AQG7DofPs1o8qA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1707058552270?e=2147483647&v=beta&t=xEHDxShx_9ye4lpeahdAgZoPpG9K0KVrNvsjkfpHWxs",
-      firstName: "Bhagyashree",
-      lastName: "Surve",
-      seniority: "manager",
-      country: "India",
-      linkedin: "http://www.linkedin.com/in/bhagyashree-surve-790826118",
-      city: "Bengaluru",
-      state: "Karnataka",
-      EmailAddStatus: "UNVERIFIED",
-      timezone: "Asia/Kolkata",
-      companyId: "82a31094-b6b8-40f0-a7fd-5133fab4fe1b",
-      blackListed: null,
-      enriched: "COMPLETE",
-      enrichedAt: "2024-09-30 13:18:18.443",
-    },
-    senderId: "27ce005f-0c13-4d46-9bfd-50e93888c133",
-  },
-  // Add more scheduled emails here...
 ]
 
 // export const dummyThreadData = [
@@ -3574,6 +2565,286 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
 //   },
 // ]
 
+// export const dummyThreads: Thread[] = [
+//   {
+//     threadId: "thread-1",
+//     emails: [
+//       {
+//         id: "email-1",
+//         threadId: "thread-1",
+//         body: `Hi Anubhav,
+
+// Congratulations on ZeptoNow’s rapid growth! Your mission to deliver groceries in 10 minutes is incredibly impressive.
+
+// I noticed you’re building out your team, and I thought I’d reach out.
+
+// At TopHire, we specialize in connecting high-growth companies with top-tier engineering talent quickly.
+
+// We streamline the process by providing pre-screened candidates, so you can minimize time spent on hiring and focus on scaling. Companies like Ola have hired candidates with us in just a few weeks.
+
+// Could I introduce you to some candidates who can hit the ground running?
+
+// Best regards,
+// Siddharth
+// Co-founder, TopHire`,
+//         subject: "Welcome to Worker AI!",
+//         recipient: "user@example.com",
+//         sendAt: "2024-10-10T08:00:00Z",
+//         createdAt: "2024-10-01T08:30:00Z",
+//         isFollowUp: false,
+//         approved: true,
+//         draftId: null,
+//         messageId: "msg-1",
+//         opened: true,
+//         clicked: false,
+//         replied: false,
+//         bounced: null,
+//         emailSent: true,
+//       },
+//     ],
+//     replies: [
+//       {
+//         id: "reply-1",
+//         date: "2024-10-10T09:00:00Z",
+//         subject: "Re: Welcome to Worker AI!",
+//         body: "Thank you for onboarding me!",
+//         from: "user@example.com",
+//       },
+//     ],
+//     lead: {
+//       id: "lead-1",
+//       email: "user@example.com",
+//       imgUrl: "https://example.com/image.jpg",
+//       firstName: "John",
+//       lastName: "Doe",
+//       seniority: "Manager",
+//       country: "USA",
+//       linkedin: "https://linkedin.com/in/johndoe",
+//       city: "New York",
+//       state: "NY",
+//       EmailAddStatus: "VERIFIED",
+//       timezone: "America/New_York",
+//       companyId: "company-1",
+//       blackListed: null,
+//     },
+//   },
+//   {
+//     threadId: "thread-2",
+//     emails: [
+//       {
+//         id: "email-2",
+//         threadId: "thread-2",
+//         body: `Hi Scott,
+
+// Congratulations on Loma.tech’s private beta launch! Your approach to enable online communities to manage commerce effortlessly is amazing.
+
+// I was scrolling through Wellfound and saw you’re hiring a Founding Engineer and thought I should reach out.
+
+// At TopHire, we connect companies with top engineering talent quickly and efficiently.
+
+// We streamline hiring by providing pre-screened candidates, so you can minimize the risk and hire the best local developers who can hit the ground running quickly. Revolut found the perfect candidates with us in just two weeks, compared to a previously unsuccessful 4-month search.
+
+// Can I connect you with some qualified candidates who are ready to work and interview this week, so you just need to check if they fit your requirements?
+
+// Thanks,
+// Siddharth
+// Co-founder, Tophire`,
+//         subject: "Follow-up on your request",
+//         recipient: "user@example.com",
+//         sendAt: "2024-10-05T08:00:00Z",
+//         createdAt: "2024-10-02T11:00:00Z",
+//         isFollowUp: true,
+//         approved: true,
+//         draftId: null,
+//         messageId: "msg-2",
+//         opened: false,
+//         clicked: false,
+//         replied: false,
+//         bounced: null,
+//         emailSent: true,
+//       },
+//     ],
+//     replies: null,
+//     lead: {
+//       id: "lead-2",
+//       email: "user@example.com",
+//       imgUrl: null,
+//       firstName: "Jane",
+//       lastName: "Smith",
+//       seniority: "Director",
+//       country: "USA",
+//       linkedin: "https://linkedin.com/in/janesmith",
+//       city: "San Francisco",
+//       state: "CA",
+//       EmailAddStatus: "VERIFIED",
+//       timezone: "America/Los_Angeles",
+//       companyId: "company-2",
+//       blackListed: null,
+//     },
+//   },
+//   {
+//     threadId: "thread-3",
+//     emails: [
+//       {
+//         id: "email-2",
+//         threadId: "thread-2",
+//         body: `Hi Priya,
+
+// Congratulations on InnoTech's recent product launch! Your innovative approach to simplifying cloud management is truly impressive.
+
+// I came across your profile on LinkedIn and noticed that you’re hiring a Senior Backend Engineer. I thought I’d reach out to see if we could help.
+
+// At TopHire, we specialize in connecting companies like InnoTech with top engineering talent quickly and efficiently.
+
+// We streamline the hiring process by providing pre-screened candidates, so you can reduce the risk and focus on finding the right fit. Companies like PayPal have filled critical roles with us in just a few weeks, compared to months of internal efforts.
+
+// Could I connect you with a few highly qualified candidates who are ready to interview and can start right away?
+
+// Best regards,
+// Siddharth
+// Co-founder, TopHire`,
+//         subject: "Follow-up on your request",
+//         recipient: "user@example.com",
+//         sendAt: "2024-10-05T08:00:00Z",
+//         createdAt: "2024-10-02T11:00:00Z",
+//         isFollowUp: true,
+//         approved: true,
+//         draftId: null,
+//         messageId: "msg-2",
+//         opened: false,
+//         clicked: false,
+//         replied: false,
+//         bounced: null,
+//         emailSent: true,
+//       },
+//     ],
+//     replies: null,
+//     lead: {
+//       id: "lead-2",
+//       email: "user@example.com",
+//       imgUrl: null,
+//       firstName: "Jane",
+//       lastName: "Smith",
+//       seniority: "Director",
+//       country: "USA",
+//       linkedin: "https://linkedin.com/in/janesmith",
+//       city: "San Francisco",
+//       state: "CA",
+//       EmailAddStatus: "VERIFIED",
+//       timezone: "America/Los_Angeles",
+//       companyId: "company-2",
+//       blackListed: null,
+//     },
+//   },
+//   {
+//     threadId: "thread-4",
+//     emails: [
+//       {
+//         id: "email-2",
+//         threadId: "thread-2",
+//         body: `Hi Rahul,
+
+// Congrats on ZipNet's Series A funding! Your vision for revolutionizing logistics with AI is truly inspiring.
+
+// I noticed on Wellfound that you’re looking for a Lead Data Scientist, and I thought I’d reach out.
+
+// At TopHire, we help fast-growing companies like ZipNet connect with top-tier talent quickly and efficiently.
+
+// We provide pre-screened candidates who are ready to hit the ground running, minimizing your time spent on hiring. Companies like Razorpay have found ideal candidates through us within a few weeks.
+
+// Can I introduce you to a few qualified candidates who could be a great fit for your team?
+
+// Best,
+// Siddharth
+// Co-founder, TopHire`,
+//         subject: "Follow-up on your request",
+//         recipient: "user@example.com",
+//         sendAt: "2024-10-05T08:00:00Z",
+//         createdAt: "2024-10-02T11:00:00Z",
+//         isFollowUp: true,
+//         approved: true,
+//         draftId: null,
+//         messageId: "msg-2",
+//         opened: false,
+//         clicked: false,
+//         replied: false,
+//         bounced: null,
+//         emailSent: true,
+//       },
+//     ],
+//     replies: null,
+//     lead: {
+//       id: "lead-2",
+//       email: "user@example.com",
+//       imgUrl: null,
+//       firstName: "Jane",
+//       lastName: "Smith",
+//       seniority: "Director",
+//       country: "USA",
+//       linkedin: "https://linkedin.com/in/janesmith",
+//       city: "San Francisco",
+//       state: "CA",
+//       EmailAddStatus: "VERIFIED",
+//       timezone: "America/Los_Angeles",
+//       companyId: "company-2",
+//       blackListed: null,
+//     },
+//   },
+//   {
+//     threadId: "thread-5",
+//     emails: [
+//       {
+//         id: "email-2",
+//         threadId: "thread-2",
+//         body: `Hi Neha,
+
+// Congrats on AeroLabs' recent partnership! Your team’s work in the AI space is groundbreaking.
+
+// I saw that you’re hiring a Machine Learning Engineer and thought I’d reach out.
+
+// At TopHire, we specialize in connecting companies with top engineering talent quickly and efficiently.
+
+// We streamline the hiring process by offering pre-screened candidates, reducing your time and effort. Companies like Freshworks have seen success with us, hiring key roles in a fraction of the usual time.
+
+// Can I introduce you to a few highly qualified engineers who are ready to interview this week?
+
+// Thanks,
+// Siddharth
+// Co-founder, TopHire`,
+//         subject: "Follow-up on your request",
+//         recipient: "user@example.com",
+//         sendAt: "2024-10-05T08:00:00Z",
+//         createdAt: "2024-10-02T11:00:00Z",
+//         isFollowUp: true,
+//         approved: true,
+//         draftId: null,
+//         messageId: "msg-2",
+//         opened: false,
+//         clicked: false,
+//         replied: false,
+//         bounced: null,
+//         emailSent: true,
+//       },
+//     ],
+//     replies: null,
+//     lead: {
+//       id: "lead-2",
+//       email: "user@example.com",
+//       imgUrl: null,
+//       firstName: "Jane",
+//       lastName: "Smith",
+//       seniority: "Director",
+//       country: "USA",
+//       linkedin: "https://linkedin.com/in/janesmith",
+//       city: "San Francisco",
+//       state: "CA",
+//       EmailAddStatus: "VERIFIED",
+//       timezone: "America/Los_Angeles",
+//       companyId: "company-2",
+//       blackListed: null,
+//     },
+//   },
+// ]
 export const dummyThreads: Thread[] = [
   {
     threadId: "thread-1",
@@ -3581,9 +2852,23 @@ export const dummyThreads: Thread[] = [
       {
         id: "email-1",
         threadId: "thread-1",
-        body: "We are excited to have you on board!",
-        subject: "Welcome to Worker AI!",
-        recipient: "user@example.com",
+        body: `Hi Anubhav,
+
+Congratulations on ZeptoNow’s rapid growth! Your mission to deliver groceries in 10 minutes is incredibly impressive.
+
+I noticed you’re expanding your team and thought I’d reach out.
+
+At TechHire, we specialize in helping fast-growing companies like ZeptoNow connect with top-tier engineering talent quickly.
+
+We streamline the hiring process by providing pre-screened candidates, allowing you to focus on scaling your business. Companies like Ola have hired candidates through us in just a few weeks.
+
+Can I introduce you to some highly qualified candidates who can hit the ground running?
+
+Best regards,  
+Raj  
+Co-founder, TechHire`,
+        subject: "Exciting opportunities for ZeptoNow",
+        recipient: "anubhav.nag@zeptonow.com",
         sendAt: "2024-10-10T08:00:00Z",
         createdAt: "2024-10-01T08:30:00Z",
         isFollowUp: false,
@@ -3601,25 +2886,32 @@ export const dummyThreads: Thread[] = [
       {
         id: "reply-1",
         date: "2024-10-10T09:00:00Z",
-        subject: "Re: Welcome to Worker AI!",
-        body: "Thank you for onboarding me!",
-        from: "user@example.com",
+        subject: "Re: Exciting opportunities for ZeptoNow",
+        body: `Hi Raj,
+
+Thank you for reaching out! We’re definitely interested in exploring top talent for our growing team.
+
+Let’s discuss further.
+
+Best regards,  
+Anubhav`,
+        from: "anubhav.nag@zeptonow.com",
       },
     ],
     lead: {
       id: "lead-1",
-      email: "user@example.com",
+      email: "anubhav.nag@zeptonow.com",
       imgUrl: "https://example.com/image.jpg",
-      firstName: "John",
-      lastName: "Doe",
-      seniority: "Manager",
-      country: "USA",
-      linkedin: "https://linkedin.com/in/johndoe",
-      city: "New York",
-      state: "NY",
+      firstName: "Anubhav",
+      lastName: "Nag",
+      seniority: "Director",
+      country: "India",
+      linkedin: "https://linkedin.com/in/anubhav-nag",
+      city: "Mumbai",
+      state: "Maharashtra",
       EmailAddStatus: "VERIFIED",
-      timezone: "America/New_York",
-      companyId: "company-1",
+      timezone: "Asia/Kolkata",
+      companyId: "zepto-123",
       blackListed: null,
     },
   },
@@ -3629,9 +2921,23 @@ export const dummyThreads: Thread[] = [
       {
         id: "email-2",
         threadId: "thread-2",
-        body: "Have you had a chance to review our proposal?",
-        subject: "Follow-up on your request",
-        recipient: "user@example.com",
+        body: `Hi Scott,
+
+Congratulations on LomaTech’s private beta launch! Your approach to enabling online communities to manage commerce effortlessly is fantastic.
+
+I saw on Wellfound that you’re hiring a Founding Engineer and thought I should reach out.
+
+At TalentBridge, we connect innovative companies like LomaTech with top engineering talent quickly.
+
+We help streamline your hiring by providing pre-screened candidates, reducing the time and effort required to find the perfect match. Companies like Revolut have found the ideal candidates with us in just two weeks, compared to an unsuccessful four-month internal search.
+
+Can I introduce you to some qualified engineers who are ready to start immediately?
+
+Best,  
+Alex  
+Co-founder, TalentBridge`,
+        subject: "Helping you build your team at LomaTech",
+        recipient: "scott@loma.tech",
         sendAt: "2024-10-05T08:00:00Z",
         createdAt: "2024-10-02T11:00:00Z",
         isFollowUp: true,
@@ -3648,18 +2954,180 @@ export const dummyThreads: Thread[] = [
     replies: null,
     lead: {
       id: "lead-2",
-      email: "user@example.com",
+      email: "scott@loma.tech",
       imgUrl: null,
-      firstName: "Jane",
-      lastName: "Smith",
-      seniority: "Director",
+      firstName: "Scott",
+      lastName: "Davis",
+      seniority: "CEO",
       country: "USA",
-      linkedin: "https://linkedin.com/in/janesmith",
+      linkedin: "https://linkedin.com/in/scottdavis",
       city: "San Francisco",
       state: "CA",
       EmailAddStatus: "VERIFIED",
       timezone: "America/Los_Angeles",
-      companyId: "company-2",
+      companyId: "loma-tech-456",
+      blackListed: null,
+    },
+  },
+  {
+    threadId: "thread-3",
+    emails: [
+      {
+        id: "email-3",
+        threadId: "thread-3",
+        body: `Hi Priya,
+
+Congratulations on InnoTech’s recent product launch! Your innovative approach to simplifying cloud management is truly impressive.
+
+I saw that you’re hiring a Senior Backend Engineer and thought I should introduce you to some talent we have at FastHire.
+
+At FastHire, we connect companies like InnoTech with highly qualified engineering talent quickly.
+
+We provide pre-screened candidates, so you can focus on finding the right fit for your team. Companies like PayPal have successfully filled critical roles with us within just a few weeks.
+
+Would it be helpful if I shared some profiles of engineers who are ready to interview immediately?
+
+Best regards,  
+Emily  
+Founder, FastHire`,
+        subject: "Top candidates for InnoTech's team",
+        recipient: "priya@innotech.com",
+        sendAt: "2024-10-05T08:00:00Z",
+        createdAt: "2024-10-02T11:00:00Z",
+        isFollowUp: true,
+        approved: true,
+        draftId: null,
+        messageId: "msg-3",
+        opened: false,
+        clicked: false,
+        replied: false,
+        bounced: null,
+        emailSent: true,
+      },
+    ],
+    replies: null,
+    lead: {
+      id: "lead-3",
+      email: "priya@innotech.com",
+      imgUrl: null,
+      firstName: "Priya",
+      lastName: "Kumar",
+      seniority: "CTO",
+      country: "India",
+      linkedin: "https://linkedin.com/in/priyakumar",
+      city: "Bangalore",
+      state: "Karnataka",
+      EmailAddStatus: "VERIFIED",
+      timezone: "Asia/Kolkata",
+      companyId: "innotech-789",
+      blackListed: null,
+    },
+  },
+  {
+    threadId: "thread-4",
+    emails: [
+      {
+        id: "email-4",
+        threadId: "thread-4",
+        body: `Hi Rahul,
+
+Congrats on ZipNet’s Series A funding! Your vision for revolutionizing logistics with AI is truly inspiring.
+
+I noticed on Wellfound that you’re looking for a Lead Data Scientist, and I thought I’d reach out.
+
+At TalentHub, we specialize in helping fast-growing companies like ZipNet connect with top-tier data scientists quickly.
+
+We streamline the process by offering pre-screened candidates who can start immediately, minimizing your hiring time. Companies like Razorpay have found their ideal talent through us in a matter of weeks.
+
+Can I introduce you to a few qualified candidates who could be a great fit?
+
+Best regards,  
+Daniel  
+CEO, TalentHub`,
+        subject: "Finding the best talent for ZipNet",
+        recipient: "rahul@zipnet.com",
+        sendAt: "2024-10-05T08:00:00Z",
+        createdAt: "2024-10-02T11:00:00Z",
+        isFollowUp: true,
+        approved: true,
+        draftId: null,
+        messageId: "msg-4",
+        opened: false,
+        clicked: false,
+        replied: false,
+        bounced: null,
+        emailSent: true,
+      },
+    ],
+    replies: null,
+    lead: {
+      id: "lead-4",
+      email: "rahul@zipnet.com",
+      imgUrl: null,
+      firstName: "Rahul",
+      lastName: "Sharma",
+      seniority: "Head of Engineering",
+      country: "India",
+      linkedin: "https://linkedin.com/in/rahulsharma",
+      city: "Delhi",
+      state: "Delhi",
+      EmailAddStatus: "VERIFIED",
+      timezone: "Asia/Kolkata",
+      companyId: "zipnet-123",
+      blackListed: null,
+    },
+  },
+  {
+    threadId: "thread-5",
+    emails: [
+      {
+        id: "email-5",
+        threadId: "thread-5",
+        body: `Hi Neha,
+
+Congrats on AeroLabs’ recent partnership! Your team’s work in the AI space is truly groundbreaking.
+
+I saw that you’re hiring a Machine Learning Engineer and thought I should reach out.
+
+At QuickHire, we specialize in connecting companies with top-tier engineering talent quickly and efficiently.
+
+We provide pre-screened candidates, so you can focus on making the right hire without unnecessary delays. Companies like Freshworks have filled critical roles with us in a fraction of the usual time.
+
+Can I introduce you to some highly qualified candidates who are ready to interview this week?
+
+Best regards,  
+Samantha  
+Co-founder, QuickHire`,
+        subject: "Let’s help you hire the best for AeroLabs",
+        recipient: "neha@aerolabs.com",
+        sendAt: "2024-10-05T08:00:00Z",
+        createdAt: "2024-10-02T11:00:00Z",
+        isFollowUp: true,
+        approved: true,
+        draftId: null,
+        messageId: "msg-5",
+        opened: false,
+        clicked: false,
+        replied: false,
+        bounced: null,
+        emailSent: true,
+      },
+    ],
+    replies: null,
+    lead: {
+      id: "lead-5",
+      email: "neha@aerolabs.com",
+      imgUrl: null,
+      firstName: "Neha",
+      lastName: "Singh",
+      seniority: "Director",
+      country: "India",
+      linkedin: "https://linkedin.com/in/nehasingh",
+      city: "Hyderabad",
+      state: "Telangana",
+      EmailAddStatus: "VERIFIED",
+      timezone: "Asia/Kolkata",
+      companyId: "aerolabs-321",
       blackListed: null,
     },
   },
