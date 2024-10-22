@@ -51,7 +51,8 @@ export default function Emails() {
       }
 
       try {
-        const targetId = await getTargetIdByUser(userId);
+        // const targetId = await getTargetIdByUser(userId);
+        const targetId = "a09130b9-5453-403b-a02f-8e936bce145b"
 
         if (!targetId) {
           setLoading(false);

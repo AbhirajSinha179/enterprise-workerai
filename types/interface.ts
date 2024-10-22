@@ -194,6 +194,7 @@ export interface ScheduledEmail {
     enrichedAt: string | null
   }
   senderId: string
+  senderEmail: string
 }
 
 export const scheduledEmailSchema = z.object({
@@ -234,6 +235,7 @@ export const scheduledEmailSchema = z.object({
     enrichedAt: z.string().nullable(),
   }),
   senderId: z.string(),
+  senderEmail: z.string(),
 })
 
 export const scheduledEmailResponseSchema = z.object({

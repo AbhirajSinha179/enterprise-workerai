@@ -19,7 +19,7 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
   return (
     <main className="flex w-full flex-col items-center">
       <div className="mt-6 flex w-full items-center justify-between">
-        <h1 className="text-2xl font-bold">Scheduled Emails</h1>
+        <h1 className="text-2xl font-bold mx-1">Scheduled Emails</h1>
       </div>
       <ul className="my-4 w-full space-y-4">
         {emails.map((item) => (
@@ -28,8 +28,9 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
             className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all bg-card")}
           >
             <div className="flex w-full flex-col gap-1">
+              <div className="text-2xl font-semibold flex">To : {item.email.recipient}</div>
               <div className="flex justify-between">
-                <div className="text-2xl font-semibold flex">{item.email.recipient}</div>
+                <div className="text-2xl font-semibold flex">From : {item.senderEmail}</div>
                 <div className="flex">
                   <TooltipProvider>
                     <Tooltip>
