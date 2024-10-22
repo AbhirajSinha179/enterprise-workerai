@@ -45,17 +45,17 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
                     </Tooltip>
                   </TooltipProvider>
 
-                  <div className="flex items-center h-6 mx-2">
+                  <div className="flex items-center h-6 ">
                     <Separator orientation="vertical" />
                   </div>
-                  <div className={cn("ml-auto mx-4 ")}>
+                  <div className={cn("ml-auto mx-4")}>
                     {item.email.sendAt ? format(new Date(item.email.sendAt), "PP") : "Not Scheduled"}
                   </div>
                 </div>
               </div>
               <div className="text-md font-medium">{item.email.subject}</div>
             </div>
-            <div className="text-xs text-foreground whitespace-pre-wrap">{item.email.body}</div>
+            <div className="text-xs text-foreground whitespace-pre-wrap mx-4">{item.email.body}</div>
           </div>
         ))}
       </ul>

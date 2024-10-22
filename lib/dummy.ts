@@ -109,21 +109,21 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
       createdAt: "2024-10-08 08:02:11.397",
       sendAt: "2024-10-15 06:07:01+00",
       body: `
-      Hi Shubam,
+Hi Shubam,
 
-      Congratulations on PocketFM’s success in transforming storytelling in India! Your team is truly innovative.
+Congratulations on PocketFM’s success in transforming storytelling in India! Your team is truly innovative.
 
-      I came across your post on LinkedIn and noticed you’re hiring for several roles.
+I came across your post on LinkedIn and noticed you’re hiring for several roles.
 
-      At TopHire, we connect top engineering talent with growing companies like yours. Our candidates are pre-screened and ready to make an impact quickly.
+At TopHire, we connect top engineering talent with growing companies like yours. Our candidates are pre-screened and ready to make an impact quickly.
 
-      Revolut found their perfect candidates with us in just two weeks, compared to a previous four-month search.
+Revolut found their perfect candidates with us in just two weeks, compared to a previous four-month search.
 
-      Can I introduce you to some qualified candidates who are ready to work and interview this week, so you can check if they meet your requirements?
+Can I introduce you to some qualified candidates who are ready to work and interview this week, so you can check if they meet your requirements?
 
-      Thanks,
-      Siddharth
-      Co-founder, TopHire
+Thanks,
+Siddharth
+Co-founder, TopHire
       `,
       isFollowUp: true,
       approved: true,
@@ -166,21 +166,21 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
       createdAt: "2024-10-08 08:02:12.556",
       sendAt: "2024-10-15 06:29:40+00",
       body: `
-      Hi Kavya,
+Hi Kavya,
 
-      Congratulations on Urban Company’s continued growth! Your role in managing customer satisfaction is impressive.
+Congratulations on Urban Company’s continued growth! Your role in managing customer satisfaction is impressive.
 
-      I noticed your company’s hiring plans and wanted to reach out.
+I noticed your company’s hiring plans and wanted to reach out.
 
-      At TopHire, we connect growing companies with top engineering talent quickly. Our pre-screened candidates are ready to hit the ground running and minimize your hiring risks.
+At TopHire, we connect growing companies with top engineering talent quickly. Our pre-screened candidates are ready to hit the ground running and minimize your hiring risks.
 
-      We’ve helped companies like Swiggy find their ideal candidates within weeks. 
+We’ve helped companies like Swiggy find their ideal candidates within weeks.
 
-      Could I connect you with some qualified candidates who can interview this week and potentially fit your needs?
+Could I connect you with some qualified candidates who can interview this week and potentially fit your needs?
 
-      Thanks,  
-      Siddharth  
-      Co-founder, TopHire
+Thanks,
+Siddharth
+Co-founder, TopHire
       `,
       isFollowUp: true,
       approved: true,
@@ -222,21 +222,21 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
       createdAt: "2024-10-08 08:02:11.38",
       sendAt: "2024-10-15 06:34:14+00",
       body: `
-      Hi Mitesh,
+Hi Mitesh,
 
-      I came across your work at PhonePe, and it’s inspiring how your team is driving digital payments forward.
+I came across your work at PhonePe, and it’s inspiring how your team is driving digital payments forward.
 
-      I noticed that you’re building out your engineering team, and I wanted to introduce myself.
+I noticed that you’re building out your engineering team, and I wanted to introduce myself.
 
-      At TopHire, we help companies like PhonePe hire top-notch engineering talent quickly and efficiently.
+At TopHire, we help companies like PhonePe hire top-notch engineering talent quickly and efficiently.
 
-      We streamline the hiring process with pre-screened candidates, so you can focus on growing your team with minimal risk. We’ve helped companies like Paytm find key candidates in a matter of weeks.
+We streamline the hiring process with pre-screened candidates, so you can focus on growing your team with minimal risk. We’ve helped companies like Paytm find key candidates in a matter of weeks.
 
-      Could I connect you with a few pre-qualified candidates?
+Could I connect you with a few pre-qualified candidates?
 
-      Best regards,  
-      Siddharth  
-      Co-founder, TopHire
+Best regards,
+Siddharth
+Co-founder, TopHire
       `,
       isFollowUp: true,
       approved: true,
@@ -279,21 +279,21 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
       createdAt: "2024-10-08 08:02:11.887",
       sendAt: "2024-10-15 06:39:38+00",
       body: `
-      Hi Anubhav,
+Hi Anubhav,
 
-      Congratulations on ZeptoNow’s incredible growth! Your team’s ability to deliver groceries in minutes is remarkable.
+Congratulations on ZeptoNow’s incredible growth! Your team’s ability to deliver groceries in minutes is remarkable.
 
-      I came across your hiring plans on LinkedIn and thought I should introduce myself.
+I came across your hiring plans on LinkedIn and thought I should introduce myself.
 
-      At TopHire, we help high-growth companies like ZeptoNow find top engineering talent quickly. Our pre-screened candidates are ready to make an impact immediately.
+At TopHire, we help high-growth companies like ZeptoNow find top engineering talent quickly. Our pre-screened candidates are ready to make an impact immediately.
 
-      We’ve helped companies like Swiggy and Flipkart build their engineering teams in record time.
+We’ve helped companies like Swiggy and Flipkart build their engineering teams in record time.
 
-      Could I connect you with a few candidates who are ready to interview this week?
+Could I connect you with a few candidates who are ready to interview this week?
 
-      Best regards,  
-      Siddharth  
-      Co-founder, TopHire
+Best regards,
+Siddharth
+Co-founder, TopHire
       `,
       isFollowUp: true,
       approved: true,
@@ -335,21 +335,21 @@ export const dummyScheduledEmails: ScheduledEmail[] = [
       createdAt: "2024-10-08 08:02:11.911",
       sendAt: "2024-10-15 06:41:59+00",
       body: `
-      Hi Navneet,
+Hi Navneet,
 
-      I’ve been following your team’s work at PhonePe, and I wanted to congratulate you on your impressive leadership.
+I’ve been following your team’s work at PhonePe, and I wanted to congratulate you on your impressive leadership.
 
-      I noticed you’re expanding your engineering team, and I thought I’d reach out.
+I noticed you’re expanding your engineering team, and I thought I’d reach out.
 
-      At TopHire, we help companies like PhonePe find engineering talent that can hit the ground running, minimizing hiring risks.
+At TopHire, we help companies like PhonePe find engineering talent that can hit the ground running, minimizing hiring risks.
 
-      We provide pre-screened candidates, ready to make an impact from day one. Companies like Paytm have successfully hired with us in just a matter of weeks.
+We provide pre-screened candidates, ready to make an impact from day one. Companies like Paytm have successfully hired with us in just a matter of weeks.
 
-      Can I connect you with a few candidates who might be a great fit?
+Can I connect you with a few candidates who might be a great fit?
 
-      Thanks,  
-      Siddharth  
-      Co-founder, TopHire
+Thanks,
+Siddharth
+Co-founder, TopHire
       `,
       isFollowUp: true,
       approved: true,
