@@ -8,12 +8,13 @@ import { useUser } from '@clerk/nextjs'
 
 interface MailTimelineItemProps {
   mail: Email | Reply
+  from: string
   showLine: boolean
   isLast: boolean
   showSubject: boolean
 }
 
-const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isLast, showSubject }) => {
+const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isLast, showSubject, from }) => {
   const { subject, body } = mail
   const { user } = useUser()
   // console.log("USER IS : ", user?.fullName)
@@ -36,7 +37,8 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
           <div className="flex items-start gap-4 text-sm">
             <div className="grid gap-1">
               <div className="font-semibold text-foreground">
-                <span className="font-medium">From:</span> {user?.emailAddresses[0]?.emailAddress}
+                {/* <span className="font-medium">From:</span> {user?.emailAddresses[0]?.emailAddress} */}
+                <span className="font-medium">From:</span> {from}
               </div>
               {showSubject && <div className="line-clamp-1 text-xs text-foreground">{subject}</div>}
               <div className="line-clamp-1 text-xs text-foreground">

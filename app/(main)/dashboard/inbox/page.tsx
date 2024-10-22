@@ -35,7 +35,7 @@ const getTargetId = async (userId: string) => {
 export default async function InboxPage() {
   const { userId } = auth()
   try {
-    const targetId = await getTargetId(userId!) 
+    const targetId = await getTargetId(userId!)
     const threadData = await getData(targetId)
     if (!threadData) {
       return (

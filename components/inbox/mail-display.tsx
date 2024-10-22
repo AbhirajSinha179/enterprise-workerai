@@ -107,6 +107,7 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
                     showLine={true}
                     isLast={index === threadContent.length - 1}
                     showSubject={index === 0}
+                    from={threadData?.senderEmail || "Unknown"}
                   />
                 ))}
               </Timeline>
