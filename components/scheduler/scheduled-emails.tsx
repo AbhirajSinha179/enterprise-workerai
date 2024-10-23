@@ -19,7 +19,7 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
   return (
     <main className="flex w-full flex-col items-center">
       <div className="mt-6 flex w-full items-center justify-between">
-        <h1 className="text-2xl font-bold">Scheduled Emails</h1>
+        <h1 className="text-2xl font-bold mx-1">Scheduled Emails</h1>
       </div>
       <ul className="my-4 w-full space-y-4">
         {emails.map((item) => (
@@ -27,9 +27,10 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
             key={item.email.id}
             className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all bg-card")}
           >
-            <div className="flex w-full flex-col gap-1">
+            <div className="flex w-full flex-col gap-1 ml-4">
+              <div className="text-2xl font-semibold flex">To : {item.email.recipient}</div>
               <div className="flex justify-between">
-                <div className="text-2xl font-semibold flex">{item.email.recipient}</div>
+                <div className="text-2xl font-semibold flex">From : {item.senderEmail}</div>
                 <div className="flex">
                   <TooltipProvider>
                     <Tooltip>
@@ -44,17 +45,17 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
                     </Tooltip>
                   </TooltipProvider>
 
-                  <div className="flex items-center h-6 mx-2">
+                  <div className="flex items-center h-6 ">
                     <Separator orientation="vertical" />
                   </div>
-                  <div className={cn("ml-auto")}>
+                  <div className={cn("ml-auto mx-4")}>
                     {item.email.sendAt ? format(new Date(item.email.sendAt), "PP") : "Not Scheduled"}
                   </div>
                 </div>
               </div>
               <div className="text-md font-medium">{item.email.subject}</div>
             </div>
-            <div className="text-xs text-foreground whitespace-pre-wrap">{item.email.body}</div>
+            <div className="text-xs text-foreground whitespace-pre-wrap mx-4">{item.email.body}</div>
           </div>
         ))}
       </ul>
