@@ -38,10 +38,10 @@ export const leadSchema = z.object({
 
 export const replySchema = z.object({
   replyId: z.string().optional(),
-  date: z.string().nullable(),
-  subject: z.string().nullable(),
-  body: z.string().nullable(),
-  from: z.string().nullable(),
+  date: z.string().nullable().optional(),
+  subject: z.string().nullable().optional(),
+  body: z.string().nullable().optional(),
+  from: z.string().nullable().optional(),
 })
 
 export const threadSchema = z.object({
