@@ -352,9 +352,9 @@ export interface StatDashboard {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
 }
 export interface DataGraph {
-  date: string
-  opens: number
-  total_emails: number
+  date: string | null
+  opens: number | null
+  total_emails: number | null
   total_unique_emails: number
 }
 export interface SalesDataItem {
@@ -387,9 +387,9 @@ export interface SalesDataItem {
 // })
 
 const dataItemSchema = z.object({
-  date: z.string(), // ISO string format for dates
-  opens: z.number(),
-  total_emails: z.number(),
+  date: z.string().nullable(), // ISO string format for dates
+  opens: z.number().nullable(),
+  total_emails: z.number().nullable(),
   total_unique_emails: z.number().optional(),
 })
 
