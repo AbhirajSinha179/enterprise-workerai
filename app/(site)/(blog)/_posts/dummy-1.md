@@ -1,5 +1,5 @@
 ---
-title: "How to Maintain Email Deliverability"
+title: "How to Maintain Email Deliverability 2.0"
 excerpt: "Scaling your outbound email campaigns can exponentially grow your sales pipeline, but maintaining email deliverability is paramount. Ensuring your emails land in the inbox and not the spam folder requires a strategic approach. Here are essential tips to maintain deliverability while scaling your outbound emails."
 coverImage: "/assets/blog/dynamic-routing/cover.jpg"
 date: "2020-03-16T05:35:07.322Z"
