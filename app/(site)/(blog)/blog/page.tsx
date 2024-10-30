@@ -14,7 +14,7 @@ const Blogs = async () => {
       <div className="mt-20">
         <div className="container mx-auto px-5">
           <h1 className="mb-8 text-5xl font-bold leading-tight tracking-tighter md:text-5xl">Blogs</h1>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-8">
             <div >
               {heroPost && (
                 <HeroPost

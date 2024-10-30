@@ -13,7 +13,7 @@ export function HeroPost({ title, coverImage, excerpt, slug }: Props) {
   return (
     <section>
       <div className="my-10 md:mb-54">
-        <div className="m-4">
+        <div className="py-4">
           {/* Cover Image */}
           <div>
             <CoverImage title={title} src={coverImage} slug={slug} />
