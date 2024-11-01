@@ -10,7 +10,7 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
     return (
       <div className="flex items-center space-x-1 my-1">
         {Array.from({ length: parseInt(status) }).map((_, index) => (
-          <CheckCircledIcon key={index} width={20} height={20} />
+          <CheckCircledIcon key={index} width={20} height={20} className="text-green-500" />
         ))}
       </div>
     );
@@ -18,44 +18,54 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
 
   return (
     <main className="flex w-full flex-col items-center">
-      <div className="mt-6 flex w-full items-center justify-between">
-        <h1 className="text-2xl font-bold mx-1">Scheduled Emails</h1>
+      <div className="mt-6 flex w-full items-center justify-between px-4">
+        <h1 className="text-2xl font-bold">Scheduled Emails</h1>
       </div>
-      <ul className="my-4 w-full space-y-4">
+      <ul className="my-6 w-full space-y-4 px-4">
         {emails.map((item) => (
           <div
             key={item.email.id}
-            className={cn("flex w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all bg-card")}
+            className="flex w-full flex-col items-start gap-3 rounded-lg border bg-card p-5 text-left shadow-sm transition-all"
           >
-            <div className="flex w-full flex-col gap-1 ml-4">
-              <div className="text-2xl font-semibold flex">To : {item.email.recipient}</div>
-              <div className="flex justify-between">
-                <div className="text-2xl font-semibold flex">From : {item.senderEmail}</div>
-                <div className="flex">
+            <div className="flex w-full flex-col gap-2">
+              <div className="flex flex-row justify-between">
+                <div className="text-lg font-semibold">To: {item.email.recipient}</div>
+                <div className="flex ">
+                  <Separator orientation="vertical" className="h-6" />
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <div>
-                          {item.email.emailSent && renderStatusIcons('1')}
-                        </div>
+                        <span className="cursor-pointer text-sm text-foreground mx-3">Details</span>
                       </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{item.email.emailSent ? "Email sent" : "Email not sent"}</p>
+                      <TooltipContent side="bottom" sideOffset={4} align="end" className="mx-2">
+                        <div className="text-left space-y-1">
+                          <div>
+                            <span className="font-medium">To:</span> {item.email.recipient}
+                          </div>
+                          <div>
+                            <span className="font-medium">From:</span> {item.senderEmail}
+                          </div>
+                          <div>
+                            <span className="font-medium">Date:</span> {item.email.sendAt ? format(new Date(item.email.sendAt), "PP") : "Not Scheduled"}
+                          </div>
+                        </div>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
-
-                  <div className="flex items-center h-6 ">
-                    <Separator orientation="vertical" />
-                  </div>
-                  <div className={cn("ml-auto mx-4")}>
-                    {item.email.sendAt ? format(new Date(item.email.sendAt), "PP") : "Not Scheduled"}
-                  </div>
                 </div>
+
               </div>
-              <div className="text-md font-medium">{item.email.subject}</div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <span className="">Subject:</span>
+                  <span className="text-md font-medium">{item.email.subject}</span>
+                </div>
+                {/* {renderStatusIcons(item.status)} */}
+              </div>
+
             </div>
-            <div className="text-xs text-foreground whitespace-pre-wrap mx-4">{item.email.body}</div>
+            <div className="text-sm  whitespace-pre-wrap">{item.email.body}</div>
           </div>
         ))}
       </ul>

@@ -3,10 +3,10 @@
 import { AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 interface DataItem {
-  date: string;
-  opens: number;
-  total_emails: number;
-  total_unique_emails: number;
+  date: string | null;
+  opens: number | null;
+  total_emails: number | null;
+  total_unique_emails: number | null;
 }
 
 interface OverviewProps {
