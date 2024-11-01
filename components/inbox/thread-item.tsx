@@ -48,7 +48,8 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
                   <h1 className="text-foreground text-sm">Details</h1>
                 </div>
               </TooltipTrigger>
-              <TooltipContent side="bottom" className="mx-2">
+              <TooltipContent side="bottom" sideOffset={4} align="end" className="mx-2">
+
                 <div className="gap-y-1">
                   <div>
                     <span className="font-medium">To:</span> {recipient}

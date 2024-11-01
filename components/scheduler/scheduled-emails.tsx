@@ -37,7 +37,7 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
                       <TooltipTrigger asChild>
                         <span className="cursor-pointer text-sm text-foreground mx-3">Details</span>
                       </TooltipTrigger>
-                      <TooltipContent side="bottom" className="px-4 py-2 mx-2">
+                      <TooltipContent side="bottom" sideOffset={4} align="end" className="mx-2">
                         <div className="text-left space-y-1">
                           <div>
                             <span className="font-medium">To:</span> {item.email.recipient}
