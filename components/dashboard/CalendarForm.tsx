@@ -6,6 +6,7 @@ import { CalendarDatePicker } from "@/components/ui/calendar-date-picker";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Form, FormItem, FormControl, FormMessage, FormField } from "@/components/ui/form";
+import moment from "moment";
 
 // Define the schema for the form
 const FormSchema = z.object({
@@ -27,8 +28,8 @@ const CalendarFormComponent: React.FC<CalendarFormProps> = ({ setStartDate, setE
   const onSubmit = async (data: any) => {
     const startDate = data.calendar.from.toISOString();
     const endDate = data.calendar.to.toISOString();
-    const formattedStartDate = encodeURIComponent(new Date(startDate).toISOString());
-    const formattedEndDate = encodeURIComponent(new Date(endDate).toISOString());
+    const formattedStartDate = encodeURIComponent(moment(new Date(startDate)).startOf("day").toISOString());
+    const formattedEndDate = encodeURIComponent(moment(new Date(endDate)).endOf("day").toISOString());
     setStartDate(formattedStartDate);
     setEndDate(formattedEndDate);
     toast(`You have selected a date range: ${data.calendar.from.toDateString()} - ${data.calendar.to.toDateString()}`);

@@ -39,7 +39,7 @@ const defaultDashboardData = {
 async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`
-    const res = await fetch(url)
+    const res = await fetch(url, { cache: "force-cache", next: { revalidate: 60 } })
     console.log(`Response status for analytics by range: ${res.status}`)
     if (!res.ok && res.status !== 404) {
       throw new Error(`Failed to fetch data. Status code: ${res.status}`)
@@ -127,8 +127,8 @@ const DashboardHome: React.FC = () => {
 
   // const [startDate, setStartDate] = useState<string>("2024-01-08T00%3A00%3A00.000Z");
   // const [endDate, setEndDate] = useState<string>("2024-07-26T23%3A59%3A59.000Z");
-  const [startDate, setStartDate] = useState<string>(moment().subtract(1, "months").toISOString())
-  const [endDate, setEndDate] = useState<string>(moment().toISOString())
+  const [startDate, setStartDate] = useState<string>(moment().startOf("day").subtract(1, "months").toISOString())
+  const [endDate, setEndDate] = useState<string>(moment().endOf("day").toISOString())
 
   const [statsDashboard, setStatsDashboard] = useState(defaultDashboardData)
   const [dataGraph, setDataGraph] = useState<DataGraph[]>([])
@@ -162,7 +162,7 @@ const DashboardHome: React.FC = () => {
 
         // Calculating open rate and response rate
         // const totalUniqueEmails = data.reduce((sum, item) => sum + (item.total_emails ?? 0), 0);
-        const totalUniqueEmails = (total_unique_emails ? total_unique_emails : 0);
+        const totalUniqueEmails = total_unique_emails ? total_unique_emails : 0
         console.log("TOTAL REPLIES : ", total_replies)
         console.log("TOTAL EMAILS : ", total_emails)
         const openRate: any = getOpenRate({ total_opens, total_emails })
@@ -170,7 +170,7 @@ const DashboardHome: React.FC = () => {
 
         // Updating state
         setTotalUniqueEmails(totalUniqueEmails)
-        setTotalSentEmails(data.reduce((sum, item) => sum + (item.total_emails ?? 0), 0));
+        setTotalSentEmails(data.reduce((sum, item) => sum + (item.total_emails ?? 0), 0))
         setOpenRate(openRate)
         setResponseRate(responseRate)
         setResponseStatus(200)
@@ -179,7 +179,7 @@ const DashboardHome: React.FC = () => {
             ...item,
             total_unique_emails: item.total_unique_emails ?? 0,
           }))
-        );
+        )
         setIsLoading(false)
       } catch (error: any) {
         if (error.message.includes("Status code: 404")) {
