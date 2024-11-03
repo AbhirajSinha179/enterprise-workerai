@@ -17,7 +17,7 @@ export function HeroPost({ title, coverImage, excerpt, slug }: Props) {
           {/* Cover Image */}
           <div>
             <CoverImage title={title} src={coverImage} slug={slug} />
-            <h3 className="mt-4 text-3xl leading-tight lg:text-3xl">
+            <h3 className="mt-4 text-3xl leading-tight lg:text-3xl font-bold">
               <Link href={`/posts/${slug}`} className="hover:underline">
                 {title}
               </Link>

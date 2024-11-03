@@ -17,7 +17,7 @@ export default async function Post({ params }: Params) {
     <main>
       <div className="container mx-auto px-5" >
         <article className="mb-32 mt-12">
-          <h1 className="mb-12 text-center text-5xl font-bold leading-tight tracking-tighter md:text-left md:text-7xl md:leading-none lg:text-8xl">
+          <h1 className="mb-12 text-center text-5xl  leading-tight tracking-tighter md:text-left md:text-7xl md:leading-none lg:text-8xl">
             {post.title}
           </h1>
           <div className="mb-8 sm:mx-0 md:mb-16">
