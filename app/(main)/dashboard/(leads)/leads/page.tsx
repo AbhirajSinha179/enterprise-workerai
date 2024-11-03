@@ -27,16 +27,35 @@ const getTargetId = async (userId: string) => {
 }
 
 async function getLeads() {
-  const { userId } = auth()
-  const targetId = await getTargetId(userId!)
-  if (!targetId) {
+  try {
+    const { userId } = auth()
+    if (!userId) {
+      console.error("User ID is undefined")
+      return []
+    }
+    const targetId = await getTargetId(userId)
+    if (!targetId) {
+      console.warn("No target ID found for user")
+      return []
+    }
+    const response = await fetch(`${process.env.BASE_API_URL}/leads?targetId=${targetId}`)
+    if (!response.ok) {
+      console.error(`Failed to fetch leads: ${response.status} ${response.statusText}`)
+      return []
+    }
+    const leadsData = await response.json()
+    const ld = z.array(leadsSchema).safeParse(leadsData)
+    if (!ld.success) {
+      console.error("Data validation failed", ld.error)
+      return []
+    }
+    return ld.data
+  } catch (error) {
+    console.error("An error occurred while fetching leads:", error)
     return []
   }
-  const leads = await fetch(`${process.env.BASE_API_URL}/leads?targetId=${targetId}`)
-  const leadsData = await leads.json()
-  const ld = z.array(leadsSchema).parse(leadsData)
-  return ld
 }
+
 
 export default async function Leads() {
   const leads = await getLeads()
