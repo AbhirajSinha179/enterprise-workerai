@@ -1,4 +1,5 @@
 "use client"
+import { BarChart, Layers, Mail, Repeat, Users, Shield } from "lucide-react"
 
 export const Features = () => {
   return (
@@ -21,7 +22,7 @@ export const Features = () => {
         </svg>
         <div className="grid w-full grid-cols-1 md:grid-cols-3 md:grid-rows-4">
           <div className="flex flex-col items-center justify-center p-10  ">
-            <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow dark:[border:0.5px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset]">
+            {/* <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow dark:[border:0.5px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -40,7 +41,8 @@ export const Features = () => {
                 <path d="M20 8.54V4a2 2 0 1 0-4 0v3"></path>
                 <path d="M7.612 12.524a3 3 0 1 0-1.6 4.3"></path>
               </svg>
-            </div>
+            </div> */}
+            <Users className="size-8 text-current" />
             <div className="mt-10">
               <h2 className="text-center text-lg font-bold">Enterprise Lead Generation</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
@@ -72,7 +74,7 @@ export const Features = () => {
               <path d="M5 12h14"></path>
               <path d="M12 5v14"></path>
             </svg>
-            <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow">
+            {/* <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow">
               <svg
                 width="15"
                 height="15"
@@ -88,7 +90,8 @@ export const Features = () => {
                   clip-rule="evenodd"
                 ></path>
               </svg>
-            </div>
+            </div> */}
+            <Mail className="size-8 text-current" />
             <div className="mt-10">
               <h2 className="text-center text-lg font-bold">Hyper-Personalized Emails</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
@@ -115,7 +118,7 @@ export const Features = () => {
               <path d="M5 12h14"></path>
               <path d="M12 5v14"></path>
             </svg>
-            <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow">
+            {/* <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -131,7 +134,8 @@ export const Features = () => {
                 <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
                 <path d="m9 12 2 2 4-4"></path>
               </svg>
-            </div>
+            </div> */}
+            <Shield className="size-8 text-current" />
             <div className="mt-10">
               <h2 className="text-center text-lg font-bold">Email Warmup & Deliverability </h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
@@ -143,7 +147,7 @@ export const Features = () => {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center p-10  ">
-            <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow">
+            {/* <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -162,7 +166,8 @@ export const Features = () => {
                 <path d="M20 8.54V4a2 2 0 1 0-4 0v3"></path>
                 <path d="M7.612 12.524a3 3 0 1 0-1.6 4.3"></path>
               </svg>
-            </div>
+            </div> */}
+            <Repeat className="size-8 text-current" />
             <div className="mt-10">
               <h2 className="text-center text-lg font-bold">Automated Follow-Ups</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
@@ -171,7 +176,7 @@ export const Features = () => {
             </div>
           </div>
           <div className="flex flex-col  items-center justify-center p-10 md:border-l-[1.2px] md:border-t-[1.2px]  ">
-            <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow">
+            {/* <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -190,14 +195,15 @@ export const Features = () => {
                 <path d="M20 8.54V4a2 2 0 1 0-4 0v3"></path>
                 <path d="M7.612 12.524a3 3 0 1 0-1.6 4.3"></path>
               </svg>
-            </div>
+            </div> */}
+            <Layers className="size-8 text-current" />
             <div className="mt-10">
               <h2 className="text-center text-lg font-bold">Scalable Campaigns</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
                 Reach thousands of prospects with ease. {""}
-                <a className="text-gray-50" href="/blog" target="_blank" rel="noreferrer">
+                {/* <a className="text-gray-50" href="/blog" target="_blank" rel="noreferrer">
                   Learn more
-                </a>
+                </a> */}
               </p>
             </div>
           </div>
@@ -217,7 +223,7 @@ export const Features = () => {
               <path d="M5 12h14"></path>
               <path d="M12 5v14"></path>
             </svg>
-            <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow">
+            {/* <div className="flex items-center justify-center rounded-full border-2 px-8 py-3 shadow">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -236,7 +242,8 @@ export const Features = () => {
                 <path d="M20 8.54V4a2 2 0 1 0-4 0v3"></path>
                 <path d="M7.612 12.524a3 3 0 1 0-1.6 4.3"></path>
               </svg>
-            </div>
+            </div> */}
+            <BarChart className="size-8 text-current" />
             <div className="mt-10">
               <h2 className="text-center text-lg font-bold">Detailed Analytics Dashboard</h2>
               <p className="mt-2 text-center text-sm text-muted-foreground">
@@ -315,7 +322,7 @@ export const Features = () => {
               <h2 className="ml-4 text-lg font-bold">Integrations</h2>
             </div>
             <p className="mt-8 text-center text-sm text-muted-foreground">
-                  Worker AI is ready to be integrated with your existing tools. We are always looking for ways to make your experience better.
+              Worker AI is ready to be integrated with your existing tools. We are always looking for ways to make your experience better.
             </p>
           </div>
           <div className="flex flex-col items-center  justify-center p-16 md:border-l-[1.2px] md:border-t-2">
