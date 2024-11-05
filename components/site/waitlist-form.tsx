@@ -9,13 +9,13 @@ export const WaitlistForm = () => {
   const [loading, setLoading] = useState(false)
 
   return (
-    <div className="mt-12 flex flex-row max-w-3xl relative left-1/2 -translate-x-1/2 items-center justify-center gap-4">
+    <div className="mt-12 flex flex-col sm:flex-row max-w-3xl relative mx-auto items-center justify-center gap-4">
 
       {/* Book a call button */}
       <Link href="https://www.calendly.com/rohit_workerai" passHref>
         <Button
           variant="secondary"
-          className="inline-flex h-12 w-96 animate-shimmer items-center justify-center
+          className="inline-flex h-14 w-96 animate-shimmer items-center justify-center sm:text-md
                   rounded-md border bg-[length:200%_100%] px-6 font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-offset-1
                   dark:border-slate-800 dark:bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] dark:text-slate-300 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-50"
         >
@@ -27,7 +27,7 @@ export const WaitlistForm = () => {
       <Link href="/tour" passHref>
         <Button
           variant="secondary"
-          className="inline-flex h-12 w-96 animate-shimmer items-center justify-center
+          className="inline-flex h-14 w-96 animate-shimmer items-center justify-center sm:text-md
                   rounded-md border bg-[length:200%_100%] px-6 font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-offset-1
                   dark:border-slate-800 dark:bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] dark:text-slate-300 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-50"
         >
