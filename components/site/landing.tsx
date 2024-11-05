@@ -8,8 +8,8 @@ import Particles from "../ui/particles"
 export default function Landing() {
   return (
     <section className="relative min-h-80vh lg:min-h-[calc(100vh-40px)] overflow-hidden rounded-b-xl bg-[linear-gradient(to_bottom,#6d28d9,#6d28d9_50%,#e8e8e8_88%)] dark:bg-[linear-gradient(to_bottom,#000,#0000_40%,#503f7b_78%,#6d28d9_99%_50%)]">
-      <div className="background_grid absolute inset-0 h-[600px] w-full bg-transparent opacity-10 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
-      <div className="absolute left-1/2 top-[calc(100%-90px)]  h-[500px] w-[700px] -translate-x-1/2 rounded-[100%] border-[#B48CDE] bg-[radial-gradient(closest-side,#000_82%,#6d28d9)] md:h-[500px] md:w-[1100px] lg:top-[calc(100%-150px)] lg:h-[750px] lg:w-[140%]"></div>
+      {/* <div className="background_grid absolute inset-0 h-[600px] w-full bg-transparent opacity-10 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div> */}
+      <div className="absolute left-1/2 top-[calc(100%-90px)] h-[500px] w-[700px] -translate-x-1/2 rounded-[100%] border-[#B48CDE] bg-[radial-gradient(closest-side,#000_82%,#6d28d9)] md:h-[500px] md:w-[1100px] lg:top-[calc(100%-150px)] lg:h-[750px] lg:w-[140%]"></div>
 
       <div className="mx-auto grid px-6 py-8 md:my-20 md:text-center lg:py-16">
         <motion.div
