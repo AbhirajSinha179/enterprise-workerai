@@ -3,7 +3,7 @@ import { Mail } from "@/components/inbox/data"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { TimelineContent, TimelineDot, TimelineHeading, TimelineItem, TimelineLine } from "@/components/ui/timeline"
 import { Email, Reply } from "@/types/interface"
-import { useUser } from '@clerk/nextjs'
+import { useUser } from "@clerk/nextjs"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 
 interface MailTimelineItemProps {
@@ -15,8 +15,11 @@ interface MailTimelineItemProps {
 }
 
 const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isLast, showSubject, from }) => {
-  const { subject, body } = mail
-  const { user } = useUser()
+  const { body } = mail
+  let subject = ""
+  if ("subject" in mail) {
+    subject = mail.subject
+  }
 
   let recipient = ""
   let date: string | null = ""
@@ -34,7 +37,7 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
         <div className="flex items-start justify-between p-4 ">
           <div className="flex items-start gap-4 text-sm">
             <div className="grid gap-1">
-              <div className="font-bold text-foreground text-xl">
+              <div className="text-xl font-bold text-foreground">
                 <span className="font-bold">To:</span> {recipient}
               </div>
               {showSubject && <div className="text-xl text-foreground">{subject}</div>}
@@ -44,12 +47,11 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
           <div>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex mx-2">
-                  <h1 className="text-foreground text-sm">Details</h1>
+                <div className="mx-2 flex">
+                  <h1 className="text-sm text-foreground">Details</h1>
                 </div>
               </TooltipTrigger>
               <TooltipContent side="bottom" sideOffset={4} align="end" className="mx-2">
-
                 <div className="gap-y-1">
                   <div>
                     <span className="font-medium">To:</span> {recipient}
@@ -57,9 +59,7 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
                   <div>
                     <span className="font-medium">From:</span> {from}
                   </div>
-                  <div>
-                    {date && <div className="font-medium"> Date : {format(new Date(date), "PPpp")}</div>}
-                  </div>
+                  <div>{date && <div className="font-medium"> Date : {format(new Date(date), "PPpp")}</div>}</div>
                 </div>
               </TooltipContent>
             </Tooltip>
