@@ -18,12 +18,12 @@ export const getOpenRate = ({ total_opens, total_emails }: { total_opens: number
 }
 
 export const getResponseRate = ({
-  total_responses,
+  total_replies,
   totalUniqueEmails,
 }: {
-  total_responses: number
+  total_replies: number
   totalUniqueEmails: number
 }) => {
   if (totalUniqueEmails === 0) return 0 // Avoid division by zero
-  return ((total_responses / totalUniqueEmails) * 100).toFixed(2) // Convert to percentage and format with 2 decimal places
+  return ((total_replies / totalUniqueEmails) * 100).toFixed(2) // Convert to percentage and format with 2 decimal places
 }
