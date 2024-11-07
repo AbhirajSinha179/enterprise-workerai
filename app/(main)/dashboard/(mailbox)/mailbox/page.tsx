@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button"
 
 const getMails = async (userId: string) => {
   const res = await fetch(`${process.env.BASE_API_URL}/user/email-address/${userId}`, {
-    cache: "force-cache",
     next: { revalidate: 30 },
   })
   if (!res.ok) {
