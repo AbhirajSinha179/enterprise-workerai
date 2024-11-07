@@ -12,9 +12,10 @@ interface MailTimelineItemProps {
   showLine: boolean
   isLast: boolean
   showSubject: boolean
+  name: string
 }
 
-const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isLast, showSubject, from }) => {
+const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isLast, showSubject, from, name }) => {
   const { subject, body } = mail
   const { user } = useUser()
 
@@ -70,9 +71,9 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
         status="custom"
         customIcon={
           <Avatar>
-            <AvatarImage alt={recipient} />
+            <AvatarImage alt={name} />
             <AvatarFallback>
-              {recipient
+              {name
                 .split(" ")
                 .map((chunk) => chunk[0])
                 .join("")}
