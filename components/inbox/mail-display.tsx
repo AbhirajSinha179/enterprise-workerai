@@ -13,6 +13,10 @@ import { Textarea } from "../ui/textarea"
 import { Timeline } from "../ui/timeline"
 
 export function MailDisplay({ threadData }: MailDisplayProps) {
+
+  const firstName = threadData?.lead?.firstName || "";
+  const lastName = threadData?.lead?.lastName || "";
+  const nameLead = `${firstName} ${lastName}`.trim().toUpperCase();
   const [replyContent, setReplyContent] = useState<string>("")
   const [threadContent, setThreadContent] = useState<CombinedMail[]>([])
   // const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || []
@@ -108,6 +112,7 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
                     isLast={index === threadContent.length - 1}
                     showSubject={index === 0}
                     from={threadData?.senderEmail || "Unknown"}
+                    name={nameLead}
                   />
                 ))}
               </Timeline>
