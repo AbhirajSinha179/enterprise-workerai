@@ -39,7 +39,7 @@ const defaultDashboardData = {
 async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`
-    const res = await fetch(url, { cache: "force-cache", next: { revalidate: 60 } })
+    const res = await fetch(url, { next: { revalidate: 60 } })
     console.log(`Response status for analytics by range: ${res.status}`)
     if (!res.ok && res.status !== 404) {
       throw new Error(`Failed to fetch data. Status code: ${res.status}`)
