@@ -18,7 +18,9 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
   const { subject, body } = mail
   const { user } = useUser()
 
-  let recipient = ""
+
+  // let recipient = ""
+  let recipient: string = ""
   let date: string | null = ""
   if ("recipient" in mail && "sendAt" in mail) {
     recipient = mail.recipient
@@ -27,6 +29,7 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
     recipient = mail.from
     date = mail.date
   }
+  console.log("RECIPENT : ", recipient)
 
   return (
     <TimelineItem status="done" className="px-4">
@@ -70,16 +73,23 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
         status="custom"
         customIcon={
           <Avatar>
-            <AvatarImage alt={recipient} />
+            <AvatarImage alt={recipient || ""} />
             <AvatarFallback>
-              {recipient
-                .split(" ")
-                .map((chunk) => chunk[0])
-                .join("")}
+              {recipient && recipient[0]
+                ? (recipient.includes("@") || recipient.includes("+"))
+                  ? recipient[0].toUpperCase() // Use only the first character if special characters are present
+                  : recipient
+                    .split(" ")
+                    .map((chunk) => chunk[0])
+                    .join("")
+                    .toUpperCase()
+                : "?"} {/* Fallback character if recipient is undefined or empty */}
             </AvatarFallback>
           </Avatar>
         }
       />
+
+
       {showLine && !isLast && <TimelineLine />}
       <TimelineContent>
         <div className="flex-1 whitespace-pre-wrap p-4 text-sm">{body}</div>
