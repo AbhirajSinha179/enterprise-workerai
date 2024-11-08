@@ -50,7 +50,7 @@ export async function deleteMailbox(id: string) {
   }
 }
 
-export async function editLead(id: any, editData: any) {
+export async function editMailboxInfo(id: any, editData: any) {
   try {
     const url = `${process.env.BASE_API_URL}/user/email-address/${id}`
     const response = await fetch(url, {
@@ -63,7 +63,7 @@ export async function editLead(id: any, editData: any) {
 
     if (response.ok) {
       // toast.success("Data saved successfully!")
-      revalidatePath("/dashboard/leads")
+      revalidatePath("/dashboard/mailbox")
       return { message: "success" }
     } else {
       const err: any = await response.json()

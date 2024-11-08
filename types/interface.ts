@@ -301,7 +301,6 @@ export interface Thread {
 export interface Reply {
   id: string
   date: string
-  subject: string
   body: string
   from: string
 }
