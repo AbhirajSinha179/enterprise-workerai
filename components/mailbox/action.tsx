@@ -1,10 +1,10 @@
 "use client"
 import { useState } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import { Loader2, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
-import { deleteMailbox, editLead } from "@/lib/actions";
+import { deleteMailbox, editMailboxInfo } from "@/lib/actions";
 import { revalidatePath } from "next/cache";
 import {
     Dialog,
@@ -32,6 +32,7 @@ interface ActionButtonsProps {
 
 
 export const ActionButtons: React.FC<ActionButtonsProps> = ({ id, firstName, position }) => {
+    const [loading, setLoading] = useState(false);
     const [editData, setEditData] = useState<EditData>({
         id,
         firstName,
@@ -50,9 +51,22 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({ id, firstName, pos
     const handleSave = async () => {
         // console.log("HANDLE SAVE FUNCTION WORKING")
         // console.log("UPDATED DATA :", editData);
-        await editLead(id, editData)
+        setLoading(true);
+        await editMailboxInfo(id, editData)
+        setLoading(false);
         toast.success("Data saved successfully!");
     };
+
+    if(loading){
+        return(
+            <div className="flex flex-row space-x-2">
+                <Button variant="secondary">
+                    <Loader2 className="size-4 animate-spin" />
+                </Button>
+            </div>
+        )
+        
+    }
 
     return (
         <div className="flex flex-row space-x-2">
