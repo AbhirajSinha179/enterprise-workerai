@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Separator } from "../ui/separator";
 import { ScheduledEmail } from "@/types/interface";
 
-export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
+export function ScheduledEmailList({ emails, lastEmailRef }: { emails: ScheduledEmail[], lastEmailRef: (node: HTMLDivElement) => void }) {
   const renderStatusIcons = (status: string) => {
     return (
       <div className="flex items-center space-x-1 my-1">
@@ -22,9 +22,10 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
         <h1 className="text-2xl font-bold">Scheduled Emails</h1>
       </div>
       <ul className="my-6 w-full space-y-4 px-4">
-        {emails.map((item) => (
+        {emails.map((item, index) => (
           <div
             key={item.email.id}
+            ref={index === emails.length - 1 ? lastEmailRef : null}
             className="flex w-full flex-col items-start gap-3 rounded-lg border bg-card p-5 text-left shadow-sm transition-all"
           >
             <div className="flex w-full flex-col gap-2">
@@ -53,19 +54,15 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
                     </Tooltip>
                   </TooltipProvider>
                 </div>
-
               </div>
-
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <span className="">Subject:</span>
                   <span className="text-md font-medium">{item.email.subject}</span>
                 </div>
-                {/* {renderStatusIcons(item.status)} */}
               </div>
-
             </div>
-            <div className="text-sm  whitespace-pre-wrap">{item.email.body}</div>
+            <div className="text-sm whitespace-pre-wrap">{item.email.body}</div>
           </div>
         ))}
       </ul>
