@@ -163,10 +163,10 @@ const DashboardHome: React.FC = () => {
         // Calculating open rate and response rate
         // const totalUniqueEmails = data.reduce((sum, item) => sum + (item.total_emails ?? 0), 0);
         const totalUniqueEmails = total_unique_emails ? total_unique_emails : 0
-        console.log("TOTAL REPLIES : ", total_replies)
-        console.log("TOTAL EMAILS : ", total_emails)
+        // console.log("TOTAL REPLIES : ", total_replies)
+        // console.log("TOTAL EMAILS : ", totalUniqueEmails)
         const openRate: any = getOpenRate({ total_opens, total_emails })
-        const responseRate: any = getResponseRate({ total_responses: total_clicks, totalUniqueEmails })
+        const responseRate: any = getResponseRate({ total_replies: total_replies, totalUniqueEmails })
 
         // Updating state
         setTotalUniqueEmails(totalUniqueEmails)
