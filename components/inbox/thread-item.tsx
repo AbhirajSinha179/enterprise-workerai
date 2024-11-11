@@ -16,9 +16,9 @@ interface MailTimelineItemProps {
 
 const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isLast, showSubject, from }) => {
   const { body } = mail
-  let subject = ""
+  let subject: string | null = ""
   if ("subject" in mail) {
-    subject = mail.subject
+    subject = mail.subject as string
   }
 
   let recipient = ""
