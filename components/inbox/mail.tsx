@@ -25,12 +25,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "../ui/button"
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
-import { MailProps, Thread, ThreadList } from "@/types/interface"
+import { Thread, ThreadList } from "@/types/interface"
 import { notFound } from "next/navigation"
+import { MailProps } from "@/types/interface";
+
 
 const MAX_INBOX_HEIGHT = 680
 
-export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
+export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef }: MailProps) {
   const { config, setConfig } = useMail()
   const [selectedView, setSelectedView] = React.useState("last24Hours")
   useEffect(() => {
@@ -115,7 +117,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
               {threads.length === 0 ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
-                <MailList items={threads} />
+                <MailList items={threads} lastEmailRef={lastEmailRef} />
               )}
             </TabsContent>
             <TabsContent value="reply" className="m-0">
@@ -124,6 +126,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
               ) : (
                 <MailList
                   items={threads.filter((t) => t.replies && t.replies instanceof Array && t.replies?.length > 0)}
+                  lastEmailRef={lastEmailRef}
                 />
               )}
             </TabsContent>
@@ -133,6 +136,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
               ) : (
                 <MailList
                   items={threads.filter((t) => t.emails && t.emails instanceof Array && t.emails?.length > 1)}
+                  lastEmailRef={lastEmailRef}
                 />
               )}
             </TabsContent>

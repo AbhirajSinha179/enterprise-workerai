@@ -1,28 +1,27 @@
-import { formatDistanceToNow } from "date-fns"
-import { ComponentProps } from "react"
-import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { useMail } from "@/contexts/MailContext"
-import { cn } from "@/lib/utils"
-import { MailListProps, Thread } from "@/types/interface"
+"use-client"
+import { formatDistanceToNow } from "date-fns";
+import { useMail } from "@/contexts/MailContext";
+import { cn } from "@/lib/utils";
+import { Thread } from "@/types/interface";
+import { MailListProps } from "@/types/interface";
 
-export function MailList({ items }: MailListProps) {
-  const { config, setConfig } = useMail()
+
+export function MailList({ items, lastEmailRef }: MailListProps) {
+  const { config, setConfig } = useMail();
 
   return (
-    <ScrollArea className="h-[75vh]">
-      <div className="flex flex-col gap-2 p-4 pt-0">
-        {items.map((thread: Thread) => {
-          const { threadId, emails, lead, replies } = thread
+    <div className="h-[75vh] overflow-y-auto p-4 pt-0">
+      {items.map((thread: Thread, index) => {
+        const { threadId, emails } = thread;
+        const latestEmail = emails?.[emails.length - 1] ?? null;
+        const latestDate = latestEmail?.sendAt;
 
-          // Safely handle null or undefined values
-          const latestEmail = emails?.[emails.length - 1] ?? null;
-          const latestReply = replies?.[replies.length - 1] ?? null;
-          const latestDate = latestEmail?.sendAt || latestReply?.date;
-
-          return (
+        return (
+          <div
+            key={threadId}
+            ref={index === items.length - 1 ? lastEmailRef : null}
+          >
             <button
-              key={threadId}
               className={cn(
                 "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-muted",
                 config.selected === thread.threadId && "bg-muted"
@@ -34,59 +33,27 @@ export function MailList({ items }: MailListProps) {
                 }))
               }
             >
-              <div className="flex w-full flex-col gap-1">
-                <div className="flex items-center">
-                  <div className="flex items-center gap-2">
-                    <div className="text-md font-semibold">
-                      {/* {lead?.firstName} {lead?.lastName} */}
-                      {emails?.[0]?.recipient ?? "No Recipient"}
-                    </div>
-                    {!emails?.[0]?.opened && <span className="flex size-2 rounded-full bg-blue-600" />}
-                  </div>
-                  <div
-                    className={cn(
-                      "ml-auto text-xs",
-                      config.selected === threadId ? "text-foreground" : "text-muted-foreground"
-                    )}
-                  >
-                    {latestEmail && latestDate &&
-                      formatDistanceToNow(new Date(latestDate), {
-                        addSuffix: true,
-                      })}
-                  </div>
-                </div>
-                <div className="text-xs font-medium">
-                  {emails?.[0]?.subject ?? "No Subject"}
-                </div>
+              <div className="flex items-center justify-between w-full">
+                <span className="font-semibold text-md">
+                  {emails?.[0]?.recipient ?? "No Recipient"}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {latestDate &&
+                    formatDistanceToNow(new Date(latestDate), {
+                      addSuffix: true,
+                    })}
+                </span>
               </div>
-              <div className="line-clamp-2 text-xs text-muted-foreground">
+              <span className="text-xs font-medium">
+                {emails?.[0]?.subject ?? "No Subject"}
+              </span>
+              <p className="line-clamp-2 text-xs text-muted-foreground">
                 {emails?.[0]?.body ? emails[0].body.substring(0, 300) : "No Body"}
-              </div>
-              {/* {thread.thread[0]?.labels.length ? (
-              <div className="flex items-center gap-2">
-                {thread.thread[0].labels.map((label: string) => (
-                  <Badge key={label} variant={getBadgeVariantFromLabel(label)}>
-                    {label}
-                  </Badge>
-                ))}
-              </div>
-            ) : null} */}
+              </p>
             </button>
-          )
-        })}
-      </div>
-    </ScrollArea>
-  )
+          </div>
+        );
+      })}
+    </div>
+  );
 }
-
-// function getBadgeVariantFromLabel(label: string): ComponentProps<typeof Badge>["variant"] {
-//   if (["work"].includes(label.toLowerCase())) {
-//     return "default";
-//   }
-
-//   if (["personal"].includes(label.toLowerCase())) {
-//     return "outline";
-//   }
-
-//   return "secondary";
-// }
