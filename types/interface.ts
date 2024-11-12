@@ -48,7 +48,7 @@ export const threadSchema = z.object({
   threadId: z.string(),
   emails: z.array(emailSchema),
   replies: z.array(replySchema).nullable(),
-  lead: leadSchema,
+  lead: leadSchema.nullable().optional(),
   senderEmail: z.string(),
 })
 
@@ -294,7 +294,7 @@ export interface Thread {
   threadId: string
   emails: Email[]
   replies: [] | Reply[] | Email[] | any
-  lead: Lead
+  lead?: Lead | null
   senderEmail: string
 }
 
