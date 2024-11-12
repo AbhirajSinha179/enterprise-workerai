@@ -24,7 +24,7 @@ const DashboardHome: React.FC = () => {
   const totalUniqueEmails = data.reduce((sum, item) => sum + item.total_unique_emails, 0)
   // const openRate = getOpenRate({ total_opens, totalUniqueEmails })
   const openRate: any = getOpenRate({ total_opens, total_emails })
-  const responseRate = getResponseRate({ total_responses: total_clicks, totalUniqueEmails })
+  const responseRate = getResponseRate({ total_replies: total_replies, totalUniqueEmails })
 
   const cardConfigs = [
     {
