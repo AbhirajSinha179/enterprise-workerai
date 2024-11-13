@@ -85,7 +85,7 @@ async function fetchRecentReply(targetId: string) {
       throw new Error("Invalid data format")
     }
 
-    return result.data.replies.sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime()).slice(0, 10)
+    return result.data.replies?.sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime()).slice(0, 10)
   } catch (error: any) {
     console.error("Error fetching data:", error.message)
     throw error
