@@ -33,6 +33,19 @@ const MAX_INBOX_HEIGHT = 680
 export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
   const { config, setConfig } = useMail()
   const [selectedView, setSelectedView] = React.useState("last24Hours")
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const filteredThreads = threads.filter((thread) =>
+    thread.senderEmail.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    thread.emails.some((email) =>
+      email.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      email.recipient.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (email.body && email.body.toLowerCase().includes(searchQuery.toLowerCase()))
+    ) ||
+    (thread.lead &&
+      (thread.lead.firstName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        thread.lead.lastName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        thread.lead.email.toLowerCase().includes(searchQuery.toLowerCase())))
+  );
   useEffect(() => {
     setConfig((prevConfig) => ({
       ...prevConfig,
@@ -70,7 +83,12 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
               <form className="flex-grow">
                 <div className="relative">
                   <Search className="absolute left-2 top-3 size-4 text-foreground" />
-                  <Input placeholder="Search" className="pl-8 w-full" />
+                  <Input
+                    placeholder="Search"
+                    className="pl-8 w-full"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
                 </div>
               </form>
               <div className="flex">
@@ -112,30 +130,31 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
             </div>
 
             <TabsContent value="all" className="m-0">
-              {threads.length === 0 ? (
+              {filteredThreads.length === 0 ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
-                <MailList items={threads} />
+                <MailList items={filteredThreads} />
               )}
             </TabsContent>
             <TabsContent value="reply" className="m-0">
-              {threads.length === 0 ? (
+              {filteredThreads.length === 0 ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
                 <MailList
-                  items={threads.filter((t) => t.replies && t.replies instanceof Array && t.replies?.length > 0)}
+                  items={filteredThreads.filter((t) => t.replies && t.replies instanceof Array && t.replies.length > 0)}
                 />
               )}
             </TabsContent>
             <TabsContent value="followup" className="m-0">
-              {threads.length === 0 ? (
+              {filteredThreads.length === 0 ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
                 <MailList
-                  items={threads.filter((t) => t.emails && t.emails instanceof Array && t.emails?.length > 1)}
+                  items={filteredThreads.filter((t) => t.emails && t.emails instanceof Array && t.emails.length > 1)}
                 />
               )}
             </TabsContent>
+
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
