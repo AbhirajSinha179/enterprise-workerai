@@ -56,13 +56,12 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
         thread.push({ type: "REPLY", data: r })
       })
     }
-    if (thread) {
-      thread.sort((a, b) => {
-        const dateA = (a.type == "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
-        const dateB = (b.type == "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
-        return new Date(dateB).getTime() - new Date(dateA).getTime()
-      })
-    }
+
+    thread.sort((a, b) => {
+      const dateA = (a.type == "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
+      const dateB = (b.type == "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
+      return new Date(dateB).getTime() - new Date(dateA).getTime()
+    })
 
     setThreadContent(thread)
   }, [threadData])
