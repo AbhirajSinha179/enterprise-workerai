@@ -18,6 +18,7 @@ import { getOpenRate, getResponseRate } from "@/lib/utils"
 import { toast } from "sonner"
 import Loading from "./loading"
 import { useAuth } from "@clerk/nextjs"
+import { useDateRange } from "@/contexts/DateRangeContext"
 import RecentSales from "@/components/dashboard/recent-sales"
 
 const defaultDashboardData = {
@@ -127,8 +128,9 @@ const DashboardHome: React.FC = () => {
 
   // const [startDate, setStartDate] = useState<string>("2024-01-08T00%3A00%3A00.000Z");
   // const [endDate, setEndDate] = useState<string>("2024-07-26T23%3A59%3A59.000Z");
-  const [startDate, setStartDate] = useState<string>(moment().startOf("day").subtract(1, "months").toISOString())
-  const [endDate, setEndDate] = useState<string>(moment().endOf("day").toISOString())
+  // const [startDate, setStartDate] = useState<string>(moment().startOf("day").subtract(1, "months").toISOString())
+  // const [endDate, setEndDate] = useState<string>(moment().endOf("day").toISOString())
+  const { startDate, endDate, setStartDate, setEndDate } = useDateRange();
 
   const [statsDashboard, setStatsDashboard] = useState(defaultDashboardData)
   const [dataGraph, setDataGraph] = useState<DataGraph[]>([])
@@ -245,7 +247,7 @@ const DashboardHome: React.FC = () => {
                 <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
                 <p className="text-muted-foreground">Here&apos;s all the analytics available.</p>
               </div>
-              <CalendarForm setStartDate={setStartDate} setEndDate={setEndDate} />
+              <CalendarForm />
             </div>
             <div>
               <div className="my-4 flex gap-x-4">
