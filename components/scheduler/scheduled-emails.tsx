@@ -48,6 +48,9 @@ export function ScheduledEmailList({ emails }: { emails: ScheduledEmail[] }) {
                           <div>
                             <span className="font-medium">Date:</span> {item.email.sendAt ? format(new Date(item.email.sendAt), "PP") : "Not Scheduled"}
                           </div>
+                          <div>
+                            <span className="font-medium">Time:</span> {item.email.sendAt ? format(new Date(item.email.sendAt), "p") : "Not Scheduled"}
+                          </div>
                         </div>
                       </TooltipContent>
                     </Tooltip>
