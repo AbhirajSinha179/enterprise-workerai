@@ -11,10 +11,12 @@ import { toast } from "sonner"
 import RecentSales from "@/components/dashboard/recent-sales"
 import { dummyDashboardData } from "@/lib/dummy"
 import moment from "moment"
+import { useDateRange } from "@/contexts/DateRangeContext"
 
 const DashboardHome: React.FC = () => {
-  const [startDate, setStartDate] = useState<string>(moment().subtract(1, "months").toISOString())
-  const [endDate, setEndDate] = useState<string>(moment().toISOString())
+  // const [startDate, setStartDate] = useState<string>(moment().subtract(1, "months").toISOString())
+  // const [endDate, setEndDate] = useState<string>(moment().toISOString())
+  const { startDate, endDate, setStartDate, setEndDate } = useDateRange();
 
   // Using dummy data directly
   // const { total_opens, total_clicks, data } = dummyDashboardData
@@ -58,7 +60,7 @@ const DashboardHome: React.FC = () => {
               <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
               <p className="text-muted-foreground">Here&apos;s all the analytics available.</p>
             </div>
-            <CalendarForm setStartDate={setStartDate} setEndDate={setEndDate} />
+            <CalendarForm />
           </div>
           <div>
             <div className="my-4 flex gap-x-4">
