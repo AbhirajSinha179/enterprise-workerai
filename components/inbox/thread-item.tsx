@@ -1,9 +1,7 @@
 import { format } from "date-fns"
-import { Mail } from "@/components/inbox/data"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { TimelineContent, TimelineDot, TimelineHeading, TimelineItem, TimelineLine } from "@/components/ui/timeline"
 import { Email, Reply } from "@/types/interface"
-import { useUser } from "@clerk/nextjs"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 
 interface MailTimelineItemProps {
@@ -22,27 +20,36 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
   }
 
 
-  // let recipient = ""
   let recipient: string = ""
   let date: string | null = ""
   if ("recipient" in mail && "sendAt" in mail) {
     recipient = mail.recipient
     date = mail.sendAt
+  } else if ("fromEmail" in mail) {
+    // For Reply type
+    recipient = mail.fromEmail as string;
+    date = mail.date
   } else {
+    // Fallback
     recipient = mail.from
     date = mail.date
   }
-  console.log("RECIPENT : ", recipient)
+
+  // console.log("RECIPIENT:", recipient)
 
   return (
     <TimelineItem status="done" className="px-4">
       <TimelineHeading>
-        <div className="flex items-start justify-between p-4 ">
+        <div className="flex items-start justify-between p-4">
           <div className="flex items-start gap-4 text-sm">
             <div className="grid gap-1">
               <div className="text-xl font-bold text-foreground">
-                <span className="font-bold">To:</span> {recipient}
+                <span className="font-bold">
+                  {"fromEmail" in mail ? "From : " : "To : "}
+                </span>
+                {recipient}
               </div>
+
               {showSubject && <div className="text-xl text-foreground">{subject}</div>}
             </div>
           </div>

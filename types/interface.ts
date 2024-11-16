@@ -36,11 +36,22 @@ export const leadSchema = z.object({
   blackListed: z.boolean().nullable(),
 })
 
+// export const replySchema = z.object({
+//   replyId: z.string().optional(),
+//   date: z.string().nullable().optional(),
+//   subject: z.string().nullable().optional(),
+//   body: z.string().nullable().optional(),
+//   from: z.string().nullable().optional(),
+// })
 export const replySchema = z.object({
-  replyId: z.string().optional(),
+  id: z.string(),
+  threadId: z.string(),
+  replyId: z.string().nullable().optional(),
+  createdAt: z.string(),
+  fromEmail: z.string(),
+  body: z.string().nullable().optional(),
   date: z.string().nullable().optional(),
   subject: z.string().nullable().optional(),
-  body: z.string().nullable().optional(),
   from: z.string().nullable().optional(),
 })
 
