@@ -60,11 +60,12 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
     thread.sort((a, b) => {
       const dateA = (a.type == "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
       const dateB = (b.type == "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
-      return new Date(dateB).getTime() - new Date(dateA).getTime()
+      return new Date(dateA).getTime() - new Date(dateB).getTime()
     })
 
     setThreadContent(thread)
   }, [threadData])
+
 
   return (
     <div className="flex h-full flex-col">
