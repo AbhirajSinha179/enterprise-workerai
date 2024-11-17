@@ -10,11 +10,11 @@ export const leadZodSchema = z.object({
     engaged: z.string().optional().default("no"),
 })
 export const leadsSchema = z.object({
-    total_leads: z.coerce.number(),
+    total_leads: z.number(),
     limit: z.number(),
     offset: z.number(),
     page: z.number(),
-    data: z.array(leadZodSchema)
+    results: z.array(leadZodSchema)
 });
 
 export type Leads = z.infer<typeof leadsSchema>
