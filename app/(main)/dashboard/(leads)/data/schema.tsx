@@ -14,7 +14,7 @@ export const leadsSchema = z.object({
     limit: z.number(),
     offset: z.number(),
     page: z.number(),
-    results: z.array(leadSchema)
+    results: z.array(leadZodSchema)
 });
 
 export type Leads = z.infer<typeof leadsSchema>
