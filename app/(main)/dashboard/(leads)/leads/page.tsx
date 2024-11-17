@@ -49,7 +49,7 @@ async function getLeads() {
       console.error("Data validation failed", ld.error)
       return []
     }
-    return ld.data.results
+    return ld.data.data
   } catch (error) {
     console.error("An error occurred while fetching leads:", error)
     return []
