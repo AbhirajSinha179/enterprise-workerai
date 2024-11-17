@@ -3,7 +3,7 @@ import { CheckCircledIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
 import { Trash2 } from "lucide-react"
 import { engaged, statuses } from "@/app/(main)/dashboard/(leads)/data/data"
-import { Leads } from "@/app/(main)/dashboard/(leads)/data/schema"
+import { Lead } from "@/app/(main)/dashboard/(leads)/data/schema"
 import { DataTableColumnHeader } from "@/components/leads/data-table-column-header"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -33,7 +33,7 @@ function handleDelete(row: any) {
         description: `${row.id} was deleted.`
     });
 }
-export const columns: ColumnDef<Leads>[] = [
+export const columns: ColumnDef<Lead>[] = [
     {
         id: "select",
         header: ({ table }) => (

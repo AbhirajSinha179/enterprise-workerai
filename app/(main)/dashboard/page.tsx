@@ -238,17 +238,17 @@ const DashboardHome: React.FC = () => {
   return (
     <ContentLayout title="Dashboard">
       <main className="w-full space-y-4">
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
-            <div className="flex justify-between space-x-10 space-y-2">
-              <div>
-                <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
-                <p className="text-muted-foreground">Here&apos;s all the analytics available.</p>
-              </div>
-              <CalendarForm />
+        <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
+          <div className="flex justify-between space-x-10 space-y-2">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+              <p className="text-muted-foreground">Here&apos;s all the analytics available.</p>
             </div>
+            <CalendarForm />
+          </div>
+          {isLoading ? (
+            <Loading />
+          ) : (
             <div>
               <div className="my-4 flex gap-x-4">
                 {cardConfigs.map((config) => (
@@ -286,8 +286,8 @@ const DashboardHome: React.FC = () => {
                 </Card>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </main>
     </ContentLayout>
   )

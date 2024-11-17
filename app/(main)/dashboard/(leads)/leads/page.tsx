@@ -44,12 +44,12 @@ async function getLeads() {
       return []
     }
     const leadsData = await response.json()
-    const ld = z.array(leadsSchema).safeParse(leadsData)
+    const ld = leadsSchema.safeParse(leadsData)
     if (!ld.success) {
       console.error("Data validation failed", ld.error)
       return []
     }
-    return ld.data
+    return ld.data.results
   } catch (error) {
     console.error("An error occurred while fetching leads:", error)
     return []
