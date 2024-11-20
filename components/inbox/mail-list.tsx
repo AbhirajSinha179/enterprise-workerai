@@ -13,7 +13,7 @@ export function MailList({ items, lastEmailRef }: MailListProps) {
     <div className="h-[75vh] overflow-y-auto p-4 pt-0">
       {items.map((thread: Thread, index) => {
         const { threadId, emails } = thread;
-        const latestEmail = emails?.[emails.length - 1] ?? null;
+        const latestEmail = emails?.[0] ?? null;
         const latestDate = latestEmail?.sendAt;
 
         return (
@@ -23,7 +23,7 @@ export function MailList({ items, lastEmailRef }: MailListProps) {
           >
             <button
               className={cn(
-                "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-muted",
+                "flex flex-col w-full items-start gap-2 rounded-lg border p-3 my-2 text-left text-sm transition-all hover:bg-muted",
                 config.selected === thread.threadId && "bg-muted"
               )}
               onClick={() =>
