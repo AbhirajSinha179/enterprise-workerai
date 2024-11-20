@@ -323,15 +323,9 @@ export interface CombinedMail {
 }
 
 export interface MailProps {
-  accounts?: {
-    label: string
-    email: string
-    icon: React.ReactNode
-  }[]
   threads: Thread[]
-  defaultLayout?: number[] | undefined
-  defaultCollapsed?: boolean
-  navCollapsedSize?: number
+  defaultLayout?: number[]
+  lastEmailRef: (node: HTMLDivElement) => void
 }
 
 export interface MailDisplayProps {
@@ -340,6 +334,7 @@ export interface MailDisplayProps {
 
 export interface MailListProps {
   items: Thread[]
+  lastEmailRef: (node: HTMLDivElement) => void
 }
 
 export interface ThreadList {
