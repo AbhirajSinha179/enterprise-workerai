@@ -24,7 +24,7 @@ export const leadSchema = z.object({
   email: z.string(),
   imgUrl: z.string().nullable(),
   firstName: z.string(),
-  lastName: z.string(),
+  lastName: z.string().nullable(),
   seniority: z.string().nullable(),
   country: z.string().nullable(),
   linkedin: z.string().nullable(),
@@ -289,7 +289,7 @@ export interface Lead {
   email: string
   imgUrl: string | null
   firstName: string
-  lastName: string
+  lastName: string | null
   seniority: string | null
   country: string | null
   linkedin: string | null
