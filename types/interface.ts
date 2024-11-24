@@ -45,14 +45,13 @@ export const leadSchema = z.object({
 // })
 export const replySchema = z.object({
   id: z.string(),
-  threadId: z.string(),
+  threadId: z.string().nullable().optional(),
   replyId: z.string().nullable().optional(),
-  createdAt: z.string(),
-  fromEmail: z.string(),
+  createdAt: z.string().nullable().optional(),
+  from: z.string(),
   body: z.string().nullable().optional(),
   date: z.string().nullable().optional(),
   subject: z.string().nullable().optional(),
-  from: z.string().nullable().optional(),
 })
 
 export const threadSchema = z.object({
@@ -60,10 +59,16 @@ export const threadSchema = z.object({
   emails: z.array(emailSchema),
   replies: z.array(replySchema).nullable(),
   lead: leadSchema.nullable().optional(),
-  senderEmail: z.string(),
+  senderEmail: z.string().nullable(),
 })
 
 export const threadsSchema = z.array(threadSchema)
+
+export const repliesSchema = z.array(z.object({
+  threadId: z.string(),
+  emails: z.array(emailSchema),
+  replies: z.array(replySchema),
+}))
 
 // export interface UnscheduledEmailThread {
 //   id: string
@@ -324,8 +329,10 @@ export interface CombinedMail {
 
 export interface MailProps {
   threads: Thread[]
+  replies: Thread[]
   defaultLayout?: number[]
-  lastEmailRef: (node: HTMLDivElement) => void
+  lastEmailRef?: (node: HTMLDivElement) => void
+  replyEmailRef?: (node: HTMLDivElement) => void
 }
 
 export interface MailDisplayProps {

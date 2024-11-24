@@ -1,82 +1,112 @@
 "use client"
-import { toast } from "sonner";
-import LoadingSign from "@/components/global/loading";
-import { Inbox } from "@/components/inbox/mail";
-import { ContentLayout } from "@/components/layout/content-layout";
-import { threadsSchema } from "@/types/interface";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { getTargetIdByUser } from "@/components/dashboard/recent-sales";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { toast } from "sonner"
+import LoadingSign from "@/components/global/loading"
+import { Inbox } from "@/components/inbox/mail"
+import { ContentLayout } from "@/components/layout/content-layout"
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll"
+import { getTargetIdByUser } from "@/lib/utils"
+import { repliesSchema, threadsSchema } from "@/types/interface"
 
 const getData = async (targetId: string, limit = 10, offset = 0) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/thread/target/${targetId}?limit=${limit}&offset=${offset}`;
-    const res = await fetch(
-      url,
-      {
-        method: "GET",
-        cache: "no-cache",
-      }
-    );
-    const data = await res.json();
-    const result = threadsSchema.parse(data);
-    return result;
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/thread/target/${targetId}?limit=${limit}&offset=${offset}`
+    const res = await fetch(url, {
+      method: "GET",
+      cache: "no-cache",
+    })
+    const data = await res.json()
+    const result = threadsSchema.parse(data)
+    return result
   } catch (error) {
-    console.log(JSON.stringify(error));
-    return [];
+    console.log(JSON.stringify(error))
+    return []
   }
-};
+}
+
+const getRepliesData = async (targetId: string, limit: number = 10, offset: number = 0) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/target/${targetId}?limit=${limit}&offset=${offset}`
+    const res = await fetch(url, {
+      method: "GET",
+      cache: "no-cache",
+    })
+    const data = await res.json()
+    console.log(data)
+    const result = repliesSchema.parse(data)
+    return result
+  } catch (error) {
+    console.log(JSON.stringify(error))
+    return []
+  }
+}
 
 export default function InboxPage() {
-  const { userId } = useAuth();
-  const [emails, setEmails] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const hasMore = useRef(true);
-  const observer = useRef<IntersectionObserver | null>(null);
+  const { userId } = useAuth()
+  const [emails, setEmails] = useState<any[]>([])
+  const [replies, setReplies] = useState<any[]>([])
+  const [loading, setLoading] = useState(false)
+  const [offset, setOffset] = useState(0)
+  const hasMore = useRef(true)
 
   const loadMoreEmails = useCallback(async () => {
-    if (!userId || !hasMore.current || loading) return;
-    setLoading(true);
+    if (!userId || !hasMore.current || loading) return
+    setLoading(true)
     try {
-      const targetId = await getTargetIdByUser(userId);
-      if (!targetId) return;
-      const fetchedEmails = await getData(targetId, 10, offset);
-      if (fetchedEmails.length === 0) hasMore.current = false;
-      setEmails((prev) => [...prev, ...fetchedEmails]);
-      setOffset((prevOffset) => prevOffset + fetchedEmails.length);
+      const targetId = await getTargetIdByUser(userId)
+      if (!targetId) return
+      const fetchedEmails = await getData(targetId, 10, offset)
+      console.log(offset)
+      if (fetchedEmails.length === 0) hasMore.current = false
+      setEmails((prev) => {
+        const existingThreadIds = new Set(prev.map((thread) => thread.threadId))
+        const newThreads = fetchedEmails.filter((thread) => !existingThreadIds.has(thread.threadId))
+        return [...prev, ...newThreads]
+      })
+      setOffset((prevOffset) => prevOffset + fetchedEmails.length)
     } catch (error) {
-      toast.error("Error fetching scheduled emails.");
-      console.error(error);
+      toast.error("Error fetching scheduled emails.")
+      console.error(error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  }, [userId, offset, loading]);
+  }, [userId, offset, loading])
 
-  const lastEmailRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
+  const loadMoreReplies = useCallback(async () => {
+    if (!userId || !hasMore.current || loading) return
+    setLoading(true)
+    try {
+      const targetId = await getTargetIdByUser(userId)
+      if (!targetId) return
+      const fetchedReplies = await getRepliesData(targetId, 10, offset)
+      if (fetchedReplies.length === 0) hasMore.current = false
+      setReplies((prev) => [...prev, ...fetchedReplies])
+      setOffset((prevOffset) => prevOffset + fetchedReplies.length)
+    } catch (error) {
+      toast.error("Error fetching scheduled emails.")
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }, [userId, offset, loading])
 
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0]?.isIntersecting && hasMore.current) {
-          loadMoreEmails();
-        }
-      });
-
-      if (node) observer.current.observe(node);
-    },
-    [loadMoreEmails, loading]
-  );
+  const emailRef = useInfiniteScroll({ loadMoreEmails, loading, hasMore, emailList: emails })
+  // const replyEmailRef = useInfiniteScroll({ loadMoreReplies, loading, hasMore, emailList: replies })
 
   useEffect(() => {
-    loadMoreEmails();
-  }, [userId]);
+    loadMoreEmails()
+  }, [loadMoreEmails])
+
+  // useEffect(() => {
+  //   loadMoreReplies()
+  //   console.log(replies)
+  // }, [userId])
 
   return (
     <ContentLayout title="Inbox">
       {emails.length > 0 ? (
-        <Inbox threads={emails} lastEmailRef={lastEmailRef} />
+        <Inbox threads={emails} replies={replies} lastEmailRef={emailRef} />
       ) : loading ? (
         <LoadingSign />
       ) : (
@@ -87,5 +117,5 @@ export default function InboxPage() {
         </div>
       )}
     </ContentLayout>
-  );
+  )
 }

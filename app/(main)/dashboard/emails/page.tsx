@@ -1,12 +1,12 @@
 "use client";
+import { useAuth } from "@clerk/nextjs";
 import { CalendarIcon } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import EmptyState from "@/components/global/empty-state";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
-import { useAuth } from "@clerk/nextjs";
-import { useEffect, useState, useRef, useCallback } from "react";
-import { toast } from "sonner";
-import { getTargetIdByUser } from "@/components/dashboard/recent-sales";
+import { getTargetIdByUser } from "@/lib/utils";
 import { ScheduledEmail, scheduledEmailResponseSchema } from "@/types/interface";
 import Loading from "./loading";
 
