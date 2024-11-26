@@ -4,9 +4,10 @@ import { useMail } from "@/contexts/MailContext";
 import { cn } from "@/lib/utils";
 import { Thread } from "@/types/interface";
 import { MailListProps } from "@/types/interface";
+import { LoadingSpinner } from "../ui/spinner";
 
 
-export function MailList({ items, lastEmailRef }: MailListProps) {
+export function MailList({ items, lastEmailRef, loading }: MailListProps) {
   const { config, setConfig } = useMail();
 
   return (
@@ -52,8 +53,14 @@ export function MailList({ items, lastEmailRef }: MailListProps) {
               </p>
             </button>
           </div>
+
         );
       })}
+      {loading && (
+        <div className="flex justify-center py-4">
+          <LoadingSpinner></LoadingSpinner>
+        </div>
+      )}
     </div>
   );
 }

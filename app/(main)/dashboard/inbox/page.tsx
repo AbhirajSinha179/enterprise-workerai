@@ -9,7 +9,7 @@ import { useInfiniteScroll } from "@/hooks/useInfiniteScroll"
 import { getTargetIdByUser } from "@/lib/utils"
 import { repliesSchema, threadsSchema } from "@/types/interface"
 
-const getData = async (targetId: string, limit = 10, offset = 0) => {
+const getData = async (targetId: string, limit = 50, offset = 0) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/thread/target/${targetId}?limit=${limit}&offset=${offset}`
     const res = await fetch(url, {
@@ -25,7 +25,7 @@ const getData = async (targetId: string, limit = 10, offset = 0) => {
   }
 }
 
-const getRepliesData = async (targetId: string, limit: number = 10, offset: number = 0) => {
+const getRepliesData = async (targetId: string, limit: number = 50, offset: number = 0) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/target/${targetId}?limit=${limit}&offset=${offset}`
     const res = await fetch(url, {
@@ -51,27 +51,28 @@ export default function InboxPage() {
   const hasMore = useRef(true)
 
   const loadMoreEmails = useCallback(async () => {
-    if (!userId || !hasMore.current || loading) return
-    setLoading(true)
+    if (!userId || !hasMore.current || loading) return;
+    setLoading(true);
     try {
-      const targetId = await getTargetIdByUser(userId)
-      if (!targetId) return
-      const fetchedEmails = await getData(targetId, 10, offset)
-      console.log(offset)
-      if (fetchedEmails.length === 0) hasMore.current = false
+      const targetId = await getTargetIdByUser(userId);
+      if (!targetId) return;
+      const fetchedEmails = await getData(targetId, 50, offset);
+      if (fetchedEmails.length === 0) hasMore.current = false;
       setEmails((prev) => {
-        const existingThreadIds = new Set(prev.map((thread) => thread.threadId))
-        const newThreads = fetchedEmails.filter((thread) => !existingThreadIds.has(thread.threadId))
-        return [...prev, ...newThreads]
-      })
-      setOffset((prevOffset) => prevOffset + fetchedEmails.length)
+        const existingThreadIds = new Set(prev.map((thread) => thread.threadId));
+        const newThreads = fetchedEmails.filter(
+          (thread) => !existingThreadIds.has(thread.threadId)
+        );
+        return [...prev, ...newThreads];
+      });
+      setOffset((prevOffset) => prevOffset + fetchedEmails.length);
     } catch (error) {
-      toast.error("Error fetching scheduled emails.")
-      console.error(error)
+      toast.error("Error fetching emails.");
+      console.error(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }, [userId, offset, loading])
+  }, [userId, offset, loading]);
 
   const loadMoreReplies = useCallback(async () => {
     if (!userId || !hasMore.current || loading) return
@@ -79,7 +80,7 @@ export default function InboxPage() {
     try {
       const targetId = await getTargetIdByUser(userId)
       if (!targetId) return
-      const fetchedReplies = await getRepliesData(targetId, 10, offset)
+      const fetchedReplies = await getRepliesData(targetId, 50, offset)
       if (fetchedReplies.length === 0) hasMore.current = false
       setReplies((prev) => [...prev, ...fetchedReplies])
       setOffset((prevOffset) => prevOffset + fetchedReplies.length)
@@ -95,8 +96,9 @@ export default function InboxPage() {
   // const replyEmailRef = useInfiniteScroll({ loadMoreReplies, loading, hasMore, emailList: replies })
 
   useEffect(() => {
-    loadMoreEmails()
-  }, [loadMoreEmails])
+    if (emails.length === 0) loadMoreEmails();
+  }, [loadMoreEmails, emails]);
+
 
   // useEffect(() => {
   //   loadMoreReplies()
@@ -106,7 +108,7 @@ export default function InboxPage() {
   return (
     <ContentLayout title="Inbox">
       {emails.length > 0 ? (
-        <Inbox threads={emails} replies={replies} lastEmailRef={emailRef} />
+        <Inbox threads={emails} replies={replies} lastEmailRef={emailRef} loading={loading} />
       ) : loading ? (
         <LoadingSign />
       ) : (

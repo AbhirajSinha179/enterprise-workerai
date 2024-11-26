@@ -32,7 +32,7 @@ import { MailProps } from "@/types/interface";
 
 const MAX_INBOX_HEIGHT = 680
 
-export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef }: MailProps) {
+export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, loading }: MailProps) {
   const { config, setConfig } = useMail()
   const [selectedView, setSelectedView] = React.useState("last24Hours")
   useEffect(() => {
@@ -117,7 +117,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef }
               {threads.length === 0 ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
-                <MailList items={threads} lastEmailRef={lastEmailRef} />
+                <MailList items={threads} lastEmailRef={lastEmailRef} loading={loading} />
               )}
             </TabsContent>
             <TabsContent value="reply" className="m-0">
@@ -127,6 +127,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef }
                 <MailList
                   items={threads.filter((t) => t.replies && t.replies instanceof Array && t.replies?.length > 0)}
                   lastEmailRef={lastEmailRef}
+                  loading={loading}
                 />
               )}
             </TabsContent>
@@ -137,6 +138,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef }
                 <MailList
                   items={threads.filter((t) => t.emails && t.emails instanceof Array && t.emails?.length > 1)}
                   lastEmailRef={lastEmailRef}
+                  loading={loading}
                 />
               )}
             </TabsContent>
