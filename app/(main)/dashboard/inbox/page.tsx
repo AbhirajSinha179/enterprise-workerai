@@ -82,7 +82,11 @@ export default function InboxPage() {
       if (!targetId) return
       const fetchedReplies = await getRepliesData(targetId, 50, offset)
       if (fetchedReplies.length === 0) hasMore.current = false
-      setReplies((prev) => [...prev, ...fetchedReplies])
+      setReplies((prev) => {
+        const existingThreadIds = new Set(prev.map((thread) => thread.threadId))
+        const newThreads = fetchedReplies.filter((thread) => !existingThreadIds.has(thread.threadId))
+        return [...prev, ...newThreads]
+      })
       setOffset((prevOffset) => prevOffset + fetchedReplies.length)
     } catch (error) {
       toast.error("Error fetching scheduled emails.")
@@ -93,22 +97,21 @@ export default function InboxPage() {
   }, [userId, offset, loading])
 
   const emailRef = useInfiniteScroll({ loadMoreEmails, loading, hasMore, emailList: emails })
-  // const replyEmailRef = useInfiniteScroll({ loadMoreReplies, loading, hasMore, emailList: replies })
+  const replyEmailRef = useInfiniteScroll({ loadMoreReplies, loading, hasMore, emailList: replies })
 
   useEffect(() => {
-    if (emails.length === 0) loadMoreEmails();
+    loadMoreEmails();
   }, [loadMoreEmails, emails]);
 
 
-  // useEffect(() => {
-  //   loadMoreReplies()
-  //   console.log(replies)
-  // }, [userId])
+  useEffect(() => {
+    loadMoreReplies()
+  }, [loadMoreReplies, replies])
 
   return (
     <ContentLayout title="Inbox">
       {emails.length > 0 ? (
-        <Inbox threads={emails} replies={replies} lastEmailRef={emailRef} loading={loading} />
+        <Inbox threads={emails} replies={replies} lastEmailRef={emailRef} replyEmailRef={replyEmailRef} loading={loading} />
       ) : loading ? (
         <LoadingSign />
       ) : (
