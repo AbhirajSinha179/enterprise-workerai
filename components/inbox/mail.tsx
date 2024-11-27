@@ -43,10 +43,10 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, 
   }, [selectedView, setConfig]);
 
   if (!threads) return notFound()
-  
+
   let displayThread = threads.find((item: Thread) => item.threadId === config.selected) || null;
-  if (!displayThread) {
-    displayThread = replies.find((item: Thread) => item.threadId === config.selected) || null;   
+  if (!displayThread && replies) {
+    displayThread = replies.find((item: Thread) => item.threadId === config.selected) || null;
   }
 
   return (
@@ -130,10 +130,11 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, 
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
                 <MailList
-                  items={replies}
+                  items={replies || []}
                   lastEmailRef={replyEmailRef}
-                  loading={loading}
+                  loading={loading || false}
                 />
+
               )}
             </TabsContent>
             <TabsContent value="followup" className="m-0">

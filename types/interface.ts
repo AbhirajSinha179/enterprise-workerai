@@ -331,11 +331,11 @@ export interface CombinedMail {
 
 export interface MailProps {
   threads: Thread[]
-  replies: Thread[]
+  replies?: Thread[]
   defaultLayout?: number[]
   lastEmailRef?: (node: HTMLDivElement) => void
   replyEmailRef?: (node: HTMLDivElement) => void
-  loading: boolean
+  loading?: boolean
 }
 
 export interface MailDisplayProps {
@@ -345,8 +345,8 @@ export interface MailDisplayProps {
 export interface MailListProps {
   items: Thread[]
   // lastEmailRef: (node: HTMLDivElement) => void
-  lastEmailRef: ((node: HTMLDivElement) => void) | undefined
-  loading: boolean
+  lastEmailRef?: ((node: HTMLDivElement) => void) | undefined
+  loading?: boolean
 }
 
 export interface ThreadList {

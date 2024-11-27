@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Separator } from "../ui/separator";
 import { ScheduledEmail } from "@/types/interface";
 
-export function ScheduledEmailList({ emails, lastEmailRef }: { emails: ScheduledEmail[], lastEmailRef: (node: HTMLDivElement) => void }) {
+export function ScheduledEmailList({ emails, lastEmailRef }: { emails: ScheduledEmail[], lastEmailRef?: (node: HTMLDivElement) => void }) {
   const renderStatusIcons = (status: string) => {
     return (
       <div className="flex items-center space-x-1 my-1">
