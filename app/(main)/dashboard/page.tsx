@@ -279,9 +279,7 @@ const DashboardHome: React.FC = () => {
                     <CardDescription>Unread</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    {/* <RecentSales />
-                      <RecentSales/> */}
-                    <RecentSales />
+                    {/* <RecentSales /> */}
                   </CardContent>
                 </Card>
               </div>

@@ -15,6 +15,7 @@ import { Timeline } from "../ui/timeline"
 export function MailDisplay({ threadData }: MailDisplayProps) {
   const [replyContent, setReplyContent] = useState<string>("")
   const [threadContent, setThreadContent] = useState<CombinedMail[]>([])
+  const [sendingReply, setSendingReply] = useState(false)
   // const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || []
   // if (threadData?.replies) {
   //   threadData.replies.forEach((r: Reply) => {
@@ -34,7 +35,8 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
 
   const handleReplySubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!replyContent.trim()) return
+    if (!replyContent.trim() || !!sendingReply) return
+    setSendingReply(true)
 
     try {
       const result = await submitReplyContent(replyContent, threadData?.threadId!)
@@ -46,6 +48,8 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
     } catch (error) {
       console.error("Error submitting the reply:", error)
       toast.error("Failed to send the message.")
+    } finally {
+      setSendingReply(false)
     }
   }
 
@@ -58,8 +62,8 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
     }
 
     thread.sort((a, b) => {
-      const dateA = (a.type == "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
-      const dateB = (b.type == "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
+      const dateA = (a.type === "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
+      const dateB = (b.type === "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
       return new Date(dateA).getTime() - new Date(dateB).getTime()
     })
 
@@ -125,7 +129,7 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
                   onChange={handleReplyChange}
                 />
                 <div className="flex items-center">
-                  <Button type="submit" size="sm" className="ml-auto">
+                  <Button type="submit" size="sm" className="ml-auto" disabled={!!sendingReply}>
                     Send
                   </Button>
                 </div>
