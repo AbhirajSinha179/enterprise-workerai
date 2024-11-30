@@ -1,80 +1,83 @@
 "use client";
+import { useAuth } from "@clerk/nextjs";
 import { CalendarIcon } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import EmptyState from "@/components/global/empty-state";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
-// import { scheduledEmailResponseSchema } from "@/types/interface";
-import { useAuth } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { getTargetIdByUser } from "@/components/dashboard/recent-sales";
+import { getTargetIdByUser } from "@/lib/utils";
 import { ScheduledEmail, scheduledEmailResponseSchema } from "@/types/interface";
 import Loading from "./loading";
 
-
-async function fetchScheduledEmails(targetId: string): Promise<ScheduledEmail[]> {
-  const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/scheduled/${targetId}`;
+async function fetchScheduledEmails(targetId: string, limit = 10, offset = 0): Promise<ScheduledEmail[]> {
+  const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/scheduled/${targetId}?limit=${limit}&offset=${offset}`;
 
   try {
     const res = await fetch(url);
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch data. Status code: ${res.status}`);
-    }
-
+    if (!res.ok) throw new Error(`Failed to fetch data. Status code: ${res.status}`);
     const data = await res.json();
     const result = scheduledEmailResponseSchema.safeParse(data);
 
-    if (!result.success) {
-      throw new Error("Invalid data format");
-    }
-
+    if (!result.success) throw new Error("Invalid data format");
     return result.data.scheduledEmails;
   } catch (error: any) {
     throw new Error(`Error fetching scheduled emails: ${error.message}`);
   }
 }
 
-
-
 export default function Emails() {
   const { userId } = useAuth();
   const [scheduledEmails, setScheduledEmails] = useState<ScheduledEmail[]>([]);
   const [loading, setLoading] = useState(true);
+  const [offset, setOffset] = useState(0);
+  const hasMore = useRef(true);
+  const observer = useRef<IntersectionObserver | null>(null);
+
+  const loadMoreEmails = async () => {
+    if (!userId || !hasMore.current) return;
+    try {
+      const targetId = await getTargetIdByUser(userId);
+      if (!targetId) return;
+
+      const fetchedEmails = await fetchScheduledEmails(targetId, 10, offset);
+      if (fetchedEmails.length === 0) hasMore.current = false;
+
+      setScheduledEmails((prev) => [...prev, ...fetchedEmails]);
+      setOffset((prevOffset) => prevOffset + fetchedEmails.length);
+    } catch (error) {
+      toast.error("Error fetching scheduled emails.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!userId) {
-        toast.error("Error finding user ID");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const targetId = await getTargetIdByUser(userId);
-
-        if (!targetId) {
-          setLoading(false);
-          return;
-        }
-
-        const fetchedEmails = await fetchScheduledEmails(targetId);
-        setScheduledEmails(fetchedEmails);
-      } catch (error) {
-        toast.error("Error fetching scheduled emails.");
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    loadMoreEmails();
   }, [userId]);
 
-  if (loading) {
-    return (
-      <Loading></Loading>
-    );
+  const lastEmailRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        const firstEntry = entries[0];
+        if (firstEntry && firstEntry.isIntersecting && hasMore.current) {
+          setLoading(true);
+          loadMoreEmails();
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [loading, userId]
+  );
+
+
+  if (loading && scheduledEmails.length === 0) {
+    return <Loading />;
   }
 
   return (
@@ -91,7 +94,7 @@ export default function Emails() {
             />
           </>
         ) : (
-          <ScheduledEmailList emails={scheduledEmails} />
+          <ScheduledEmailList emails={scheduledEmails} lastEmailRef={lastEmailRef} />
         )}
       </div>
     </ContentLayout>

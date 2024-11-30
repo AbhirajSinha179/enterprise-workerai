@@ -1,20 +1,14 @@
 // app/components/inbox/index.tsx
 "use client"
 
+import { MixerHorizontalIcon } from "@radix-ui/react-icons"
 import { InboxIcon, MailOpenIcon, Search } from "lucide-react"
 // import * as React from "react"
+import { notFound } from "next/navigation"
 import React, { useEffect } from "react";
 import EmptyState from "@/components/global/empty-state" // Ensure this import is correct
 import { MailDisplay } from "@/components/inbox/mail-display"
 import { MailList } from "@/components/inbox/mail-list"
-import { Input } from "@/components/ui/input"
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
-import { Separator } from "@/components/ui/separator"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { useMail } from "@/contexts/MailContext"
-import { cn } from "@/lib/utils"
-// import { MailProps, ThreadList } from "@/types/interface"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -23,14 +17,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
+import { Separator } from "@/components/ui/separator"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { useMail } from "@/contexts/MailContext"
+import { cn } from "@/lib/utils"
+// import { MailProps, ThreadList } from "@/types/interface"
+import { Thread, ThreadList } from "@/types/interface"
+import { MailProps } from "@/types/interface";
 import { Button } from "../ui/button"
-import { MixerHorizontalIcon } from "@radix-ui/react-icons"
-import { MailProps, Thread, ThreadList } from "@/types/interface"
-import { notFound } from "next/navigation"
+
 
 const MAX_INBOX_HEIGHT = 680
 
-export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
+export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, replyEmailRef, replies, loading }: MailProps) {
   const { config, setConfig } = useMail()
   const [selectedView, setSelectedView] = React.useState("last24Hours")
   useEffect(() => {
@@ -41,6 +43,11 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
   }, [selectedView, setConfig]);
 
   if (!threads) return notFound()
+
+  let displayThread = threads.find((item: Thread) => item.threadId === config.selected) || null;
+  if (!displayThread && replies) {
+    displayThread = replies.find((item: Thread) => item.threadId === config.selected) || null;
+  }
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -67,7 +74,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
             </div>
             <Separator />
             <div className="p-4 backdrop-blur supports-[backdrop-filter]:bg-background/0 flex justify-between flex-row">
-              <form className="flex-grow">
+              <form className="grow">
                 <div className="relative">
                   <Search className="absolute left-2 top-3 size-4 text-foreground" />
                   <Input placeholder="Search" className="pl-8 w-full" />
@@ -115,7 +122,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
               {threads.length === 0 ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
-                <MailList items={threads} />
+                <MailList items={threads} lastEmailRef={lastEmailRef} loading={loading} />
               )}
             </TabsContent>
             <TabsContent value="reply" className="m-0">
@@ -123,8 +130,11 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
                 <MailList
-                  items={threads.filter((t) => t.replies && t.replies instanceof Array && t.replies?.length > 0)}
+                  items={replies || []}
+                  lastEmailRef={replyEmailRef}
+                  loading={loading || false}
                 />
+
               )}
             </TabsContent>
             <TabsContent value="followup" className="m-0">
@@ -133,6 +143,8 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
               ) : (
                 <MailList
                   items={threads.filter((t) => t.emails && t.emails instanceof Array && t.emails?.length > 1)}
+                  lastEmailRef={lastEmailRef}
+                  loading={loading}
                 />
               )}
             </TabsContent>
@@ -140,7 +152,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655] }: MailProps) {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
-          <MailDisplay threadData={threads.find((item: Thread) => item.threadId === config.selected) || null} />
+          <MailDisplay threadData={displayThread} />
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
