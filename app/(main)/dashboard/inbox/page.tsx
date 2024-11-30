@@ -48,7 +48,9 @@ export default function InboxPage() {
   const [replies, setReplies] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const [offset, setOffset] = useState(0)
+  const [offsetReplies, setOffsetReplies] = useState(0)
   const hasMore = useRef(true)
+  const hasMoreReplies = useRef(true)
 
   const loadMoreEmails = useCallback(async () => {
     if (!userId || !hasMore.current || loading) return;
@@ -75,38 +77,38 @@ export default function InboxPage() {
   }, [userId, offset, loading]);
 
   const loadMoreReplies = useCallback(async () => {
-    if (!userId || !hasMore.current || loading) return
+    if (!userId || !hasMoreReplies.current || loading) return
     setLoading(true)
     try {
       const targetId = await getTargetIdByUser(userId)
       if (!targetId) return
-      const fetchedReplies = await getRepliesData(targetId, 50, offset)
-      if (fetchedReplies.length === 0) hasMore.current = false
+      const fetchedReplies = await getRepliesData(targetId, 10, offsetReplies)
+      if (fetchedReplies.length === 0) hasMoreReplies.current = false
       setReplies((prev) => {
         const existingThreadIds = new Set(prev.map((thread) => thread.threadId))
         const newThreads = fetchedReplies.filter((thread) => !existingThreadIds.has(thread.threadId))
         return [...prev, ...newThreads]
       })
-      setOffset((prevOffset) => prevOffset + fetchedReplies.length)
+      setOffsetReplies((prevOffset) => prevOffset + fetchedReplies.length)
     } catch (error) {
       toast.error("Error fetching scheduled emails.")
       console.error(error)
     } finally {
       setLoading(false)
     }
-  }, [userId, offset, loading])
+  }, [userId, offsetReplies, loading])
 
   const emailRef = useInfiniteScroll({ loadMoreEmails, loading, hasMore, emailList: emails })
-  const replyEmailRef = useInfiniteScroll({ loadMoreReplies, loading, hasMore, emailList: replies })
+  const replyEmailRef = useInfiniteScroll({ loadMoreReplies, loading, hasMoreReplies, emailList: replies })
 
   useEffect(() => {
     loadMoreEmails();
-  }, [loadMoreEmails, emails]);
+  }, []);
 
 
   useEffect(() => {
     loadMoreReplies()
-  }, [loadMoreReplies, replies])
+  }, [])
 
   return (
     <ContentLayout title="Inbox">
