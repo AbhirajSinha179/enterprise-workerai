@@ -1,17 +1,16 @@
-"use-client"
 import { formatDistanceToNow } from "date-fns";
 import { useMail } from "@/contexts/MailContext";
 import { cn } from "@/lib/utils";
 import { Thread } from "@/types/interface";
 import { MailListProps } from "@/types/interface";
 import { LoadingSpinner } from "../ui/spinner";
-
+import { ScrollArea } from "../ui/scroll-area";
 
 export function MailList({ items, lastEmailRef, loading }: MailListProps) {
   const { config, setConfig } = useMail();
 
   return (
-    <div className="h-[75vh] overflow-y-auto p-4 pt-0">
+    <ScrollArea className="h-[75vh] p-4 pt-0">
       {items.map((thread: Thread, index) => {
         const { threadId, emails } = thread;
         const latestEmail = emails?.[0] ?? null;
@@ -53,14 +52,13 @@ export function MailList({ items, lastEmailRef, loading }: MailListProps) {
               </p>
             </button>
           </div>
-
         );
       })}
       {loading && (
         <div className="flex justify-center py-4">
-          <LoadingSpinner></LoadingSpinner>
+          <LoadingSpinner />
         </div>
       )}
-    </div>
+    </ScrollArea>
   );
 }

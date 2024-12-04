@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from "react"
-import { Eye, MailOpen, Send, Target, Star } from "lucide-react"
+import { Eye, MailOpen, Send, Star, Reply } from "lucide-react"
 import { Overview } from "@/components/dashboard/overview"
 // import { RecentSales } from "@/components/dashboard/recent-sales"; string
 import { ContentLayout } from "@/components/layout/content-layout"
@@ -137,6 +137,7 @@ const DashboardHome: React.FC = () => {
   // const [recentSalesData, setRecentSalesData] = useState<any[]>([]);
   const [responseStatus, setResponseStatus] = useState<number | null>(null)
   const [openRate, setOpenRate] = useState<number>(0)
+  const [totalOpen, setTotalOpen] = useState<number>(0)
   const [responseRate, setResponseRate] = useState<number>(0)
   const [totalUniqueEmails, setTotalUniqueEmails] = useState<number>(0)
   const [totalSentEmails, setTotalSentEmails] = useState<number>(0)
@@ -175,6 +176,7 @@ const DashboardHome: React.FC = () => {
         setTotalSentEmails(data.reduce((sum, item) => sum + (item.total_emails ?? 0), 0))
         setOpenRate(openRate)
         setResponseRate(responseRate)
+        setTotalOpen(total_opens)
         setResponseStatus(200)
         setDataGraph(
           data.map((item) => ({
@@ -216,6 +218,12 @@ const DashboardHome: React.FC = () => {
       className: "text-muted-foreground",
     },
     {
+      title: "Total Open",
+      stat: totalOpen,
+      icon: Eye,
+      className: "text-muted-foreground",
+    },
+    {
       title: "Open Rate",
       stat: openRate,
       icon: MailOpen,
@@ -224,7 +232,7 @@ const DashboardHome: React.FC = () => {
     {
       title: "Response Rate",
       stat: responseRate,
-      icon: Eye,
+      icon: Reply,
       className: "text-muted-foreground",
     },
     // {
