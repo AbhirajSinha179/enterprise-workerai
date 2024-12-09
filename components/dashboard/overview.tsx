@@ -6,7 +6,7 @@ interface DataItem {
   date: string | null;
   opens: number | null;
   total_emails: number | null;
-  // total_unique_emails: number | null;
+  total_unique_emails: number | null;
 }
 
 interface OverviewProps {
@@ -30,23 +30,11 @@ export function Overview({ data }: OverviewProps) {
             <stop offset="95%" stopColor="#435BD5" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <XAxis dataKey="date" tickLine={false}
-          axisLine={false}
-          tickMargin={8}
-          tickFormatter={(value) => value.slice(0, 8)} />
-        <YAxis
-          axisLine={false}
-          tickFormatter={(value) => (value === 0 ? '' : value)}
-        />
-        <Tooltip formatter={(value, name) => {
-          const customNames: { [key: string]: string } = {
-            total_emails: "Total Emails",
-            opens: "Opens",
-          };
-          return [value, customNames[name] || name];
-        }} />
-        <Area type="monotone" dataKey="total_emails" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-        <Area type="monotone" dataKey="opens" label="Opens" stroke="#435BD5" fillOpacity={1} fill="url(#colorPv)" />
+        <XAxis dataKey="date" />
+        <YAxis />
+        <Tooltip />
+        <Area type="monotone" dataKey="total_unique_emails" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+        <Area type="monotone" dataKey="opens" stroke="#435BD5" fillOpacity={1} fill="url(#colorPv)" />
       </AreaChart>
     </ResponsiveContainer>
   )

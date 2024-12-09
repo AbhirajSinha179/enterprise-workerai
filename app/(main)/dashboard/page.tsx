@@ -21,7 +21,6 @@ import { useAuth } from "@clerk/nextjs"
 import { useDateRange } from "@/contexts/DateRangeContext"
 import RecentSales from "@/components/dashboard/recent-sales"
 
-
 const defaultDashboardData = {
   total_replies: 0,
   total_emails: 0,
@@ -182,8 +181,7 @@ const DashboardHome: React.FC = () => {
         setDataGraph(
           data.map((item) => ({
             ...item,
-            total_emails: item.total_emails ?? 0,
-            date: moment(item.date).format('MMM Do YY'),
+            total_unique_emails: item.total_unique_emails ?? 0,
           }))
         )
         setIsLoading(false)
