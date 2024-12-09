@@ -373,7 +373,7 @@ export interface DataGraph {
   date: string | null
   opens: number | null
   total_emails: number | null
-  total_unique_emails: number
+  // total_unique_emails: number
 }
 export interface SalesDataItem {
   name: string
