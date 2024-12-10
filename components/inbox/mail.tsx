@@ -48,6 +48,19 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, 
         thread.lead.lastName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         thread.lead.email.toLowerCase().includes(searchQuery.toLowerCase())))
   );
+  const filteredReplies = replies?.filter((reply) =>
+    reply.senderEmail?.toLowerCase().includes(searchQuery.toLowerCase()) || // Check if senderEmail exists
+    reply.emails?.some((email) =>
+      email.subject?.toLowerCase().includes(searchQuery.toLowerCase()) || // Check if subject exists
+      email.recipient?.toLowerCase().includes(searchQuery.toLowerCase()) // Check if recipient exists
+    ) ||
+    (reply.lead &&
+      (reply.lead.firstName?.toLowerCase().includes(searchQuery.toLowerCase()) || // Check if firstName exists
+        reply.lead.lastName?.toLowerCase().includes(searchQuery.toLowerCase()) || // Check if lastName exists
+        reply.lead.email?.toLowerCase().includes(searchQuery.toLowerCase()))) // Check if email exists
+  );
+
+
   useEffect(() => {
     setConfig((prevConfig) => ({
       ...prevConfig,
@@ -144,11 +157,11 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, 
               )}
             </TabsContent>
             <TabsContent value="reply" className="m-0">
-              {filteredThreads.length === 0 ? (
+              {filteredReplies?.length === 0 ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
                 <MailList
-                  items={filteredThreads.filter((t) => t.replies && t.replies instanceof Array && t.replies.length > 0) || []}
+                  items={filteredReplies || []}
                   lastEmailRef={replyEmailRef}
                   loading={loading || false}
                 />
@@ -156,7 +169,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, 
               )}
             </TabsContent>
             <TabsContent value="followup" className="m-0">
-              {filteredThreads.length === 0 ? (
+              {threads.length === 0 ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
                 <MailList
