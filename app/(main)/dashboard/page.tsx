@@ -1,25 +1,24 @@
 "use client"
-import React, { useState, useEffect } from "react"
-import { Eye, MailOpen, Send, Star, Reply } from "lucide-react"
+import { useAuth } from "@clerk/nextjs"
+import { Eye, MailOpen, Reply, Send, Star } from "lucide-react"
+import moment from "moment"
+import React, { useEffect, useState } from "react"
+import { toast } from "sonner"
+import CalendarForm from "@/components/dashboard/CalendarForm"
 import { Overview } from "@/components/dashboard/overview"
 // import { RecentSales } from "@/components/dashboard/recent-sales"; string
 import { ContentLayout } from "@/components/layout/content-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { useDateRange } from "@/contexts/DateRangeContext"
+import { getOpenRate, getResponseRate } from "@/lib/utils"
 import {
   dashboardDataSchema,
   DataGraph,
-  SalesDataItem,
-  StatDashboard,
   getThreadApiResponseSchema,
+  // SalesDataItem,
+  // StatDashboard,
 } from "@/types/interface"
-import CalendarForm from "@/components/dashboard/CalendarForm"
-import moment from "moment"
-import { getOpenRate, getResponseRate } from "@/lib/utils"
-import { toast } from "sonner"
 import Loading from "./loading"
-import { useAuth } from "@clerk/nextjs"
-import { useDateRange } from "@/contexts/DateRangeContext"
-import RecentSales from "@/components/dashboard/recent-sales"
 
 
 const defaultDashboardData = {
