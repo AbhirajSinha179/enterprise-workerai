@@ -18,7 +18,8 @@ import {
   // SalesDataItem,
   // StatDashboard,
 } from "@/types/interface"
-import Loading from "./loading"
+import { Skeleton } from "@/components/ui/skeleton"
+// import Loading from "./loading"
 
 
 const defaultDashboardData = {
@@ -255,45 +256,87 @@ const DashboardHome: React.FC = () => {
             </div>
             <CalendarForm />
           </div>
-          {isLoading ? (
+          {/* {isLoading ? (
             <Loading />
-          ) : (
-            <div>
-              <div className="my-4 flex gap-x-4">
-                {cardConfigs.map((config) => (
-                  <Card className="w-full overflow-x-auto" key={config.title}>
+          ) : ( */}
+          <div>
+            <div className="my-4 flex gap-x-4">
+              {isLoading
+                ? // Render Skeletons when loading
+                Array.from({ length: cardConfigs.length }).map((_, idx) => (
+                  <Card className="w-full overflow-x-auto" key={idx}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium text-muted-foreground">{config.title}</CardTitle>
-                      <config.icon className={`size-4 text-${config.className}`} width={24} height={24} />
+                      <Skeleton className="h-6 w-20" />
+                      <Skeleton className="h-6 w-6" />
                     </CardHeader>
                     <CardContent>
-                      <div className="text-4xl font-bold text-foreground">{config.stat}</div>
+                      <Skeleton className="h-12 w-32" />
+                    </CardContent>
+                  </Card>
+                ))
+                : // Render actual cards when data is available
+                cardConfigs.map((config) => (
+                  <Card className="w-full overflow-x-auto" key={config.title}>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium text-muted-foreground">
+                        {config.title}
+                      </CardTitle>
+                      <config.icon
+                        className={`size-4 text-${config.className}`}
+                        width={24}
+                        height={24}
+                      />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold text-foreground">
+                        {config.stat}
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
-              </div>
-              <div className="w-full space-y-5">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-foreground">Overview</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pl-2">
-                    <Overview data={dataGraph} />
-                  </CardContent>
-                </Card>
-
-                <Card className="overflow-y-auto">
-                  <CardHeader>
-                    <CardTitle className="text-foreground">Recent Response</CardTitle>
-                    <CardDescription>Unread</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    {/* <RecentSales /> */}
-                  </CardContent>
-                </Card>
-              </div>
             </div>
-          )}
+            <div className="w-full space-y-5">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-foreground">Overview</CardTitle>
+                </CardHeader>
+                <CardContent className="pl-2">
+                  <Overview data={dataGraph} isLoading={isLoading} />
+                </CardContent>
+              </Card>
+
+              <Card className="overflow-y-auto">
+                <CardHeader>
+                  <CardTitle className="text-foreground">Recent Response</CardTitle>
+                  <CardDescription>Unread</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {isLoading ? (
+                    // Render Skeleton when loading
+                    <div className="space-y-4">
+                      {Array.from({ length: 5 }).map((_, idx) => (
+                        <div key={idx} className="flex items-center space-x-4">
+                          <Skeleton className="h-10 w-10 rounded-full" /> {/* Circle skeleton for profile/icon */}
+                          <div className="flex-1 space-y-2">
+                            <Skeleton className="h-4 w-3/4" /> {/* Line skeleton for name/title */}
+                            <Skeleton className="h-3 w-1/2" /> {/* Line skeleton for subtitle/date */}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    // Render actual content when data is available
+                    <div>
+                      {/* Replace with actual RecentSales or data rendering */}
+                      <p className="text-sm text-muted-foreground">No recent responses found.</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+            </div>
+          </div>
+          {/* )} */}
         </div>
       </main>
     </ContentLayout>
