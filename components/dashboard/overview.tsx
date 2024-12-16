@@ -19,16 +19,17 @@ interface DataItem {
 
 interface OverviewProps {
   data: DataItem[];
-  isLoading: boolean; // New prop to indicate loading state
+  isLoading?: boolean; // New prop to indicate loading state
 }
 
 export function Overview({ data, isLoading }: OverviewProps) {
   if (isLoading) {
     // Render a skeleton while loading
     return (
-      <div className="w-full h-[350px]">
+      <div className="w-full h-[200px] sm:h-[300px] md:h-[350px]">
         <Skeleton className="h-full w-full" />
       </div>
+
     );
   }
 

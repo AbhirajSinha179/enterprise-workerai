@@ -315,19 +315,18 @@ const DashboardHome: React.FC = () => {
                     // Render Skeleton when loading
                     <div className="space-y-4">
                       {Array.from({ length: 5 }).map((_, idx) => (
-                        <div key={idx} className="flex items-center space-x-4">
-                          <Skeleton className="h-10 w-10 rounded-full" /> {/* Circle skeleton for profile/icon */}
-                          <div className="flex-1 space-y-2">
-                            <Skeleton className="h-4 w-3/4" /> {/* Line skeleton for name/title */}
-                            <Skeleton className="h-3 w-1/2" /> {/* Line skeleton for subtitle/date */}
+                        <div key={idx} className="flex items-center space-x-4 sm:space-x-6">
+                          <Skeleton className="h-8 w-8 sm:h-10 sm:w-10 rounded-full" />
+                          <div className="flex-1 space-y-1 sm:space-y-2">
+                            <Skeleton className="h-3 w-2/3 sm:h-4 sm:w-3/4" />
+                            <Skeleton className="h-2 w-1/3 sm:h-3 sm:w-1/2" />
                           </div>
                         </div>
+
                       ))}
                     </div>
                   ) : (
-                    // Render actual content when data is available
                     <div>
-                      {/* Replace with actual RecentSales or data rendering */}
                       <p className="text-sm text-muted-foreground">No recent responses found.</p>
                     </div>
                   )}
