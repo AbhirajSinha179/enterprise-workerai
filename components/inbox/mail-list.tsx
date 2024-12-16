@@ -3,60 +3,67 @@ import { useMail } from "@/contexts/MailContext";
 import { cn } from "@/lib/utils";
 import { Thread } from "@/types/interface";
 import { MailListProps } from "@/types/interface";
-import { LoadingSpinner } from "../ui/spinner";
 import { ScrollArea } from "../ui/scroll-area";
+import { SkeletonLoaderInbox } from "./skeleton-loader";
 
 export function MailList({ items, lastEmailRef, loading }: MailListProps) {
   const { config, setConfig } = useMail();
 
   return (
     <ScrollArea className="h-[75vh] p-4 pt-0">
-      {items.map((thread: Thread, index) => {
-        const { threadId, emails } = thread;
-        const latestEmail = emails?.[0] ?? null;
-        const latestDate = latestEmail?.sendAt;
+      {/* Show skeleton loader when loading and no items are present */}
+      {loading && items.length === 0 ? (
+        <SkeletonLoaderInbox count={20} />
+      ) : (
+        items.map((thread: Thread, index) => {
+          const { threadId, emails } = thread;
+          const latestEmail = emails?.[0] ?? null;
+          const latestDate = latestEmail?.sendAt;
 
-        return (
-          <div
-            key={threadId}
-            ref={index === items.length - 1 ? lastEmailRef : null}
-          >
-            <button
-              className={cn(
-                "flex flex-col w-full items-start gap-2 rounded-lg border p-3 my-2 text-left text-sm transition-all hover:bg-muted",
-                config.selected === thread.threadId && "bg-muted"
-              )}
-              onClick={() =>
-                setConfig((prevConfig) => ({
-                  ...prevConfig,
-                  selected: threadId,
-                }))
-              }
+          return (
+            <div
+              key={threadId}
+              ref={index === items.length - 1 ? lastEmailRef : null}
             >
-              <div className="flex items-center justify-between w-full">
-                <span className="font-semibold text-md">
-                  {emails?.[0]?.recipient ?? "No Recipient"}
+              <button
+                className={cn(
+                  "flex flex-col w-full items-start gap-2 rounded-lg border p-3 my-2 text-left text-sm transition-all hover:bg-muted",
+                  config.selected === thread.threadId && "bg-muted"
+                )}
+                onClick={() =>
+                  setConfig((prevConfig) => ({
+                    ...prevConfig,
+                    selected: threadId,
+                  }))
+                }
+              >
+                <div className="flex items-center justify-between w-full">
+                  <span className="font-semibold text-md">
+                    {emails?.[0]?.recipient ?? "No Recipient"}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {latestDate &&
+                      formatDistanceToNow(new Date(latestDate), {
+                        addSuffix: true,
+                      })}
+                  </span>
+                </div>
+                <span className="text-xs font-medium">
+                  {emails?.[0]?.subject ?? "No Subject"}
                 </span>
-                <span className="text-xs text-muted-foreground">
-                  {latestDate &&
-                    formatDistanceToNow(new Date(latestDate), {
-                      addSuffix: true,
-                    })}
-                </span>
-              </div>
-              <span className="text-xs font-medium">
-                {emails?.[0]?.subject ?? "No Subject"}
-              </span>
-              <p className="line-clamp-2 text-xs text-muted-foreground">
-                {emails?.[0]?.body ? emails[0].body.substring(0, 300) : "No Body"}
-              </p>
-            </button>
-          </div>
-        );
-      })}
-      {loading && (
-        <div className="flex justify-center py-4">
-          <LoadingSpinner />
+                <p className="line-clamp-2 text-xs text-muted-foreground">
+                  {emails?.[0]?.body ? emails[0].body.substring(0, 300) : "No Body"}
+                </p>
+              </button>
+            </div>
+          );
+        })
+      )}
+
+      {/* Show skeleton loader for infinite scroll */}
+      {loading && items.length > 0 && (
+        <div className="mt-4">
+          <SkeletonLoaderInbox count={3} />
         </div>
       )}
     </ScrollArea>

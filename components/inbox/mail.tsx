@@ -150,14 +150,15 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, 
             </div>
 
             <TabsContent value="all" className="m-0">
-              {filteredThreads.length === 0 ? (
+              {filteredThreads.length === 0 && !loading ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
                 <MailList items={filteredThreads} lastEmailRef={lastEmailRef} loading={loading} />
               )}
             </TabsContent>
+
             <TabsContent value="reply" className="m-0">
-              {filteredReplies?.length === 0 ? (
+              {filteredReplies?.length === 0 && !loading ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
                 <MailList
@@ -165,11 +166,11 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, 
                   lastEmailRef={replyEmailRef}
                   loading={loading || false}
                 />
-
               )}
             </TabsContent>
+
             <TabsContent value="followup" className="m-0">
-              {threads.length === 0 ? (
+              {filteredThreads.filter((t) => t.emails && t.emails instanceof Array && t.emails?.length > 1).length === 0 && !loading ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
                 <MailList
@@ -179,6 +180,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, 
                 />
               )}
             </TabsContent>
+
 
           </Tabs>
         </ResizablePanel>

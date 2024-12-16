@@ -2,7 +2,7 @@
 import { useAuth } from "@clerk/nextjs"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
-import LoadingSign from "@/components/global/loading"
+// import LoadingSign from "@/components/global/loading"
 import { Inbox } from "@/components/inbox/mail"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll"
@@ -112,17 +112,21 @@ export default function InboxPage() {
 
   return (
     <ContentLayout title="Inbox">
+      <Inbox threads={emails} replies={replies} lastEmailRef={emailRef} replyEmailRef={replyEmailRef} loading={loading} />
+      {/* 
       {emails.length > 0 ? (
         <Inbox threads={emails} replies={replies} lastEmailRef={emailRef} replyEmailRef={replyEmailRef} loading={loading} />
-      ) : loading ? (
-        <LoadingSign />
-      ) : (
-        <div className="flex min-h-[70vh] items-center justify-center">
-          <div className="flex items-center justify-center font-bold">
-            Unable to fetch data. Please try again later.
+        // ) : loading ? (
+        //   <LoadingSign />
+      )
+        // ) 
+        : (
+          <div className="flex min-h-[70vh] items-center justify-center">
+            <div className="flex items-center justify-center font-bold">
+              Unable to fetch data. Please try again later.
+            </div>
           </div>
-        </div>
-      )}
+        )} */}
     </ContentLayout>
   )
 }
