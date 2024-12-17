@@ -1,25 +1,25 @@
 "use client"
-import React, { useState, useEffect } from "react"
-import { Eye, MailOpen, Send, Star, Reply } from "lucide-react"
+import { useAuth } from "@clerk/nextjs"
+import { Eye, MailOpen, Reply, Send, Star } from "lucide-react"
+import moment from "moment"
+import React, { useEffect, useState } from "react"
+import { toast } from "sonner"
+import CalendarForm from "@/components/dashboard/CalendarForm"
 import { Overview } from "@/components/dashboard/overview"
 // import { RecentSales } from "@/components/dashboard/recent-sales"; string
 import { ContentLayout } from "@/components/layout/content-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { useDateRange } from "@/contexts/DateRangeContext"
+import { getOpenRate, getResponseRate } from "@/lib/utils"
 import {
   dashboardDataSchema,
   DataGraph,
-  SalesDataItem,
-  StatDashboard,
   getThreadApiResponseSchema,
+  // SalesDataItem,
+  // StatDashboard,
 } from "@/types/interface"
-import CalendarForm from "@/components/dashboard/CalendarForm"
-import moment from "moment"
-import { getOpenRate, getResponseRate } from "@/lib/utils"
-import { toast } from "sonner"
-import Loading from "./loading"
-import { useAuth } from "@clerk/nextjs"
-import { useDateRange } from "@/contexts/DateRangeContext"
-import RecentSales from "@/components/dashboard/recent-sales"
+import { Skeleton } from "@/components/ui/skeleton"
+// import Loading from "./loading"
 
 
 const defaultDashboardData = {
@@ -256,45 +256,86 @@ const DashboardHome: React.FC = () => {
             </div>
             <CalendarForm />
           </div>
-          {isLoading ? (
+          {/* {isLoading ? (
             <Loading />
-          ) : (
-            <div>
-              <div className="my-4 flex gap-x-4">
-                {cardConfigs.map((config) => (
-                  <Card className="w-full overflow-x-auto" key={config.title}>
+          ) : ( */}
+          <div>
+            <div className="my-4 flex gap-x-4">
+              {isLoading
+                ? // Render Skeletons when loading
+                Array.from({ length: cardConfigs.length }).map((_, idx) => (
+                  <Card className="w-full overflow-x-auto" key={idx}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium text-muted-foreground">{config.title}</CardTitle>
-                      <config.icon className={`size-4 text-${config.className}`} width={24} height={24} />
+                      <Skeleton className="h-6 w-20" />
+                      <Skeleton className="h-6 w-6" />
                     </CardHeader>
                     <CardContent>
-                      <div className="text-4xl font-bold text-foreground">{config.stat}</div>
+                      <Skeleton className="h-12 w-32" />
+                    </CardContent>
+                  </Card>
+                ))
+                : // Render actual cards when data is available
+                cardConfigs.map((config) => (
+                  <Card className="w-full overflow-x-auto" key={config.title}>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium text-muted-foreground">
+                        {config.title}
+                      </CardTitle>
+                      <config.icon
+                        className={`size-4 text-${config.className}`}
+                        width={24}
+                        height={24}
+                      />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold text-foreground">
+                        {config.stat}
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
-              </div>
-              <div className="w-full space-y-5">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-foreground">Overview</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pl-2">
-                    <Overview data={dataGraph} />
-                  </CardContent>
-                </Card>
-
-                <Card className="overflow-y-auto">
-                  <CardHeader>
-                    <CardTitle className="text-foreground">Recent Response</CardTitle>
-                    <CardDescription>Unread</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    {/* <RecentSales /> */}
-                  </CardContent>
-                </Card>
-              </div>
             </div>
-          )}
+            <div className="w-full space-y-5">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-foreground">Overview</CardTitle>
+                </CardHeader>
+                <CardContent className="pl-2">
+                  <Overview data={dataGraph} isLoading={isLoading} />
+                </CardContent>
+              </Card>
+
+              <Card className="overflow-y-auto">
+                <CardHeader>
+                  <CardTitle className="text-foreground">Recent Response</CardTitle>
+                  <CardDescription>Unread</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {isLoading ? (
+                    // Render Skeleton when loading
+                    <div className="space-y-4">
+                      {Array.from({ length: 5 }).map((_, idx) => (
+                        <div key={idx} className="flex items-center space-x-4 sm:space-x-6">
+                          <Skeleton className="h-8 w-8 sm:h-10 sm:w-10 rounded-full" />
+                          <div className="flex-1 space-y-1 sm:space-y-2">
+                            <Skeleton className="h-3 w-2/3 sm:h-4 sm:w-3/4" />
+                            <Skeleton className="h-2 w-1/3 sm:h-3 sm:w-1/2" />
+                          </div>
+                        </div>
+
+                      ))}
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="text-sm text-muted-foreground">No recent responses found.</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+            </div>
+          </div>
+          {/* )} */}
         </div>
       </main>
     </ContentLayout>
