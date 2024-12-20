@@ -6,6 +6,7 @@ import {
   LayoutGrid,
   LucideSquareArrowOutUpRight,
   Mail,
+  Rocket,
   Users,
 } from "lucide-react"
 
@@ -69,6 +70,13 @@ export function getMenuList(pathname: string): Group[] {
           label: "Leads",
           active: pathname.includes("/leads"),
           icon: ArrowBigRightDash,
+          submenus: [],
+        },
+        {
+          href: `${DASHBOARD_PATH}/campaigns`,
+          label: "Campaigns",
+          active: pathname.includes("/campaigns"),
+          icon: Rocket,
           submenus: [],
         },
         {
