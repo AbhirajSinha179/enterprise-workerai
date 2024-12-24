@@ -20,7 +20,7 @@ import {
 } from "@/types/interface"
 import { Skeleton } from "@/components/ui/skeleton"
 // import Loading from "./loading"
-import { useTargetId } from "@/contexts/TargetIdContext";
+import { useTargetContext } from "@/contexts/TargetIdContext"
 
 
 const defaultDashboardData = {
@@ -95,74 +95,38 @@ async function fetchRecentReply(targetId: string) {
   }
 }
 
-// export async function getTargetIdByUser(userId: string): Promise<string | null> {
-//   try {
-//     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/target/${userId}`;
-//     const res = await fetch(url);
-
-//     if (!res.ok) {
-//       if (res.status === 404) {
-//         toast.error("No targets found for this user.");
-//         return null;
-//       } else {
-//         throw new Error(`Failed to fetch targets. Status code: ${res.status}`);
-//       }
-//     }
-
-//     const data: any = await res.json();
-//     if (!data.targets || data.targets.length === 0) {
-//       toast.error("No targets found for this user.");
-//       return null;
-//     }
-
-//     const targetId = data.targets[0].id; // Assuming you want the first target ID
-//     return targetId;
-//   } catch (error: any) {
-//     console.error("Error fetching target ID:", error.message);
-//     toast.error("Error fetching target ID.");
-//     return null;
-//   }
-// }
-
 const DashboardHome: React.FC = () => {
   const { userId } = useAuth();
 
-  if (userId) {
-    const targetID = getTargetIdByUser(userId);
-    // console.log("user id ", userId)
-    // console.log("TARGET ID", targetID);
-  } else {
-    console.log("User ID is not available");
-  }
-
-
-  const { targetId, setTargetId } = useTargetId();
+  const { setTargetId, addTarget, targetList } = useTargetContext();
 
   useEffect(() => {
-    async function fetchAndSetTargetId() {
+    async function fetchAndSaveTargets() {
       if (!userId) return;
+
       try {
-        const id = await getTargetIdByUser(userId);
-        if (id) setTargetId(id);
+        const targets = await getTargetIdByUser(userId); // Fetch all targets
+        if (targets && targets.length > 0) {
+          // Set the first target as the selected target
+          const { id }: any = targets[0];
+          setTargetId(id);
+
+          // Add all targets to the targetList
+          targets.forEach((target) => addTarget(target.id, target.name || "Unnamed Target"));
+        }
       } catch (error) {
-        console.error("Error fetching target ID:", error);
+        console.error("Error fetching and saving targets:", error);
       }
+
     }
-    fetchAndSetTargetId();
-  }, [userId, setTargetId]);
 
+    fetchAndSaveTargets();
+  }, [userId, setTargetId, addTarget]);
 
-  // const TARGET_ID: string = "1c1108a8-9108-42e2-8177-4e655bbc87ed"
-
-  // const [startDate, setStartDate] = useState<string>("2024-01-08T00%3A00%3A00.000Z");
-  // const [endDate, setEndDate] = useState<string>("2024-07-26T23%3A59%3A59.000Z");
-  // const [startDate, setStartDate] = useState<string>(moment().startOf("day").subtract(1, "months").toISOString())
-  // const [endDate, setEndDate] = useState<string>(moment().endOf("day").toISOString())
   const { startDate, endDate, setStartDate, setEndDate } = useDateRange();
 
   const [statsDashboard, setStatsDashboard] = useState(defaultDashboardData)
   const [dataGraph, setDataGraph] = useState<DataGraph[]>([])
-  // const [recentSalesData, setRecentSalesData] = useState<any[]>([]);
   const [responseStatus, setResponseStatus] = useState<number | null>(null)
   const [openRate, setOpenRate] = useState<number>(0)
   const [totalOpen, setTotalOpen] = useState<number>(0)
@@ -183,23 +147,13 @@ const DashboardHome: React.FC = () => {
         console.log("START DATE : ", startDate)
         console.log("END DATE : ", endDate)
         const dashboardData = await fetchDashboardDataUsingRange("userId", userId, startDate, endDate)
-        // dummy userId
-        // const dashboardData = await fetchDashboardDataUsingRange("userId", "user_2jQ7lufOqU1WFrEsi2wG3B7zF70", startDate, endDate);
-        // const targetId: any = await getTargetIdByUser(userId);
-        // const recentReplies = await fetchRecentReply(targetId);
 
-        // Destructuring dashboardData
         const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dashboardData
 
-        // Calculating open rate and response rate
-        // const totalUniqueEmails = data.reduce((sum, item) => sum + (item.total_emails ?? 0), 0);
         const totalUniqueEmails = total_unique_emails ? total_unique_emails : 0
-        // console.log("TOTAL REPLIES : ", total_replies)
-        // console.log("TOTAL EMAILS : ", totalUniqueEmails)
         const openRate: any = getOpenRate({ total_opens, total_emails })
         const responseRate: any = getResponseRate({ total_replies: total_replies, totalUniqueEmails })
 
-        // Updating state
         setTotalUniqueEmails(totalUniqueEmails)
         setTotalSentEmails(data.reduce((sum, item) => sum + (item.total_emails ?? 0), 0))
         setOpenRate(openRate)
@@ -264,12 +218,6 @@ const DashboardHome: React.FC = () => {
       icon: Reply,
       className: "text-muted-foreground",
     },
-    // {
-    //   title: "Monthly Target",
-    //   stat: "2500",
-    //   icon: Target,
-    //   className: "text-muted-foreground",
-    // },
   ]
 
   return (
@@ -283,14 +231,10 @@ const DashboardHome: React.FC = () => {
             </div>
             <CalendarForm />
           </div>
-          {/* {isLoading ? (
-            <Loading />
-          ) : ( */}
           <div>
             <div className="my-4 flex gap-x-4">
               {isLoading
-                ? // Render Skeletons when loading
-                Array.from({ length: cardConfigs.length }).map((_, idx) => (
+                ? Array.from({ length: cardConfigs.length }).map((_, idx) => (
                   <Card className="w-full overflow-x-auto" key={idx}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <Skeleton className="h-6 w-20" />
@@ -301,8 +245,7 @@ const DashboardHome: React.FC = () => {
                     </CardContent>
                   </Card>
                 ))
-                : // Render actual cards when data is available
-                cardConfigs.map((config) => (
+                : cardConfigs.map((config) => (
                   <Card className="w-full overflow-x-auto" key={config.title}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -339,7 +282,6 @@ const DashboardHome: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                   {isLoading ? (
-                    // Render Skeleton when loading
                     <div className="space-y-4">
                       {Array.from({ length: 5 }).map((_, idx) => (
                         <div key={idx} className="flex items-center space-x-4 sm:space-x-6">
@@ -349,7 +291,6 @@ const DashboardHome: React.FC = () => {
                             <Skeleton className="h-2 w-1/3 sm:h-3 sm:w-1/2" />
                           </div>
                         </div>
-
                       ))}
                     </div>
                   ) : (
@@ -359,10 +300,8 @@ const DashboardHome: React.FC = () => {
                   )}
                 </CardContent>
               </Card>
-
             </div>
           </div>
-          {/* )} */}
         </div>
       </main>
     </ContentLayout>

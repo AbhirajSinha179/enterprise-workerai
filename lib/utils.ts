@@ -28,7 +28,7 @@ export const getResponseRate = ({
   return ((total_replies / totalUniqueEmails) * 100).toFixed(2) // Convert to percentage and format with 2 decimal places
 }
 
-export async function getTargetIdByUser(userId: string): Promise<string | null> {
+export async function getTargetIdByUser(userId: string): Promise<{ id: string; name?: string }[] | null> {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/target/${userId}`
     const res = await fetch(url)
@@ -47,10 +47,9 @@ export async function getTargetIdByUser(userId: string): Promise<string | null> 
       return null
     }
 
-    const targetId = data.targets[0].id
-    return targetId
+    return data.targets // Return the full list of targets
   } catch (error: any) {
-    console.error("Error fetching target ID:", error.message)
+    console.error("Error fetching targets:", error.message)
     return null
   }
 }

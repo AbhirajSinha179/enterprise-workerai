@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/ui/select";
 import { toast } from "sonner";
 import { useAuth } from "@clerk/nextjs";
+import { useTargetContext } from "@/contexts/TargetIdContext";
 
 // Static list of countries
 const countryList = [
@@ -37,6 +38,7 @@ type Campaign = {
 
 export default function AddCampaignDialog({ onCampaignAdded }: AddCampaignProps) {
     const { userId } = useAuth();
+    const { setTargetId } = useTargetContext();
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [newCampaign, setNewCampaign] = useState<Campaign>({
         targetName: "",
@@ -59,7 +61,6 @@ export default function AddCampaignDialog({ onCampaignAdded }: AddCampaignProps)
 
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/target`, {
-
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -77,7 +78,11 @@ export default function AddCampaignDialog({ onCampaignAdded }: AddCampaignProps)
             const data: any = await response.json();
             console.log("Campaign Added Successfully: ", data);
 
+            // Notify parent component about the new campaign
             onCampaignAdded({ ...newCampaign, id: data.id });
+
+            // Save the target ID and target name in the context
+            setTargetId(data.id, newCampaign.targetName);
 
             toast.success("Campaign added successfully!");
             setDialogOpen(false);

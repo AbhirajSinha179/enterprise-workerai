@@ -1,16 +1,20 @@
 import { Layout } from "@/components/layout/layout"
 import { DateRangeProvider } from "@/contexts/DateRangeContext"
 import { MailProvider } from "@/contexts/MailContext"
-import { TargetIdProvider } from "@/contexts/TargetIdContext"
+// import { TargetIdProvider } from "@/contexts/TargetIdContext"
+import { TargetProvider } from "@/contexts/TargetIdContext"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <Layout>
       <DateRangeProvider>
-        <TargetIdProvider>
+        {/* <TargetIdProvider> */}
+        <TargetProvider>
 
           <MailProvider>{children}</MailProvider>
-        </TargetIdProvider>
+        </TargetProvider>
+
+        {/* </TargetIdProvider> */}
       </DateRangeProvider>
     </Layout>
   )
