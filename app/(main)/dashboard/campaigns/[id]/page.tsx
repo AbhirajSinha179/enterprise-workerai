@@ -96,7 +96,7 @@ export default function CampaignDetails() {
                     ]}
                 />
 
-                <OmitLeads
+                {/* <OmitLeads
                     title={"Omit Leads"}
                     description="Select the leads which you want to remove from this campaign"
                 />
@@ -110,17 +110,17 @@ export default function CampaignDetails() {
                 <InputWithCommas
                     cardTitle="Job Titles"
                     cardDescription="Enter the job titles which you want to target with this campaign"
-                />
+                /> */}
 
                 <InputWithCommas
                     cardTitle="Outbound Keywords"
                     cardDescription="Enter the Keywords "
                 />
 
-                <InputWithCommas
+                {/* <InputWithCommas
                     cardTitle="Blacklisted email domains"
                     cardDescription="Enter the emails which you don't want to send emails to"
-                />
+                /> */}
             </div>
         </ContentLayout>
     );

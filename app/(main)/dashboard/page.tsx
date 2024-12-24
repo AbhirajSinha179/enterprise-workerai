@@ -10,7 +10,7 @@ import { Overview } from "@/components/dashboard/overview"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useDateRange } from "@/contexts/DateRangeContext"
-import { getOpenRate, getResponseRate } from "@/lib/utils"
+import { getOpenRate, getResponseRate, getTargetIdByUser } from "@/lib/utils"
 import {
   dashboardDataSchema,
   DataGraph,
@@ -20,6 +20,7 @@ import {
 } from "@/types/interface"
 import { Skeleton } from "@/components/ui/skeleton"
 // import Loading from "./loading"
+import { useTargetId } from "@/contexts/TargetIdContext";
 
 
 const defaultDashboardData = {
@@ -124,7 +125,33 @@ async function fetchRecentReply(targetId: string) {
 // }
 
 const DashboardHome: React.FC = () => {
-  const { userId } = useAuth()
+  const { userId } = useAuth();
+
+  if (userId) {
+    const targetID = getTargetIdByUser(userId);
+    // console.log("user id ", userId)
+    // console.log("TARGET ID", targetID);
+  } else {
+    console.log("User ID is not available");
+  }
+
+
+  const { targetId, setTargetId } = useTargetId();
+
+  useEffect(() => {
+    async function fetchAndSetTargetId() {
+      if (!userId) return;
+      try {
+        const id = await getTargetIdByUser(userId);
+        if (id) setTargetId(id);
+      } catch (error) {
+        console.error("Error fetching target ID:", error);
+      }
+    }
+    fetchAndSetTargetId();
+  }, [userId, setTargetId]);
+
+
   // const TARGET_ID: string = "1c1108a8-9108-42e2-8177-4e655bbc87ed"
 
   // const [startDate, setStartDate] = useState<string>("2024-01-08T00%3A00%3A00.000Z");

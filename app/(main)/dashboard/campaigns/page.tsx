@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/ui/select";
 import { Edit } from "lucide-react";
+import AddCampaignDialog from "@/components/campaign/AddCampaignDialog";
 
 type Campaign = {
     id: number;
@@ -32,6 +33,8 @@ export default function Campaign() {
         { id: 4, name: "Test Campaign", leads: "0 / 45,123", status: "Private", country: "FR", isActive: false },
         { id: 5, name: "Sample Campaign", leads: "0 / 32,456", status: "Private", country: "DE", isActive: true },
     ]);
+
+
 
     const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
     const [editingCampaign, setEditingCampaign] = useState<Campaign | null>(null);
@@ -66,86 +69,15 @@ export default function Campaign() {
         setEditDialogOpen(false);
         setEditingCampaign(null);
     };
+    const handleCampaignAdded = (newCampaign: any) => {
+        setCampaigns((prevCampaigns) => [...prevCampaigns, newCampaign]);
+    };
 
     return (
         <ContentLayout title="Campaign">
             <div className="space-y-6">
 
-                <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <DialogTrigger asChild>
-                        <Button className="mb-4">Add Campaign</Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Add New Campaign</DialogTitle>
-                        </DialogHeader>
-                        <form
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                setCampaigns((prevCampaigns: any[]) => [
-                                    ...prevCampaigns,
-                                    {
-                                        id: prevCampaigns.length + 1,
-                                        ...newCampaign,
-                                    },
-                                ]);
-                                console.log("New Campaign Added:", newCampaign);
-                                setNewCampaign({
-                                    name: "",
-                                    leads: "",
-                                    status: "Private",
-                                    country: "US",
-                                    isActive: false,
-                                });
-                                setDialogOpen(false);
-                            }}
-                            className="space-y-4"
-                        >
-                            <Input
-                                required
-                                placeholder="Campaign Name"
-                                value={newCampaign.name}
-                                onChange={(e) => setNewCampaign({ ...newCampaign, name: e.target.value })}
-                            />
-                            <Input
-                                required
-                                placeholder="Leads (e.g., 0 / 100,000)"
-                                value={newCampaign.leads}
-                                onChange={(e) => setNewCampaign({ ...newCampaign, leads: e.target.value })}
-                            />
-                            <Select
-                                value={newCampaign.status}
-                                onValueChange={(value) => setNewCampaign({ ...newCampaign, status: value })}
-                            >
-                                <SelectTrigger>
-                                    <div>{newCampaign.status}</div>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="Private">Private</SelectItem>
-                                    <SelectItem value="Public">Public</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            <Input
-                                required
-                                placeholder="Country (e.g., US)"
-                                value={newCampaign.country}
-                                onChange={(e) => setNewCampaign({ ...newCampaign, country: e.target.value })}
-                            />
-                            <div className="flex items-center space-x-2">
-                                <Switch
-                                    checked={newCampaign.isActive}
-                                    onCheckedChange={(value) => setNewCampaign({ ...newCampaign, isActive: value })}
-                                />
-                                <Label>{newCampaign.isActive ? "Active" : "Inactive"}</Label>
-                            </div>
-                            <DialogFooter>
-                                <Button type="submit" className="bg-blue-500">
-                                    Add Campaign
-                                </Button>
-                            </DialogFooter>
-                        </form>
-                    </DialogContent>
-                </Dialog>
+                <AddCampaignDialog onCampaignAdded={handleCampaignAdded}></AddCampaignDialog>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {campaigns.map((campaign) => (
@@ -155,11 +87,12 @@ export default function Campaign() {
                                     <div className="flex justify-between">
                                         <Avatar className="flex">
                                             <AvatarImage
-                                                src={`https://flagcdn.com/w40/${campaign.country.toLowerCase()}.png`}
-                                                alt={`${campaign.country} flag`}
+                                                src={`https://flagcdn.com/w40/${(campaign.country || "unknown").toLowerCase()}.png`}
+                                                alt={`${campaign.country || "Unknown"} flag`}
                                             />
-                                            <AvatarFallback>{campaign.country}</AvatarFallback>
+                                            <AvatarFallback>{campaign.country || "N/A"}</AvatarFallback>
                                         </Avatar>
+
                                         <div className="flex flex-row items-center">
                                             <div className="text-lg font-semibold">{campaign.name}</div>
                                             <button
