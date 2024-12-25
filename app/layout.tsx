@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner"
 import AuthProvider from "@/providers/auth-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 import { GeistSans } from "geist/font/sans"
+import { TargetProvider } from "@/contexts/TargetIdContext"
 
 const myFont = localFont({
   src: [
@@ -32,8 +33,8 @@ const myFont = localFont({
       style: "normal",
     },
   ],
-}) 
-  
+})
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -41,7 +42,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html lang="en" className={GeistSans.className}>
         <body className="m-0 scroll-smooth p-0 antialiased relative overflow-x-hidden">
           <ThemeProvider attribute="class" defaultTheme="dark">
-            {children}
+            <TargetProvider>
+
+              {children}
+            </TargetProvider>
             <Toaster />
           </ThemeProvider>
         </body>

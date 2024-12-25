@@ -3,48 +3,54 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface Target {
     id: string;
-    name: string;
 }
 
 interface TargetContextType {
     targetId: string | null; // Currently selected target ID
-    targetName: string | null; // Currently selected target name
     targetList: Target[]; // List of all stored targets
-    setTargetId: (id: string, name?: string) => void; // Set the selected target ID and name
-    addTarget: (id: string, name: string) => void; // Add a new target to the list
+    setTargetId: (id: string) => void; // Set the selected target ID
+    addTarget: (id: string) => void; // Add a new target to the list
     removeTarget: (id: string) => void; // Remove a target from the list
+    resetTargets: () => void;
+    setTarget: (targetId: any) => void
 }
 
 const TargetContext = createContext<TargetContextType | undefined>(undefined);
 
 export const TargetProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [targetId, setTargetIdState] = useState<string | null>(null);
-    const [targetName, setTargetNameState] = useState<string | null>(null);
     const [targetList, setTargetList] = useState<Target[]>([]); // List of all targets
 
-    const setTargetId = (id: string, name?: string) => {
+    const setTargetId = (id: string) => {
         setTargetIdState(id);
-        if (name) {
-            setTargetNameState(name);
-        } else {
-            const target = targetList.find((target) => target.id === id);
-            setTargetNameState(target ? target.name : null);
-        }
-        console.log(`Target ID updated: ${id}, Name: ${name || "Unnamed"}`);
+        console.log(`Target ID updated: ${id}`);
+    };
+    const resetTargets = () => {
+        setTargetList([]);
+        setTargetIdState(null);
     };
 
-    const addTarget = (id: string, name: string) => {
+    const addTarget = (id: string) => {
         if (!targetList.some((target) => target.id === id)) {
-            setTargetList((prevList) => [...prevList, { id, name }]);
+            setTargetList((prevList) => [...prevList, { id }]);
+            console.log(`Target added: ID - ${id}`);
+        } else {
+            console.log(`Duplicate target detected: ID - ${id}`);
+            // console.log("TARGET ID NO :", targetList.length)
         }
-        console.log(`Target added: ID - ${id}, Name - ${name}`);
     };
+
+    const setTarget = (targetList: any) => {
+        console.log(targetList);
+        setTargetList(targetList);
+    }
+
+
 
     const removeTarget = (id: string) => {
         setTargetList((prevList) => prevList.filter((target) => target.id !== id));
         if (targetId === id) {
             setTargetIdState(null);
-            setTargetNameState(null);
         }
         console.log(`Target removed: ID - ${id}`);
     };
@@ -53,11 +59,12 @@ export const TargetProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         <TargetContext.Provider
             value={{
                 targetId,
-                targetName,
                 targetList,
                 setTargetId,
                 addTarget,
                 removeTarget,
+                resetTargets,
+                setTarget
             }}
         >
             {children}

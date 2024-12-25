@@ -8,6 +8,8 @@ import { ContentLayout } from "@/components/layout/content-layout";
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
 import { getTargetIdByUser } from "@/lib/utils";
 import { ScheduledEmail, scheduledEmailResponseSchema } from "@/types/interface";
+import { useTargetContext } from "@/contexts/TargetIdContext"
+
 import Loading from "./loading";
 
 async function fetchScheduledEmails(targetId: string, limit = 10, offset = 0): Promise<ScheduledEmail[]> {
@@ -33,11 +35,13 @@ export default function Emails() {
   const [offset, setOffset] = useState(0);
   const hasMore = useRef(true);
   const observer = useRef<IntersectionObserver | null>(null);
+  const { targetId } = useTargetContext();
+
 
   const loadMoreEmails = async () => {
     if (!userId || !hasMore.current) return;
     try {
-      const targetId = await getTargetIdByUser(userId);
+      // const targetId = await getTargetIdByUser(userId);
       if (!targetId) return;
 
       const fetchedEmails = await fetchScheduledEmails(targetId, 10, offset);

@@ -5,6 +5,8 @@ import { DataTable } from "@/components/leads/data-table"
 import { auth } from "@clerk/nextjs/server"
 import { z } from "zod"
 import { leadsSchema } from "../data/schema"
+import { useTargetContext } from "@/contexts/TargetIdContext";
+
 // import {
 //   Breadcrumb,
 //   BreadcrumbItem,
@@ -14,26 +16,30 @@ import { leadsSchema } from "../data/schema"
 //   BreadcrumbSeparator,
 // } from "@/components/ui/breadcrumb"
 
-const getTargetId = async (userId: string) => {
-  const url = `${process.env.BASE_API_URL}/user/target/${userId}`
-  const res = await fetch(url)
-  const data: any = await res.json()
-  if (!data.targets || data.targets.length === 0) {
-    return null
-  }
+// const getTargetId = async (userId: string) => {
+//   const { targetId } = useTargetContext();
+//   const url = `${process.env.BASE_API_URL}/user/target/${userId}`
+//   const res = await fetch(url)
+//   const data: any = await res.json()
 
-  const targetId = data.targets[0].id
-  return targetId
-}
+//   if (!data.targets || data.targets.length === 0) {
+//     return null
+//   }
+
+//   const targetId = data.targets[0].id
+//   return targetId
+// }
 
 async function getLeads() {
+  const { targetId } = useTargetContext();
+
   try {
     const { userId } = auth()
     if (!userId) {
       console.error("User ID is undefined")
       return []
     }
-    const targetId = await getTargetId(userId)
+    // const targetId = await getTargetId(userId)
     if (!targetId) {
       console.warn("No target ID found for user")
       return []

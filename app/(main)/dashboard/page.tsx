@@ -39,7 +39,7 @@ const defaultDashboardData = {
   ],
 }
 
-async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
+async function fetchDashboardDataUsingRange(type: string, id: any, startDate: string, endDate: string) {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`
     const res = await fetch(url, { next: { revalidate: 60 } })
@@ -98,30 +98,29 @@ async function fetchRecentReply(targetId: string) {
 const DashboardHome: React.FC = () => {
   const { userId } = useAuth();
 
-  const { setTargetId, addTarget, targetList } = useTargetContext();
+  const { setTarget, setTargetId, targetId } = useTargetContext();
 
   useEffect(() => {
-    async function fetchAndSaveTargets() {
+    const fetchAndSaveTargets = async () => {
       if (!userId) return;
 
       try {
-        const targets = await getTargetIdByUser(userId); // Fetch all targets
+        const targets = await getTargetIdByUser(userId);
+        console.log("Fetched targets:", targets);
         if (targets && targets.length > 0) {
-          // Set the first target as the selected target
-          const { id }: any = targets[0];
-          setTargetId(id);
-
-          // Add all targets to the targetList
-          targets.forEach((target) => addTarget(target.id, target.name || "Unnamed Target"));
+          setTargetId(targets[0].id);
+          setTarget(targets);
+        } else {
+          console.warn("No targets found for user:", userId);
         }
       } catch (error) {
-        console.error("Error fetching and saving targets:", error);
+        console.error("Error fetching targets:", error);
       }
-
-    }
+    };
 
     fetchAndSaveTargets();
-  }, [userId, setTargetId, addTarget]);
+  }, []);
+
 
   const { startDate, endDate, setStartDate, setEndDate } = useDateRange();
 
@@ -146,7 +145,7 @@ const DashboardHome: React.FC = () => {
       try {
         console.log("START DATE : ", startDate)
         console.log("END DATE : ", endDate)
-        const dashboardData = await fetchDashboardDataUsingRange("userId", userId, startDate, endDate)
+        const dashboardData = await fetchDashboardDataUsingRange("userId", targetId, startDate, endDate)
 
         const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dashboardData
 

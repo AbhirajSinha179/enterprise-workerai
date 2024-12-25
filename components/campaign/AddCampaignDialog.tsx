@@ -82,7 +82,7 @@ export default function AddCampaignDialog({ onCampaignAdded }: AddCampaignProps)
             onCampaignAdded({ ...newCampaign, id: data.id });
 
             // Save the target ID and target name in the context
-            setTargetId(data.id, newCampaign.targetName);
+            setTargetId(data.id);
 
             toast.success("Campaign added successfully!");
             setDialogOpen(false);

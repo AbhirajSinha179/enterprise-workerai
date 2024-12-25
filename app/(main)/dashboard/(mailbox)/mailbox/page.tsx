@@ -4,6 +4,8 @@ import { ContentLayout } from "@/components/layout/content-layout"
 import { DataTable } from "@/components/leads/data-table"
 import { columns } from "@/components/mailbox/columns"
 import { Button } from "@/components/ui/button"
+import { useTargetContext } from "@/contexts/TargetIdContext";
+
 
 // {
 //   id: 'b2305391-8bae-408c-8d7f-57f115a50c91',
@@ -29,6 +31,8 @@ const getMails = async (userId: string) => {
 }
 
 export default async function MailboxPage() {
+  const { targetId } = useTargetContext();
+
   const { userId } = auth()
   if (!userId) {
     return {
@@ -38,20 +42,27 @@ export default async function MailboxPage() {
       },
     }
   }
-  const mails = await getMails(userId)
+  if (targetId) {
+
+    const mails = await getMails(targetId)
+    if (!mails) {
+      return (
+        <ContentLayout title="Mailbox">
+          <div className="flex min-h-[70vh] items-center justify-center">
+            <div className="flex items-center justify-center font-bold">
+              Unable to fetch data. Please try again later.
+            </div>
+          </div>
+        </ContentLayout>
+      )
+    }
+  }
+  else
+    console.log("TARGET ID NOT FOUND ")
+
   // console.log("MAILS INFO :", mails)
 
-  if (!mails) {
-    return (
-      <ContentLayout title="Mailbox">
-        <div className="flex min-h-[70vh] items-center justify-center">
-          <div className="flex items-center justify-center font-bold">
-            Unable to fetch data. Please try again later.
-          </div>
-        </div>
-      </ContentLayout>
-    )
-  }
+
   return (
     <ContentLayout title="Mailbox">
       <div className="my-8 flex justify-between">
