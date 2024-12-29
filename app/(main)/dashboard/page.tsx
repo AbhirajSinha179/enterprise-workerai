@@ -98,7 +98,7 @@ async function fetchRecentReply(targetId: string) {
 const DashboardHome: React.FC = () => {
   const { userId } = useAuth();
 
-  const { setTarget, setTargetId, targetId } = useTargetContext();
+  const { setTarget, setTargetId } = useTargetContext();
 
   useEffect(() => {
     const fetchAndSaveTargets = async () => {
@@ -107,12 +107,14 @@ const DashboardHome: React.FC = () => {
       try {
         const targets = await getTargetIdByUser(userId);
         console.log("Fetched targets:", targets);
-        if (targets && targets.length > 0) {
-          setTargetId(targets[0].id);
+        if (targets && targets.length > 0 && targets[0]?.id) {
+          setTargetId(targets[0]!.id);
           setTarget(targets);
+          // console.log("Target ID:", targetId);
         } else {
-          console.warn("No targets found for user:", userId);
+          console.warn("No valid targets found.");
         }
+
       } catch (error) {
         console.error("Error fetching targets:", error);
       }
@@ -133,6 +135,8 @@ const DashboardHome: React.FC = () => {
   const [totalUniqueEmails, setTotalUniqueEmails] = useState<number>(0)
   const [totalSentEmails, setTotalSentEmails] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(true)
+  const { targetId } = useTargetContext();
+
 
   useEffect(() => {
     async function fetchData() {
@@ -143,8 +147,9 @@ const DashboardHome: React.FC = () => {
       }
       setIsLoading(true)
       try {
-        console.log("START DATE : ", startDate)
-        console.log("END DATE : ", endDate)
+        // console.log("START DATE : ", startDate)
+        // console.log("END DATE : ", endDate)
+        // console.log("TARGET ID : ", targetId)
         const dashboardData = await fetchDashboardDataUsingRange("userId", targetId, startDate, endDate)
 
         const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dashboardData
@@ -184,7 +189,7 @@ const DashboardHome: React.FC = () => {
     }
 
     fetchData()
-  }, [startDate, endDate])
+  }, [startDate, endDate, targetId])
 
   const cardConfigs = [
     {

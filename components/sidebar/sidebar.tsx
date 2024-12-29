@@ -51,7 +51,7 @@ export function Sidebar() {
             </Link>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-80 mx-4">
-            <DropdownMenuLabel>Select Target</DropdownMenuLabel>
+            <DropdownMenuLabel>Select Campaign</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {targetList.map((target) => (
               <Button
