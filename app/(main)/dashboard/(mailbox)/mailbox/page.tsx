@@ -1,4 +1,5 @@
-import { auth } from "@clerk/nextjs/server"
+"use client"
+// import { auth } from "@clerk/nextjs/server"
 import Link from "next/link"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { DataTable } from "@/components/leads/data-table"
@@ -32,16 +33,17 @@ const getMails = async (userId: string) => {
 
 export default async function MailboxPage() {
   const { targetId } = useTargetContext();
+  // console.log("TARGET ID FORM THE CONTEXT : ", targetId)
 
-  const { userId } = auth()
-  if (!userId) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    }
-  }
+  // const { userId } = auth()
+  // if (!userId) {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   }
+  // }
   if (targetId) {
 
     const mails = await getMails(targetId)

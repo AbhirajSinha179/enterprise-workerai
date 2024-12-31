@@ -42,10 +42,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html lang="en" className={GeistSans.className}>
         <body className="m-0 scroll-smooth p-0 antialiased relative overflow-x-hidden">
           <ThemeProvider attribute="class" defaultTheme="dark">
-            <TargetProvider>
+            {/* <TargetProvider> */}
 
-              {children}
-            </TargetProvider>
+            {children}
+            {/* </TargetProvider> */}
             <Toaster />
           </ThemeProvider>
         </body>
