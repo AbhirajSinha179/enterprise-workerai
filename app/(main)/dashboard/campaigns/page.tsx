@@ -1,53 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { CardChronark } from "@/components/custom-components/card-chronark";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/ui/select";
 import { Edit } from "lucide-react";
 import AddCampaignDialog from "@/components/campaign/AddCampaignDialog";
+import { z } from "zod";
+import { useAuth } from "@clerk/nextjs";
+import { getTargetIdByUser } from "@/lib/utils";
+import { Campaign, getTargetsApiResponseSchema } from "@/types/interface";
 
-type Campaign = {
-    id: number;
-    name: string;
-    leads: string;
-    status: "Private" | "Public";
-    country: string;
-    isActive: boolean;
-};
+
 
 export default function Campaign() {
     const router = useRouter();
-
-    const [campaigns, setCampaigns] = useState<Campaign[]>([
-        { id: 1, name: "New Campaign", leads: "0 / 99,668", status: "Private", country: "US", isActive: true },
-        { id: 2, name: "New Campaign", leads: "0 / 78,579", status: "Private", country: "IN", isActive: false },
-        { id: 3, name: "Untitled Campaign", leads: "0 / 4,187", status: "Private", country: "ID", isActive: true },
-        { id: 4, name: "Test Campaign", leads: "0 / 45,123", status: "Private", country: "FR", isActive: false },
-        { id: 5, name: "Sample Campaign", leads: "0 / 32,456", status: "Private", country: "DE", isActive: true },
-    ]);
-
-
-
-    const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
+    const { userId }: any = useAuth();
+    const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [editingCampaign, setEditingCampaign] = useState<Campaign | null>(null);
-    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-    const [newCampaign, setNewCampaign] = useState({
-        name: "",
-        leads: "",
-        status: "Private",
-        country: "US",
-        isActive: false,
-    });
 
-    const handleCardClick = (id: number) => {
+    useEffect(() => {
+        const fetchCampaigns = async () => {
+            try {
+                const response = await getTargetIdByUser(userId);
+                // console.log("RESPONSE : ", response);
+                const parsedData = getTargetsApiResponseSchema.parse({ message: "Targets fetched", targets: response });
+                // console.log("PARSED DATA : ", parsedData);
+                setCampaigns(parsedData.targets);
+            } catch (error) {
+                console.error("Error fetching or validating campaigns:", error);
+            }
+        };
+
+        fetchCampaigns();
+    }, []);
+
+    const handleCardClick = (id: string) => {
         router.push(`/dashboard/campaigns/${id}`);
     };
 
@@ -56,13 +52,13 @@ export default function Campaign() {
         setEditDialogOpen(true);
     };
 
-    const handleDelete = (id: number) => {
-        setCampaigns(campaigns.filter((campaign) => campaign.id !== id));
+    const handleDelete = (id: string) => {
+        setCampaigns((prevCampaigns) => prevCampaigns.filter((campaign) => campaign.id !== id));
     };
 
     const handleDialogSave = (updatedCampaign: Campaign) => {
-        setCampaigns(
-            campaigns.map((campaign) =>
+        setCampaigns((prevCampaigns) =>
+            prevCampaigns.map((campaign) =>
                 campaign.id === updatedCampaign.id ? updatedCampaign : campaign
             )
         );
@@ -76,25 +72,22 @@ export default function Campaign() {
     return (
         <ContentLayout title="Campaign">
             <div className="space-y-6">
-
-                <AddCampaignDialog onCampaignAdded={handleCampaignAdded}></AddCampaignDialog>
-
+                <AddCampaignDialog onCampaignAdded={handleCampaignAdded} />
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {campaigns.map((campaign) => (
                         <div key={campaign.id} className="relative cursor-pointer m-2">
                             <CardChronark isFooter={false}>
                                 <div className="p-4" onClick={() => handleCardClick(campaign.id)}>
                                     <div className="flex justify-between">
-                                        <Avatar className="flex">
+                                        <Avatar>
                                             <AvatarImage
-                                                src={`https://flagcdn.com/w40/${(campaign.country || "unknown").toLowerCase()}.png`}
-                                                alt={`${campaign.country || "Unknown"} flag`}
+                                                src={`https://flagcdn.com/w40/${campaign.region?.toLowerCase() || "unknown"}.png`}
+                                                alt={`${campaign.region || "Unknown"} flag`}
                                             />
-                                            <AvatarFallback>{campaign.country || "N/A"}</AvatarFallback>
+                                            <AvatarFallback>{campaign.region || "N/A"}</AvatarFallback>
                                         </Avatar>
-
                                         <div className="flex flex-row items-center">
-                                            <div className="text-lg font-semibold">{campaign.name}</div>
+                                            <div className="text-lg font-semibold">{campaign.targetName || "Untitled Campaign"}</div>
                                             <button
                                                 onClick={(e) => {
                                                     e.stopPropagation();
@@ -107,8 +100,10 @@ export default function Campaign() {
                                         </div>
                                     </div>
                                     <div className="mt-4 flex justify-between items-center">
-                                        <div className="text-sm text-secondary-foreground">{campaign.leads}</div>
-                                        <div className="text-sm">{campaign.status}</div>
+                                        <div className="text-sm text-secondary-foreground">
+                                            Industry: {campaign.industry}
+                                        </div>
+                                        <div className="text-sm">Size: {campaign.companySize}</div>
                                     </div>
                                     <div
                                         className="mt-12 flex justify-between items-center"
@@ -117,16 +112,20 @@ export default function Campaign() {
                                         <div className="flex items-center space-x-2">
                                             <Switch
                                                 id={`campaign-${campaign.id}`}
-                                                checked={campaign.isActive}
-                                                onCheckedChange={(value) => {
-                                                    setCampaigns((prev) =>
-                                                        prev.map((c) =>
-                                                            c.id === campaign.id ? { ...c, isActive: value } : c
+                                                checked={campaign.active}
+                                                onCheckedChange={(value) =>
+                                                    setCampaigns((prevCampaigns) =>
+                                                        prevCampaigns.map((c) =>
+                                                            c.id === campaign.id
+                                                                ? { ...c, active: value }
+                                                                : c
                                                         )
-                                                    );
-                                                }}
+                                                    )
+                                                }
                                             />
-                                            <Label htmlFor={`campaign-${campaign.id}`}>{campaign.isActive ? "Active" : "Inactive"}</Label>
+                                            <Label htmlFor={`campaign-${campaign.id}`}>
+                                                {campaign.active ? "Active" : "Inactive"}
+                                            </Label>
                                         </div>
                                     </div>
                                 </div>
@@ -143,24 +142,30 @@ export default function Campaign() {
                         </DialogHeader>
                         <div className="space-y-4">
                             <Input
-                                value={editingCampaign.name}
+                                value={editingCampaign.targetName || ""}
                                 onChange={(e) =>
-                                    setEditingCampaign({ ...editingCampaign, name: e.target.value })
+                                    setEditingCampaign({
+                                        ...editingCampaign,
+                                        targetName: e.target.value,
+                                    })
                                 }
                                 placeholder="Campaign Name"
                             />
                             <Select
-                                value={editingCampaign.status}
-                                onValueChange={(value: "Private" | "Public") =>
-                                    setEditingCampaign({ ...editingCampaign, status: value })
+                                value={editingCampaign.industry}
+                                onValueChange={(value) =>
+                                    setEditingCampaign({
+                                        ...editingCampaign,
+                                        industry: value,
+                                    })
                                 }
                             >
                                 <SelectTrigger>
-                                    <div>{editingCampaign.status}</div>
+                                    <div>{editingCampaign.industry}</div>
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="Private">Private</SelectItem>
-                                    <SelectItem value="Public">Public</SelectItem>
+                                    <SelectItem value="Tech">Tech</SelectItem>
+                                    <SelectItem value="Marketing">Marketing</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
