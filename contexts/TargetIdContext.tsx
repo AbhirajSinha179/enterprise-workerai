@@ -3,16 +3,17 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface Target {
     id: string;
+    name?: string; // Optional name for the target
 }
 
 interface TargetContextType {
     targetId: string | null; // Currently selected target ID
     targetList: Target[]; // List of all stored targets
     setTargetId: (id: string) => void; // Set the selected target ID
-    addTarget: (id: string) => void; // Add a new target to the list
+    addTarget: (id: string, name?: string) => void; // Add a new target to the list
     removeTarget: (id: string) => void; // Remove a target from the list
-    resetTargets: () => void;
-    setTarget: (targetId: any) => void
+    resetTargets: () => void; // Reset all targets
+    setTarget: (targetList: Target[]) => void; // Set the entire target list
 }
 
 const TargetContext = createContext<TargetContextType | undefined>(undefined);
@@ -25,27 +26,26 @@ export const TargetProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         setTargetIdState(id);
         console.log(`Target ID updated: ${id}`);
     };
+
     const resetTargets = () => {
         setTargetList([]);
         setTargetIdState(null);
     };
 
-    const addTarget = (id: string) => {
+    const addTarget = (id: string, name?: string) => {
         if (!targetList.some((target) => target.id === id)) {
-            setTargetList((prevList) => [...prevList, { id }]);
-            console.log(`Target added: ID - ${id}`);
+            const targetName = name || `Target ${id}`;
+            setTargetList((prevList) => [...prevList, { id, name: targetName }]);
+            console.log(`Target added: ID - ${id}, Name - ${targetName}`);
         } else {
             console.log(`Duplicate target detected: ID - ${id}`);
-            // console.log("TARGET ID NO :", targetList.length)
         }
     };
 
-    const setTarget = (targetList: any) => {
-        console.log(targetList);
-        setTargetList(targetList);
-    }
-
-
+    const setTarget = (newTargetList: Target[]) => {
+        console.log(newTargetList);
+        setTargetList(newTargetList);
+    };
 
     const removeTarget = (id: string) => {
         setTargetList((prevList) => prevList.filter((target) => target.id !== id));
@@ -64,7 +64,7 @@ export const TargetProvider: React.FC<{ children: ReactNode }> = ({ children }) 
                 addTarget,
                 removeTarget,
                 resetTargets,
-                setTarget
+                setTarget,
             }}
         >
             {children}

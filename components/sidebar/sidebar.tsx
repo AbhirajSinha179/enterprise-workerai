@@ -50,20 +50,24 @@ export function Sidebar() {
               </h1>
             </Link>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-80 mx-4">
+          <DropdownMenuContent className="w-96 mx-4  overflow-y-auto">
             <DropdownMenuLabel>Select Campaign</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {targetList.map((target) => (
               <Button
                 key={target.id}
                 variant={targetId === target.id ? "secondary" : "ghost"}
-                className="w-full text-left"
+                className="w-full text-left px-4 py-2  flex justify-between"
                 onClick={() => setTargetId(target.id)}
               >
-                {target.id}
+                <div>
+                  <span className="font-medium">{target.name || "Unnamed"}</span>
+                  <span className="block text-xs">{target.id.substring(0, 6)}...</span>
+                </div>
               </Button>
             ))}
           </DropdownMenuContent>
+
         </DropdownMenu>
         <Menu isOpen={!collapsed} />
       </div>

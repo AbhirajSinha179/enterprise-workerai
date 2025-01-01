@@ -107,10 +107,15 @@ const DashboardHome: React.FC = () => {
       try {
         const targets = await getTargetIdByUser(userId);
         console.log("Fetched targets:", targets);
-        if (targets && targets.length > 0 && targets[0]?.id) {
-          setTargetId(targets[0]!.id);
-          setTarget(targets);
-          // console.log("Target ID:", targetId);
+        if (targets && targets.length > 0) {
+          // Ensure each target has both id and name properties
+          const formattedTargets: any = targets.map((target: any) => ({
+            id: target.id,
+            name: target.name || `Target ${target.id}`, // Fallback name if name is missing
+          }));
+          setTargetId(formattedTargets[0].id); // Set the first target's ID as selected
+          setTarget(formattedTargets); // Update the targetList
+          console.log("Formatted Targets:", formattedTargets);
         } else {
           console.warn("No valid targets found.");
         }
@@ -149,8 +154,8 @@ const DashboardHome: React.FC = () => {
       try {
         // console.log("START DATE : ", startDate)
         // console.log("END DATE : ", endDate)
-        // console.log("TARGET ID : ", targetId)
-        const dashboardData = await fetchDashboardDataUsingRange("userId", targetId, startDate, endDate)
+        console.log("TARGET ID : ", targetId)
+        const dashboardData = await fetchDashboardDataUsingRange("targetId", targetId, startDate, endDate)
 
         const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dashboardData
 
