@@ -1,11 +1,15 @@
 "use client";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
+import { getTargetIdByUser } from "@/lib/utils"; // Replace with your actual path
+import { useAuth } from "@clerk/nextjs";
 
+// Interface for a target object
 interface Target {
     id: string;
     name?: string; // Optional name for the target
 }
 
+// Interface for the context type
 interface TargetContextType {
     targetId: string | null; // Currently selected target ID
     targetList: Target[]; // List of all stored targets
@@ -14,13 +18,17 @@ interface TargetContextType {
     removeTarget: (id: string) => void; // Remove a target from the list
     resetTargets: () => void; // Reset all targets
     setTarget: (targetList: Target[]) => void; // Set the entire target list
+    fetchTargets: () => Promise<void>; // Function to fetch targets
 }
 
 const TargetContext = createContext<TargetContextType | undefined>(undefined);
 
 export const TargetProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+    const { userId } = useAuth();
     const [targetId, setTargetIdState] = useState<string | null>(null);
-    const [targetList, setTargetList] = useState<Target[]>([]); // List of all targets
+    const [targetList, setTargetList] = useState<Target[]>([]);
+
+    console.log("TargetProvider initialized with userId:", userId);
 
     const setTargetId = (id: string) => {
         setTargetIdState(id);
@@ -28,6 +36,7 @@ export const TargetProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     };
 
     const resetTargets = () => {
+        console.log("Resetting all targets...");
         setTargetList([]);
         setTargetIdState(null);
     };
@@ -43,17 +52,53 @@ export const TargetProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     };
 
     const setTarget = (newTargetList: Target[]) => {
-        console.log(newTargetList);
+        console.log("Setting target list:", newTargetList);
         setTargetList(newTargetList);
     };
 
     const removeTarget = (id: string) => {
+        console.log(`Removing target with ID: ${id}`);
         setTargetList((prevList) => prevList.filter((target) => target.id !== id));
         if (targetId === id) {
             setTargetIdState(null);
+            console.log(`Target ID ${id} was selected. Resetting targetId.`);
         }
-        console.log(`Target removed: ID - ${id}`);
     };
+
+    const fetchTargets = useCallback(async () => {
+        if (!userId) {
+            console.error("No userId available. Cannot fetch targets.");
+            return;
+        }
+
+        console.log("Fetching targets for userId:", userId);
+        try {
+            const response = await getTargetIdByUser(userId); // Replace with your API or function call
+            console.log("Fetched targets:", response);
+
+            if (response && response.length > 0) {
+                const formattedTargets = response.map((target: any) => ({
+                    id: target.id,
+                    name: target.name || `Target ${target.id}`, // Ensure every target has a name
+                }));
+                console.log("Formatted targets:", formattedTargets);
+                setTarget(formattedTargets);
+                setTargetId(formattedTargets[0]?.id || null); // Set the first target as selected
+            } else {
+                console.warn("No valid targets found.");
+                resetTargets();
+            }
+        } catch (error) {
+            console.error("Error fetching targets:", error);
+        }
+    }, [userId]);
+
+    useEffect(() => {
+        console.log("useEffect triggered for userId:", userId);
+        if (userId) {
+            fetchTargets();
+        }
+    }, [userId, fetchTargets]);
 
     return (
         <TargetContext.Provider
@@ -65,6 +110,7 @@ export const TargetProvider: React.FC<{ children: ReactNode }> = ({ children }) 
                 removeTarget,
                 resetTargets,
                 setTarget,
+                fetchTargets,
             }}
         >
             {children}

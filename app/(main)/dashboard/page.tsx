@@ -98,35 +98,35 @@ async function fetchRecentReply(targetId: string) {
 const DashboardHome: React.FC = () => {
   const { userId } = useAuth();
 
-  const { setTarget, setTargetId } = useTargetContext();
+  // const { setTarget, setTargetId } = useTargetContext();
 
-  useEffect(() => {
-    const fetchAndSaveTargets = async () => {
-      if (!userId) return;
+  // useEffect(() => {
+  //   const fetchAndSaveTargets = async () => {
+  //     if (!userId) return;
 
-      try {
-        const targets = await getTargetIdByUser(userId);
-        console.log("Fetched targets:", targets);
-        if (targets && targets.length > 0) {
-          // Ensure each target has both id and name properties
-          const formattedTargets: any = targets.map((target: any) => ({
-            id: target.id,
-            name: target.name || `Target ${target.id}`, // Fallback name if name is missing
-          }));
-          setTargetId(formattedTargets[0].id); // Set the first target's ID as selected
-          setTarget(formattedTargets); // Update the targetList
-          console.log("Formatted Targets:", formattedTargets);
-        } else {
-          console.warn("No valid targets found.");
-        }
+  //     try {
+  //       const targets = await getTargetIdByUser(userId);
+  //       console.log("Fetched targets:", targets);
+  //       if (targets && targets.length > 0) {
+  //         // Ensure each target has both id and name properties
+  //         const formattedTargets: any = targets.map((target: any) => ({
+  //           id: target.id,
+  //           name: target.name || `Target ${target.id}`, // Fallback name if name is missing
+  //         }));
+  //         setTargetId(formattedTargets[0].id); // Set the first target's ID as selected
+  //         setTarget(formattedTargets); // Update the targetList
+  //         console.log("Formatted Targets:", formattedTargets);
+  //       } else {
+  //         console.warn("No valid targets found.");
+  //       }
 
-      } catch (error) {
-        console.error("Error fetching targets:", error);
-      }
-    };
+  //     } catch (error) {
+  //       console.error("Error fetching targets:", error);
+  //     }
+  //   };
 
-    fetchAndSaveTargets();
-  }, []);
+  //   fetchAndSaveTargets();
+  // }, []);
 
 
   const { startDate, endDate, setStartDate, setEndDate } = useDateRange();
