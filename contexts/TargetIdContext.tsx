@@ -79,7 +79,7 @@ export const TargetProvider: React.FC<{ children: ReactNode }> = ({ children }) 
             if (response && response.length > 0) {
                 const formattedTargets = response.map((target: any) => ({
                     id: target.id,
-                    name: target.name || `Target ${target.id}`, // Ensure every target has a name
+                    name: target.targetName || `Unknown`, // Ensure every target has a name
                 }));
                 console.log("Formatted targets:", formattedTargets);
                 setTarget(formattedTargets);

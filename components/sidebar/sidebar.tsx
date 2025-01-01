@@ -57,14 +57,14 @@ export function Sidebar() {
             WorkerAI
           </h1>
         </Link>
-        <div className="my-4">
+        <div className={cn("my-4 mx-auto", collapsed && "hidden")}>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                className="w-[250px] justify-between "
+                className="w-[150px] justify-between "
               >
                 <div className="overflow-hidden">
                   {targetId
@@ -75,7 +75,7 @@ export function Sidebar() {
                 <ChevronsUpDown className="opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[300px] p-0 my-2">
+            <PopoverContent className="w-[180px] p-0 my-2">
               <Command>
                 <CommandInput placeholder="Search Campaign..." />
                 <CommandList>
@@ -89,9 +89,9 @@ export function Sidebar() {
                           setOpen(false);
                         }}
                       >
-                        <div>
+                        <div className=" justify-self-center">
                           <span className="font-medium">{target.name || "Unnamed"}</span>
-                          <span className="block text-xs">{target.id.substring(0, 6)}...</span>
+                          {/* <span className="block text-xs">{target.id.substring()}...</span> */}
                         </div>
                         <Check
                           className={cn(
