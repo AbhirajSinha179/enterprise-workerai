@@ -40,6 +40,7 @@ export default function AddCampaignDialog({ onCampaignAdded }: AddCampaignProps)
     const { userId } = useAuth();
     const { setTargetId } = useTargetContext();
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [newCampaign, setNewCampaign] = useState<Campaign>({
         targetName: "",
         industry: "",
@@ -59,6 +60,7 @@ export default function AddCampaignDialog({ onCampaignAdded }: AddCampaignProps)
             return;
         }
 
+        setIsLoading(true);
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/target`, {
                 method: "POST",
@@ -100,6 +102,8 @@ export default function AddCampaignDialog({ onCampaignAdded }: AddCampaignProps)
         } catch (error) {
             console.error("Error in API call: ", error);
             toast.error("An error occurred while adding the campaign.");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -194,8 +198,12 @@ export default function AddCampaignDialog({ onCampaignAdded }: AddCampaignProps)
                         }
                     />
                     <DialogFooter>
-                        <Button type="submit" className="bg-blue-500">
-                            Add Campaign
+                        <Button
+                            type="submit"
+                            className="bg-blue-500"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "Adding..." : "Add Campaign"}
                         </Button>
                     </DialogFooter>
                 </form>
