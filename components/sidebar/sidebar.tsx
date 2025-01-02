@@ -64,7 +64,7 @@ export function Sidebar() {
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                className="w-[150px] justify-between "
+                className="w-[250px] justify-between "
               >
                 <div className="overflow-hidden">
                   {targetId
@@ -75,7 +75,7 @@ export function Sidebar() {
                 <ChevronsUpDown className="opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[180px] p-0 my-2">
+            <PopoverContent className="w-[250px] p-0 my-2">
               <Command>
                 <CommandInput placeholder="Search Campaign..." />
                 <CommandList>
