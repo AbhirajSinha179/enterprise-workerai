@@ -6,6 +6,7 @@ import { DataTable } from "@/components/leads/data-table"
 import { columns } from "@/components/mailbox/columns"
 import { Button } from "@/components/ui/button"
 import { useTargetContext } from "@/contexts/TargetIdContext";
+import { useEffect, useState } from "react"
 
 
 // {
@@ -19,10 +20,8 @@ import { useTargetContext } from "@/contexts/TargetIdContext";
 //   dailyCapacity: 25
 // }
 
-const getMails = async (userId: string) => {
-  const res = await fetch(`${process.env.BASE_API_URL}/user/email-address/${userId}`, {
-    next: { revalidate: 30 },
-  })
+const getMails = async (id: string, type:"u"|"t") => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/email-address/${id}?t=${type}`)
   if (!res.ok) {
     return null
   }
@@ -44,10 +43,23 @@ export default async function MailboxPage() {
   //     },
   //   }
   // }
-  if (targetId) {
+  const [mailsDisplay,setMailsDisplay]= useState<any[]>([])
 
-    const mails = await getMails(targetId)
-    if (!mails) {
+  useEffect(() => {
+    if (!targetId) {
+      console.warn("No target ID available.");
+      return;
+    }
+    const fetchMails = async () => {
+      const fetchedMails = await getMails(targetId, "t");
+      setMailsDisplay(fetchedMails)
+    };
+    fetchMails();
+  }, [targetId])
+  
+  
+  if (targetId) {
+    if (!mailsDisplay) {
       return (
         <ContentLayout title="Mailbox">
           <div className="flex min-h-[70vh] items-center justify-center">
@@ -76,7 +88,7 @@ export default async function MailboxPage() {
         </Link>
       </div>
       {/* @ts-ignore */}
-      <DataTable data={mails} columns={columns} isActionButton={false} />
+      <DataTable data={mailsDisplay} columns={columns} isActionButton={false} />
     </ContentLayout>
   )
 }

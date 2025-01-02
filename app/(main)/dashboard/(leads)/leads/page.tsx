@@ -15,7 +15,7 @@ async function getLeads(targetId: string): Promise<any[]> {
       return [];
     }
 
-    const response = await fetch(`${process.env.BASE_API_URL}/leads?targetId=${targetId}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/leads?targetId=${targetId}`);
     if (!response.ok) {
       console.error(`Failed to fetch leads: ${response.status} ${response.statusText}`);
       return [];
