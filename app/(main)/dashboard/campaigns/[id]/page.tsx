@@ -3,11 +3,11 @@
 import { ContentLayout } from "@/components/layout/content-layout";
 import CSVUpload from "@/components/outbound/csvUploader";
 import InputWithCommas from "@/components/outbound/input-with-commas";
-import MultiSelectCard from "@/components/outbound/multiSelectChip";
-import OmitLeads from "@/components/outbound/multioptionomitlead";
+// import MultiSelectCard from "@/components/outbound/multiSelectChip";
+// import OmitLeads from "@/components/outbound/multioptionomitlead";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 
 type Campaign = {
     id: number;
@@ -18,41 +18,42 @@ type Campaign = {
     isActive: boolean;
 };
 
-const campaigns: Campaign[] = [
-    { id: 1, name: "New Campaign", leads: "0 / 99,668", status: "Private", country: "US", isActive: true },
-    { id: 2, name: "New Campaign", leads: "0 / 78,579", status: "Private", country: "IN", isActive: false },
-    { id: 3, name: "Untitled Campaign", leads: "0 / 4,187", status: "Private", country: "ID", isActive: true },
-    { id: 4, name: "Test Campaign", leads: "0 / 45,123", status: "Private", country: "FR", isActive: false },
-    { id: 5, name: "Sample Campaign", leads: "0 / 32,456", status: "Private", country: "DE", isActive: true },
-];
+// const campaigns: Campaign[] = [
+//     { id: 1, name: "New Campaign", leads: "0 / 99,668", status: "Private", country: "US", isActive: true },
+//     { id: 2, name: "New Campaign", leads: "0 / 78,579", status: "Private", country: "IN", isActive: false },
+//     { id: 3, name: "Untitled Campaign", leads: "0 / 4,187", status: "Private", country: "ID", isActive: true },
+//     { id: 4, name: "Test Campaign", leads: "0 / 45,123", status: "Private", country: "FR", isActive: false },
+//     { id: 5, name: "Sample Campaign", leads: "0 / 32,456", status: "Private", country: "DE", isActive: true },
+// ];
 
 const locations = [{ name: "India" }, { name: "USA" }, { name: "Germany" }];
 
 export default function CampaignDetails() {
     const params = useParams();
     const router = useRouter();
-    const id = Number(params?.id);
-    const [campaign, setCampaign] = useState<Campaign | null>(null);
+    const targetId = String(params?.id);
+    // console.log("RECIVDED TARGET ID : ", targetId)
+    // const [campaign, setCampaign] = useState<Campaign | null>(null);
 
-    useEffect(() => {
-        const selectedCampaign = campaigns.find((campaign) => campaign.id === id);
-        setCampaign(selectedCampaign || null);
-    }, [id]);
+    // useEffect(() => {
+    //     const selectedCampaign = campaigns.find((campaign) => campaign.id === id);
+    //     setCampaign(selectedCampaign || null);
+    // }, [id]);
 
-    if (!campaign) {
-        return (
-            <div className="p-6">
-                <h1 className="text-2xl font-bold">Campaign Not Found</h1>
-                <Button
-                    onClick={() => router.back()}
-                    variant={"secondary"}
-                    className="m-4"
-                >
-                    Back
-                </Button>
-            </div>
-        );
-    }
+    // if (!campaign) {
+    //     return (
+    //         <div className="p-6">
+    //             <h1 className="text-2xl font-bold">Campaign Not Found</h1>
+    //             <Button
+    //                 onClick={() => router.back()}
+    //                 variant={"secondary"}
+    //                 className="m-4"
+    //             >
+    //                 Back
+    //             </Button>
+    //         </div>
+    //     );
+    // }
 
     return (
         <ContentLayout title="Campaign Details">
@@ -79,6 +80,7 @@ export default function CampaignDetails() {
                     title="Upload Custom Leads (CSV)"
                     description="Upload your CSV file to seamlessly import and process your data"
                     endpoint={`${process.env.NEXT_PUBLIC_API_BASE_URL}/leads`}
+                    targetId={targetId}
                     verification
                     requiredColumns={[
                         { name: "email", required: true },

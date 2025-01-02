@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/dialog"
 import { useAuth } from "@clerk/nextjs"
 import { getTargetIdByUser } from "../dashboard/recent-sales"
-import { useTargetContext } from "@/contexts/TargetIdContext"
 
 const dropZoneConfig = {
   maxFiles: 2,
@@ -39,6 +38,7 @@ interface CSVUploader {
   dialogTriggerText?: string
   endpoint: string
   verification?: boolean
+  targetId: string
 }
 
 export default function CSVUpload({
@@ -49,6 +49,7 @@ export default function CSVUpload({
   dialog,
   dialogTriggerText,
   verification,
+  targetId,
 }: CSVUploader) {
   const [file, setFile] = useState<File | null>(null)
   const [csvData, setCsvData] = useState<string[][]>([])
@@ -61,7 +62,7 @@ export default function CSVUpload({
   const [force, setForce] = useState(false)
   const [allColumnsMapped, setAllColumnsMapped] = useState(false)
   const { userId } = useAuth()
-  const {targetId} = useTargetContext()
+  // const {targetId} = useTargetContext()
   const handleFileChange = (files: File[] | null) => {
     if (files && files.length > 0) {
       const selectedFile = files[0]
@@ -180,7 +181,7 @@ export default function CSVUpload({
     const payload = {
       data: mappedData,
       force: force,
-      targetId: targetId, 
+      targetId: targetId,
     }
 
     console.log(payload)
