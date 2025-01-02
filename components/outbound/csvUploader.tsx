@@ -38,7 +38,7 @@ interface CSVUploader {
   dialogTriggerText?: string
   endpoint: string
   verification?: boolean
-  targetId: string
+  targetId?: string
 }
 
 export default function CSVUpload({

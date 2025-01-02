@@ -27,7 +27,7 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
   let sanitizedBody: any;
   if (Array.isArray(body)) {
     const filteredBody = reject(body, (item: string) => item.includes("<a>")); // Remove items with unwanted tags
-    sanitizedBody = filteredBody.map((item: string) => stripHtmlTags(item)); // Sanitize remaining items
+    sanitizedBody = filteredBody.map((item: any) => stripHtmlTags(item)); // Sanitize remaining items
   } else if (typeof body === "string") {
     sanitizedBody = stripHtmlTags(body); // Sanitize directly if it's a string
   } else {
