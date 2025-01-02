@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { TimelineContent, TimelineDot, TimelineHeading, TimelineItem, TimelineLine } from "@/components/ui/timeline"
 import { Email, Reply } from "@/types/interface"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
+import { reject } from "lodash";
 
 interface MailTimelineItemProps {
   mail: Email | Reply
@@ -12,30 +13,47 @@ interface MailTimelineItemProps {
   showSubject: boolean
 }
 
+
+// Function to strip HTML tags
+function stripHtmlTags(input: string): string {
+  const doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.body.textContent || "";
+}
+
 const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isLast, showSubject, from }) => {
-  const { body } = mail
-  let subject: string | null = ""
-  if ("subject" in mail) {
-    subject = mail.subject as string
-  }
+  const { body }: any = mail;
 
-
-  let recipient: string = ""
-  let date: string | null = ""
-  if ("recipient" in mail && "sendAt" in mail) {
-    recipient = mail.recipient
-    date = mail.sendAt
-  } else if ("fromEmail" in mail) {
-    // For Reply type
-    recipient = mail.fromEmail as string;
-    date = mail.date
+  // Check if body is an array
+  let sanitizedBody: any;
+  if (Array.isArray(body)) {
+    const filteredBody = reject(body, (item: string) => item.includes("<a>")); // Remove items with unwanted tags
+    sanitizedBody = filteredBody.map((item: string) => stripHtmlTags(item)); // Sanitize remaining items
+  } else if (typeof body === "string") {
+    sanitizedBody = stripHtmlTags(body); // Sanitize directly if it's a string
   } else {
-    // Fallback
-    recipient = mail.from
-    date = mail.date
+    sanitizedBody = body; // Fallback for unexpected types
   }
 
-  // console.log("RECIPIENT:", recipient)
+  console.log("BODY : ", body);
+  console.log("SANITIZED BODY : ", sanitizedBody);
+
+  let subject: string | null = "";
+  if ("subject" in mail) {
+    subject = mail.subject as string;
+  }
+
+  let recipient: string = "";
+  let date: string | null = "";
+  if ("recipient" in mail && "sendAt" in mail) {
+    recipient = mail.recipient;
+    date = mail.sendAt;
+  } else if ("fromEmail" in mail) {
+    recipient = mail.fromEmail as string;
+    date = mail.date;
+  } else {
+    recipient = mail.from;
+    date = mail.date;
+  }
 
   return (
     <TimelineItem status="done" className="px-4">
@@ -84,25 +102,26 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
             <AvatarFallback>
               {recipient && recipient[0]
                 ? (recipient.includes("@") || recipient.includes("+"))
-                  ? recipient[0].toUpperCase() // Use only the first character if special characters are present
+                  ? recipient[0].toUpperCase()
                   : recipient
                     .split(" ")
                     .map((chunk) => chunk[0])
                     .join("")
                     .toUpperCase()
-                : "?"} {/* Fallback character if recipient is undefined or empty */}
+                : "?"}
             </AvatarFallback>
           </Avatar>
         }
       />
 
-
       {showLine && !isLast && <TimelineLine />}
       <TimelineContent>
-        <div className="flex-1 whitespace-pre-wrap p-4 text-sm">{body}</div>
+        <div className="flex-1 whitespace-pre-wrap p-4 text-sm">
+          {Array.isArray(sanitizedBody) ? sanitizedBody.join("\n") : sanitizedBody}
+        </div>
       </TimelineContent>
     </TimelineItem>
-  )
-}
+  );
+};
 
-export default MailTimelineItem
+export default MailTimelineItem;
