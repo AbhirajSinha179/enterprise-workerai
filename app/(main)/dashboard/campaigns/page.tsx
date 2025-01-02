@@ -72,7 +72,9 @@ export default function Campaign() {
     return (
         <ContentLayout title="Campaign">
             <div className="space-y-6">
-                <AddCampaignDialog onCampaignAdded={handleCampaignAdded} />
+                <div className="flex  justify-end px-2">
+                    <AddCampaignDialog onCampaignAdded={handleCampaignAdded} />
+                </div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {campaigns.map((campaign) => (
                         <div key={campaign.id} className="relative cursor-pointer m-2">
