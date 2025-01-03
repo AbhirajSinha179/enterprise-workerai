@@ -69,6 +69,7 @@ export const repliesSchema = z.array(
     threadId: z.string(),
     emails: z.array(emailSchema),
     replies: z.array(replySchema),
+    senderEmail: z.string(),
   })
 )
 
@@ -465,3 +466,21 @@ export const instantReplyResponseSchema = z.object({
   emailId: z.string().uuid(),
   email: z.array(emailSchema),
 })
+
+//campaigns
+export const campaignSchema = z.object({
+  id: z.string(),
+  industry: z.string().optional(),
+  region: z.string().optional(),
+  companySize: z.string().optional(),
+  active: z.boolean(),
+  targetName: z.string().optional(),
+})
+
+export const getTargetsApiResponseSchema = z.object({
+  message: z.string(),
+  targets: z.array(campaignSchema),
+})
+
+// TypeScript types inferred from Zod schema
+export type Campaign = z.infer<typeof campaignSchema>

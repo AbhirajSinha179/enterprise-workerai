@@ -11,6 +11,7 @@ import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { CLIENT_ID } from "@/lib/constants"
 import { toast } from "sonner"
+import { useTargetContext } from "@/contexts/TargetIdContext"
 
 export const FormDataSchema = z.object({})
 type Inputs = z.infer<typeof FormDataSchema>
@@ -346,55 +347,59 @@ const SecondFormMicrosoft = ({ handleSmtpEnabledClick }: { handleSmtpEnabledClic
   </div>
 )
 
-const ThirdFormGoogle = ({ handleLoginClick }: { handleLoginClick: () => void }) => (
-  <div className="flex justify-center ">
-    <div className="w-1/2 rounded-lg bg-card  p-6 shadow-md">
-      <h1 className="mb-4 text-2xl font-bold">Connect Your Google Account</h1>
-      <p className="mb-6">Allow WorkerAI to access your Google workspace. You only need to do this once per domain.</p>
-      <ol className="mb-6 list-inside list-decimal space-y-4">
-        <li>
-          Go to your
-          <Link href="https://admin.google.com/" className="px-1 text-blue-600" target="_blank">
-            Google Workspace Admin Panel
-          </Link>
-          .
-        </li>
-        <li>
-          Click <span className="font-semibold">Add App</span> and then select{" "}
-          <span className="font-semibold">OAuth App Name or Client ID</span>.
-        </li>
-        <li>
-          Use the following Client-ID to search for WorkerAI:
-          <div className="my-2 flex overflow-auto text-wrap rounded-md bg-muted px-4 py-8">
-            <code className="relative whitespace-normal">
-              <Button
-                onClick={() => {
-                  navigator.clipboard.writeText(CLIENT_ID)
-                  toast("Copied Client ID to your clipboard")
-                }}
-                className="absolute right-0 top-0 -mt-6 hover:bg-background"
-                variant="secondary"
-              >
-                <CopyIcon className="size-4" />
-              </Button>
-              {CLIENT_ID}
-            </code>
-          </div>
-        </li>
-        <li>Select and approve WorkerAI to access your Google Workspace.</li>
-      </ol>
-      <div className="flex justify-center">
-        <button
-          type="button"
-          className="-foreground rounded bg-primary px-4 py-2 font-bold duration-300 
+const ThirdFormGoogle = ({ handleLoginClick }: { handleLoginClick: () => void }) => {
+  const { targetId } = useTargetContext()
+
+  return (
+    <div className="flex justify-center ">
+      <div className="w-1/2 rounded-lg bg-card  p-6 shadow-md">
+        <h1 className="mb-4 text-2xl font-bold">Connect Your Google Account</h1>
+        <p className="mb-6">
+          Allow WorkerAI to access your Google workspace. You only need to do this once per domain.
+        </p>
+        <ol className="mb-6 list-inside list-decimal space-y-4">
+          <li>
+            Go to your
+            <Link href="https://admin.google.com/" className="px-1 text-blue-600" target="_blank">
+              Google Workspace Admin Panel
+            </Link>
+            .
+          </li>
+          <li>
+            Click <span className="font-semibold">Add App</span> and then select{" "}
+            <span className="font-semibold">OAuth App Name or Client ID</span>.
+          </li>
+          <li>
+            Use the following Client-ID to search for WorkerAI:
+            <div className="my-2 flex overflow-auto text-wrap rounded-md bg-muted px-4 py-8">
+              <code className="relative whitespace-normal">
+                <Button
+                  onClick={() => {
+                    navigator.clipboard.writeText(CLIENT_ID)
+                    toast("Copied Client ID to your clipboard")
+                  }}
+                  className="absolute right-0 top-0 -mt-6 hover:bg-background"
+                  variant="secondary"
+                >
+                  <CopyIcon className="size-4" />
+                </Button>
+                {CLIENT_ID}
+              </code>
+            </div>
+          </li>
+          <li>Select and approve WorkerAI to access your Google Workspace.</li>
+        </ol>
+        <div className="flex justify-center">
+          <button
+            type="button"
+            className="-foreground rounded bg-primary px-4 py-2 font-bold duration-300 
                                                 hover:-translate-y-1 hover:scale-110"
-          onClick={handleLoginClick}
-        >
-          <Link href={'https://api.workerai.co/auth'}>
-            Login
-          </Link>
-        </button>
+            onClick={handleLoginClick}
+          >
+            <Link href={"https://api.workerai.co/auth?t=" + targetId}>Login</Link>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}

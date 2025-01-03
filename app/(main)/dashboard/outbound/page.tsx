@@ -4,10 +4,14 @@ import CSVUpload from "@/components/outbound/csvUploader"
 import InputWithCommas from "@/components/outbound/input-with-commas"
 import OmitLeads from "@/components/outbound/multioptionomitlead"
 import MultiSelectCard from "@/components/outbound/multiSelectChip"
+import { useTargetContext } from "@/contexts/TargetIdContext"
+
 
 const locations = [{ name: "India" }, { name: "USA" }, { name: "Germany" }]
 
+
 export default function OutboundSetting() {
+  const { targetId }: any = useTargetContext()
   return (
     <ContentLayout title="Outbound Settings">
       <div className="grid gap-6">
@@ -16,6 +20,7 @@ export default function OutboundSetting() {
           title="Upload Custom Leads (CSV)"
           description="Upload your CSV file to seamlessly import and process your data"
           endpoint={`${process.env.NEXT_PUBLIC_API_BASE_URL}/leads`}
+          targetId={targetId}
           verification
           requiredColumns={[
             { name: "email", required: true },

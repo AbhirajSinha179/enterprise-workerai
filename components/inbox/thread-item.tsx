@@ -1,41 +1,99 @@
-import { format } from "date-fns"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { TimelineContent, TimelineDot, TimelineHeading, TimelineItem, TimelineLine } from "@/components/ui/timeline"
-import { Email, Reply } from "@/types/interface"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  TimelineContent,
+  TimelineDot,
+  TimelineHeading,
+  TimelineItem,
+  TimelineLine,
+} from "@/components/ui/timeline";
+import { Email, Reply } from "@/types/interface";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { reject } from "lodash";
 
 interface MailTimelineItemProps {
-  mail: Email | Reply
-  from: string
-  showLine: boolean
-  isLast: boolean
-  showSubject: boolean
+  mail: Email | Reply;
+  from: string;
+  showLine: boolean;
+  isLast: boolean;
+  showSubject: boolean;
 }
 
-const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isLast, showSubject, from }) => {
-  const { body } = mail
-  let subject: string | null = ""
-  if ("subject" in mail) {
-    subject = mail.subject as string
+// Function to strip HTML tags
+function stripHtmlTags(input: string): string {
+  const doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.body.textContent || "";
+}
+
+
+function formatDateRaw(dateString: string): string {
+  if (!dateString) return "Invalid Date";
+  let normalizedDate = dateString.trim();
+  if (!normalizedDate.includes("T")) {
+    normalizedDate = normalizedDate.replace(" ", "T");
+  }
+  if (normalizedDate.endsWith("+")) {
+    normalizedDate = normalizedDate.slice(0, -1) + "+00:00";
   }
 
+  if (!normalizedDate.endsWith("Z") && !/[\+\-]\d{2}:\d{2}$/.test(normalizedDate)) {
+    normalizedDate += "+00:00";
+  }
 
-  let recipient: string = ""
-  let date: string | null = ""
-  if ("recipient" in mail && "sendAt" in mail) {
-    recipient = mail.recipient
-    date = mail.sendAt
-  } else if ("fromEmail" in mail) {
-    // For Reply type
-    recipient = mail.fromEmail as string;
-    date = mail.date
+  try {
+    const date = new Date(normalizedDate);
+
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid Date");
+    }
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const day = date.getUTCDate();
+    const month = monthNames[date.getUTCMonth()];
+    const hours = date.getUTCHours().toString().padStart(2, "0");
+    const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+    return `${day} ${month} ${hours}:${minutes}`;
+  } catch (error) {
+    console.error("Error parsing date:", error);
+    return "Invalid Date";
+  }
+}
+
+
+const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
+  mail,
+  showLine,
+  isLast,
+  showSubject,
+  from,
+}) => {
+  const { body }: any = mail;
+
+  let sanitizedBody: any;
+  if (Array.isArray(body)) {
+    const filteredBody = reject(body, (item: string) => item.includes("<a>")); // Remove items with unwanted tags
+    sanitizedBody = filteredBody.map((item: any) => stripHtmlTags(item)); // Sanitize remaining items
+  } else if (typeof body === "string") {
+    sanitizedBody = stripHtmlTags(body); // Sanitize directly if it's a string
   } else {
-    // Fallback
-    recipient = mail.from
-    date = mail.date
+    sanitizedBody = body; // Fallback for unexpected types
   }
 
-  // console.log("RECIPIENT:", recipient)
+  let subject: string | null = mail.subject || null;
+  let recipient: string = "";
+  let sender: string = "";
+  let date: string | null = null;
+
+  if ("recipient" in mail && "sendAt" in mail) {
+    recipient = mail.recipient;
+    date = mail.sendAt;
+    sender = from;
+  } else if ("from" in mail) {
+    sender = mail.from as string;
+    recipient = from;
+    date = mail.date || null;
+  }
+
+  // console.log("DATE : ", date)
+  const formattedDate = date ? formatDateRaw(date) : "Invalid Date";
 
   return (
     <TimelineItem status="done" className="px-4">
@@ -45,9 +103,9 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
             <div className="grid gap-1">
               <div className="text-xl font-bold text-foreground">
                 <span className="font-bold">
-                  {"fromEmail" in mail ? "From : " : "To : "}
+                  {"from" in mail ? "From : " : "To : "}
                 </span>
-                {recipient}
+                {"from" in mail ? sender : recipient}
               </div>
 
               {showSubject && <div className="text-xl text-foreground">{subject}</div>}
@@ -64,12 +122,18 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
               <TooltipContent side="bottom" sideOffset={4} align="end" className="mx-2">
                 <div className="gap-y-1">
                   <div>
-                    <span className="font-medium">To:</span> {recipient}
+                    <span className="font-bold">To : </span>
+                    {recipient}
                   </div>
                   <div>
-                    <span className="font-medium">From:</span> {from}
+                    <span className="font-bold">From : </span>
+                    {sender}
                   </div>
-                  <div>{date && <div className="font-medium"> Date : {format(new Date(date), "PPpp")}</div>}</div>
+                  <div>
+                    <div className="font-medium">
+                      Date: {formattedDate}
+                    </div>
+                  </div>
                 </div>
               </TooltipContent>
             </Tooltip>
@@ -84,25 +148,26 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
             <AvatarFallback>
               {recipient && recipient[0]
                 ? (recipient.includes("@") || recipient.includes("+"))
-                  ? recipient[0].toUpperCase() // Use only the first character if special characters are present
+                  ? recipient[0].toUpperCase()
                   : recipient
                     .split(" ")
                     .map((chunk) => chunk[0])
                     .join("")
                     .toUpperCase()
-                : "?"} {/* Fallback character if recipient is undefined or empty */}
+                : "?"}
             </AvatarFallback>
           </Avatar>
         }
       />
 
-
       {showLine && !isLast && <TimelineLine />}
       <TimelineContent>
-        <div className="flex-1 whitespace-pre-wrap p-4 text-sm">{body}</div>
+        <div className="flex-1 whitespace-pre-wrap p-4 text-sm">
+          {Array.isArray(sanitizedBody) ? sanitizedBody.join("\n") : sanitizedBody}
+        </div>
       </TimelineContent>
     </TimelineItem>
-  )
-}
+  );
+};
 
-export default MailTimelineItem
+export default MailTimelineItem;

@@ -6,8 +6,9 @@ import { toast } from "sonner"
 import { Inbox } from "@/components/inbox/mail"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll"
-import { getTargetIdByUser } from "@/lib/utils"
 import { repliesSchema, threadsSchema } from "@/types/interface"
+import { useTargetContext } from "@/contexts/TargetIdContext";
+
 
 const getData = async (targetId: string, limit = 50, offset = 0) => {
   try {
@@ -51,12 +52,14 @@ export default function InboxPage() {
   const [offsetReplies, setOffsetReplies] = useState(0)
   const hasMore = useRef(true)
   const hasMoreReplies = useRef(true)
+  const { targetId } = useTargetContext();
+
+
 
   const loadMoreEmails = useCallback(async () => {
     if (!userId || !hasMore.current || loading) return;
     setLoading(true);
     try {
-      const targetId = await getTargetIdByUser(userId);
       if (!targetId) return;
       const fetchedEmails = await getData(targetId, 50, offset);
       if (fetchedEmails.length === 0) hasMore.current = false;
@@ -80,7 +83,6 @@ export default function InboxPage() {
     if (!userId || !hasMoreReplies.current || loading) return
     setLoading(true)
     try {
-      const targetId = await getTargetIdByUser(userId)
       if (!targetId) return
       const fetchedReplies = await getRepliesData(targetId, 10, offsetReplies)
       if (fetchedReplies.length === 0) hasMoreReplies.current = false
