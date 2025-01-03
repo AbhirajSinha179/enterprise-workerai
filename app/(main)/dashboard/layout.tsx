@@ -7,13 +7,13 @@ import { TargetProvider } from "@/contexts/TargetIdContext";
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <TargetProvider>
-      <Layout>
-        <DateRangeProvider>
-          <MailProvider>
+      <DateRangeProvider>
+        <MailProvider>
+          <Layout>
             {children}
-          </MailProvider>
-        </DateRangeProvider>
-      </Layout>
+          </Layout>
+        </MailProvider>
+      </DateRangeProvider>
     </TargetProvider>
   );
 }
