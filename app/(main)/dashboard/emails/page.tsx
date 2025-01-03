@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import EmptyState from "@/components/global/empty-state";
 import { ContentLayout } from "@/components/layout/content-layout";
 import { ScheduledEmailList } from "@/components/scheduler/scheduled-emails";
-import { getTargetIdByUser } from "@/lib/utils";
 import { ScheduledEmail, scheduledEmailResponseSchema } from "@/types/interface";
 import { useTargetContext } from "@/contexts/TargetIdContext"
 
@@ -41,7 +40,6 @@ export default function Emails() {
   const loadMoreEmails = async () => {
     if (!userId || !hasMore.current) return;
     try {
-      // const targetId = await getTargetIdByUser(userId);
       if (!targetId) return;
 
       const fetchedEmails = await fetchScheduledEmails(targetId, 10, offset);

@@ -15,7 +15,7 @@ import { Edit } from "lucide-react";
 import AddCampaignDialog from "@/components/campaign/AddCampaignDialog";
 import { z } from "zod";
 import { useAuth } from "@clerk/nextjs";
-import { getTargetIdByUser } from "@/lib/utils";
+import { getTargetsIdByUser } from "@/lib/utils";
 import { Campaign, getTargetsApiResponseSchema } from "@/types/interface";
 
 
@@ -30,7 +30,7 @@ export default function Campaign() {
     useEffect(() => {
         const fetchCampaigns = async () => {
             try {
-                const response = await getTargetIdByUser(userId);
+                const response = await getTargetsIdByUser(userId);
                 // console.log("RESPONSE : ", response);
                 const parsedData = getTargetsApiResponseSchema.parse({ message: "Targets fetched", targets: response });
                 // console.log("PARSED DATA : ", parsedData);

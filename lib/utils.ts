@@ -28,7 +28,7 @@ export const getResponseRate = ({
   return ((total_replies / totalUniqueEmails) * 100).toFixed(2) // Convert to percentage and format with 2 decimal places
 }
 
-export async function getTargetIdByUser(userId: string): Promise<{ id: string; name?: string }[] | null> {
+export async function getTargetsIdByUser(userId: string): Promise<{ id: string; name?: string }[] | null> {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/target/${userId}`
     const res = await fetch(url)

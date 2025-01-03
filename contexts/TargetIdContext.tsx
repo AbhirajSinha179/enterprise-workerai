@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
-import { getTargetIdByUser } from "@/lib/utils"; // Replace with your actual path
+import { getTargetsIdByUser } from "@/lib/utils"; // Replace with your actual path
 import { useAuth } from "@clerk/nextjs";
 
 // Interface for a target object
@@ -73,7 +73,7 @@ export const TargetProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
         console.log("Fetching targets for userId:", userId);
         try {
-            const response = await getTargetIdByUser(userId); // Replace with your API or function call
+            const response = await getTargetsIdByUser(userId); // Replace with your API or function call
             console.log("Fetched targets:", response);
 
             if (response && response.length > 0) {

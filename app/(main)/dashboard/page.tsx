@@ -10,7 +10,7 @@ import { Overview } from "@/components/dashboard/overview"
 import { ContentLayout } from "@/components/layout/content-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useDateRange } from "@/contexts/DateRangeContext"
-import { getOpenRate, getResponseRate, getTargetIdByUser } from "@/lib/utils"
+import { getOpenRate, getResponseRate } from "@/lib/utils"
 import {
   dashboardDataSchema,
   DataGraph,
@@ -97,40 +97,7 @@ async function fetchRecentReply(targetId: string) {
 
 const DashboardHome: React.FC = () => {
   const { userId } = useAuth();
-
-  // const { setTarget, setTargetId } = useTargetContext();
-
-  // useEffect(() => {
-  //   const fetchAndSaveTargets = async () => {
-  //     if (!userId) return;
-
-  //     try {
-  //       const targets = await getTargetIdByUser(userId);
-  //       console.log("Fetched targets:", targets);
-  //       if (targets && targets.length > 0) {
-  //         // Ensure each target has both id and name properties
-  //         const formattedTargets: any = targets.map((target: any) => ({
-  //           id: target.id,
-  //           name: target.name || `Target ${target.id}`, // Fallback name if name is missing
-  //         }));
-  //         setTargetId(formattedTargets[0].id); // Set the first target's ID as selected
-  //         setTarget(formattedTargets); // Update the targetList
-  //         console.log("Formatted Targets:", formattedTargets);
-  //       } else {
-  //         console.warn("No valid targets found.");
-  //       }
-
-  //     } catch (error) {
-  //       console.error("Error fetching targets:", error);
-  //     }
-  //   };
-
-  //   fetchAndSaveTargets();
-  // }, []);
-
-
   const { startDate, endDate, setStartDate, setEndDate } = useDateRange();
-
   const [statsDashboard, setStatsDashboard] = useState(defaultDashboardData)
   const [dataGraph, setDataGraph] = useState<DataGraph[]>([])
   const [responseStatus, setResponseStatus] = useState<number | null>(null)

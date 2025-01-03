@@ -19,7 +19,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { useAuth } from "@clerk/nextjs"
-import { getTargetIdByUser } from "../dashboard/recent-sales"
 
 const dropZoneConfig = {
   maxFiles: 2,
