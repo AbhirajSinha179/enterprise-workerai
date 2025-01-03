@@ -24,24 +24,39 @@ function stripHtmlTags(input: string): string {
   return doc.body.textContent || "";
 }
 
-// Function to format the raw date string
+
 function formatDateRaw(dateString: string): string {
   if (!dateString) return "Invalid Date";
+  let normalizedDate = dateString.trim();
+  if (!normalizedDate.includes("T")) {
+    normalizedDate = normalizedDate.replace(" ", "T");
+  }
+  if (normalizedDate.endsWith("+")) {
+    normalizedDate = normalizedDate.slice(0, -1) + "+00:00";
+  }
 
-  // Ensure the date string is normalized (add 'T' and timezone if missing)
-  let normalizedDate = dateString.trim().replace(" ", "T");
   if (!normalizedDate.endsWith("Z") && !/[\+\-]\d{2}:\d{2}$/.test(normalizedDate)) {
     normalizedDate += "+00:00";
   }
 
-  // Extract date and time components
-  const [datePart, timePart] = normalizedDate.split("T");
-  const [year, month, day] = datePart!.split("-");
-  const time = timePart?.split("+")[0]?.split("Z")[0] ?? "00:00:00";
+  try {
+    const date = new Date(normalizedDate);
 
-  // Format the date as "MMM dd, yyyy, hh:mm:ss"
-  return `${month}/${day}/${year}, ${time}`;
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid Date");
+    }
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const day = date.getUTCDate();
+    const month = monthNames[date.getUTCMonth()];
+    const hours = date.getUTCHours().toString().padStart(2, "0");
+    const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+    return `${day} ${month} ${hours}:${minutes}`;
+  } catch (error) {
+    console.error("Error parsing date:", error);
+    return "Invalid Date";
+  }
 }
+
 
 const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
   mail,
@@ -52,7 +67,6 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
 }) => {
   const { body }: any = mail;
 
-  // Sanitize body content
   let sanitizedBody: any;
   if (Array.isArray(body)) {
     const filteredBody = reject(body, (item: string) => item.includes("<a>")); // Remove items with unwanted tags
@@ -63,7 +77,6 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
     sanitizedBody = body; // Fallback for unexpected types
   }
 
-  // Extract fields from mail
   let subject: string | null = mail.subject || null;
   let recipient: string = "";
   let sender: string = "";
@@ -79,7 +92,7 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
     date = mail.date || null;
   }
 
-  // Format the date without using `new Date`
+  // console.log("DATE : ", date)
   const formattedDate = date ? formatDateRaw(date) : "Invalid Date";
 
   return (
