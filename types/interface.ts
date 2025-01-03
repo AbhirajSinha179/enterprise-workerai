@@ -69,6 +69,7 @@ export const repliesSchema = z.array(
     threadId: z.string(),
     emails: z.array(emailSchema),
     replies: z.array(replySchema),
+    senderEmail: z.string(),
   })
 )
 

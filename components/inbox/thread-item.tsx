@@ -1,18 +1,22 @@
-import { format } from "date-fns"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { TimelineContent, TimelineDot, TimelineHeading, TimelineItem, TimelineLine } from "@/components/ui/timeline"
-import { Email, Reply } from "@/types/interface"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  TimelineContent,
+  TimelineDot,
+  TimelineHeading,
+  TimelineItem,
+  TimelineLine,
+} from "@/components/ui/timeline";
+import { Email, Reply } from "@/types/interface";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { reject } from "lodash";
 
 interface MailTimelineItemProps {
-  mail: Email | Reply
-  from: string
-  showLine: boolean
-  isLast: boolean
-  showSubject: boolean
+  mail: Email | Reply;
+  from: string;
+  showLine: boolean;
+  isLast: boolean;
+  showSubject: boolean;
 }
-
 
 // Function to strip HTML tags
 function stripHtmlTags(input: string): string {
@@ -20,10 +24,35 @@ function stripHtmlTags(input: string): string {
   return doc.body.textContent || "";
 }
 
-const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isLast, showSubject, from }) => {
+// Function to format the raw date string
+function formatDateRaw(dateString: string): string {
+  if (!dateString) return "Invalid Date";
+
+  // Ensure the date string is normalized (add 'T' and timezone if missing)
+  let normalizedDate = dateString.trim().replace(" ", "T");
+  if (!normalizedDate.endsWith("Z") && !/[\+\-]\d{2}:\d{2}$/.test(normalizedDate)) {
+    normalizedDate += "+00:00";
+  }
+
+  // Extract date and time components
+  const [datePart, timePart] = normalizedDate.split("T");
+  const [year, month, day] = datePart!.split("-");
+  const time = timePart?.split("+")[0]?.split("Z")[0] ?? "00:00:00";
+
+  // Format the date as "MMM dd, yyyy, hh:mm:ss"
+  return `${month}/${day}/${year}, ${time}`;
+}
+
+const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
+  mail,
+  showLine,
+  isLast,
+  showSubject,
+  from,
+}) => {
   const { body }: any = mail;
 
-  // Check if body is an array
+  // Sanitize body content
   let sanitizedBody: any;
   if (Array.isArray(body)) {
     const filteredBody = reject(body, (item: string) => item.includes("<a>")); // Remove items with unwanted tags
@@ -34,26 +63,24 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
     sanitizedBody = body; // Fallback for unexpected types
   }
 
-  console.log("BODY : ", body);
-  console.log("SANITIZED BODY : ", sanitizedBody);
-
-  let subject: string | null = "";
-  if ("subject" in mail) {
-    subject = mail.subject as string;
-  }
-
+  // Extract fields from mail
+  let subject: string | null = mail.subject || null;
   let recipient: string = "";
-  let date: string | null = "";
+  let sender: string = "";
+  let date: string | null = null;
+
   if ("recipient" in mail && "sendAt" in mail) {
     recipient = mail.recipient;
     date = mail.sendAt;
-  } else if ("fromEmail" in mail) {
-    recipient = mail.fromEmail as string;
-    date = mail.date;
-  } else {
-    recipient = mail.from;
-    date = mail.date;
+    sender = from;
+  } else if ("from" in mail) {
+    sender = mail.from as string;
+    recipient = from;
+    date = mail.date || null;
   }
+
+  // Format the date without using `new Date`
+  const formattedDate = date ? formatDateRaw(date) : "Invalid Date";
 
   return (
     <TimelineItem status="done" className="px-4">
@@ -63,9 +90,9 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
             <div className="grid gap-1">
               <div className="text-xl font-bold text-foreground">
                 <span className="font-bold">
-                  {"fromEmail" in mail ? "From : " : "To : "}
+                  {"from" in mail ? "From : " : "To : "}
                 </span>
-                {recipient}
+                {"from" in mail ? sender : recipient}
               </div>
 
               {showSubject && <div className="text-xl text-foreground">{subject}</div>}
@@ -82,12 +109,18 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({ mail, showLine, isL
               <TooltipContent side="bottom" sideOffset={4} align="end" className="mx-2">
                 <div className="gap-y-1">
                   <div>
-                    <span className="font-medium">To:</span> {recipient}
+                    <span className="font-bold">To : </span>
+                    {recipient}
                   </div>
                   <div>
-                    <span className="font-medium">From:</span> {from}
+                    <span className="font-bold">From : </span>
+                    {sender}
                   </div>
-                  <div>{date && <div className="font-medium"> Date : {format(new Date(date), "PPpp")}</div>}</div>
+                  <div>
+                    <div className="font-medium">
+                      Date: {formattedDate}
+                    </div>
+                  </div>
                 </div>
               </TooltipContent>
             </Tooltip>
