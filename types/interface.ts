@@ -457,6 +457,8 @@ export const mailboxSchema = z.object({
   userId: z.string(),
   warmupCapacity: z.number(),
   dailyCapacity: z.number(),
+  position: z.string().nullable(),
+  company: z.string().nullable(),
 })
 
 export const mailboxSchemaArray = z.array(mailboxSchema)
