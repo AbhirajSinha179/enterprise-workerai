@@ -92,15 +92,15 @@ export default function MailboxPage() {
     );
   }
 
-  if (isDataFetched && mailsDisplay.length === 0) {
-    return (
-      <ContentLayout title="Mailbox">
-        <div className="flex min-h-[70vh] items-center justify-center">
-          <div className="font-bold">No mailbox data available.</div>
-        </div>
-      </ContentLayout>
-    );
-  }
+  // if (isDataFetched && mailsDisplay.length === 0) {
+  //   return (
+  //     <ContentLayout title="Mailbox">
+  //       <div className="flex min-h-[70vh] items-center justify-center">
+  //         <div className="font-bold">No mailbox data available.</div>
+  //       </div>
+  //     </ContentLayout>
+  //   );
+  // }
 
   return (
     <ContentLayout title="Mailbox">
