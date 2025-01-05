@@ -10,6 +10,7 @@ import { useAuth } from "@clerk/nextjs";
 import { mailboxSchema } from "@/types/interface";
 import { z } from "zod";
 import Loading from "./loading";
+import { useTargetContext } from "@/contexts/TargetIdContext";
 
 const getMails = async (id: string, type: "u" | "t") => {
   try {
@@ -43,9 +44,10 @@ export default function MailboxPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
+  const { targetId }: any = useTargetContext();
 
   useEffect(() => {
-    if (!userId) {
+    if (!targetId) {
       setError("No user ID available.");
       setLoading(false);
       return;
@@ -54,7 +56,7 @@ export default function MailboxPage() {
     const fetchMails = async () => {
       setLoading(true);
       try {
-        const fetchedMails = await getMails(userId, "u");
+        const fetchedMails = await getMails(targetId, "t");
         if (fetchedMails) {
           setMailsDisplay(fetchedMails);
           setError(null);
