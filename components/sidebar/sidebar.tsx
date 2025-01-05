@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import React from "react";
 import {
@@ -71,7 +69,6 @@ export function Sidebar() {
                     ? targetList.find((target) => target.id === targetId)?.name || "Unnamed"
                     : "Select Campaign"}
                 </div>
-
                 <ChevronsUpDown className="opacity-50" />
               </Button>
             </PopoverTrigger>
@@ -89,16 +86,17 @@ export function Sidebar() {
                           setOpen(false);
                         }}
                       >
-                        <div className=" justify-self-center">
-                          <span className="font-medium">{target.name || "Unnamed"}</span>
-                          {/* <span className="block text-xs">{target.id.substring()}...</span> */}
-                        </div>
-                        <Check
-                          className={cn(
-                            "ml-auto",
-                            targetId === target.id ? "opacity-100" : "opacity-0"
-                          )}
-                        />
+                        <Link href="/dashboard/" className="w-full flex items-center">
+                          <div className="justify-self-center">
+                            <span className="font-medium">{target.name || "Unnamed"}</span>
+                          </div>
+                          <Check
+                            className={cn(
+                              "ml-auto",
+                              targetId === target.id ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                        </Link>
                       </CommandItem>
                     ))}
                   </CommandGroup>
