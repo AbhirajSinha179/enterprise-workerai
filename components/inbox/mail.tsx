@@ -71,12 +71,14 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, 
 
   if (!threads) return notFound()
 
-  let displayThread = threads.find((item: Thread) => item.threadId === config.selected) || null;
-  displayThread = replies?.find((item: Thread) => {
-    // console.log("Item in Replies Find:", item);
+
+  const threadFromThreads = threads.find((item: Thread) => item.threadId === config.selected) || null;
+  const threadFromReplies = replies?.find((item: Thread) => {
+    console.log("Item in Replies Find:", item);
     return item.threadId === config.selected;
   }) || null;
-  // console.log("DISPLAY THREAD : ", displayThread)
+  // console.log("THREAD FROM REPLIES : ", threadFromReplies)
+  // console.log("THREAD FROM thread : ", threadFromThreads)
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -189,7 +191,7 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, 
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
-          <MailDisplay threadData={displayThread} />
+          <MailDisplay threadData={threadFromReplies || threadFromThreads} />
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
