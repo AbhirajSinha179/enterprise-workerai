@@ -77,7 +77,7 @@ export default function InboxPage() {
     } finally {
       setLoading(false);
     }
-  }, [userId, offset, loading]);
+  }, [userId, offset, loading, targetId]);
 
   const loadMoreReplies = useCallback(async () => {
     if (!userId || !hasMoreReplies.current || loading) return
@@ -98,19 +98,19 @@ export default function InboxPage() {
     } finally {
       setLoading(false)
     }
-  }, [userId, offsetReplies, loading])
+  }, [userId, offsetReplies, loading, targetId])
 
   const emailRef = useInfiniteScroll({ loadMoreEmails, loading, hasMore, emailList: emails })
   const replyEmailRef = useInfiniteScroll({ loadMoreReplies, loading, hasMoreReplies, emailList: replies })
 
   useEffect(() => {
     loadMoreEmails();
-  }, []);
+  }, [targetId, userId]);
 
 
   useEffect(() => {
     loadMoreReplies()
-  }, [])
+  }, [targetId, userId])
 
   return (
     <ContentLayout title="Inbox">
@@ -118,8 +118,8 @@ export default function InboxPage() {
       {/* 
       {emails.length > 0 ? (
         <Inbox threads={emails} replies={replies} lastEmailRef={emailRef} replyEmailRef={replyEmailRef} loading={loading} />
-        // ) : loading ? (
-        //   <LoadingSign />
+      ) : loading ? (
+        <LoadingSign />
       )
         // ) 
         : (
