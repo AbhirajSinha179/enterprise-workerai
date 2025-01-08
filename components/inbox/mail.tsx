@@ -32,7 +32,7 @@ import { Button } from "../ui/button"
 
 const MAX_INBOX_HEIGHT = 680
 
-export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, replyEmailRef, replies, loading }: MailProps) {
+export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, replyEmailRef, replies, loading, loadingReplies }: MailProps) {
   // console.log("RECIVED REPLIES : ", replies)
   const { config, setConfig } = useMail()
   const [selectedView, setSelectedView] = React.useState("last24Hours")
@@ -163,13 +163,13 @@ export function Inbox({ threads, defaultLayout = [265, 440, 655], lastEmailRef, 
             </TabsContent>
 
             <TabsContent value="reply" className="m-0">
-              {filteredReplies?.length === 0 && !loading ? (
+              {filteredReplies?.length === 0 && !loadingReplies ? (
                 <EmptyState headerMessage="No Emails Yet" containerMessage="" icon={<InboxIcon size={60} />} />
               ) : (
                 <MailList
                   items={filteredReplies || []}
                   lastEmailRef={replyEmailRef}
-                  loading={loading || false}
+                  loading={loadingReplies}
                 />
               )}
             </TabsContent>

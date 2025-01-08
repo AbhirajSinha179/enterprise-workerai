@@ -48,6 +48,7 @@ export default function InboxPage() {
   const [emails, setEmails] = useState<any[]>([])
   const [replies, setReplies] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
+  const [loadingReplies, setLoadingReplies] = useState(false)
   const [offset, setOffset] = useState(0)
   const [offsetReplies, setOffsetReplies] = useState(0)
   const hasMore = useRef(true)
@@ -81,7 +82,7 @@ export default function InboxPage() {
 
   const loadMoreReplies = useCallback(async () => {
     if (!userId || !hasMoreReplies.current || loading) return
-    setLoading(true)
+    setLoadingReplies(true)
     try {
       if (!targetId) return
       const fetchedReplies = await getRepliesData(targetId, 10, offsetReplies)
@@ -96,7 +97,7 @@ export default function InboxPage() {
       toast.error("Error fetching scheduled emails.")
       console.error(error)
     } finally {
-      setLoading(false)
+      setLoadingReplies(false)
     }
   }, [userId, offsetReplies, loading, targetId])
 
@@ -114,7 +115,7 @@ export default function InboxPage() {
 
   return (
     <ContentLayout title="Inbox">
-      <Inbox threads={emails} replies={replies} lastEmailRef={emailRef} replyEmailRef={replyEmailRef} loading={loading} />
+      <Inbox threads={emails} replies={replies} lastEmailRef={emailRef} replyEmailRef={replyEmailRef} loading={loading} loadingReplies={loadingReplies} />
       {/* 
       {emails.length > 0 ? (
         <Inbox threads={emails} replies={replies} lastEmailRef={emailRef} replyEmailRef={replyEmailRef} loading={loading} />
