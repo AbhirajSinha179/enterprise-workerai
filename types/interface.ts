@@ -337,6 +337,7 @@ export interface MailProps {
   lastEmailRef?: (node: HTMLDivElement) => void
   replyEmailRef?: (node: HTMLDivElement) => void
   loading?: boolean
+  loadingReplies?: boolean
 }
 
 export interface MailDisplayProps {

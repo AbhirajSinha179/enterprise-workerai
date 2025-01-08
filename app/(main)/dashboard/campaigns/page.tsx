@@ -20,7 +20,7 @@ import { Campaign, getTargetsApiResponseSchema } from "@/types/interface";
 
 
 
-export default function Campaign() {
+export default function CampaignPage() {
     const router = useRouter();
     const { userId }: any = useAuth();
     const [campaigns, setCampaigns] = useState<Campaign[]>([]);
