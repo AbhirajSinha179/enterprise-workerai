@@ -108,9 +108,17 @@ const DashboardHome: React.FC = () => {
   const [totalSentEmails, setTotalSentEmails] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(true)
   const { targetId } = useTargetContext();
+  const [isFetchingTargetId, setIsFetchingTargetId] = useState(true);
+
 
 
   useEffect(() => {
+    if (!targetId) {
+      setIsFetchingTargetId(true);
+      return;
+    }
+    setIsFetchingTargetId(false);
+
     async function fetchData() {
       if (!userId) {
         console.log("USER ID NOT FOUND ")
@@ -161,7 +169,7 @@ const DashboardHome: React.FC = () => {
     }
 
     fetchData()
-  }, [startDate, endDate, targetId])
+  }, [startDate, endDate, targetId, userId])
 
   const cardConfigs = [
     {
@@ -195,6 +203,7 @@ const DashboardHome: React.FC = () => {
       className: "text-muted-foreground",
     },
   ]
+  const isLoadingDashboard = isLoading || isFetchingTargetId;
 
   return (
     <ContentLayout title="Dashboard">
@@ -209,7 +218,7 @@ const DashboardHome: React.FC = () => {
           </div>
           <div>
             <div className="my-4 flex gap-x-4">
-              {isLoading
+              {isLoadingDashboard
                 ? Array.from({ length: cardConfigs.length }).map((_, idx) => (
                   <Card className="w-full overflow-x-auto" key={idx}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
