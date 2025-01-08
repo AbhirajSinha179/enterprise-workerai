@@ -7,6 +7,7 @@ import { DataTable } from "@/components/leads/data-table";
 import { useEffect, useState } from "react";
 import { leadsSchema } from "../data/schema";
 import { useTargetContext } from "@/contexts/TargetIdContext";
+import { Skeleton } from "@/components/ui/skeleton";
 
 async function getLeads(targetId: string): Promise<any[]> {
   try {
@@ -59,7 +60,23 @@ export default function Leads() {
   }, [targetId]); // Runs whenever targetId changes
 
   if (isLoading) {
-    return <p>Loading...</p>; // Show a loading state while fetching
+    return (
+      <ContentLayout title="Leads">
+        <div className="hidden h-full flex-1 flex-col space-y-8 p-4 md:flex">
+          <div className="flex items-center justify-between space-y-2">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight">Leads</h2>
+              <p className="text-foreground">Here&apos;s all the leads available.</p>
+            </div>
+          </div>
+          <div className="space-y-4">
+            {[...Array(10)].map((_, index) => (
+              <Skeleton key={index} className="h-12 w-full rounded-md" />
+            ))}
+          </div>
+        </div>
+      </ContentLayout>
+    );
   }
 
   return (
