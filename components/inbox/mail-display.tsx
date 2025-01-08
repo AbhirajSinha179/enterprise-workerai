@@ -54,21 +54,32 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
   }
 
   useEffect(() => {
-    const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || []
+    const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || [];
     if (threadData?.replies) {
       threadData.replies.forEach((r: Reply) => {
-        thread.push({ type: "REPLY", data: r })
-      })
+        thread.push({ type: "REPLY", data: r });
+      });
     }
 
     thread.sort((a, b) => {
-      const dateA = (a.type === "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
-      const dateB = (b.type === "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
-      return new Date(dateA).getTime() - new Date(dateB).getTime()
-    })
+      const sanitizeDate = (date: string | null) => {
+        if (!date) return "";
+        const sanitized = date.split("+")[0]?.trim();
+        return sanitized;
+      };
 
-    setThreadContent(thread)
-  }, [threadData])
+      const dateA = sanitizeDate(a.type === "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || "";
+      const dateB = sanitizeDate(b.type === "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || "";
+
+      console.log("Sanitized DATE A:", dateA);
+      console.log("Sanitized DATE B:", dateB);
+
+      return new Date(dateA).getTime() - new Date(dateB).getTime();
+    });
+
+    setThreadContent(thread);
+  }, [threadData]);
+
 
 
   return (
