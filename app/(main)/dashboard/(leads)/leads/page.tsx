@@ -40,26 +40,28 @@ async function getLeads(targetId: string): Promise<any[]> {
 export default function Leads() {
   const { targetId } = useTargetContext(); // Assume targetId is part of context
   const [leads, setLeads] = useState<any[]>([]); // State to store leads
-  const [isLoading, setIsLoading] = useState<boolean>(true); // State to manage loading
+  const [isFetchingTargetId, setIsFetchingTargetId] = useState<boolean>(true); // State for targetId fetching
+  const [isFetchingLeads, setIsFetchingLeads] = useState<boolean>(false); // State for leads fetching
 
   useEffect(() => {
     if (!targetId) {
-      console.warn("No target ID available.");
-      setIsLoading(false);
+      setIsFetchingTargetId(true);
       return;
     }
 
+    setIsFetchingTargetId(false);
+
     const fetchLeads = async () => {
-      setIsLoading(true);
+      setIsFetchingLeads(true);
       const fetchedLeads = await getLeads(targetId);
       setLeads(fetchedLeads);
-      setIsLoading(false);
+      setIsFetchingLeads(false);
     };
 
     fetchLeads();
   }, [targetId]); // Runs whenever targetId changes
 
-  if (isLoading) {
+  if (isFetchingTargetId || isFetchingLeads) {
     return (
       <ContentLayout title="Leads">
         <div className="hidden h-full flex-1 flex-col space-y-8 p-4 md:flex">
@@ -70,7 +72,7 @@ export default function Leads() {
             </div>
           </div>
           <div className="space-y-4">
-            {[...Array(10)].map((_, index) => (
+            {[...Array(20)].map((_, index) => (
               <Skeleton key={index} className="h-12 w-full rounded-md" />
             ))}
           </div>
