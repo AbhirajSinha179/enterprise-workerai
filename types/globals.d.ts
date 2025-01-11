@@ -1,11 +1,13 @@
-// ! This file is not being used, but it is here to show how to add global types
 
-// export {}
+export { }
 
-// declare global {
-//   interface CustomJwtSessionClaims {
-//     metadata: {
-//       onboardingComplete?: boolean
-//     }
-//   }
-// }
+export type Roles = user | admin | guest | dashboard_admin
+
+declare global {
+  interface CustomJwtSessionClaims {
+    metadata: {
+      target?: string
+      role?: Roles
+    }
+  }
+}
