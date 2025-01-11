@@ -1,8 +1,6 @@
-import { auth } from "@clerk/nextjs/server"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
-import { Roles } from "@/types/globals"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -57,7 +55,3 @@ export async function getTargetsIdByUser(userId: string): Promise<{ id: string; 
   }
 }
 
-export const checkRole = async (role: Roles) => {
-  const { sessionClaims } = await auth()
-  return sessionClaims?.metadata.role === role
-}
