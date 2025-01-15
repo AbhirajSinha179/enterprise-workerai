@@ -56,15 +56,37 @@ export default function CampaignPage() {
         setCampaigns((prevCampaigns) => prevCampaigns.filter((campaign) => campaign.id !== id));
     };
 
-    const handleDialogSave = (updatedCampaign: Campaign) => {
-        setCampaigns((prevCampaigns) =>
-            prevCampaigns.map((campaign) =>
-                campaign.id === updatedCampaign.id ? updatedCampaign : campaign
-            )
-        );
-        setEditDialogOpen(false);
-        setEditingCampaign(null);
+    const handleDialogSave = async (updatedCampaign: Campaign) => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/target/${updatedCampaign.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedCampaign), // Send the updated campaign data
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to update the campaign");
+            }
+
+            const data = await response.json();
+            console.log("Campaign updated:", data);
+
+            // Update the campaigns state
+            setCampaigns((prevCampaigns) =>
+                prevCampaigns.map((campaign) =>
+                    campaign.id === updatedCampaign.id ? updatedCampaign : campaign
+                )
+            );
+            setEditDialogOpen(false);
+            setEditingCampaign(null);
+        } catch (error) {
+            console.error("Error updating the campaign:", error);
+            alert("Failed to save changes. Please try again.");
+        }
     };
+
     const handleCampaignAdded = (newCampaign: any) => {
         setCampaigns((prevCampaigns) => [...prevCampaigns, newCampaign]);
     };
