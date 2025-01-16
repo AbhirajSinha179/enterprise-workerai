@@ -81,12 +81,14 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
   let recipient: string = "";
   let sender: string = "";
   let date: string | null = null;
+  let showName: string | null = "";
 
   if ("recipient" in mail && "sendAt" in mail) {
     recipient = mail.recipient;
     date = mail.sendAt;
     sender = from;
   } else if ("from" in mail) {
+    //reply
     sender = mail.from as string;
     recipient = from;
     date = mail.date || null;
@@ -94,6 +96,7 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
 
   // console.log("DATE : ", date)
   const formattedDate = date ? formatDateRaw(date) : "Invalid Date";
+  showName = "from" in mail ? sender : recipient
 
   return (
     <TimelineItem status="done" className="px-4">
@@ -105,7 +108,7 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
                 <span className="font-bold">
                   {"from" in mail ? "From : " : "To : "}
                 </span>
-                {"from" in mail ? sender : recipient}
+                {showName}
               </div>
 
               {showSubject && <div className="text-xl text-foreground">{subject}</div>}
@@ -144,12 +147,12 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
         status="custom"
         customIcon={
           <Avatar>
-            <AvatarImage alt={recipient || ""} />
+            <AvatarImage alt={showName || ""} />
             <AvatarFallback>
-              {recipient && recipient[0]
-                ? (recipient.includes("@") || recipient.includes("+"))
-                  ? recipient[0].toUpperCase()
-                  : recipient
+              {showName && showName[0]
+                ? (showName.includes("@") || showName.includes("+"))
+                  ? showName[0].toUpperCase()
+                  : showName
                     .split(" ")
                     .map((chunk) => chunk[0])
                     .join("")
