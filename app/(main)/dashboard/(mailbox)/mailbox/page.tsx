@@ -6,88 +6,81 @@ import { ContentLayout } from "@/components/layout/content-layout";
 import { DataTable } from "@/components/leads/data-table";
 import { columns } from "@/components/mailbox/columns";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@clerk/nextjs";
 import { mailboxSchema } from "@/types/interface";
 import { z } from "zod";
 import Loading from "./loading";
 import { useTargetContext } from "@/contexts/TargetIdContext";
 
-const getMails = async (id: string, type: "u" | "t") => {
+async function getMailBoxes(targetId: string): Promise<{ data: any[]; error: string | null }> {
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/email-address/${id}?t=${type}`;
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/email-address/${targetId}?t=t`;
     console.log("Fetching from URL:", url);
-    const res = await fetch(url);
+    const response = await fetch(url);
 
-    if (!res.ok) {
-      console.error("Failed to fetch emails:", res.statusText);
-      return null;
+    if (!response.ok) {
+      const errorMessage = `Failed to fetch emails: ${response.statusText}`;
+      console.error(errorMessage);
+      return { data: [], error: errorMessage };
     }
 
-    const data = await res.json();
-    const validationResult = z.array(mailboxSchema).safeParse(data);
+    const data = await response.json();
+    const validation = z.array(mailboxSchema).safeParse(data);
 
-    if (!validationResult.success) {
-      console.error("Validation error:", validationResult.error.errors);
-      return null;
+    if (!validation.success) {
+      const validationError = "Data validation failed: " + JSON.stringify(validation.error.errors);
+      console.error(validationError);
+      return { data: [], error: validationError };
     }
 
-    return validationResult.data;
-  } catch (error) {
-    console.error("Error fetching emails:", error);
-    return null;
+    return { data: validation.data, error: null };
+  } catch (error: any) {
+    const fetchError = `Error fetching mailboxes: ${error.message}`;
+    console.error(fetchError);
+    return { data: [], error: fetchError };
   }
-};
+}
 
 export default function MailboxPage() {
-  const { userId } = useAuth();
-  const [mailsDisplay, setMailsDisplay] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { targetId } = useTargetContext();
+  const [mailboxes, setMailboxes] = useState<any[]>([]);
+  const [isFetchingTargetId, setIsFetchingTargetId] = useState(true);
+  const [isFetchingMailboxes, setIsFetchingMailboxes] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
-  const { targetId }: any = useTargetContext();
 
   useEffect(() => {
     if (!targetId) {
-      setError("No user ID available.");
-      setLoading(false);
+      setIsFetchingTargetId(true);
       return;
     }
 
-    const fetchMails = async () => {
-      setLoading(true);
-      try {
-        const fetchedMails = await getMails(targetId, "t");
-        if (fetchedMails) {
-          setMailsDisplay(fetchedMails);
-          setError(null);
-        } else {
-          setMailsDisplay([]);
-          setError("No mailboxes found.");
-        }
-      } catch (err) {
-        setError("An unexpected error occurred.");
-      } finally {
-        setLoading(false);
-        setIsDataFetched(true); // Ensure this is set after fetching
+    setIsFetchingTargetId(false);
+
+    const fetchMailboxes = async () => {
+      setIsFetchingMailboxes(true);
+      const { data, error } = await getMailBoxes(targetId);
+      if (error) {
+        setError(error);
+      } else {
+        setMailboxes(data);
       }
+      setIsFetchingMailboxes(false);
     };
 
-    fetchMails();
-  }, [userId]);
+    fetchMailboxes();
+  }, [targetId]);
 
-  if (loading) {
+  if (isFetchingTargetId || isFetchingMailboxes) {
     return <Loading />;
   }
 
-  if (error && isDataFetched) {
+  if (error) {
     return (
       <ContentLayout title="Mailbox">
         <div className="flex min-h-[70vh] items-center justify-center">
-          <div className="flex items-center justify-center font-bold">
-            Unable to fetch data. Please try again later.
+          <div className=" font-bold">
+            An unexpected error occurred.
           </div>
         </div>
-
       </ContentLayout>
     );
   }
@@ -112,7 +105,7 @@ export default function MailboxPage() {
           </Button>
         </Link>
       </div>
-      <DataTable data={mailsDisplay} columns={columns} isActionButton={false} />
+      <DataTable data={mailboxes} columns={columns} isActionButton={false} />
     </ContentLayout>
   );
 }
