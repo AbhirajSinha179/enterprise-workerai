@@ -21,9 +21,8 @@ interface MailTimelineItemProps {
 // Function to strip HTML tags
 function stripHtmlTags(input: string): string {
   const doc = new DOMParser().parseFromString(input, "text/html");
-  return doc.body.textContent || "";
+  return doc.body.textContent?.replace(/(?:\r\n|\r|\n)/g, "\n") || "";
 }
-
 
 function formatDateRaw(dateString: string): string {
   if (!dateString) return "Invalid Date";
@@ -57,7 +56,6 @@ function formatDateRaw(dateString: string): string {
   }
 }
 
-
 const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
   mail,
   showLine,
@@ -67,12 +65,12 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
 }) => {
   const { body }: any = mail;
 
-  let sanitizedBody: any;
+  let sanitizedBody: string | string[];
   if (Array.isArray(body)) {
-    const filteredBody = reject(body, (item: string) => item.includes("<a>")); // Remove items with unwanted tags
-    sanitizedBody = filteredBody.map((item: any) => stripHtmlTags(item)); // Sanitize remaining items
+    const filteredBody = reject(body, (item: string) => item.includes("<a>")); // Remove unwanted tags
+    sanitizedBody = filteredBody.map((item: any) => stripHtmlTags(item).replace(/\\n/g, "\n"));
   } else if (typeof body === "string") {
-    sanitizedBody = stripHtmlTags(body); // Sanitize directly if it's a string
+    sanitizedBody = stripHtmlTags(body).replace(/\\n/g, "\n"); // Sanitize directly if it's a string
   } else {
     sanitizedBody = body; // Fallback for unexpected types
   }
@@ -88,15 +86,15 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
     date = mail.sendAt;
     sender = from;
   } else if ("from" in mail) {
-    //reply
+    // Reply
     sender = mail.from as string;
     recipient = from;
     date = mail.date || null;
   }
 
-  // console.log("DATE : ", date)
   const formattedDate = date ? formatDateRaw(date) : "Invalid Date";
-  showName = "from" in mail ? sender : recipient
+  showName = "from" in mail ? sender : recipient;
+  // console.log("SANITIZED BODY : ", sanitizedBody);
 
   return (
     <TimelineItem status="done" className="px-4">
@@ -133,9 +131,7 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
                     {sender}
                   </div>
                   <div>
-                    <div className="font-medium">
-                      Date: {formattedDate}
-                    </div>
+                    <div className="font-medium">Date: {formattedDate}</div>
                   </div>
                 </div>
               </TooltipContent>
@@ -150,7 +146,7 @@ const MailTimelineItem: React.FC<MailTimelineItemProps> = ({
             <AvatarImage alt={showName || ""} />
             <AvatarFallback>
               {showName && showName[0]
-                ? (showName.includes("@") || showName.includes("+"))
+                ? showName.includes("@") || showName.includes("+")
                   ? showName[0].toUpperCase()
                   : showName
                     .split(" ")
