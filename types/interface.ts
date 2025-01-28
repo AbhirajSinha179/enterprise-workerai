@@ -442,10 +442,15 @@ export const emailThreadSchema = z.object({
   bounced: z.boolean().nullable(), // Added nullable field
 })
 
-export const getThreadApiResponseSchema = z.object({
-  emails: z.array(emailThreadSchema),
-  replies: z.array(replySchema),
-})
+export const getThreadApiResponseSchema = z.array(
+  z.object({
+    threadId: z.string(),
+    emails: z.array(emailThreadSchema), // Array of emails in the thread
+    replies: z.array(replySchema), // Array of replies in the thread
+    lead: leadSchema, // Lead information
+    senderEmail: z.string(), // Sender email
+  })
+)
 
 export type EmailThread = z.infer<typeof emailThreadSchema>
 
