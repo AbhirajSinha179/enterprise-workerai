@@ -7,21 +7,19 @@ import { toast } from "sonner"
 import CalendarForm from "@/components/dashboard/CalendarForm"
 import { Overview } from "@/components/dashboard/overview"
 // import { RecentSales } from "@/components/dashboard/recent-sales"; string
+import RecentSales from "@/components/dashboard/recent-sales"
 import { ContentLayout } from "@/components/layout/content-layout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 import { useDateRange } from "@/contexts/DateRangeContext"
 import { getOpenRate, getResponseRate } from "@/lib/utils"
 import {
     dashboardDataSchema,
     DataGraph,
-    getThreadApiResponseSchema,
+    recentResponseSchema,
     // SalesDataItem,
     // StatDashboard,
 } from "@/types/interface"
-import { Skeleton } from "@/components/ui/skeleton"
-import RecentSales from "@/components/dashboard/recent-sales"
-import { Button } from "@/components/ui/button"
-import Link from "next/link";
 
 // import Loading from "./loading"
 // import Loading from "../(site)/loading"
@@ -87,25 +85,14 @@ async function fetchRecentReply(userId: string) {
         }
 
         const data = await res.json();
-        const result = getThreadApiResponseSchema.safeParse(data);
+        const result = recentResponseSchema.safeParse(data);
 
         if (!result.success) {
             console.error(result.error);
             throw new Error("Invalid data format");
         }
 
-        // Sort and map replies with their respective leads
-        const sortedReplies = result.data
-            .flatMap((thread) =>
-                thread.replies.map((reply) => ({
-                    ...reply,
-                    lead: thread.lead, // Attach lead info to each reply
-                }))
-            )
-            .sort((a, b) => new Date(b.date || "").getTime() - new Date(a.date || "").getTime())
-            .slice(0, 10); // Limit to 10 replies
-
-        return sortedReplies || [];
+        return result.data || [];
     } catch (error: any) {
         console.error("Error fetching data:", error.message);
         throw error;
@@ -144,7 +131,7 @@ const DashboardHome: React.FC = () => {
         async function fetchData() {
             if (!userId) {
                 console.log("USER ID NOT FOUND ")
-                toast.error("Error finding user ID")
+                toast.error("Error finding user")
                 return
             }
             setIsLoading(true)
@@ -153,7 +140,7 @@ const DashboardHome: React.FC = () => {
                 // console.log("END DATE : ", endDate)
                 // console.log("TARGET ID : ", targetId)
                 const dashboardData = await fetchDashboardDataUsingRange("userId", userId, startDate, endDate)
-                const recentReplies = await fetchRecentReply(targetId)
+                const recentReplies = await fetchRecentReply(userId)
                 setRecentReplies(recentReplies)
 
                 const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dashboardData
@@ -256,7 +243,7 @@ const DashboardHome: React.FC = () => {
                                         <Card className="w-full overflow-x-auto" key={idx}>
                                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                                 <Skeleton className="h-6 w-20" />
-                                                <Skeleton className="h-6 w-6" />
+                                                <Skeleton className="size-6" />
                                             </CardHeader>
                                             <CardContent>
                                                 <Skeleton className="h-12 w-32" />
@@ -302,7 +289,7 @@ const DashboardHome: React.FC = () => {
                                             <div className="space-y-4">
                                                 {Array.from({ length: 5 }).map((_, idx) => (
                                                     <div key={idx} className="flex items-center space-x-4">
-                                                        <Skeleton className="h-10 w-10 rounded-full" />
+                                                        <Skeleton className="size-10 rounded-full" />
                                                         <div className="flex-1 space-y-2">
                                                             <Skeleton className="h-4 w-1/2" />
                                                             <Skeleton className="h-3 w-1/3" />

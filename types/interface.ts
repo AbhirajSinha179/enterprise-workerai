@@ -452,6 +452,15 @@ export const getThreadApiResponseSchema = z.array(
   })
 )
 
+export const recentResponseSchema = z.array(
+  z.object({
+    id: z.string(),
+    body: z.string(),
+    date: z.string(),
+    from: z.string(),
+  })
+)
+
 export type EmailThread = z.infer<typeof emailThreadSchema>
 
 export type ApiResponse = z.infer<typeof getThreadApiResponseSchema>
