@@ -53,8 +53,8 @@ export function getMenuList(pathname: string): Group[] {
       groupLabel: "",
       menus: [
         {
-          href: `/over-view`,
-          label: "Over-View",
+          href: `/overview`,
+          label: "Overview",
           active: pathname.includes("/over-view"),
           icon: LineChart,
           submenus: [],
