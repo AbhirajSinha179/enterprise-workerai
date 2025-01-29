@@ -20,7 +20,11 @@ import {
 } from "@/types/interface"
 import { Skeleton } from "@/components/ui/skeleton"
 import RecentSales from "@/components/dashboard/recent-sales"
+import { Button } from "@/components/ui/button"
+import Link from "next/link";
+
 // import Loading from "./loading"
+import Loading from "../(site)/loading"
 // import { useTargetContext } from "@/contexts/TargetIdContext"
 
 
@@ -126,6 +130,7 @@ const DashboardHome: React.FC = () => {
     const targetId = "7cb54876-bbb6-4161-8935-9524fe3d891e";
     const [isFetchingTargetId, setIsFetchingTargetId] = useState(true);
     const [recentReplies, setRecentReplies] = useState<any[]>([])
+    const [isNavigating, setIsNavigating] = useState(false);
     // console.log("RECENT REPLIES : ", recentReplies)
 
 
@@ -225,7 +230,9 @@ const DashboardHome: React.FC = () => {
     ]
     const isLoadingDashboard = isLoading || isFetchingTargetId;
 
-    return (
+    return isNavigating ? (
+        <Loading />
+    ) : (
         <ContentLayout title="Overall Analytics">
             <main className="w-full space-y-4">
                 <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
@@ -234,7 +241,11 @@ const DashboardHome: React.FC = () => {
                             <h2 className="text-2xl font-bold tracking-tight">Overall Analytics</h2>
                             <p className="text-muted-foreground">Here&apos;s all the campaigns analytics available.</p>
                         </div>
-                        {/* <CalendarForm /> */}
+                        <Link href="/dashboard" onClick={() => setIsNavigating(true)}>
+                            <Button variant={"secondary"}>
+                                Back to Dashboard
+                            </Button>
+                        </Link>
                     </div>
                     <div>
                         <div className="my-4 flex gap-x-4">
@@ -283,7 +294,6 @@ const DashboardHome: React.FC = () => {
                             <Card className="overflow-y-auto">
                                 <CardHeader>
                                     <CardTitle className="text-foreground">Recent Response</CardTitle>
-                                    {/* <CardDescription>Unread</CardDescription> */}
                                 </CardHeader>
                                 <CardContent>
                                     {isLoading ? (
@@ -305,13 +315,13 @@ const DashboardHome: React.FC = () => {
                                     )}
                                 </CardContent>
                             </Card>
-
                         </div>
                     </div>
                 </div>
             </main>
         </ContentLayout>
-    )
+    );
+
 }
 
 export default DashboardHome
