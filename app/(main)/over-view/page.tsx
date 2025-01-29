@@ -45,9 +45,9 @@ const defaultDashboardData = {
     ],
 }
 
-async function fetchDashboardDataUsingRange(type: string, id: any,) {
+async function fetchDashboardDataUsingRange(type: string, id: any, startDate: string, endDate: string) {
     try {
-        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/analytics/${type}/${id}/range`
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`
         const res = await fetch(url, { next: { revalidate: 60 } })
         console.log(`Response status for analytics by range: ${res.status}`)
         if (!res.ok && res.status !== 404) {
@@ -154,7 +154,7 @@ const DashboardHome: React.FC = () => {
                 // console.log("START DATE : ", startDate)
                 // console.log("END DATE : ", endDate)
                 // console.log("TARGET ID : ", targetId)
-                const dashboardData = await fetchDashboardDataUsingRange("userId", userId)
+                const dashboardData = await fetchDashboardDataUsingRange("userId", userId, startDate, endDate)
                 const recentReplies = await fetchRecentReply(targetId)
                 setRecentReplies(recentReplies)
 
@@ -234,92 +234,96 @@ const DashboardHome: React.FC = () => {
     return isNavigating ? (
         <Loading />
     ) : (
-        <ContentLayout title="Overall Analytics">
-            <main className="w-full space-y-4">
-                <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
-                    <div className="flex justify-between space-x-10 space-y-2">
-                        <div>
-                            <h2 className="text-2xl font-bold tracking-tight">Overall Analytics</h2>
-                            <p className="text-muted-foreground">Here&apos;s all the campaigns analytics available.</p>
-                        </div>
-                        <Link href="/dashboard" onClick={() => setIsNavigating(true)}>
+        <ContentLayout title="Overview">
+            <div className="container px-4 py-10 sm:px-8">
+                <main className="w-full space-y-4">
+                    <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
+                        <div className="flex justify-between space-x-10 space-y-2">
+                            <div>
+                                <h2 className="text-2xl font-bold tracking-tight">Overall Analytics</h2>
+                                <p className="text-muted-foreground">Here&apos;s all the campaigns analytics available.</p>
+                            </div>
+                            {/* <Link href="/dashboard" onClick={() => setIsNavigating(true)}>
                             <Button variant={"secondary"}>
                                 Back to Dashboard
                             </Button>
-                        </Link>
-                    </div>
-                    <div>
-                        <div className="my-4 flex gap-x-4">
-                            {isLoadingDashboard
-                                ? Array.from({ length: cardConfigs.length }).map((_, idx) => (
-                                    <Card className="w-full overflow-x-auto" key={idx}>
-                                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                            <Skeleton className="h-6 w-20" />
-                                            <Skeleton className="h-6 w-6" />
-                                        </CardHeader>
-                                        <CardContent>
-                                            <Skeleton className="h-12 w-32" />
-                                        </CardContent>
-                                    </Card>
-                                ))
-                                : cardConfigs.map((config) => (
-                                    <Card className="w-full overflow-x-auto" key={config.title}>
-                                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                            <CardTitle className="text-sm font-medium text-muted-foreground">
-                                                {config.title}
-                                            </CardTitle>
-                                            <config.icon
-                                                className={`size-4 text-${config.className}`}
-                                                width={24}
-                                                height={24}
-                                            />
-                                        </CardHeader>
-                                        <CardContent>
-                                            <div className="text-4xl font-bold text-foreground">
-                                                {config.stat}
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                ))}
-                        </div>
-                        <div className="w-full space-y-5">
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle className="text-foreground">Overview</CardTitle>
-                                </CardHeader>
-                                <CardContent className="pl-2">
-                                    <Overview data={dataGraph} isLoading={isLoading} />
-                                </CardContent>
-                            </Card>
+                        </Link> */}
+                            <CalendarForm />
 
-                            <Card className="overflow-y-auto">
-                                <CardHeader>
-                                    <CardTitle className="text-foreground">Recent Response</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    {isLoading ? (
-                                        <div className="space-y-4">
-                                            {Array.from({ length: 5 }).map((_, idx) => (
-                                                <div key={idx} className="flex items-center space-x-4">
-                                                    <Skeleton className="h-10 w-10 rounded-full" />
-                                                    <div className="flex-1 space-y-2">
-                                                        <Skeleton className="h-4 w-1/2" />
-                                                        <Skeleton className="h-3 w-1/3" />
-                                                    </div>
+                        </div>
+                        <div>
+                            <div className="my-4 flex gap-x-4">
+                                {isLoadingDashboard
+                                    ? Array.from({ length: cardConfigs.length }).map((_, idx) => (
+                                        <Card className="w-full overflow-x-auto" key={idx}>
+                                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                                <Skeleton className="h-6 w-20" />
+                                                <Skeleton className="h-6 w-6" />
+                                            </CardHeader>
+                                            <CardContent>
+                                                <Skeleton className="h-12 w-32" />
+                                            </CardContent>
+                                        </Card>
+                                    ))
+                                    : cardConfigs.map((config) => (
+                                        <Card className="w-full overflow-x-auto" key={config.title}>
+                                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                                <CardTitle className="text-sm font-medium text-muted-foreground">
+                                                    {config.title}
+                                                </CardTitle>
+                                                <config.icon
+                                                    className={`size-4 text-${config.className}`}
+                                                    width={24}
+                                                    height={24}
+                                                />
+                                            </CardHeader>
+                                            <CardContent>
+                                                <div className="text-4xl font-bold text-foreground">
+                                                    {config.stat}
                                                 </div>
-                                            ))}
-                                        </div>
-                                    ) : recentReplies.length > 0 ? (
-                                        <RecentSales data={recentReplies} />
-                                    ) : (
-                                        <p className="text-sm text-muted-foreground">No recent responses found.</p>
-                                    )}
-                                </CardContent>
-                            </Card>
+                                            </CardContent>
+                                        </Card>
+                                    ))}
+                            </div>
+                            <div className="w-full space-y-5">
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle className="text-foreground">Overview</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="pl-2">
+                                        <Overview data={dataGraph} isLoading={isLoading} />
+                                    </CardContent>
+                                </Card>
+
+                                <Card className="overflow-y-auto">
+                                    <CardHeader>
+                                        <CardTitle className="text-foreground">Recent Response</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        {isLoading ? (
+                                            <div className="space-y-4">
+                                                {Array.from({ length: 5 }).map((_, idx) => (
+                                                    <div key={idx} className="flex items-center space-x-4">
+                                                        <Skeleton className="h-10 w-10 rounded-full" />
+                                                        <div className="flex-1 space-y-2">
+                                                            <Skeleton className="h-4 w-1/2" />
+                                                            <Skeleton className="h-3 w-1/3" />
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : recentReplies.length > 0 ? (
+                                            <RecentSales data={recentReplies} />
+                                        ) : (
+                                            <p className="text-sm text-muted-foreground">No recent responses found.</p>
+                                        )}
+                                    </CardContent>
+                                </Card>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </main>
+                </main>
+            </div>
         </ContentLayout>
     );
 
