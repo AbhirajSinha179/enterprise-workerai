@@ -4,6 +4,7 @@ import {
   Calendar,
   InboxIcon,
   LayoutGrid,
+  LineChart,
   LucideSquareArrowOutUpRight,
   Mail,
   Rocket,
@@ -37,13 +38,25 @@ export function getMenuList(pathname: string): Group[] {
   const DASHBOARD_PATH = pathname.includes("/tour") ? "/tour" : "/dashboard"
   return [
     {
-      groupLabel: "",
+      groupLabel: "Analytics",
       menus: [
         {
           href: `${DASHBOARD_PATH}`,
           label: "Dashboard",
           active: pathname.includes("/dashboard"),
           icon: LayoutGrid,
+          submenus: [],
+        },
+      ],
+    },
+    {
+      groupLabel: "",
+      menus: [
+        {
+          href: `/over-view`,
+          label: "Over-View",
+          active: pathname.includes("/over-view"),
+          icon: LineChart,
           submenus: [],
         },
       ],

@@ -21,6 +21,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 // import Loading from "./loading"
 import { useTargetContext } from "@/contexts/TargetIdContext"
+import RecentSales from "@/components/dashboard/recent-sales"
 
 
 const defaultDashboardData = {
@@ -72,29 +73,41 @@ async function fetchDashboardDataUsingRange(type: string, id: any, startDate: st
 
 async function fetchRecentReply(targetId: string) {
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/thread/target/${targetId}/`
-    console.log(url)
-    const res = await fetch(url)
-    console.log(`Response status for get thread API call response: ${res.status}`)
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/target/${targetId}?limit=5`;
+
+    // console.log(url);
+    const res = await fetch(url);
+    console.log(`Response status for get thread API call response: ${res.status}`);
+
     if (!res.ok) {
-      throw new Error(`Failed to fetch data. Status code: ${res.status}`)
+      throw new Error(`Failed to fetch data. Status code: ${res.status}`);
     }
 
-    const data = await res.json()
-    const result = getThreadApiResponseSchema.safeParse(data)
+    const data = await res.json();
+    const result = getThreadApiResponseSchema.safeParse(data);
 
     if (!result.success) {
-      console.error(result.error)
-      throw new Error("Invalid data format")
+      console.error(result.error);
+      throw new Error("Invalid data format");
     }
 
-    return result.data.replies?.sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime()).slice(0, 10)
+    // Sort and map replies with their respective leads
+    const sortedReplies = result.data
+      .flatMap((thread) =>
+        thread.replies.map((reply) => ({
+          ...reply,
+          lead: thread.lead, // Attach lead info to each reply
+        }))
+      )
+      .sort((a, b) => new Date(b.date || "").getTime() - new Date(a.date || "").getTime())
+      .slice(0, 10); // Limit to 10 replies
+
+    return sortedReplies || [];
   } catch (error: any) {
-    console.error("Error fetching data:", error.message)
-    throw error
+    console.error("Error fetching data:", error.message);
+    throw error;
   }
 }
-
 const DashboardHome: React.FC = () => {
   const { userId } = useAuth();
   const { startDate, endDate, setStartDate, setEndDate } = useDateRange();
@@ -109,6 +122,8 @@ const DashboardHome: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
   const { targetId } = useTargetContext();
   const [isFetchingTargetId, setIsFetchingTargetId] = useState(true);
+  const [recentReplies, setRecentReplies] = useState<any[]>([])
+
 
 
 
@@ -129,8 +144,11 @@ const DashboardHome: React.FC = () => {
       try {
         // console.log("START DATE : ", startDate)
         // console.log("END DATE : ", endDate)
-        console.log("TARGET ID : ", targetId)
+        // console.log("TARGET ID : ", targetId)
+        if (!targetId) return
         const dashboardData = await fetchDashboardDataUsingRange("targetId", targetId, startDate, endDate)
+        const recentReplies = await fetchRecentReply(targetId)
+        setRecentReplies(recentReplies)
 
         const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dashboardData
 
@@ -263,25 +281,25 @@ const DashboardHome: React.FC = () => {
               <Card className="overflow-y-auto">
                 <CardHeader>
                   <CardTitle className="text-foreground">Recent Response</CardTitle>
-                  <CardDescription>Unread</CardDescription>
+                  {/* <CardDescription>Unread</CardDescription> */}
                 </CardHeader>
                 <CardContent>
                   {isLoading ? (
                     <div className="space-y-4">
                       {Array.from({ length: 5 }).map((_, idx) => (
-                        <div key={idx} className="flex items-center space-x-4 sm:space-x-6">
-                          <Skeleton className="h-8 w-8 sm:h-10 sm:w-10 rounded-full" />
-                          <div className="flex-1 space-y-1 sm:space-y-2">
-                            <Skeleton className="h-3 w-2/3 sm:h-4 sm:w-3/4" />
-                            <Skeleton className="h-2 w-1/3 sm:h-3 sm:w-1/2" />
+                        <div key={idx} className="flex items-center space-x-4">
+                          <Skeleton className="h-10 w-10 rounded-full" />
+                          <div className="flex-1 space-y-2">
+                            <Skeleton className="h-4 w-1/2" />
+                            <Skeleton className="h-3 w-1/3" />
                           </div>
                         </div>
                       ))}
                     </div>
+                  ) : recentReplies.length > 0 ? (
+                    <RecentSales data={recentReplies} />
                   ) : (
-                    <div>
-                      <p className="text-sm text-muted-foreground">No recent responses found.</p>
-                    </div>
+                    <p className="text-sm text-muted-foreground">No recent responses found.</p>
                   )}
                 </CardContent>
               </Card>
