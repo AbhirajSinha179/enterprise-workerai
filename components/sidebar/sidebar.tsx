@@ -23,6 +23,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
 export function Sidebar() {
   const { collapsed, setCollapsed } = useSidebarContext();
@@ -37,24 +38,35 @@ export function Sidebar() {
       )}
     >
       <SidebarToggle isOpen={!collapsed} setIsOpen={setCollapsed} />
+
       <div className="relative flex h-full flex-col overflow-y-auto px-3 py-4 shadow-md">
-        <Link
-          href="/dashboard"
-          className={cn(
-            "mb-1 flex items-center gap-2 self-center transition-transform duration-300 ease-in-out",
-            collapsed ? "translate-x-1" : "translate-x-0"
-          )}
-        >
-          <WorkerAILogo className="mr-1 size-8" />
-          <h1
-            className={cn(
-              "whitespace-nowrap text-xl font-bold transition-[transform,opacity,display] duration-300 ease-in-out",
-              collapsed ? "hidden -translate-x-96 opacity-0" : "translate-x-0 opacity-100"
-            )}
-          >
-            WorkerAI
-          </h1>
-        </Link>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/overall-analytics"
+                className={cn(
+                  "mb-1 flex items-center gap-2 self-center transition-transform duration-300 ease-in-out",
+                  collapsed ? "translate-x-1" : "translate-x-0"
+                )}
+              >
+                <WorkerAILogo className="mr-1 size-8" />
+                <h1
+                  className={cn(
+                    "whitespace-nowrap text-xl font-bold transition-[transform,opacity,display] duration-300 ease-in-out",
+                    collapsed ? "hidden -translate-x-96 opacity-0" : "translate-x-0 opacity-100"
+                  )}
+                >
+                  WorkerAI
+                </h1>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Overall Analytics</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         <div className={cn("my-4 mx-auto", collapsed && "hidden")}>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
