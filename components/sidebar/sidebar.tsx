@@ -1,6 +1,8 @@
 import Link from "next/link";
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+import React from "react";
+import {
+  Button,
+} from "@/components/ui/button";
 import { Menu } from "@/components/sidebar/menu";
 import { SidebarToggle } from "@/components/sidebar/sidebar-toggle";
 import { cn } from "@/lib/utils";
@@ -21,113 +23,90 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
-import Loading from "@/app/(site)/loading";
 
 export function Sidebar() {
   const { collapsed, setCollapsed } = useSidebarContext();
   const { targetList, setTargetId, targetId } = useTargetContext();
   const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = useState(false);
 
   return (
-    <>
-      {loading && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <Loading />
-        </div>
+    <aside
+      className={cn(
+        "fixed left-0 top-0 z-20 h-screen -translate-x-full shadow-lg transition-[width] duration-300 ease-in-out dark:bg-slate-950 dark:shadow-slate-800 lg:translate-x-0",
+        collapsed ? "w-[90px]" : "w-72"
       )}
-
-      <aside
-        className={cn(
-          "fixed left-0 top-0 z-20 h-screen -translate-x-full shadow-lg transition-[width] duration-300 ease-in-out dark:bg-slate-950 dark:shadow-slate-800 lg:translate-x-0",
-          collapsed ? "w-[90px]" : "w-72"
-        )}
-      >
-        <SidebarToggle isOpen={!collapsed} setIsOpen={setCollapsed} />
-
-        <div className="relative flex h-full flex-col overflow-y-auto px-3 py-4 shadow-md">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="/overall-analytics"
-                  className={cn(
-                    "mb-1 flex items-center gap-2 self-center transition-transform duration-300 ease-in-out",
-                    collapsed ? "translate-x-1" : "translate-x-0"
-                  )}
-                  onClick={() => setLoading(true)} // Set loading to true when clicked
-                >
-                  <WorkerAILogo className="mr-1 size-8" />
-                  <h1
-                    className={cn(
-                      "whitespace-nowrap text-xl font-bold transition-[transform,opacity,display] duration-300 ease-in-out",
-                      collapsed ? "hidden -translate-x-96 opacity-0" : "translate-x-0 opacity-100"
-                    )}
-                  >
-                    WorkerAI
-                  </h1>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Overall Analytics</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <div className={cn("my-4 mx-auto", collapsed && "hidden")}>
-            <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={open}
-                  className="w-[250px] justify-between "
-                >
-                  <div className="overflow-hidden">
-                    {targetId
-                      ? targetList.find((target) => target.id === targetId)?.name || "Unnamed"
-                      : "Select Campaign"}
-                  </div>
-                  <ChevronsUpDown className="opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-[250px] p-0 my-2">
-                <Command>
-                  <CommandInput placeholder="Search Campaign..." />
-                  <CommandList>
-                    <CommandEmpty>No campaigns found.</CommandEmpty>
-                    <CommandGroup>
-                      {targetList.map((target) => (
-                        <CommandItem
-                          key={target.id}
-                          onSelect={() => {
-                            setTargetId(target.id);
-                            setOpen(false);
-                          }}
-                        >
-                          <Link href="/dashboard/" className="w-full flex items-center">
-                            <div className="justify-self-center">
-                              <span className="font-medium">{target.name || "Unnamed"}</span>
-                            </div>
-                            <Check
-                              className={cn(
-                                "ml-auto",
-                                targetId === target.id ? "opacity-100" : "opacity-0"
-                              )}
-                            />
-                          </Link>
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </div>
-          <Menu isOpen={!collapsed} />
+    >
+      <SidebarToggle isOpen={!collapsed} setIsOpen={setCollapsed} />
+      <div className="relative flex h-full flex-col overflow-y-auto px-3 py-4 shadow-md">
+        <Link
+          href="/dashboard"
+          className={cn(
+            "mb-1 flex items-center gap-2 self-center transition-transform duration-300 ease-in-out",
+            collapsed ? "translate-x-1" : "translate-x-0"
+          )}
+        >
+          <WorkerAILogo className="mr-1 size-8" />
+          <h1
+            className={cn(
+              "whitespace-nowrap text-xl font-bold transition-[transform,opacity,display] duration-300 ease-in-out",
+              collapsed ? "hidden -translate-x-96 opacity-0" : "translate-x-0 opacity-100"
+            )}
+          >
+            WorkerAI
+          </h1>
+        </Link>
+        <div className={cn("my-4 mx-auto", collapsed && "hidden")}>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={open}
+                className="w-[250px] justify-between "
+              >
+                <div className="overflow-hidden">
+                  {targetId
+                    ? targetList.find((target) => target.id === targetId)?.name || "Unnamed"
+                    : "Select Campaign"}
+                </div>
+                <ChevronsUpDown className="opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[250px] p-0 my-2">
+              <Command>
+                <CommandInput placeholder="Search Campaign..." />
+                <CommandList>
+                  <CommandEmpty>No campaigns found.</CommandEmpty>
+                  <CommandGroup>
+                    {targetList.map((target) => (
+                      <CommandItem
+                        key={target.id}
+                        onSelect={() => {
+                          setTargetId(target.id);
+                          setOpen(false);
+                        }}
+                      >
+                        <Link href="/dashboard/" className="w-full flex items-center">
+                          <div className="justify-self-center">
+                            <span className="font-medium">{target.name || "Unnamed"}</span>
+                          </div>
+                          <Check
+                            className={cn(
+                              "ml-auto",
+                              targetId === target.id ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                        </Link>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
-      </aside>
-    </>
+        <Menu isOpen={!collapsed} />
+      </div>
+    </aside>
   );
 }

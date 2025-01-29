@@ -24,7 +24,8 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link";
 
 // import Loading from "./loading"
-import Loading from "../(site)/loading"
+// import Loading from "../(site)/loading"
+import Loading from "../dashboard/loading"
 // import { useTargetContext } from "@/contexts/TargetIdContext"
 
 

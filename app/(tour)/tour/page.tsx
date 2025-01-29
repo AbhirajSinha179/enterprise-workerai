@@ -91,7 +91,7 @@ const DashboardHome: React.FC = () => {
                   <CardTitle className="text-foreground">Recent Response</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <RecentSales isDemo={true} />
+                  {/* <RecentSales isDemo={true} /> */}
                 </CardContent>
               </Card>
             </div>
