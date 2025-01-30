@@ -219,7 +219,7 @@ const DashboardHome: React.FC = () => {
     return isNavigating ? (
         <Loading />
     ) : (
-        <ContentLayout title="Overview">
+        <ContentLayout title="Back to Dashboard">
             <div className="container px-4 py-10 sm:px-8">
                 <main className="w-full space-y-4">
                     <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
