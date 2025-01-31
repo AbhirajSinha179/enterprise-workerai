@@ -1,10 +1,9 @@
-
 import { z } from "zod"
 
 export const emailSchema = z.object({
   id: z.string(),
   threadId: z.string(),
-  body: z.string(),
+  body: z.string().nullable(),
   subject: z.string(),
   recipient: z.string(),
   sendAt: z.string().nullable(),
@@ -25,7 +24,7 @@ export const leadSchema = z.object({
   email: z.string(),
   imgUrl: z.string().nullable(),
   firstName: z.string(),
-  lastName: z.string(),
+  lastName: z.string().nullable(),
   seniority: z.string().nullable(),
   country: z.string().nullable(),
   linkedin: z.string().nullable(),
@@ -37,22 +36,42 @@ export const leadSchema = z.object({
   blackListed: z.boolean().nullable(),
 })
 
+// export const replySchema = z.object({
+//   replyId: z.string().optional(),
+//   date: z.string().nullable().optional(),
+//   subject: z.string().nullable().optional(),
+//   body: z.string().nullable().optional(),
+//   from: z.string().nullable().optional(),
+// })
 export const replySchema = z.object({
-  id: z.string().optional(),
-  date: z.string().nullable(),
-  subject: z.string().nullable(),
-  body: z.string(),
-  from: z.string(),
+  id: z.string(),
+  threadId: z.string().nullable().optional(),
+  replyId: z.string().nullable().optional(),
+  createdAt: z.string().nullable().optional(),
+  from: z.string().nullable().optional(),
+  body: z.string().nullable().optional(),
+  date: z.string().nullable().optional(),
+  subject: z.string().nullable().optional(),
 })
 
 export const threadSchema = z.object({
   threadId: z.string(),
   emails: z.array(emailSchema),
   replies: z.array(replySchema).nullable(),
-  lead: leadSchema,
+  lead: leadSchema.nullable().optional(),
+  senderEmail: z.string().nullable(),
 })
 
 export const threadsSchema = z.array(threadSchema)
+
+export const repliesSchema = z.array(
+  z.object({
+    threadId: z.string(),
+    emails: z.array(emailSchema),
+    replies: z.array(replySchema),
+    senderEmail: z.string(),
+  })
+)
 
 // export interface UnscheduledEmailThread {
 //   id: string
@@ -162,8 +181,8 @@ export interface ScheduledEmail {
     subject: string
     recipient: string
     createdAt: string
-    sendAt: string
-    body: string
+    sendAt: string | null
+    body: string | null
     isFollowUp: boolean
     approved: boolean
     draftId: string | null
@@ -180,8 +199,8 @@ export interface ScheduledEmail {
     email: string
     imgUrl: string | null
     firstName: string
-    lastName: string
-    seniority: string
+    lastName: string | null
+    seniority: string | null
     country: string | null
     linkedin: string | null
     city: string | null
@@ -190,8 +209,11 @@ export interface ScheduledEmail {
     timezone: string | null
     companyId: string | null
     blackListed: boolean | null
+    enriched: string
+    enrichedAt: string | null
   }
   senderId: string
+  senderEmail: string
 }
 
 export const scheduledEmailSchema = z.object({
@@ -200,8 +222,8 @@ export const scheduledEmailSchema = z.object({
     subject: z.string(),
     recipient: z.string(),
     createdAt: z.string(),
-    sendAt: z.string(),
-    body: z.string(),
+    sendAt: z.string().nullable(),
+    body: z.string().nullable(),
     isFollowUp: z.boolean(),
     approved: z.boolean(),
     draftId: z.string().nullable(),
@@ -218,18 +240,21 @@ export const scheduledEmailSchema = z.object({
     email: z.string(),
     imgUrl: z.string().nullable(),
     firstName: z.string(),
-    lastName: z.string(),
-    seniority: z.string(),
+    lastName: z.string().nullable(),
+    seniority: z.string().nullable(),
     country: z.string().nullable(),
-    linkedin: z.string().nullable(),
-    city: z.string().nullable(),
-    state: z.string().nullable(),
+    linkedin: z.union([z.string(), z.literal("")]).nullable(),
+    city: z.union([z.string(), z.literal("")]).nullable(),
+    state: z.union([z.string(), z.literal("")]).nullable(),
     EmailAddStatus: z.string(),
     timezone: z.string().nullable(),
     companyId: z.string().nullable(),
     blackListed: z.boolean().nullable(),
+    enriched: z.string(),
+    enrichedAt: z.string().nullable(),
   }),
   senderId: z.string(),
+  senderEmail: z.string(),
 })
 
 export const scheduledEmailResponseSchema = z.object({
@@ -251,7 +276,7 @@ export interface Email {
   id: string
   threadId: string
   // name: string
-  body: string
+  body: string | null
   subject: string
   recipient: string
   sendAt: string | null
@@ -272,7 +297,7 @@ export interface Lead {
   email: string
   imgUrl: string | null
   firstName: string
-  lastName: string
+  lastName: string | null
   seniority: string | null
   country: string | null
   linkedin: string | null
@@ -288,17 +313,17 @@ export interface Thread {
   threadId: string
   emails: Email[]
   replies: [] | Reply[] | Email[] | any
-  lead: Lead
+  lead?: Lead | null
+  senderEmail: string
 }
 
 export interface Reply {
   id: string
   date: string
-  subject: string
+  subject?: string
   body: string
   from: string
 }
-
 
 export interface CombinedMail {
   type: "EMAIL" | "REPLY"
@@ -306,15 +331,13 @@ export interface CombinedMail {
 }
 
 export interface MailProps {
-  accounts?: {
-    label: string
-    email: string
-    icon: React.ReactNode
-  }[]
   threads: Thread[]
-  defaultLayout?: number[] | undefined
-  defaultCollapsed?: boolean
-  navCollapsedSize?: number
+  replies?: Thread[]
+  defaultLayout?: number[]
+  lastEmailRef?: (node: HTMLDivElement) => void
+  replyEmailRef?: (node: HTMLDivElement) => void
+  loading?: boolean
+  loadingReplies?: boolean
 }
 
 export interface MailDisplayProps {
@@ -323,6 +346,9 @@ export interface MailDisplayProps {
 
 export interface MailListProps {
   items: Thread[]
+  // lastEmailRef: (node: HTMLDivElement) => void
+  lastEmailRef?: ((node: HTMLDivElement) => void) | undefined
+  loading?: boolean
 }
 
 export interface ThreadList {
@@ -346,10 +372,10 @@ export interface StatDashboard {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
 }
 export interface DataGraph {
-  date: string
-  opens: number
-  total_emails: number
-  total_unique_emails: number
+  date: string | null
+  opens: number | null
+  total_emails: number | null
+  // total_unique_emails: number
 }
 export interface SalesDataItem {
   name: string
@@ -381,16 +407,19 @@ export interface SalesDataItem {
 // })
 
 const dataItemSchema = z.object({
-  date: z.string(), // ISO string format for dates
-  opens: z.number(),
-  total_emails: z.number(),
-  total_unique_emails: z.number(),
+  date: z.string().nullable(), // ISO string format for dates
+  opens: z.number().nullable(),
+  total_emails: z.number().nullable(),
+  total_unique_emails: z.number().optional(),
 })
 
 // Define the schema for the overall dashboard data
 export const dashboardDataSchema = z.object({
+  total_emails: z.number(),
+  total_replies: z.number(),
   total_clicks: z.number(),
   total_opens: z.number(),
+  total_unique_emails: z.number().nullable(),
   data: z.array(dataItemSchema),
 })
 
@@ -413,11 +442,24 @@ export const emailThreadSchema = z.object({
   bounced: z.boolean().nullable(), // Added nullable field
 })
 
+export const getThreadApiResponseSchema = z.array(
+  z.object({
+    threadId: z.string(),
+    emails: z.array(emailThreadSchema), // Array of emails in the thread
+    replies: z.array(replySchema), // Array of replies in the thread
+    lead: leadSchema, // Lead information
+    senderEmail: z.string(), // Sender email
+  })
+)
 
-export const getThreadApiResponseSchema = z.object({
-  emails: z.array(emailThreadSchema),
-  replies: z.array(replySchema),
-})
+export const recentResponseSchema = z.array(
+  z.object({
+    id: z.string(),
+    body: z.string(),
+    date: z.string(),
+    from: z.string(),
+  })
+)
 
 export type EmailThread = z.infer<typeof emailThreadSchema>
 
@@ -430,8 +472,32 @@ export const mailboxSchema = z.object({
   userId: z.string(),
   warmupCapacity: z.number(),
   dailyCapacity: z.number(),
+  position: z.string().nullable(),
+  company: z.string().nullable(),
 })
 
 export const mailboxSchemaArray = z.array(mailboxSchema)
 
-export const instantReplyResponseSchema = z.object({ message: z.string(), emailId: z.string().uuid(), email: z.array(emailSchema) })
+export const instantReplyResponseSchema = z.object({
+  message: z.string(),
+  emailId: z.string().uuid(),
+  email: z.array(emailSchema),
+})
+
+//campaigns
+export const campaignSchema = z.object({
+  id: z.string(),
+  industry: z.string().optional(),
+  region: z.string().optional(),
+  companySize: z.string().optional(),
+  active: z.boolean(),
+  targetName: z.string().optional(),
+})
+
+export const getTargetsApiResponseSchema = z.object({
+  message: z.string(),
+  targets: z.array(campaignSchema),
+})
+
+// TypeScript types inferred from Zod schema
+export type Campaign = z.infer<typeof campaignSchema>

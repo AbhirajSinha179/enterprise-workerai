@@ -1,6 +1,7 @@
 import Link from "next/link"
 // import CoverImage from "./cover-image"
 import CoverImage from "@/components/blogs/cover-image"
+
 type Props = {
   title: string
   coverImage: string
@@ -11,20 +12,21 @@ type Props = {
 export function HeroPost({ title, coverImage, excerpt, slug }: Props) {
   return (
     <section>
-      <div className="mb-8 md:mb-16">
-      </div>
-      <div className="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
-        <CoverImage title={title} src={coverImage} slug={slug} />
-        <div>
+      <div className="my-10 md:mb-54">
+        <div className="py-4">
+          {/* Cover Image */}
+          <div>
+            <CoverImage title={title} src={coverImage} slug={slug} />
+            <h3 className="mt-4 text-3xl leading-tight lg:text-3xl font-bold">
+              <Link href={`/posts/${slug}`} className="hover:underline">
+                {title}
+              </Link>
+            </h3>
+          </div>
+          {/* Cover Image */}
 
-        <div>
-          <h3 className="mb-4 text-4xl leading-tight lg:text-5xl">
-            <Link href={`/posts/${slug}`} className="hover:underline">
-              {title}
-            </Link>
-          </h3>
-        </div>
-          <p className="mb-4 text-lg leading-relaxed">{excerpt}</p>
+          {/* Optional: Add the excerpt if needed */}
+          {/* <p className="mt-4 text-lg leading-relaxed">{excerpt}</p> */}
         </div>
       </div>
     </section>

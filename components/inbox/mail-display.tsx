@@ -15,6 +15,7 @@ import { Timeline } from "../ui/timeline"
 export function MailDisplay({ threadData }: MailDisplayProps) {
   const [replyContent, setReplyContent] = useState<string>("")
   const [threadContent, setThreadContent] = useState<CombinedMail[]>([])
+  const [sendingReply, setSendingReply] = useState(false)
   // const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || []
   // if (threadData?.replies) {
   //   threadData.replies.forEach((r: Reply) => {
@@ -34,7 +35,8 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
 
   const handleReplySubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!replyContent.trim()) return
+    if (!replyContent.trim() || !!sendingReply) return
+    setSendingReply(true)
 
     try {
       const result = await submitReplyContent(replyContent, threadData?.threadId!)
@@ -46,25 +48,39 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
     } catch (error) {
       console.error("Error submitting the reply:", error)
       toast.error("Failed to send the message.")
+    } finally {
+      setSendingReply(false)
     }
   }
 
   useEffect(() => {
-    const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || []
+    const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || [];
     if (threadData?.replies) {
       threadData.replies.forEach((r: Reply) => {
-        thread.push({ type: "REPLY", data: r })
-      })
+        thread.push({ type: "REPLY", data: r });
+      });
     }
 
     thread.sort((a, b) => {
-      const dateA = (a.type == "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
-      const dateB = (b.type == "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
-      return new Date(dateA).getTime() - new Date(dateB).getTime()
-    })
+      const sanitizeDate = (date: string | null) => {
+        if (!date) return "";
+        const sanitized = date.split("+")[0]?.trim();
+        return sanitized;
+      };
 
-    setThreadContent(thread)
-  }, [threadData])
+      const dateA = sanitizeDate(a.type === "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || "";
+      const dateB = sanitizeDate(b.type === "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || "";
+
+      console.log("Sanitized DATE A:", dateA);
+      console.log("Sanitized DATE B:", dateB);
+
+      return new Date(dateA).getTime() - new Date(dateB).getTime();
+    });
+
+    setThreadContent(thread);
+  }, [threadData]);
+
+
 
   return (
     <div className="flex h-full flex-col">
@@ -107,6 +123,7 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
                     showLine={true}
                     isLast={index === threadContent.length - 1}
                     showSubject={index === 0}
+                    from={threadData?.senderEmail || "Unknown"}
                   />
                 ))}
               </Timeline>
@@ -123,7 +140,7 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
                   onChange={handleReplyChange}
                 />
                 <div className="flex items-center">
-                  <Button type="submit" size="sm" className="ml-auto">
+                  <Button type="submit" size="sm" className="ml-auto" disabled={!!sendingReply}>
                     Send
                   </Button>
                 </div>

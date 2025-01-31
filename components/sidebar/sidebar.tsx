@@ -1,14 +1,33 @@
-import Link from "next/link"
-
-import { Menu } from "@/components/sidebar/menu"
-import { SidebarToggle } from "@/components/sidebar/sidebar-toggle"
-import { cn } from "@/lib/utils"
-// import { useLockedBody } from "@/hooks/useBodyLock";
-import { WorkerAILogo } from "../global/logo"
-import { useSidebarContext } from "../layout/layout-context"
+import Link from "next/link";
+import React from "react";
+import {
+  Button,
+} from "@/components/ui/button";
+import { Menu } from "@/components/sidebar/menu";
+import { SidebarToggle } from "@/components/sidebar/sidebar-toggle";
+import { cn } from "@/lib/utils";
+import { WorkerAILogo } from "../global/logo";
+import { useSidebarContext } from "../layout/layout-context";
+import { useTargetContext } from "@/contexts/TargetIdContext";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Check, ChevronsUpDown } from "lucide-react";
 
 export function Sidebar() {
-  const { collapsed, setCollapsed } = useSidebarContext()
+  const { collapsed, setCollapsed } = useSidebarContext();
+  const { targetList, setTargetId, targetId } = useTargetContext();
+  const [open, setOpen] = React.useState(false);
 
   return (
     <aside
@@ -36,8 +55,58 @@ export function Sidebar() {
             WorkerAI
           </h1>
         </Link>
+        <div className={cn("my-4 mx-auto", collapsed && "hidden")}>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={open}
+                className="w-[250px] justify-between "
+              >
+                <div className="overflow-hidden">
+                  {targetId
+                    ? targetList.find((target) => target.id === targetId)?.name || "Unnamed"
+                    : "Select Campaign"}
+                </div>
+                <ChevronsUpDown className="opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[250px] p-0 my-2">
+              <Command>
+                <CommandInput placeholder="Search Campaign..." />
+                <CommandList>
+                  <CommandEmpty>No campaigns found.</CommandEmpty>
+                  <CommandGroup>
+                    {targetList.map((target) => (
+                      <CommandItem
+                        key={target.id}
+                        onSelect={() => {
+                          setTargetId(target.id);
+                          setOpen(false);
+                        }}
+                      >
+                        <Link href="/dashboard/" className="w-full flex items-center">
+                          <div className="justify-self-center">
+                            <span className="font-medium">{target.name || "Unnamed"}</span>
+                          </div>
+                          <Check
+                            className={cn(
+                              "ml-auto",
+                              targetId === target.id ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                        </Link>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+        </div>
         <Menu isOpen={!collapsed} />
       </div>
     </aside>
-  )
+  );
 }

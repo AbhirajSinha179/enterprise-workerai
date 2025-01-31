@@ -6,6 +6,8 @@ import { CalendarDatePicker } from "@/components/ui/calendar-date-picker";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Form, FormItem, FormControl, FormMessage, FormField } from "@/components/ui/form";
+import moment from "moment";
+import { useDateRange } from "@/contexts/DateRangeContext";
 
 // Define the schema for the form
 const FormSchema = z.object({
@@ -15,22 +17,16 @@ const FormSchema = z.object({
   }),
 });
 
-interface CalendarFormProps {
-  setStartDate: (date: string) => void;
-  setEndDate: (date: string) => void;
-}
-
 // Component to handle the calendar form
-const CalendarFormComponent: React.FC<CalendarFormProps> = ({ setStartDate, setEndDate }) => {
+const CalendarFormComponent: React.FC = () => {
   const { control, handleSubmit, setValue } = useFormContext();
+  const { setStartDate, setEndDate } = useDateRange();
 
   const onSubmit = async (data: any) => {
     const startDate = data.calendar.from.toISOString();
     const endDate = data.calendar.to.toISOString();
-    const formattedStartDate = encodeURIComponent(new Date(startDate).toISOString());
-    const formattedEndDate = encodeURIComponent(new Date(endDate).toISOString());
-    setStartDate(formattedStartDate);
-    setEndDate(formattedEndDate);
+    setStartDate(startDate);
+    setEndDate(endDate);
     toast(`You have selected a date range: ${data.calendar.from.toDateString()} - ${data.calendar.to.toDateString()}`);
   };
 
@@ -62,23 +58,22 @@ const CalendarFormComponent: React.FC<CalendarFormProps> = ({ setStartDate, setE
 };
 
 // Main component that wraps the form with FormProvider
-const CalendarForm: React.FC<CalendarFormProps> = ({ setStartDate, setEndDate }) => {
+const CalendarForm: React.FC = () => {
+  const { startDate, endDate } = useDateRange();
+
   const formMethods = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       calendar: {
-        from: new Date(new Date().getFullYear(), 0, 1),
-        to: new Date(),
+        from: startDate ? new Date(startDate) : new Date(new Date().getFullYear(), 0, 1),
+        to: endDate ? new Date(endDate) : new Date(),
       },
     },
   });
 
   return (
     <FormProvider {...formMethods}>
-      <CalendarFormComponent
-        setStartDate={setStartDate}
-        setEndDate={setEndDate}
-      />
+      <CalendarFormComponent />
     </FormProvider>
   );
 };

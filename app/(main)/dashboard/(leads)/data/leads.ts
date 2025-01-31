@@ -1,5 +1,5 @@
-import { Leads } from "./schema"
-const leadsData: Leads[] = [
+import { Lead } from "./schema"
+const leadsData: Lead[] = [
   {
     id: "1",
     name: "Jack",

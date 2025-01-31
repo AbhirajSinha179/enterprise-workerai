@@ -4,18 +4,23 @@ import CSVUpload from "@/components/outbound/csvUploader"
 import InputWithCommas from "@/components/outbound/input-with-commas"
 import OmitLeads from "@/components/outbound/multioptionomitlead"
 import MultiSelectCard from "@/components/outbound/multiSelectChip"
+import { useTargetContext } from "@/contexts/TargetIdContext"
+
 
 const locations = [{ name: "India" }, { name: "USA" }, { name: "Germany" }]
 
+
 export default function OutboundSetting() {
+  const { targetId }: any = useTargetContext()
   return (
     <ContentLayout title="Outbound Settings">
       <div className="grid gap-6">
         <CSVUpload
           key="upload-custom-leads"
           title="Upload Custom Leads (CSV)"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing"
+          description="Upload your CSV file to seamlessly import and process your data"
           endpoint={`${process.env.NEXT_PUBLIC_API_BASE_URL}/leads`}
+          targetId={targetId}
           verification
           requiredColumns={[
             { name: "email", required: true },
@@ -25,7 +30,7 @@ export default function OutboundSetting() {
             { name: "seniority", required: false },
             { name: "country", required: false },
             { name: "linkedin", required: false },
-            { name: "city", required: false},
+            { name: "city", required: false },
             { name: "state", required: false },
             { name: "timezone", required: false },
             { name: "companyName", required: true },
@@ -33,7 +38,7 @@ export default function OutboundSetting() {
           ]}
         />
 
-        <OmitLeads title={"Omit Leads"} description="Lorem, ipsum dolor sit amet consectetur adipisicing"></OmitLeads>
+        {/* <OmitLeads title={"Omit Leads"} description="Lorem, ipsum dolor sit amet consectetur adipisicing"></OmitLeads>
 
         <MultiSelectCard
           cardTitle="Location"
@@ -49,7 +54,7 @@ export default function OutboundSetting() {
         <InputWithCommas
           cardTitle="Blacklisted email domains"
           cardDescription="Lorem, ipsum dolor sit amet consectetur adipisicing"
-        />
+        /> */}
       </div>
     </ContentLayout>
   )

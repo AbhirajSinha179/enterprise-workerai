@@ -5,9 +5,11 @@ import {
   Calendar,
   InboxIcon,
   LayoutGrid,
+  LineChart,
   LucideSquareArrowOutUpRight,
   Mail,
   Sparkles,
+  Rocket,
   Users,
 } from "lucide-react"
 
@@ -30,20 +32,33 @@ type Group = {
   menus: Menu[]
 }
 
-const DASHBOARD_PATH = "/dashboard"
+// const DASHBOARD_PATH = "/dashboard"
 
 export const CLIENT_ID = "205356801177-sgo5c1okrp6j5vlpjp291ilk66idpnml.apps.googleusercontent.com"
 
 export function getMenuList(pathname: string): Group[] {
+  const DASHBOARD_PATH = pathname.includes("/tour") ? "/tour" : "/dashboard"
   return [
     {
-      groupLabel: "",
+      groupLabel: "Analytics",
       menus: [
         {
           href: `${DASHBOARD_PATH}`,
           label: "Dashboard",
           active: pathname.includes("/dashboard"),
           icon: LayoutGrid,
+          submenus: [],
+        },
+      ],
+    },
+    {
+      groupLabel: "",
+      menus: [
+        {
+          href: `/overview`,
+          label: "Overview",
+          active: pathname.includes("/over-view"),
+          icon: LineChart,
           submenus: [],
         },
       ],
@@ -77,6 +92,13 @@ export function getMenuList(pathname: string): Group[] {
           label: "Leads",
           active: pathname.includes("/leads"),
           icon: ArrowBigRightDash,
+          submenus: [],
+        },
+        {
+          href: `${DASHBOARD_PATH}/campaigns`,
+          label: "Campaigns",
+          active: pathname.includes("/campaigns"),
+          icon: Rocket,
           submenus: [],
         },
         {
@@ -115,6 +137,42 @@ export const getLandingNavList = () => [
   {
     href: "/contact",
     label: "Contact",
+  },
+]
+
+export const MESSAGE_BUBBLE_QUESTIONS = [
+  "How do I find the best leads?",
+
+  "How can I improve email deliverability?",
+
+  "What is the best copy for emails?",
+
+  "How can I decrease my email bounce rate?",
+
+  "What is the best platform for finding leads?",
+
+  "What is the best subject line for outbound emails?",
+
+  "How can I automate and scale outbound emails?",
+
+  "What is the best platform for researching prospects?",
+]
+
+export const ABOUT_US_SECTIONS = [
+  {
+    title: "Our Mission",
+    description:
+      "At Worker AI, our mission is to revolutionize the outbound sales process by automating the entire workflow using cutting-edge AI technology. We empower businesses to scale personalized outreach efforts, targeting the right prospects with hyper-personalized emails, optimized follow-ups, and seamless deliverability.",
+  },
+  {
+    title: "Our Vision",
+    description:
+      "We envision a future where businesses of any size can harness the power of AI to streamline their sales process, build stronger relationships with clients, and grow faster without compromising personalization. Our goal is to become the go-to platform for AI-driven sales automation, replacing traditional, time-consuming methods.",
+  },
+  {
+    title: "Our Story",
+    description:
+      "Worker AI started with a simple yet powerful idea: What if AI could not just assist in sending emails, but automate the entire outbound sales process? Born out of a need to solve real-world challenges faced by businesses trying to scale their outreach, Worker AI was founded by a team of passionate individuals who combine expertise in AI, technology, and sales to create a transformative product. We're driven by the belief that businesses should focus more on relationships, not the technicalities of sales outreach",
   },
 ]
 
@@ -160,6 +218,11 @@ export const MULTIDIRECTION_SLIDE_VARIANTS = {
   hidden: { opacity: 0, x: "-25vw" },
   visible: { opacity: 1, x: 0 },
   right: { opacity: 0, x: "25vw" },
+}
+
+export const FADE_DOWN_ANIMATION_VARIANTS = {
+  hidden: { opacity: 0, y: -10 },
+  show: { opacity: 1, y: 0, transition: { type: "spring" } },
 }
 
 export const wordVariants = {

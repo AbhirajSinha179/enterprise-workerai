@@ -36,7 +36,7 @@ const InputSpotlightBorder = ({ value, onChange, name, type, placeholder }: any)
 
   return (
     <>
-      <div className="relative w-full flex-1">
+      <div className="relative w-full flex-1 min-w-64">
         <input
           value={value}
           onChange={onChange}
@@ -49,7 +49,7 @@ const InputSpotlightBorder = ({ value, onChange, name, type, placeholder }: any)
           name={name}
           type={type}
           placeholder={placeholder}
-          className="h-12 w-full cursor-default rounded-md border border-gray-800 bg-gray-950 p-3.5 text-gray-100 transition-colors duration-500 placeholder:select-none  placeholder:text-gray-500 focus:border-[#8678F9] focus:outline-none"
+          className="h-12 w-full cursor-text rounded-md border border-gray-800 bg-gray-950 p-3.5 text-gray-100 transition-colors duration-500 placeholder:select-none  placeholder:text-gray-500 focus:border-[#8678F9] focus:outline-none"
         />
         <input
           ref={divRef}

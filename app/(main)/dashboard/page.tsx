@@ -1,28 +1,35 @@
 "use client"
-import React, { useState, useEffect } from "react"
-import { Eye, MailOpen, Send, Target, Star } from "lucide-react"
+import { useAuth } from "@clerk/nextjs"
+import { Eye, MailOpen, Reply, Send, Star } from "lucide-react"
+import moment from "moment"
+import React, { useEffect, useState } from "react"
+import { toast } from "sonner"
+import CalendarForm from "@/components/dashboard/CalendarForm"
 import { Overview } from "@/components/dashboard/overview"
 // import { RecentSales } from "@/components/dashboard/recent-sales"; string
 import { ContentLayout } from "@/components/layout/content-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { useDateRange } from "@/contexts/DateRangeContext"
+import { getOpenRate, getResponseRate } from "@/lib/utils"
 import {
   dashboardDataSchema,
   DataGraph,
-  SalesDataItem,
-  StatDashboard,
   getThreadApiResponseSchema,
+  // SalesDataItem,
+  // StatDashboard,
 } from "@/types/interface"
-import CalendarForm from "@/components/dashboard/CalendarForm"
-import moment from "moment"
-import { getOpenRate, getResponseRate } from "@/lib/utils"
-import { toast } from "sonner"
-import Loading from "./loading"
-import { useAuth } from "@clerk/nextjs"
+import { Skeleton } from "@/components/ui/skeleton"
+// import Loading from "./loading"
+import { useTargetContext } from "@/contexts/TargetIdContext"
 import RecentSales from "@/components/dashboard/recent-sales"
 
+
 const defaultDashboardData = {
+  total_replies: 0,
+  total_emails: 0,
   total_clicks: 0,
   total_opens: 0,
+  total_unique_emails: 0,
   data: [
     {
       date: "2024-01-01T00:00:00Z",
@@ -33,10 +40,10 @@ const defaultDashboardData = {
   ],
 }
 
-async function fetchDashboardDataUsingRange(type: string, id: string, startDate: string, endDate: string) {
+async function fetchDashboardDataUsingRange(type: string, id: any, startDate: string, endDate: string) {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/analytics/${type}/${id}/range?start=${startDate}&end=${endDate}`
-    const res = await fetch(url)
+    const res = await fetch(url, { next: { revalidate: 60 } })
     console.log(`Response status for analytics by range: ${res.status}`)
     if (!res.ok && res.status !== 404) {
       throw new Error(`Failed to fetch data. Status code: ${res.status}`)
@@ -66,78 +73,67 @@ async function fetchDashboardDataUsingRange(type: string, id: string, startDate:
 
 async function fetchRecentReply(targetId: string) {
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/thread/target/${targetId}/`
-    console.log(url)
-    const res = await fetch(url)
-    console.log(`Response status for get thread API call response: ${res.status}`)
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/target/${targetId}?limit=5`;
+
+    // console.log(url);
+    const res = await fetch(url);
+    console.log(`Response status for get thread API call response: ${res.status}`);
+
     if (!res.ok) {
-      throw new Error(`Failed to fetch data. Status code: ${res.status}`)
+      throw new Error(`Failed to fetch data. Status code: ${res.status}`);
     }
 
-    const data = await res.json()
-    const result = getThreadApiResponseSchema.safeParse(data)
+    const data = await res.json();
+    const result = getThreadApiResponseSchema.safeParse(data);
 
     if (!result.success) {
-      console.error(result.error)
-      throw new Error("Invalid data format")
+      console.error(result.error);
+      throw new Error("Invalid data format");
     }
 
-    return result.data.replies.sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime()).slice(0, 10)
+    // Sort and map replies with their respective leads
+    const sortedReplies = result.data
+      .flatMap((thread) =>
+        thread.replies.map((reply) => ({
+          ...reply,
+          lead: thread.lead, // Attach lead info to each reply
+        }))
+      )
+      .sort((a, b) => new Date(b.date || "").getTime() - new Date(a.date || "").getTime())
+      .slice(0, 10); // Limit to 10 replies
+
+    return sortedReplies || [];
   } catch (error: any) {
-    console.error("Error fetching data:", error.message)
-    throw error
+    console.error("Error fetching data:", error.message);
+    throw error;
   }
 }
-
-// export async function getTargetIdByUser(userId: string): Promise<string | null> {
-//   try {
-//     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/target/${userId}`;
-//     const res = await fetch(url);
-
-//     if (!res.ok) {
-//       if (res.status === 404) {
-//         toast.error("No targets found for this user.");
-//         return null;
-//       } else {
-//         throw new Error(`Failed to fetch targets. Status code: ${res.status}`);
-//       }
-//     }
-
-//     const data: any = await res.json();
-//     if (!data.targets || data.targets.length === 0) {
-//       toast.error("No targets found for this user.");
-//       return null;
-//     }
-
-//     const targetId = data.targets[0].id; // Assuming you want the first target ID
-//     return targetId;
-//   } catch (error: any) {
-//     console.error("Error fetching target ID:", error.message);
-//     toast.error("Error fetching target ID.");
-//     return null;
-//   }
-// }
-
 const DashboardHome: React.FC = () => {
-  const { userId } = useAuth()
-  // const TARGET_ID: string = "1c1108a8-9108-42e2-8177-4e655bbc87ed"
-
-  // const [startDate, setStartDate] = useState<string>("2024-01-08T00%3A00%3A00.000Z");
-  // const [endDate, setEndDate] = useState<string>("2024-07-26T23%3A59%3A59.000Z");
-  const [startDate, setStartDate] = useState<string>(moment().toISOString())
-  const [endDate, setEndDate] = useState<string>(moment().subtract(1, "months").toISOString())
-
+  const { userId } = useAuth();
+  const { startDate, endDate, setStartDate, setEndDate } = useDateRange();
   const [statsDashboard, setStatsDashboard] = useState(defaultDashboardData)
   const [dataGraph, setDataGraph] = useState<DataGraph[]>([])
-  // const [recentSalesData, setRecentSalesData] = useState<any[]>([]);
   const [responseStatus, setResponseStatus] = useState<number | null>(null)
   const [openRate, setOpenRate] = useState<number>(0)
+  const [totalOpen, setTotalOpen] = useState<number>(0)
   const [responseRate, setResponseRate] = useState<number>(0)
   const [totalUniqueEmails, setTotalUniqueEmails] = useState<number>(0)
   const [totalSentEmails, setTotalSentEmails] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(true)
+  const { targetId } = useTargetContext();
+  const [isFetchingTargetId, setIsFetchingTargetId] = useState(true);
+  const [recentReplies, setRecentReplies] = useState<any[]>([])
+
+
+
 
   useEffect(() => {
+    if (!targetId) {
+      setIsFetchingTargetId(true);
+      return;
+    }
+    setIsFetchingTargetId(false);
+
     async function fetchData() {
       if (!userId) {
         console.log("USER ID NOT FOUND ")
@@ -146,29 +142,33 @@ const DashboardHome: React.FC = () => {
       }
       setIsLoading(true)
       try {
-        console.log("START DATE : ", startDate)
-        console.log("END DATE : ", endDate)
-        const dashboardData = await fetchDashboardDataUsingRange("userId", userId, startDate, endDate)
-        // dummy userId
-        // const dashboardData = await fetchDashboardDataUsingRange("userId", "user_2jQ7lufOqU1WFrEsi2wG3B7zF70", startDate, endDate);
-        // const targetId: any = await getTargetIdByUser(userId);
-        // const recentReplies = await fetchRecentReply(targetId);
+        // console.log("START DATE : ", startDate)
+        // console.log("END DATE : ", endDate)
+        // console.log("TARGET ID : ", targetId)
+        if (!targetId) return
+        const dashboardData = await fetchDashboardDataUsingRange("targetId", targetId, startDate, endDate)
+        const recentReplies = await fetchRecentReply(targetId)
+        setRecentReplies(recentReplies)
 
-        // Destructuring dashboardData
-        const { total_opens, total_clicks, data } = dashboardData
+        const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dashboardData
 
-        // Calculating open rate and response rate
-        const totalUniqueEmails = data.reduce((sum, item) => sum + item.total_unique_emails, 0)
-        const openRate: any = getOpenRate({ total_opens, totalUniqueEmails })
-        const responseRate: any = getResponseRate({ total_responses: total_clicks, totalUniqueEmails })
+        const totalUniqueEmails = total_unique_emails ? total_unique_emails : 0
+        const openRate: any = getOpenRate({ total_opens, total_emails })
+        const responseRate: any = getResponseRate({ total_replies: total_replies, totalUniqueEmails })
 
-        // Updating state
         setTotalUniqueEmails(totalUniqueEmails)
-        setTotalSentEmails(data.reduce((sum, item) => sum + item.total_emails, 0))
+        setTotalSentEmails(data.reduce((sum, item) => sum + (item.total_emails ?? 0), 0))
         setOpenRate(openRate)
         setResponseRate(responseRate)
+        setTotalOpen(total_opens)
         setResponseStatus(200)
-        setDataGraph(data)
+        setDataGraph(
+          data.map((item) => ({
+            ...item,
+            total_emails: item.total_emails ?? 0,
+            date: moment(item.date).format('MMM Do YY'),
+          }))
+        )
         setIsLoading(false)
       } catch (error: any) {
         if (error.message.includes("Status code: 404")) {
@@ -187,7 +187,7 @@ const DashboardHome: React.FC = () => {
     }
 
     fetchData()
-  }, [startDate, endDate])
+  }, [startDate, endDate, targetId, userId])
 
   const cardConfigs = [
     {
@@ -203,6 +203,12 @@ const DashboardHome: React.FC = () => {
       className: "text-muted-foreground",
     },
     {
+      title: "Total Open",
+      stat: totalOpen,
+      icon: Eye,
+      className: "text-muted-foreground",
+    },
+    {
       title: "Open Rate",
       stat: openRate,
       icon: MailOpen,
@@ -211,70 +217,95 @@ const DashboardHome: React.FC = () => {
     {
       title: "Response Rate",
       stat: responseRate,
-      icon: Eye,
+      icon: Reply,
       className: "text-muted-foreground",
     },
-    // {
-    //   title: "Monthly Target",
-    //   stat: "2500",
-    //   icon: Target,
-    //   className: "text-muted-foreground",
-    // },
   ]
+  const isLoadingDashboard = isLoading || isFetchingTargetId;
 
   return (
     <ContentLayout title="Dashboard">
       <main className="w-full space-y-4">
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
-            <div className="flex justify-between space-x-10 space-y-2">
-              <div>
-                <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
-                <p className="text-muted-foreground">Here&apos;s all the analytics available.</p>
-              </div>
-              <CalendarForm setStartDate={setStartDate} setEndDate={setEndDate} />
-            </div>
+        <div className="hidden h-full flex-1 flex-col space-y-4 md:flex">
+          <div className="flex justify-between space-x-10 space-y-2">
             <div>
-              <div className="my-4 flex gap-x-4">
-                {cardConfigs.map((config) => (
-                  <Card className="w-full overflow-x-auto" key={config.title}>
+              <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+              <p className="text-muted-foreground">Here&apos;s all the analytics available.</p>
+            </div>
+            <CalendarForm />
+          </div>
+          <div>
+            <div className="my-4 flex gap-x-4">
+              {isLoadingDashboard
+                ? Array.from({ length: cardConfigs.length }).map((_, idx) => (
+                  <Card className="w-full overflow-x-auto" key={idx}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium text-muted-foreground">{config.title}</CardTitle>
-                      <config.icon className={`size-4 text-${config.className}`} width={24} height={24} />
+                      <Skeleton className="h-6 w-20" />
+                      <Skeleton className="h-6 w-6" />
                     </CardHeader>
                     <CardContent>
-                      <div className="text-4xl font-bold text-foreground">{config.stat}</div>
+                      <Skeleton className="h-12 w-32" />
+                    </CardContent>
+                  </Card>
+                ))
+                : cardConfigs.map((config) => (
+                  <Card className="w-full overflow-x-auto" key={config.title}>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium text-muted-foreground">
+                        {config.title}
+                      </CardTitle>
+                      <config.icon
+                        className={`size-4 text-${config.className}`}
+                        width={24}
+                        height={24}
+                      />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold text-foreground">
+                        {config.stat}
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
-              </div>
-              <div className="w-full space-y-5">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-foreground">Overview</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pl-2">
-                    <Overview data={dataGraph} />
-                  </CardContent>
-                </Card>
+            </div>
+            <div className="w-full space-y-5">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-foreground">Overview</CardTitle>
+                </CardHeader>
+                <CardContent className="pl-2">
+                  <Overview data={dataGraph} isLoading={isLoading} />
+                </CardContent>
+              </Card>
 
-                <Card className="overflow-y-auto">
-                  <CardHeader>
-                    <CardTitle className="text-foreground">Recent Response</CardTitle>
-                    <CardDescription>Unread</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    {/* <RecentSales />
-                      <RecentSales/> */}
-                    <RecentSales />
-                  </CardContent>
-                </Card>
-              </div>
+              <Card className="overflow-y-auto">
+                <CardHeader>
+                  <CardTitle className="text-foreground">Recent Response</CardTitle>
+                  {/* <CardDescription>Unread</CardDescription> */}
+                </CardHeader>
+                <CardContent>
+                  {isLoading ? (
+                    <div className="space-y-4">
+                      {Array.from({ length: 5 }).map((_, idx) => (
+                        <div key={idx} className="flex items-center space-x-4">
+                          <Skeleton className="h-10 w-10 rounded-full" />
+                          <div className="flex-1 space-y-2">
+                            <Skeleton className="h-4 w-1/2" />
+                            <Skeleton className="h-3 w-1/3" />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : recentReplies.length > 0 ? (
+                    <RecentSales data={recentReplies} />
+                  ) : (
+                    <p className="text-sm text-muted-foreground">No recent responses found.</p>
+                  )}
+                </CardContent>
+              </Card>
             </div>
           </div>
-        )}
+        </div>
       </main>
     </ContentLayout>
   )

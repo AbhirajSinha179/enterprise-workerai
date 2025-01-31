@@ -61,6 +61,7 @@ html {
   }
   body {
     @apply bg-background text-foreground;
+    overflow-y: auto !important;
   }
 }
 @layer utilities {
@@ -96,5 +97,13 @@ html {
 }
 
 .underline-animated {
-  @apply relative block w-fit font-semibold text-foreground after:absolute after:block after:h-[3px] after:w-full after:origin-right after:scale-x-0 after:bg-white after:transition after:duration-300 after:content-[''] after:hover:origin-left after:hover:scale-x-100
+  @apply relative inline-block w-fit text-foreground after:absolute after:block after:h-[3px] after:w-full after:origin-right after:scale-x-0 after:bg-white after:transition after:duration-300 after:content-[''] after:hover:origin-left after:hover:scale-x-100;
+}
+
+.background_grid {
+  @apply bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_5rem];
+}
+
+body {
+  overflow-y: auto !important;
 }
