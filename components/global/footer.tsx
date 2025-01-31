@@ -22,9 +22,9 @@ const footerLinks = [
   {
     title: "Contact",
     links: [
-      { name: "Contact Us", href: "#" },
-      { name: "Book a Call", href: "#" },
-      { name: "Talk to Sales", href: "#" },
+      { name: "Contact Us", href: "https://www.calendly.com/rohit_workerai" },
+      { name: "Book a Call", href: "https://www.calendly.com/rohit_workerai" },
+      { name: "Talk to Sales", href: "https://www.calendly.com/rohit_workerai" },
     ],
   },
 ]
