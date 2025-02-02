@@ -69,9 +69,9 @@ export default function MailboxPage() {
     fetchMailboxes();
   }, [targetId]);
 
-  if (isFetchingTargetId || isFetchingMailboxes) {
-    return <Loading />;
-  }
+  // if (isFetchingTargetId || isFetchingMailboxes) {
+  //   return <Loading />;
+  // }
 
   if (error) {
     return (
@@ -105,7 +105,7 @@ export default function MailboxPage() {
           </Button>
         </Link>
       </div>
-      <DataTable data={mailboxes} columns={columns} isActionButton={false} />
+      <DataTable data={mailboxes} columns={columns} isActionButton={false} isLoading={isFetchingMailboxes} />
     </ContentLayout>
   );
 }

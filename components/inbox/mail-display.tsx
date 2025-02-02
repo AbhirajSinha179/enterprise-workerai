@@ -1,5 +1,5 @@
 import { MoreVertical, Reply as ReplyIcon } from "lucide-react"
-import { use, useEffect, useState } from "react"
+import { use, useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import MailTimelineItem from "@/components/inbox/thread-item"
 import { Button } from "@/components/ui/button"
@@ -16,18 +16,9 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
   const [replyContent, setReplyContent] = useState<string>("")
   const [threadContent, setThreadContent] = useState<CombinedMail[]>([])
   const [sendingReply, setSendingReply] = useState(false)
-  // const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || []
-  // if (threadData?.replies) {
-  //   threadData.replies.forEach((r: Reply) => {
-  //     thread.push({ type: "REPLY", data: r })
-  //   })
-  // }
 
-  // thread.sort((a, b) => {
-  //   const dateA = (a.type == "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || ""
-  //   const dateB = (b.type == "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || ""
-  //   return new Date(dateA).getTime() - new Date(dateB).getTime()
-  // })
+  // Create a reference for the Textarea
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleReplyChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReplyContent(event.target.value)
@@ -53,6 +44,11 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
     }
   }
 
+  // Function to focus the Textarea when the Reply button is clicked
+  const handleFocusTextarea = () => {
+    textareaRef.current?.focus();
+  }
+
   useEffect(() => {
     const thread: CombinedMail[] = threadData?.emails.map((e) => ({ type: "EMAIL", data: e })) || [];
     if (threadData?.replies) {
@@ -71,16 +67,11 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
       const dateA = sanitizeDate(a.type === "EMAIL" ? (a.data as Email).sendAt : (a.data as Reply).date) || "";
       const dateB = sanitizeDate(b.type === "EMAIL" ? (b.data as Email).sendAt : (b.data as Reply).date) || "";
 
-      console.log("Sanitized DATE A:", dateA);
-      console.log("Sanitized DATE B:", dateB);
-
       return new Date(dateA).getTime() - new Date(dateB).getTime();
     });
 
     setThreadContent(thread);
   }, [threadData]);
-
-
 
   return (
     <div className="flex h-full flex-col">
@@ -88,7 +79,7 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
         <div className="ml-auto flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!threadData}>
+              <Button variant="ghost" size="icon" disabled={!threadData} onClick={handleFocusTextarea}>
                 <ReplyIcon className="size-4" />
                 <span className="sr-only">Reply</span>
               </Button>
@@ -134,6 +125,7 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
             <form onSubmit={handleReplySubmit}>
               <div className="mx-2 grid gap-4">
                 <Textarea
+                  ref={textareaRef}  // Attach ref here
                   className="bg-card p-4"
                   placeholder="Reply..."
                   value={replyContent}
