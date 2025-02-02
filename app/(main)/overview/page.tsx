@@ -77,7 +77,7 @@ async function fetchDashboardDataUsingRange(type: string, id: any, startDate: st
 async function fetchRecentReply(userId: string) {
     try {
         const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/user/${userId}`;
-        const res = await fetch(url);
+        const res = await fetch(url, { next: { revalidate: 60 } });
         console.log(`Response status for get thread API call response: ${res.status}`);
 
         if (!res.ok) {
@@ -120,6 +120,42 @@ const DashboardHome: React.FC = () => {
     // console.log("RECENT REPLIES : ", recentReplies)
 
 
+    useEffect(() => {
+        if (!targetId) {
+            setIsFetchingTargetId(true);
+            return;
+        }
+        setIsFetchingTargetId(false);
+
+        async function fetchData() {
+            if (!userId) {
+                console.log("USER ID NOT FOUND ")
+                toast.error("Error finding user ID")
+                return
+            }
+            setIsLoading(true)
+            try {
+                if (!targetId) return
+                const recentReplies = await fetchRecentReply(targetId)
+                setRecentReplies(recentReplies)
+                setIsLoading(false)
+            } catch (error: any) {
+                if (error.message.includes("Status code: 404")) {
+                    setResponseStatus(404)
+                    toast.error("Data not found (404)")
+                } else {
+                    setResponseStatus(
+                        error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null
+                    )
+                    toast.error("Error fetching data")
+                    console.error("Error fetching data:", error.message)
+                }
+                setIsLoading(false)
+            }
+        }
+
+        fetchData()
+    }, [targetId, userId])
 
     useEffect(() => {
         if (!targetId) {
@@ -140,8 +176,8 @@ const DashboardHome: React.FC = () => {
                 // console.log("END DATE : ", endDate)
                 // console.log("TARGET ID : ", targetId)
                 const dashboardData = await fetchDashboardDataUsingRange("userId", userId, startDate, endDate)
-                const recentReplies = await fetchRecentReply(userId)
-                setRecentReplies(recentReplies)
+                // const recentReplies = await fetchRecentReply(userId)
+                // setRecentReplies(recentReplies)
 
                 const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dashboardData
 
