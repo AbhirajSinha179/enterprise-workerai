@@ -15,6 +15,7 @@ import {
   dashboardDataSchema,
   DataGraph,
   getThreadApiResponseSchema,
+  recentResponseSchema,
   // SalesDataItem,
   // StatDashboard,
 } from "@/types/interface"
@@ -73,7 +74,7 @@ async function fetchDashboardDataUsingRange(type: string, id: any, startDate: st
 
 async function fetchRecentReply(targetId: string) {
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/target/${targetId}?limit=5`;
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/recent/targetId/${targetId}`;
     const res = await fetch(url, { next: { revalidate: 60 } });
     console.log(`Response status for get thread API call response: ${res.status}`);
 
@@ -82,7 +83,7 @@ async function fetchRecentReply(targetId: string) {
     }
 
     const data = await res.json();
-    const result = getThreadApiResponseSchema.safeParse(data);
+    const result = recentResponseSchema.safeParse(data);
 
     if (!result.success) {
       console.error(result.error);
@@ -91,14 +92,14 @@ async function fetchRecentReply(targetId: string) {
 
     // Sort and map replies with their respective leads
     const sortedReplies = result.data
-      .flatMap((thread) =>
-        thread.replies.map((reply) => ({
-          ...reply,
-          lead: thread.lead, // Attach lead info to each reply
-        }))
-      )
-      .sort((a, b) => new Date(b.date || "").getTime() - new Date(a.date || "").getTime())
-      .slice(0, 10); // Limit to 10 replies
+      // .flatMap((thread) =>
+      //   thread.replies.map((reply) => ({
+      //     ...reply,
+      //     lead: thread.lead, // Attach lead info to each reply
+      //   }))
+      // )
+      // .sort((a, b) => new Date(b.date || "").getTime() - new Date(a.date || "").getTime())
+      // .slice(0, 10); // Limit to 10 replies
 
     return sortedReplies || [];
   } catch (error: any) {
