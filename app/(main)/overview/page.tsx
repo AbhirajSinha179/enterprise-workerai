@@ -54,7 +54,6 @@ async function fetchDashboardDataUsingRange(type: string, id: any, startDate: st
 
         if (res.status === 404) {
             console.log("FETCH FUNCTION ANALYTICS BY RANGE ")
-            toast("Page not found 404")
             return defaultDashboardData
         }
 
@@ -66,7 +65,6 @@ async function fetchDashboardDataUsingRange(type: string, id: any, startDate: st
             throw new Error("Invalid data format")
         }
 
-        console.log("RESULT FROM API CALL ", result)
         return result.data
     } catch (error: any) {
         console.error("Error fetching data:", error.message)
@@ -147,7 +145,7 @@ const DashboardHome: React.FC = () => {
                     setResponseStatus(
                         error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null
                     )
-                    toast.error("Error fetching data")
+                    toast.error("Unable to fetch recent replies")
                     console.error("Error fetching data:", error.message)
                 }
                 setIsLoading(false)
@@ -203,12 +201,12 @@ const DashboardHome: React.FC = () => {
                 if (error.message.includes("Status code: 404")) {
                     setStatsDashboard(defaultDashboardData)
                     setResponseStatus(404)
-                    toast.error("Data not found (404)")
+                    toast.error("Unable to fetch overall analytics data ")
                 } else {
                     setResponseStatus(
                         error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null
                     )
-                    toast.error("Error fetching data")
+                    toast.error("Unable to fetch overall analytics data ")
                     console.error("Error fetching data:", error.message)
                 }
                 setIsLoading(false)
