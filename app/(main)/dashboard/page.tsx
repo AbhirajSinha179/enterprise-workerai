@@ -146,12 +146,12 @@ const DashboardHome: React.FC = () => {
       } catch (error: any) {
         if (error.message.includes("Status code: 404")) {
           setResponseStatus(404)
-          toast.error("Data not found (404)")
+          toast.error("Unable to Fetch Reply Data")
         } else {
           setResponseStatus(
             error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null
           )
-          toast.error("Error fetching data")
+          toast.error("Unable to Fetch Reply Data")
           console.error("Error fetching data:", error.message)
         }
         setIsLoading(false)
@@ -209,12 +209,12 @@ const DashboardHome: React.FC = () => {
         if (error.message.includes("Status code: 404")) {
           setStatsDashboard(defaultDashboardData)
           setResponseStatus(404)
-          toast.error("Data not found (404)")
+          toast.error("Unable to fetch analytics data")
         } else {
           setResponseStatus(
             error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null
           )
-          toast.error("Error fetching data")
+          toast.error("Unable to fetch analytics data")
           console.error("Error fetching data:", error.message)
         }
         setIsLoading(false)
