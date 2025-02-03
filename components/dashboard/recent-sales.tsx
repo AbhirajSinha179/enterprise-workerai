@@ -20,9 +20,9 @@ const RecentSales: React.FC<RecentSalesProps> = ({ data }) => {
   console.log("Data for recent sales component : ", data);
 
   return (
-    <div className="space-y-4">
+    <div className="">
       {data.map((reply) => (
-        <div key={reply.id} className="flex items-center justify-between p-2 border-b ">
+        <div key={reply.id} className="flex items-center justify-between p-2 py-4 border-b last:border-b-0">
           {/* Avatar */}
           <Avatar className="size-8">
             <AvatarFallback>{reply.from[0]?.toUpperCase()}</AvatarFallback>
