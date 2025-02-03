@@ -74,7 +74,7 @@ async function fetchDashboardDataUsingRange(type: string, id: any, startDate: st
 
 async function fetchRecentReply(userId: string) {
     try {
-        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/user/${userId}`;
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/recent/user/${userId}`;
         const res = await fetch(url, { next: { revalidate: 60 } });
         console.log(`Response status for get thread API call response: ${res.status}`);
 
