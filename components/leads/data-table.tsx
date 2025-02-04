@@ -128,7 +128,7 @@ export function DataTable<TData, TValue>({ columns, data, isActionButton, isLoad
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      <DataTablePagination table={table} isActionButton={isActionButton} />
     </div>
   );
 }
