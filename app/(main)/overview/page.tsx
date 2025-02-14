@@ -74,7 +74,7 @@ async function fetchDashboardDataUsingRange(type: string, id: any, startDate: st
 
 async function fetchRecentReply(userId: string) {
     try {
-        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/recent/user/${userId}`;
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/recent/userId/${userId}`;
         const res = await fetch(url, { next: { revalidate: 60 } });
         console.log(`Response status for get thread API call response: ${res.status}`);
 
@@ -111,7 +111,6 @@ const DashboardHome: React.FC = () => {
     const [totalUniqueEmails, setTotalUniqueEmails] = useState<number>(0)
     const [totalSentEmails, setTotalSentEmails] = useState<number>(0)
     const [isLoading, setIsLoading] = useState(true)
-    const targetId = "7cb54876-bbb6-4161-8935-9524fe3d891e";
     const [isFetchingTargetId, setIsFetchingTargetId] = useState(true);
     const [recentReplies, setRecentReplies] = useState<any[]>([])
     const [isNavigating, setIsNavigating] = useState(false);
@@ -119,10 +118,10 @@ const DashboardHome: React.FC = () => {
 
 
     useEffect(() => {
-        if (!targetId) {
-            setIsFetchingTargetId(true);
-            return;
-        }
+        // if (!targetId) {
+        //     setIsFetchingTargetId(true);
+        //     return;
+        // }
         setIsFetchingTargetId(false);
 
         async function fetchData() {
@@ -133,8 +132,8 @@ const DashboardHome: React.FC = () => {
             }
             setIsLoading(true)
             try {
-                if (!targetId) return
-                const recentReplies = await fetchRecentReply(targetId)
+                if (!userId) return
+                const recentReplies = await fetchRecentReply(userId)
                 setRecentReplies(recentReplies)
                 setIsLoading(false)
             } catch (error: any) {
@@ -153,13 +152,13 @@ const DashboardHome: React.FC = () => {
         }
 
         fetchData()
-    }, [targetId, userId])
+    }, [userId])
 
     useEffect(() => {
-        if (!targetId) {
-            setIsFetchingTargetId(true);
-            return;
-        }
+        // if (!targetId) {
+        //     setIsFetchingTargetId(true);
+        //     return;
+        // }
         setIsFetchingTargetId(false);
 
         async function fetchData() {
@@ -214,7 +213,7 @@ const DashboardHome: React.FC = () => {
         }
 
         fetchData()
-    }, [startDate, endDate, targetId, userId])
+    }, [startDate, endDate, userId])
 
     const cardConfigs = [
         {
