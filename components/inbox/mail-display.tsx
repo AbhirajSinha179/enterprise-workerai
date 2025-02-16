@@ -1,4 +1,4 @@
-import { MoreVertical, Reply as ReplyIcon } from "lucide-react"
+import { ChevronDown, MoreVertical, ReplyAll, Reply as ReplyIcon } from "lucide-react"
 import { use, useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import MailTimelineItem from "@/components/inbox/thread-item"
@@ -11,11 +11,60 @@ import { Email, MailDisplayProps, Thread, Reply, CombinedMail } from "@/types/in
 import { ScrollArea } from "../ui/scroll-area"
 import { Textarea } from "../ui/textarea"
 import { Timeline } from "../ui/timeline"
+import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover"
+import { Input } from "../ui/input"
 
 export function MailDisplay({ threadData }: MailDisplayProps) {
-  const [replyContent, setReplyContent] = useState<string>("")
+  const [replyContent, setReplyContent] = useState("")
+  const [replyType, setReplyType] = useState("default")
+  const [ccEmails, setCcEmails] = useState("")
   const [threadContent, setThreadContent] = useState<CombinedMail[]>([])
   const [sendingReply, setSendingReply] = useState(false)
+  const [recipientEmails, setRecipientEmails] = useState<string[]>([threadData?.lead?.email || ""])
+  const [selectedOptions, setSelectedOptions] = useState(recipientEmails)
+  const [loading, setLoading] = useState(false)
+
+
+ const handleInputChange = (event) => {
+    const value = event.target.value;
+    if (value.includes(",")) {
+      const newValues = value.split(",").map(v => v.trim()).filter(v => v && !selectedOptions.includes(v));
+      setSelectedOptions((prev) => [...prev, ...newValues]);
+      setCcEmails("");
+    } else {
+      setCcEmails(value);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addOptionsFromInput();
+    }
+  };
+
+  const addOptionsFromInput = async () => {
+    const newValues = ccEmails.split(",").map(v => v.trim()).filter(v => v && !selectedOptions.includes(v));
+    if (newValues.length > 0) {
+      setSelectedOptions((prev) => [...prev, ...newValues]);
+      setCcEmails("");
+    }
+    if (selectedOptions.length === 0 && newValues.length === 0) {
+      return;
+    }
+    try {
+      setLoading(true);
+      await submitData([...selectedOptions, ...newValues]);
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRemove = (value) => {
+    setSelectedOptions((prev) => prev.filter((option) => option !== value));
+  };
 
   // Create a reference for the Textarea
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -56,7 +105,8 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
         thread.push({ type: "REPLY", data: r });
       });
     }
-
+    
+    // make one util function for this
     thread.sort((a, b) => {
       const sanitizeDate = (date: string | null) => {
         if (!date) return "";
@@ -122,20 +172,43 @@ export function MailDisplay({ threadData }: MailDisplayProps) {
           </div>
           <Separator className="bg-card" />
           <div className="p-4">
-            <form onSubmit={handleReplySubmit}>
-              <div className="mx-2 grid gap-4">
+            <form onSubmit={handleReplySubmit} className="w-full">
+              <div className="flex min-h-[80px] w-full flex-col rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-foreground focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+                <div className="flex w-full flex-wrap items-center gap-x-2 py-1">
+                  <div className="flex-1">
+                    <span className="text-sm text-foreground">To:</span>
+                    <div className="flex gap-2">
+                      {selectedOptions.map((option) => (
+                        <button key={option} type="button" onClick={() => handleRemove(option)}>
+                          <Badge variant="secondary">
+                            <div className="flex items-center justify-around gap-1">
+                              <p>{option}</p>
+                              <X className="size-4" />
+                            </div>
+                          </Badge>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <Input
+                    type="text"
+                    placeholder="CC Emails (comma-separated)"
+                    value={ccEmails}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    className="w-fit w-full flex-1 border-none bg-transparent"
+                  />
+                </div>
                 <Textarea
-                  ref={textareaRef}  // Attach ref here
-                  className="bg-card p-4"
+                  ref={textareaRef}
+                  className="w-full border-none bg-transparent p-2"
                   placeholder="Reply..."
                   value={replyContent}
                   onChange={handleReplyChange}
                 />
-                <div className="flex items-center">
-                  <Button type="submit" size="sm" className="ml-auto" disabled={!!sendingReply}>
-                    Send
-                  </Button>
-                </div>
+                <Button type="submit" size="sm" className="mt-2" disabled={sendingReply || loading}>
+                  Send
+                </Button>
               </div>
             </form>
           </div>
