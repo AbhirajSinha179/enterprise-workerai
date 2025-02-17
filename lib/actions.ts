@@ -166,16 +166,25 @@ export async function submitLocations(data: string[]) {
     throw error
   }
 }
-
-export async function submitReplyContent(text: string, threadId: string) {
+export async function submitReplyContent(text: string, threadId: string, ccEmails?: string[]) {
   try {
+    const requestBody: Record<string, any> = {
+      reply: text,
+      threadId: threadId,
+    }
+
+    if (ccEmails && ccEmails.length > 0) {
+      requestBody.cc = ccEmails
+    }
+
     const response = await fetch(`${process.env.BASE_API_URL}/emails/reply/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ reply: text, threadId: threadId }),
+      body: JSON.stringify(requestBody),
     })
+
     if (!response.ok) {
       throw new Error(`Error: ${response.statusText}`)
     }
