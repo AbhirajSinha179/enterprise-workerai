@@ -28,10 +28,11 @@ interface ActionButtonsProps {
     id: string;
     firstName: string;
     position: string;
+    refreshData: () => void;
 }
 
 
-export const ActionButtons: React.FC<ActionButtonsProps> = ({ id, firstName, position }) => {
+export const ActionButtons: React.FC<ActionButtonsProps> = ({ id, firstName, position, refreshData }) => {
     const [loading, setLoading] = useState(false);
     const [editData, setEditData] = useState<EditData>({
         id,
@@ -49,23 +50,23 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({ id, firstName, pos
     };
 
     const handleSave = async () => {
-        // console.log("HANDLE SAVE FUNCTION WORKING")
-        // console.log("UPDATED DATA :", editData);
         setLoading(true);
         await editMailboxInfo(id, editData)
         setLoading(false);
         toast.success("Data saved successfully!");
+        refreshData();
+
     };
 
-    if(loading){
-        return(
+    if (loading) {
+        return (
             <div className="flex flex-row space-x-2">
                 <Button variant="secondary">
                     <Loader2 className="size-4 animate-spin" />
                 </Button>
             </div>
         )
-        
+
     }
 
     return (
@@ -79,8 +80,8 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({ id, firstName, pos
                 </DialogTrigger>
                 <DialogContent className="w-1/3">
                     <DialogHeader>
-                        <DialogTitle>Edit Lead</DialogTitle>
-                        <DialogDescription>Edit the lead details below.</DialogDescription>
+                        <DialogTitle>Edit Mailbox</DialogTitle>
+                        <DialogDescription>Edit the Mailbox details below.</DialogDescription>
                     </DialogHeader>
                     <div className="space-y-4">
                         <div>

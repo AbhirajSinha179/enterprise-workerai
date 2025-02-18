@@ -3,7 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Mails } from "@/app/(main)/dashboard/(mailbox)/data/schema";
 import { ActionButtons } from "./action";
 
-export const columns: ColumnDef<Mails>[] = [
+export const columns = (refreshData: () => void): ColumnDef<Mails>[] => [
   {
     accessorKey: "id",
     header: ({ column }) => null,
@@ -48,6 +48,7 @@ export const columns: ColumnDef<Mails>[] = [
         id={row.getValue("id")}
         firstName={row.getValue("firstName")}
         position={row.getValue("position")}
+        refreshData={refreshData}
       />
     ),
   },
