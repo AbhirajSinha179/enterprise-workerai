@@ -92,14 +92,14 @@ async function fetchRecentReply(targetId: string) {
 
     // Sort and map replies with their respective leads
     const sortedReplies = result.data
-      // .flatMap((thread) =>
-      //   thread.replies.map((reply) => ({
-      //     ...reply,
-      //     lead: thread.lead, // Attach lead info to each reply
-      //   }))
-      // )
-      // .sort((a, b) => new Date(b.date || "").getTime() - new Date(a.date || "").getTime())
-      // .slice(0, 10); // Limit to 10 replies
+    // .flatMap((thread) =>
+    //   thread.replies.map((reply) => ({
+    //     ...reply,
+    //     lead: thread.lead, // Attach lead info to each reply
+    //   }))
+    // )
+    // .sort((a, b) => new Date(b.date || "").getTime() - new Date(a.date || "").getTime())
+    // .slice(0, 10); // Limit to 10 replies
 
     return sortedReplies || [];
   } catch (error: any) {
@@ -134,33 +134,37 @@ const DashboardHome: React.FC = () => {
 
     async function fetchData() {
       if (!userId) {
-        console.log("USER ID NOT FOUND ")
-        toast.error("Error finding user ID")
-        return
+        console.log("USER ID NOT FOUND ");
+        toast.error("Error finding user ID");
+        return;
       }
-      setIsLoading(true)
+      setIsLoading(true);
       try {
-        if (!targetId) return
-        const recentReplies = await fetchRecentReply(targetId)
-        setRecentReplies(recentReplies)
-        setIsLoading(false)
+        if (!targetId) return;
+        const recentReplies = await fetchRecentReply(targetId);
+        setRecentReplies(recentReplies);
+        setIsLoading(false);
       } catch (error: any) {
-        if (error.message.includes("Status code: 404")) {
-          setResponseStatus(404)
-          toast.error("Unable to Fetch Reply Data")
+        if (error.message.includes("Status code: 404") || error.message.includes("Status code: 400")) {
+          setRecentReplies([]);
+          setResponseStatus(400);
+          toast.error("No recent replies found for this target.");
         } else {
           setResponseStatus(
-            error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null
-          )
-          toast.error("Unable to Fetch Reply Data")
-          console.error("Error fetching data:", error.message)
+            error.message.includes("Status code:")
+              ? parseInt(error.message.split("Status code:")[1])
+              : null
+          );
+          toast.error("Unable to Fetch Reply Data");
+          console.error("Error fetching data:", error.message);
         }
-        setIsLoading(false)
+        setIsLoading(false);
       }
     }
 
-    fetchData()
-  }, [targetId, userId])
+    fetchData();
+  }, [targetId, userId]);
+
 
 
   useEffect(() => {
