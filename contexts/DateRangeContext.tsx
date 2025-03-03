@@ -14,7 +14,7 @@ const DateRangeContext = createContext<DateRangeContextProps | undefined>(undefi
 export const DateRangeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // const [startDate, setStartDate] = useState<string>(new Date().toISOString());
     // const [endDate, setEndDate] = useState<string>(new Date().toISOString());
-    const [startDate, setStartDate] = useState<string>(moment().startOf("day").subtract(1, "months").toISOString())
+    const [startDate, setStartDate] = useState<string>(moment().startOf("day").subtract(3, "months").toISOString())
     const [endDate, setEndDate] = useState<string>(moment().endOf("day").toISOString())
 
     return (
