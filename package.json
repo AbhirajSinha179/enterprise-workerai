@@ -76,7 +76,7 @@
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.51.5",
     "react-resizable-panels": "^2.0.19",
-    "recharts": "^2.12.7",
+    "recharts": "^2.15.1",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "sonner": "^1.4.41",
