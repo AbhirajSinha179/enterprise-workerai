@@ -69,9 +69,22 @@ export default function MailboxPage() {
     fetchMailboxes();
   }, [targetId]);
 
-  if (isFetchingTargetId || isFetchingMailboxes) {
-    return <Loading />;
-  }
+  const fetchMailboxes = async () => {
+    if (!targetId) return;
+    setIsFetchingMailboxes(true);
+    const { data, error } = await getMailBoxes(targetId);
+    if (error) {
+      setError(error);
+    } else {
+      setMailboxes(data);
+    }
+    setIsFetchingMailboxes(false);
+  };
+
+
+  // if (isFetchingTargetId || isFetchingMailboxes) {
+  //   return <Loading />;
+  // }
 
   if (error) {
     return (
@@ -105,7 +118,7 @@ export default function MailboxPage() {
           </Button>
         </Link>
       </div>
-      <DataTable data={mailboxes} columns={columns} isActionButton={false} />
+      <DataTable data={mailboxes} columns={columns(fetchMailboxes)} isActionButton={false} isLoading={isFetchingMailboxes} />
     </ContentLayout>
   );
 }

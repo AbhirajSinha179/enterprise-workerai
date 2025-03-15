@@ -15,6 +15,7 @@ import {
   dashboardDataSchema,
   DataGraph,
   getThreadApiResponseSchema,
+  recentResponseSchema,
   // SalesDataItem,
   // StatDashboard,
 } from "@/types/interface"
@@ -73,10 +74,8 @@ async function fetchDashboardDataUsingRange(type: string, id: any, startDate: st
 
 async function fetchRecentReply(targetId: string) {
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/target/${targetId}?limit=5`;
-
-    // console.log(url);
-    const res = await fetch(url);
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/recent/targetId/${targetId}`;
+    const res = await fetch(url, { next: { revalidate: 60 } });
     console.log(`Response status for get thread API call response: ${res.status}`);
 
     if (!res.ok) {
@@ -84,7 +83,7 @@ async function fetchRecentReply(targetId: string) {
     }
 
     const data = await res.json();
-    const result = getThreadApiResponseSchema.safeParse(data);
+    const result = recentResponseSchema.safeParse(data);
 
     if (!result.success) {
       console.error(result.error);
@@ -93,14 +92,14 @@ async function fetchRecentReply(targetId: string) {
 
     // Sort and map replies with their respective leads
     const sortedReplies = result.data
-      .flatMap((thread) =>
-        thread.replies.map((reply) => ({
-          ...reply,
-          lead: thread.lead, // Attach lead info to each reply
-        }))
-      )
-      .sort((a, b) => new Date(b.date || "").getTime() - new Date(a.date || "").getTime())
-      .slice(0, 10); // Limit to 10 replies
+    // .flatMap((thread) =>
+    //   thread.replies.map((reply) => ({
+    //     ...reply,
+    //     lead: thread.lead, // Attach lead info to each reply
+    //   }))
+    // )
+    // .sort((a, b) => new Date(b.date || "").getTime() - new Date(a.date || "").getTime())
+    // .slice(0, 10); // Limit to 10 replies
 
     return sortedReplies || [];
   } catch (error: any) {
@@ -108,6 +107,7 @@ async function fetchRecentReply(targetId: string) {
     throw error;
   }
 }
+
 const DashboardHome: React.FC = () => {
   const { userId } = useAuth();
   const { startDate, endDate, setStartDate, setEndDate } = useDateRange();
@@ -124,6 +124,46 @@ const DashboardHome: React.FC = () => {
   const [isFetchingTargetId, setIsFetchingTargetId] = useState(true);
   const [recentReplies, setRecentReplies] = useState<any[]>([])
 
+
+  useEffect(() => {
+    if (!targetId) {
+      setIsFetchingTargetId(true);
+      return;
+    }
+    setIsFetchingTargetId(false);
+
+    async function fetchData() {
+      if (!userId) {
+        console.log("USER ID NOT FOUND ");
+        toast.error("Error finding user ID");
+        return;
+      }
+      setIsLoading(true);
+      try {
+        if (!targetId) return;
+        const recentReplies = await fetchRecentReply(targetId);
+        setRecentReplies(recentReplies);
+        setIsLoading(false);
+      } catch (error: any) {
+        if (error.message.includes("Status code: 404") || error.message.includes("Status code: 400")) {
+          setRecentReplies([]);
+          setResponseStatus(400);
+          toast.error("No recent replies found for this target.");
+        } else {
+          setResponseStatus(
+            error.message.includes("Status code:")
+              ? parseInt(error.message.split("Status code:")[1])
+              : null
+          );
+          toast.error("Unable to Fetch Reply Data");
+          console.error("Error fetching data:", error.message);
+        }
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [targetId, userId]);
 
 
 
@@ -147,8 +187,8 @@ const DashboardHome: React.FC = () => {
         // console.log("TARGET ID : ", targetId)
         if (!targetId) return
         const dashboardData = await fetchDashboardDataUsingRange("targetId", targetId, startDate, endDate)
-        const recentReplies = await fetchRecentReply(targetId)
-        setRecentReplies(recentReplies)
+        // const recentReplies = await fetchRecentReply(targetId)
+        // setRecentReplies(recentReplies)
 
         const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dashboardData
 
@@ -174,12 +214,12 @@ const DashboardHome: React.FC = () => {
         if (error.message.includes("Status code: 404")) {
           setStatsDashboard(defaultDashboardData)
           setResponseStatus(404)
-          toast.error("Data not found (404)")
+          toast.error("Unable to fetch analytics data")
         } else {
           setResponseStatus(
             error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null
           )
-          toast.error("Error fetching data")
+          toast.error("Unable to fetch analytics data")
           console.error("Error fetching data:", error.message)
         }
         setIsLoading(false)

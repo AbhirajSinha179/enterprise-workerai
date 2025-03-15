@@ -17,10 +17,12 @@ import {
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>
+  isActionButton?: boolean
 }
 
 export function DataTablePagination<TData>({
   table,
+  isActionButton = false,
 }: DataTablePaginationProps<TData>) {
   const {
     pageIndex,
@@ -34,7 +36,11 @@ export function DataTablePagination<TData>({
   return (
     <div className="flex items-center justify-between px-2">
       <div className="flex-1 text-sm text-foreground">
-        {selectedRowCount} of {filteredRowCount} row(s) selected.
+        {isActionButton && (
+          <div className="flex-1 text-sm text-foreground">
+            {selectedRowCount} of {filteredRowCount} row(s) selected.
+          </div>
+        )}
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">

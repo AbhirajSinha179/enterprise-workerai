@@ -57,7 +57,7 @@ export function ScheduledEmailList({
                   <div className="text-lg font-semibold">To: {item.email.recipient}</div>
                   <div className="flex ">
                     <Separator orientation="vertical" className="h-6" />
-                    <TooltipProvider>
+                    <TooltipProvider delayDuration={100} skipDelayDuration={0}>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <span className="cursor-pointer text-sm text-foreground mx-3">Details</span>
@@ -82,6 +82,7 @@ export function ScheduledEmailList({
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
+
                   </div>
                 </div>
                 <div className="flex items-center justify-between">

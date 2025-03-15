@@ -54,7 +54,6 @@ async function fetchDashboardDataUsingRange(type: string, id: any, startDate: st
 
         if (res.status === 404) {
             console.log("FETCH FUNCTION ANALYTICS BY RANGE ")
-            toast("Page not found 404")
             return defaultDashboardData
         }
 
@@ -66,7 +65,6 @@ async function fetchDashboardDataUsingRange(type: string, id: any, startDate: st
             throw new Error("Invalid data format")
         }
 
-        console.log("RESULT FROM API CALL ", result)
         return result.data
     } catch (error: any) {
         console.error("Error fetching data:", error.message)
@@ -76,8 +74,8 @@ async function fetchDashboardDataUsingRange(type: string, id: any, startDate: st
 
 async function fetchRecentReply(userId: string) {
     try {
-        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/user/${userId}`;
-        const res = await fetch(url);
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/emails/reply/recent/userId/${userId}`;
+        const res = await fetch(url, { next: { revalidate: 60 } });
         console.log(`Response status for get thread API call response: ${res.status}`);
 
         if (!res.ok) {
@@ -113,19 +111,54 @@ const DashboardHome: React.FC = () => {
     const [totalUniqueEmails, setTotalUniqueEmails] = useState<number>(0)
     const [totalSentEmails, setTotalSentEmails] = useState<number>(0)
     const [isLoading, setIsLoading] = useState(true)
-    const targetId = "7cb54876-bbb6-4161-8935-9524fe3d891e";
     const [isFetchingTargetId, setIsFetchingTargetId] = useState(true);
     const [recentReplies, setRecentReplies] = useState<any[]>([])
     const [isNavigating, setIsNavigating] = useState(false);
     // console.log("RECENT REPLIES : ", recentReplies)
 
 
+    useEffect(() => {
+        // if (!targetId) {
+        //     setIsFetchingTargetId(true);
+        //     return;
+        // }
+        setIsFetchingTargetId(false);
+
+        async function fetchData() {
+            if (!userId) {
+                console.log("USER ID NOT FOUND ")
+                toast.error("Error finding user ID")
+                return
+            }
+            setIsLoading(true)
+            try {
+                if (!userId) return
+                const recentReplies = await fetchRecentReply(userId)
+                setRecentReplies(recentReplies)
+                setIsLoading(false)
+            } catch (error: any) {
+                if (error.message.includes("Status code: 404")) {
+                    setResponseStatus(404)
+                    toast.error("Data not found (404)")
+                } else {
+                    setResponseStatus(
+                        error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null
+                    )
+                    toast.error("Unable to fetch recent replies")
+                    console.error("Error fetching data:", error.message)
+                }
+                setIsLoading(false)
+            }
+        }
+
+        fetchData()
+    }, [userId])
 
     useEffect(() => {
-        if (!targetId) {
-            setIsFetchingTargetId(true);
-            return;
-        }
+        // if (!targetId) {
+        //     setIsFetchingTargetId(true);
+        //     return;
+        // }
         setIsFetchingTargetId(false);
 
         async function fetchData() {
@@ -140,8 +173,8 @@ const DashboardHome: React.FC = () => {
                 // console.log("END DATE : ", endDate)
                 // console.log("TARGET ID : ", targetId)
                 const dashboardData = await fetchDashboardDataUsingRange("userId", userId, startDate, endDate)
-                const recentReplies = await fetchRecentReply(userId)
-                setRecentReplies(recentReplies)
+                // const recentReplies = await fetchRecentReply(userId)
+                // setRecentReplies(recentReplies)
 
                 const { total_replies, total_emails, total_opens, total_clicks, total_unique_emails, data } = dashboardData
 
@@ -167,12 +200,12 @@ const DashboardHome: React.FC = () => {
                 if (error.message.includes("Status code: 404")) {
                     setStatsDashboard(defaultDashboardData)
                     setResponseStatus(404)
-                    toast.error("Data not found (404)")
+                    toast.error("Unable to fetch overall analytics data ")
                 } else {
                     setResponseStatus(
                         error.message.includes("Status code:") ? parseInt(error.message.split("Status code:")[1]) : null
                     )
-                    toast.error("Error fetching data")
+                    toast.error("Unable to fetch overall analytics data ")
                     console.error("Error fetching data:", error.message)
                 }
                 setIsLoading(false)
@@ -180,7 +213,7 @@ const DashboardHome: React.FC = () => {
         }
 
         fetchData()
-    }, [startDate, endDate, targetId, userId])
+    }, [startDate, endDate, userId])
 
     const cardConfigs = [
         {
