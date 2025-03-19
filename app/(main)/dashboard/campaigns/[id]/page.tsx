@@ -8,8 +8,8 @@ import { useParams, useRouter } from "next/navigation";
 import moment from "moment-timezone";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, ChevronsUpDown, Check } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2, ChevronsUpDown, Check, Ghost } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import {
     Command,
@@ -38,14 +38,14 @@ export default function CampaignDetails() {
     const [timezone, setTimezone] = useState("");
     const [followupCount, setFollowupCount] = useState(2);
     const [followupDelay, setFollowupDelay] = useState(2);
+    const [campaignActive, setCampaignActive] = useState(false);
     const [sendNewEmails, setSendNewEmails] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isNewEmailsLoading, setIsNewEmailsLoading] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
     const [open, setOpen] = useState(false);
 
-    const updateSettingsSubmit = async (event: React.FormEvent) => {
+    const handleSettingsUpdate = async (event: React.FormEvent) => {
         event.preventDefault();
-        setIsLoading(true);
+        setIsUpdating(true);
 
         try {
             const response = await fetch(
@@ -56,54 +56,28 @@ export default function CampaignDetails() {
                     body: JSON.stringify({
                         timezone,
                         followupCount,
-                        followupDelay
+                        followupDelay,
+                        active: campaignActive,
+                        newEmail: sendNewEmails,
                     }),
                 }
             );
+
             if (!response.ok) {
                 const errorData: any = await response.json();
                 throw new Error(errorData.message || "Failed to update campaign details");
             }
-            const data = await response.json();
-            console.log("Updated Campaign:", data);
+
             toast.success("Campaign settings updated successfully!", {
-                description: `Timezone: ${timezone}, Follow-ups: ${followupCount}, Delay: ${followupDelay} days`,
+                description: `Timezone: ${timezone}, Follow-ups: ${followupCount}, Delay: ${followupDelay} days, Active: ${campaignActive}, Send Emails: ${sendNewEmails}`,
             });
         } catch (error) {
             console.error("Error updating campaign settings:", error);
             toast.error("Error updating campaign settings", {
                 description: error instanceof Error ? error.message : "Please try again.",
             });
-
         } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const handleNewEmailsToggle = async (checked: boolean) => {
-        setIsNewEmailsLoading(true);
-        setSendNewEmails(checked);
-
-        try {
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/targets/${targetId}`,
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ newEmail: checked }),
-                }
-            );
-
-            if (!response.ok) {
-                throw new Error("Failed to update new email setting");
-            }
-
-            console.log("New email setting updated successfully");
-        } catch (error) {
-            console.error("Error updating new email setting:", error);
-            alert("Error updating new email setting. Please try again.");
-        } finally {
-            setIsNewEmailsLoading(false);
+            setIsUpdating(false);
         }
     };
 
@@ -113,43 +87,33 @@ export default function CampaignDetails() {
                 <Button onClick={() => router.back()} variant="secondary" className="my-4">
                     Back
                 </Button>
-
-                <CSVUpload
-                    key="upload-custom-leads"
-                    title="Upload Custom Leads (CSV)"
-                    description="Upload your CSV file to seamlessly import and process your data"
-                    endpoint={`${process.env.NEXT_PUBLIC_API_BASE_URL}/leads`}
-                    targetId={targetId}
-                    verification
-                    requiredColumns={[
-                        { name: "email", required: true },
-                        { name: "imgUrl", required: false },
-                        { name: "firstName", required: true },
-                        { name: "lastName", required: false },
-                        { name: "seniority", required: false },
-                        { name: "country", required: false },
-                        { name: "linkedin", required: false },
-                        { name: "city", required: false },
-                        { name: "state", required: false },
-                        { name: "timezone", required: false },
-                        { name: "companyName", required: true },
-                        { name: "companyWebsite", required: false },
-                    ]}
-                />
-
-                <form onSubmit={updateSettingsSubmit}>
-                    <Card className="p-2 shadow-md py-4">
+                <form onSubmit={handleSettingsUpdate}>
+                    <Card className="p-4 shadow-md border rounded-lg">
                         <CardHeader>
-                            <CardTitle>
-                                Update Settings
-                            </CardTitle>
+                            <CardTitle>Campaign Settings</CardTitle>
+                            <CardDescription>Control campaign activation, follow-ups, and timezone.</CardDescription>
                         </CardHeader>
-                        <CardContent>
-                            <div className="grid grid-cols-4 gap-6 items-end mt-2">
+                        <CardContent className="rounded-lg p-4 space-y-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="flex flex-col p-3 rounded-md shadow-sm border">
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm font-medium">Campaign Active</Label>
+                                        <Switch checked={campaignActive} onCheckedChange={setCampaignActive} />
+                                    </div>
+                                    <p className="text-xs text-gray-500 mt-1">Turn the campaign on or off.</p>
+                                </div>
+
+                                <div className="flex flex-col p-3 rounded-md shadow-sm border">
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm font-medium">Send New Emails</Label>
+                                        <Switch checked={sendNewEmails} onCheckedChange={setSendNewEmails} />
+                                    </div>
+                                    <p className="text-xs text-gray-500 mt-1">Enable to start sending new emails.</p>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-3 gap-6 items-end mt-2">
                                 <div className="flex flex-col">
-                                    <Label className="text-sm font-medium mb-1">
-                                        Select Timezone
-                                    </Label>
+                                    <Label className="text-sm font-medium mb-1">Select Timezone</Label>
                                     <Popover open={open} onOpenChange={setOpen}>
                                         <PopoverTrigger asChild>
                                             <Button
@@ -192,10 +156,9 @@ export default function CampaignDetails() {
                                         </PopoverContent>
                                     </Popover>
                                 </div>
+
                                 <div className="flex flex-col">
-                                    <Label className="text-sm font-medium mb-1">
-                                        Follow-up Count
-                                    </Label>
+                                    <Label className="text-sm font-medium mb-1">Follow-up Count</Label>
                                     <Input
                                         type="number"
                                         className="w-full"
@@ -206,9 +169,7 @@ export default function CampaignDetails() {
                                 </div>
 
                                 <div className="flex flex-col">
-                                    <Label className="text-sm font-medium mb-1">
-                                        Follow-up Delay in Days
-                                    </Label>
+                                    <Label className="text-sm font-medium mb-1">Follow-up Delay (Days)</Label>
                                     <Input
                                         type="number"
                                         className="w-full"
@@ -217,29 +178,30 @@ export default function CampaignDetails() {
                                         min={0}
                                     />
                                 </div>
-
-                                <Button type="submit" className="h-10 w-full flex justify-center items-center" disabled={isLoading}>
-                                    {isLoading ? (
-                                        <>
-                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting...
-                                        </>
-                                    ) : (
-                                        "Submit"
-                                    )}
-                                </Button>
                             </div>
+                            <Button variant={"secondary"} type="submit" className="h-10 w-full flex justify-center items-center" disabled={isUpdating}>
+                                {isUpdating ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Updating...
+                                    </>
+                                ) : "Update Settings"}
+                            </Button>
+
                         </CardContent>
                     </Card>
                 </form>
-
-                {/* <Card className="p-6 shadow-md">
-                    <CardContent>
-                        <div className="flex items-center justify-between h-12 px-4">
-                            <Label className="text-sm font-medium">Send New Emails</Label>
-                            <Switch checked={sendNewEmails} onCheckedChange={handleNewEmailsToggle} disabled={isNewEmailsLoading} />
-                        </div>
-                    </CardContent>
-                </Card> */}
+                <CSVUpload
+                    key="upload-custom-leads"
+                    title="Upload Custom Leads (CSV)"
+                    description="Upload your CSV file to seamlessly import and process your data"
+                    endpoint={`${process.env.NEXT_PUBLIC_API_BASE_URL}/leads`}
+                    targetId={targetId}
+                    verification
+                    requiredColumns={[
+                        { name: "email", required: true },
+                        { name: "companyName", required: true },
+                    ]}
+                />
             </div>
         </ContentLayout>
     );

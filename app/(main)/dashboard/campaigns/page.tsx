@@ -100,7 +100,7 @@ export default function CampaignPage() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {campaigns.map((campaign) => (
                         <div key={campaign.id} className="relative cursor-pointer m-2">
-                            <CardChronark isFooter={false}>
+                            <CardChronark isFooter={false} >
                                 <div className="p-4" onClick={() => handleCardClick(campaign.id)}>
                                     <div className="flex justify-between">
                                         <Avatar>
@@ -129,7 +129,7 @@ export default function CampaignPage() {
                                         </div>
                                         <div className="text-sm">Size: {campaign.companySize}</div>
                                     </div>
-                                    <div
+                                    {/* <div
                                         className="mt-12 flex justify-between items-center"
                                         onClick={(e) => e.stopPropagation()}
                                     >
@@ -151,7 +151,7 @@ export default function CampaignPage() {
                                                 {campaign.active ? "Active" : "Inactive"}
                                             </Label>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </CardChronark>
                         </div>

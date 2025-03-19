@@ -20,9 +20,10 @@ export const CardChronark = ({ children, isFooter = false }: { children: React.R
     <div
       onMouseMove={onMouseMove}
       className={cn(
-        "group relative overflow-hidden border border-zinc-600 duration-300 hover:border-zinc-400/50 hover:bg-zinc-800/10 md:gap-8 ",
+        "group relative overflow-hidden border border-zinc-600 duration-300 hover:border-zinc-400/50 hover:bg-zinc-800/10 md:gap-8 min-h-[150px] ",
         !isFooter ?? "rounded-xl border"
       )}
+
     >
       <div className="pointer-events-none">
         <div className="absolute inset-0 z-0 blur transition duration-500 [mask-image:linear-gradient(black,transparent)]" />
