@@ -1,16 +1,13 @@
 "use client";
 
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
-  AreaChart,
-  Area,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
-
 interface DataItem {
   date: string | null;
   opens: number | null;
@@ -19,17 +16,26 @@ interface DataItem {
 
 interface OverviewProps {
   data: DataItem[];
-  isLoading?: boolean; // New prop to indicate loading state
+  isLoading?: boolean;
 }
+
+const chartConfig = {
+  total_emails: {
+    label: "Total Emails",
+    color: "#8884d8",
+  },
+  opens: {
+    label: "Opens",
+    color: "#435BD5",
+  },
+} satisfies ChartConfig;
 
 export function Overview({ data, isLoading }: OverviewProps) {
   if (isLoading) {
-    // Render a skeleton while loading
     return (
       <div className="w-full h-[200px] sm:h-[300px] md:h-[350px]">
         <Skeleton className="h-full w-full" />
       </div>
-
     );
   }
 
@@ -41,60 +47,56 @@ export function Overview({ data, isLoading }: OverviewProps) {
     );
   }
 
+  const sanitizedData = data.map((item) => ({
+    ...item,
+    total_emails: Math.max(0, item.total_emails || 0),
+    opens: Math.max(0, item.opens || 0),
+  }));
+
   return (
-    <ResponsiveContainer width="100%" height={350}>
-      <AreaChart
-        width={730}
-        height={300}
-        data={data}
-        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-      >
-        <defs>
-          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-          </linearGradient>
-          <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#435BD5" stopOpacity={1.0} />
-            <stop offset="95%" stopColor="#435BD5" stopOpacity={0} />
-          </linearGradient>
-        </defs>
-        <XAxis
-          dataKey="date"
-          tickLine={false}
-          axisLine={false}
-          tickMargin={8}
-          tickFormatter={(value) => value.slice(0, 8)}
-        />
-        <YAxis
-          axisLine={false}
-          tickFormatter={(value) => (value === 0 ? "" : value)}
-        />
-        <Tooltip
-          formatter={(value, name) => {
-            const customNames: { [key: string]: string } = {
-              total_emails: "Total Emails",
-              opens: "Opens",
-            };
-            return [value, customNames[name] || name];
-          }}
-        />
-        <Area
-          type="monotone"
-          dataKey="total_emails"
-          stroke="#8884d8"
-          fillOpacity={1}
-          fill="url(#colorUv)"
-        />
-        <Area
-          type="monotone"
-          dataKey="opens"
-          label="Opens"
-          stroke="#435BD5"
-          fillOpacity={1}
-          fill="url(#colorPv)"
-        />
-      </AreaChart>
-    </ResponsiveContainer>
+    <div className="max-h-[350px] overflow-hidden w-full flex justify-center">
+      <ChartContainer config={chartConfig} className="max-h-[350px] w-full">
+        <AreaChart
+          accessibilityLayer
+          data={sanitizedData}
+          height={350}
+          margin={{ left: 12, right: 12 }}
+        >
+          <CartesianGrid vertical={false} horizontal={false} />
+          <XAxis
+            dataKey="date"
+            tickLine={false}
+            axisLine={false}
+            tickMargin={8}
+            tickFormatter={(value) => value.slice(0, 8)}
+          />
+          <YAxis
+            axisLine={false}
+            tickLine={false}
+            tickFormatter={(value) => value}
+            width={40}
+          />
+
+          <ChartTooltip
+            cursor={false}
+            content={<ChartTooltipContent indicator="line" />}
+          />
+          <Area
+            dataKey="total_emails"
+            type="monotone"
+            fill="#8884d8"
+            fillOpacity={0.4}
+            stroke="#8884d8"
+          />
+          <Area
+            dataKey="opens"
+            type="monotone"
+            fill="#435BD5"
+            fillOpacity={0.4}
+            stroke="#435BD5"
+          />
+        </AreaChart>
+      </ChartContainer>
+    </div>
   );
 }
