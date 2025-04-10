@@ -10,6 +10,10 @@ import { ContentLayout } from '@/components/layout/content-layout'
 
 import DraggableParagraphFormList from '@/components/generate/DraggableParagraphFormList'
 import SubjectOptionsEditor from '@/components/generate/SubjectOptionsEditor'
+import ClosingOptionsEditor from '@/components/generate/ClosingOptionsEditor'
+import SignatureFormatEditor from '@/components/generate/SignatureFormatEditor'
+import FinalRefinementEditor from '@/components/generate/FinalRefinementEditor'
+import MailboxInfoCard from '@/components/generate/MailboxInfoCard'
 
 export default function EmailGen() {
     const [language, setLanguage] = useState('en')
@@ -20,6 +24,52 @@ export default function EmailGen() {
         "Subject: {target_name}, cut costs with E2E Networks—worth a chat?",
         "Subject: {target_name}, reduce GPU/IT costs by 40%—interested?"
     ])
+    const [closingOptions, setClosingOptions] = useState([
+        'Looking forward to your thoughts!',
+        'Could we schedule a chat next week?'
+    ])
+    const [signature, setSignature] = useState('Best, {sender_name}{sender_title}, {sender_company_name}')
+
+    const [useRefinement, setUseRefinement] = useState(true)
+    const [refineProvider, setRefineProvider] = useState('openai')
+    const [refineModel, setRefineModel] = useState('gpt-4o-mini')
+    const [temperature, setTemperature] = useState(0.7)
+    const [promptTemplate, setPromptTemplate] = useState(
+        'Below is a sales email. Make changes if necessary to make it crisp...'
+    )
+    const [maxTokens, setMaxTokens] = useState(500)
+    const [mailbox, setMailbox] = useState('test@e2enetworks.com')
+    const [salesRep, setSalesRep] = useState('John E2E')
+    const [leads, setLeads] = useState(3)
+    const [paragraphs, setParagraphs] = useState([
+        {
+            id: Date.now(),
+            type: 'static',
+            formData: {
+                content: '',
+                promptTemplate: '',
+                model: '',
+                temperature: '',
+                provider: '',
+                apiKey: '',
+                dataInclusions: {
+                    about: true,
+                    experience: true,
+                    recommendations: true,
+                    education: true,
+                },
+            },
+        },
+    ])
+    const updateParagraph = (id: number, field: string, value: any) => {
+        setParagraphs((prev) =>
+            prev.map((item) => (item.id === id ? { ...item, [field]: value } : item))
+        )
+    }
+
+
+
+
     const [tabs, setTabs] = useState([{ id: 1, name: 'Follow Up' }])
 
     const addNewTab = () => {
@@ -76,7 +126,48 @@ export default function EmailGen() {
                                 <Separator />
                             </div>
 
-                            <DraggableParagraphFormList />
+                            <DraggableParagraphFormList
+                                paragraphs={paragraphs}
+                                setParagraphs={setParagraphs}
+                                updateParagraph={updateParagraph}
+                            />
+                            <Button onClick={() => console.log('Final Submission:', paragraphs)}>
+                                Submit All
+                            </Button>
+
+                            <ClosingOptionsEditor
+                                closingOptions={closingOptions}
+                                setClosingOptions={setClosingOptions}
+                            />
+                            <SignatureFormatEditor
+                                signature={signature}
+                                setSignature={setSignature}
+                            />
+
+                            <FinalRefinementEditor
+                                useRefinement={useRefinement}
+                                setUseRefinement={setUseRefinement}
+                                refineProvider={refineProvider}
+                                setRefineProvider={setRefineProvider}
+                                refineModel={refineModel}
+                                setRefineModel={setRefineModel}
+                                temperature={temperature}
+                                setTemperature={setTemperature}
+                                promptTemplate={promptTemplate}
+                                setPromptTemplate={setPromptTemplate}
+                                maxTokens={maxTokens}
+                                setMaxTokens={setMaxTokens}
+                            />
+                            <MailboxInfoCard
+                                title="Test with /test-e2e"
+                                mailbox={mailbox}
+                                setMailbox={setMailbox}
+                                salesRep={salesRep}
+                                setSalesRep={setSalesRep}
+                                leads={leads}
+                                setLeads={setLeads}
+                            />
+
                         </div>
 
                         <div className="w-1/3">
