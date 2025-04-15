@@ -72,7 +72,7 @@ export function Sidebar() {
                 <ChevronsUpDown className="opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[250px] p-0 my-2">
+            <PopoverContent side="right" align="start" className="w-[250px] p-0 mx-2">
               <Command>
                 <CommandInput placeholder="Search Campaign..." />
                 <CommandList>

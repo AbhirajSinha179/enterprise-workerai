@@ -32,6 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "./input";
 
 const months = [
   "January",
@@ -485,7 +486,7 @@ export const CalendarDatePicker = React.forwardRef<
               }}
             >
               <div className="flex">
-                <div className="flex flex-col gap-1 pr-4 text-left border-r border-muted-foreground">
+                <div className="flex flex-col gap-2 pr-4 text-left border-r border-muted-foreground">
                   {dateRanges.map(({ label, start, end }) => (
                     <Button
                       key={label}
@@ -510,80 +511,117 @@ export const CalendarDatePicker = React.forwardRef<
                 </div>
                 <div className="flex flex-col">
                   <div className="flex items-center gap-4">
-                    <div className="flex gap-2 ml-3 ">
-                      <Select
-                        onValueChange={(value) =>
-                          handleMonthChange(months.indexOf(value), "from")
-                        }
-                        value={
-                          monthFrom ? months[monthFrom.getMonth()] : undefined
-                        }
-                      >
-                        <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-foreground">
-                          <SelectValue placeholder="Month" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-muted text-foreground">
-                          {months.map((month, idx) => (
-                            <SelectItem key={idx} value={month}>
-                              {month}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <Select
-                        onValueChange={(value) =>
-                          handleYearChange(Number(value), "from")
-                        }
-                        value={yearFrom ? yearFrom.toString() : undefined}
-                      >
-                        <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-foreground">
-                          <SelectValue placeholder="Year" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-muted text-foreground">
-                          {years.map((year, idx) => (
-                            <SelectItem key={idx} value={year.toString()}>
-                              {year}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                    <div className="flex items-center gap-4">
+                      {/* FROM block */}
+                      <div className="flex flex-col gap-2 ml-3">
+                        <div className="flex gap-2">
+                          <Select
+                            onValueChange={(value) =>
+                              handleMonthChange(months.indexOf(value), "from")
+                            }
+                            value={monthFrom ? months[monthFrom.getMonth()] : undefined}
+                          >
+                            <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-foreground">
+                              <SelectValue placeholder="Month" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-muted text-foreground">
+                              {months.map((month, idx) => (
+                                <SelectItem key={idx} value={month}>
+                                  {month}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <Select
+                            onValueChange={(value) =>
+                              handleYearChange(Number(value), "from")
+                            }
+                            value={yearFrom ? yearFrom.toString() : undefined}
+                          >
+                            <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-foreground">
+                              <SelectValue placeholder="Year" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-muted text-foreground">
+                              {years.map((year, idx) => (
+                                <SelectItem key={idx} value={year.toString()}>
+                                  {year}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <Input
+                          type="date"
+                          value={date.from ? format(date.from, "yyyy-MM-dd") : ""}
+                          onChange={(e) => {
+                            const input = e.target.value;
+                            if (/^\d{4}-\d{2}-\d{2}$/.test(input)) {
+                              const parsedDate = new Date(input);
+                              if (!isNaN(parsedDate.getTime())) {
+                                onDateSelect({ from: parsedDate, to: date.to ?? parsedDate });
+                              }
+                            }
+                          }}
+                          className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden"
+                        />
+                      </div>
+
+                      {/* TO block */}
+                      <div className="flex flex-col gap-2">
+                        <div className="flex gap-2">
+                          <Select
+                            onValueChange={(value) =>
+                              handleMonthChange(months.indexOf(value), "to")
+                            }
+                            value={monthTo ? months[monthTo.getMonth()] : undefined}
+                          >
+                            <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-foreground">
+                              <SelectValue placeholder="Month" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-muted text-foreground">
+                              {months.map((month, idx) => (
+                                <SelectItem key={idx} value={month}>
+                                  {month}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <Select
+                            onValueChange={(value) =>
+                              handleYearChange(Number(value), "to")
+                            }
+                            value={yearTo ? yearTo.toString() : undefined}
+                          >
+                            <SelectTrigger className="w-[122px] text-foreground focus:ring-0 focus:ring-offset-0 font-medium bg-card ">
+                              <SelectValue placeholder="Year" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-muted text-foreground">
+                              {years.map((year, idx) => (
+                                <SelectItem key={idx} value={year.toString()}>
+                                  {year}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <Input
+                          type="date"
+                          value={date.to ? format(date.to, "yyyy-MM-dd") : ""}
+                          onChange={(e) => {
+                            const input = e.target.value;
+                            if (/^\d{4}-\d{2}-\d{2}$/.test(input)) {
+                              const parsedDate = new Date(input);
+                              if (!isNaN(parsedDate.getTime())) {
+                                onDateSelect({ from: date.from ?? parsedDate, to: parsedDate });
+                              }
+                            }
+                          }}
+                          className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden"
+                        />
+                      </div>
                     </div>
-                    <div className="flex gap-2">
-                      <Select
-                        onValueChange={(value) =>
-                          handleMonthChange(months.indexOf(value), "to")
-                        }
-                        value={monthTo ? months[monthTo.getMonth()] : undefined}
-                      >
-                        <SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium bg-card text-foreground">
-                          <SelectValue placeholder="Month" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-muted text-foreground">
-                          {months.map((month, idx) => (
-                            <SelectItem key={idx} value={month}>
-                              {month}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <Select
-                        onValueChange={(value) =>
-                          handleYearChange(Number(value), "to")
-                        }
-                        value={yearTo ? yearTo.toString() : undefined}
-                      >
-                        <SelectTrigger className="w-[122px] text-foreground focus:ring-0 focus:ring-offset-0 font-medium bg-card ">
-                          <SelectValue placeholder="Year" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-muted text-foreground">
-                          {years.map((year, idx) => (
-                            <SelectItem key={idx} value={year.toString()}>
-                              {year}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+
+
                   </div>
                   <div className="flex ">
                     <Calendar
